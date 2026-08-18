@@ -2,6 +2,12 @@
 
 ## CV-Led Personalization Checklist
 
+## Reference Background Panel Refinement
+
+- [x] Inspect the reference site’s background layers and white information-card structure.
+- [x] Add matching pale background depth and white information panels to the personalized hero and content sections.
+- [x] Verify the refinement on desktop and mobile, then save a checkpoint.
+
 - [x] Extract the name, title, biography, experience, education, skills, and contact facts from the supplied CV.
 - [x] Upload the supplied professional photo for portfolio use.
 - [x] Confirm missing social links, target role, availability, and project-selection preferences.
