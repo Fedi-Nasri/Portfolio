@@ -1,0 +1,18 @@
+.editor-reset { min-height:34px; display:inline-flex; align-items:center; gap:5px; padding:7px 8px; border:0; color:#8b641d; background:#fff8e8; border-radius:8px; font-size:11px; font-weight:800; }
+.editor-reset:hover { color:#684714; background:#ffefc9; }
+.editor-tree-group > h3 { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.editor-tree-group > h3 small { color:#9aacbf; font-size:9px; letter-spacing:.04em; }
+.editor-array-controls { display:flex; justify-content:flex-end; gap:4px; margin:0 0 3px; }
+.editor-array-controls button { width:25px; height:24px; display:grid; place-items:center; padding:0; border:1px solid #dce6f4; border-radius:6px; color:#57749b; background:#fff; }
+.editor-array-controls button:hover:not(:disabled) { color:#fff; border-color:#4b73ca; background:#4b73ca; }
+.editor-array-controls button:last-child:hover:not(:disabled) { border-color:#d25a5a; background:#d25a5a; }
+.editor-array-controls button:disabled { opacity:.35; cursor:not-allowed; }
+.editor-preview-orbit button { display:grid; place-items:center; min-height:74px; padding:10px; border:1px solid #d6e4fa; border-radius:12px; color:#336cc5; background:rgba(255,255,255,.8); font-size:11px; font-weight:800; text-align:center; box-shadow:0 7px 15px rgba(43,78,132,.07); }
+.editor-preview-orbit button:hover,.editor-preview-orbit button.is-selected { border-color:#75a2eb; background:#edf5ff; }
+.editor-preview-list { display:grid; gap:8px; }
+.editor-preview-list button { display:grid; gap:3px; width:100%; padding:10px 12px; border:1px solid #e0eaf8; border-radius:9px; color:#2c4568; background:#fff; text-align:left; }
+.editor-preview-list button:hover,.editor-preview-list button.is-selected { border-color:#8bb1f0; background:#f1f7ff; }
+.editor-preview-list small { color:#6989b7; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.editor-preview-list strong { font-size:13px; }
+.editor-preview-list span { color:#6d809b; font-size:11px; }
+@media (max-width:620px) { .editor-array-controls { margin-right:-2px; }.editor-reset { order:3; }.editor-preview-list button { padding:9px; } }

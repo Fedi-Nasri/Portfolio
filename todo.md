@@ -51,6 +51,14 @@
 - [x] Save a distinctive draft change, re-fetch editor content, and confirm the change persists.
 - [x] Publish a distinctive visible change, confirm it in inspectable public-page text, then restore and re-verify the original content.
 
+## Direct Editor Continuation — No Authentication
+
+- [x] Keep `/edit` as a direct public route with no sign-in, roles, or authentication controls.
+- [x] Add structured controls to duplicate, reorder, and remove editable list items in the direct editor.
+- [x] Add a reset-to-saved-draft action and clearer unsaved-change feedback.
+- [x] Expand in-context preview selection to more portfolio sections without changing the public design.
+- [x] Exercise the updated direct editor controls, save and publish a draft, verify public rendering, then re-check desktop and mobile layouts.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.
