@@ -8,6 +8,12 @@
 
 ## Reference Section Padding Correction
 
+## Reference Typography Refinement
+
+- [x] Match the supplied screenshots’ type family, text sizing, weights, line heights, and label treatment.
+- [x] Apply the typography system consistently to the hero, About, experience, projects, skills, capability, and contact sections.
+- [x] Verify desktop and mobile readability, then save a checkpoint.
+
 - [x] Remove the global 56px inner frame padding and 283px desktop side margin.
 - [x] Apply the reference-style 100px vertical and 56px horizontal padding to portfolio sections.
 - [x] Verify the corrected spacing at desktop width and save a checkpoint.

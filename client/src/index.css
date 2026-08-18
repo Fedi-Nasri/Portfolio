@@ -1,6 +1,6 @@
 /* Design reminder — Reference Fidelity: light white canvas, dark navy typography,
    royal-blue accents, portrait-led hero, soft raised cards, and technical connectors. */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -35,7 +35,7 @@
 :root { --radius: 1rem; --background: #ffffff; --foreground: #14213c; --card: #fff; --card-foreground: #14213c; --popover: #fff; --popover-foreground: #14213c; --primary: #4567f4; --primary-foreground: #fff; --secondary: #f2f6ff; --secondary-foreground: #14213c; --muted: #f3f6fa; --muted-foreground: #77839a; --accent: #e9f0ff; --accent-foreground: #244bd2; --destructive: #dc4054; --destructive-foreground: #fff; --border: #e8edf5; --input: #e2e8f2; --ring: #4567f4; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
-body { margin: 0; background: #edf3fb; color: #14213c; font-family: "Manrope", sans-serif; }
+body { margin: 0; background: #edf3fb; color: #14213c; font-family: "Inter", sans-serif; }
 button, input, textarea { font: inherit; }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -119,15 +119,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .ref-contact { display:grid; grid-template-columns: .85fr 1.15fr; gap:100px; background:#f3f7fd; }.contact-ref-copy > p { max-width:425px; margin:25px 0 35px; color:var(--body); font-size:14px; line-height:1.7; }.contact-facts { display:grid; gap:14px; }.contact-facts div { display:grid; grid-template-columns:72px 1fr; gap:10px; align-items:center; }.contact-facts span { color:#8d9bb0; font-size:10px; font-weight:800; text-transform:uppercase; }.contact-facts a, .contact-facts p { color:var(--ink); margin:0; font-size:12px; font-weight:700; }.contact-facts p { display:flex; align-items:center; gap:6px; }.contact-facts a:hover { color:var(--blue); }.reference-form { padding:24px; background:white; border:1px solid #e5edf9; border-radius:17px; box-shadow:var(--soft-shadow); display:grid; gap:13px; align-self:start; }.reference-form label { color:#7f8da1; display:grid; gap:6px; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }.reference-form input, .reference-form textarea { width:100%; padding:11px 12px; border:1px solid #e1e8f3; color:var(--ink); background:#fbfcff; border-radius:8px; font-size:12px; resize:vertical; }.reference-form input::placeholder, .reference-form textarea::placeholder { color:#a9b5c6; }.reference-form button { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px; border:0; border-radius:8px; color:white; background:linear-gradient(135deg,var(--blue-2),var(--blue)); font-size:11px; font-weight:800; text-transform:uppercase; transition:transform .18s ease; }.reference-form button:hover { transform:translateY(-2px); }.ref-footer { max-width:1390px; margin:auto; padding:25px 32px; display:flex; align-items:center; justify-content:space-between; gap:25px; border-top:1px solid var(--line); background:#fff; color:var(--ink); }.ref-footer p { margin:0; color:var(--body); font-size:10px; }.ref-footer > div:last-child { display:flex; gap:15px; }.ref-footer a { color:var(--body); font-size:10px; font-weight:700; }.ref-footer a:hover { color:var(--blue); }.floating-contact { position:fixed; z-index:20; right:20px; bottom:20px; width:39px; height:39px; display:grid; place-items:center; color:white; background:var(--blue); border-radius:50%; box-shadow:0 8px 22px rgba(69,103,244,.3); transform:rotate(180deg); }
 
 /* Larger regular copy only — preserve the established title scale. */
-.hero-blurb { font-size: 15px; line-height: 1.7; max-width: 355px; }
-.about-ref-grid p { font-size: 16px; line-height: 1.82; }
-.section-intro { font-size: 16px; line-height: 1.75; }
-.job-copy { font-size: 14px; line-height: 1.72; }
-.project-description p { font-size: 14px; line-height: 1.72; }
-.full-stack-top > span { font-size: 15px; line-height: 1.72; }
-.service-grid p { font-size: 14px; line-height: 1.72; }
-.contact-ref-copy > p { font-size: 16px; line-height: 1.75; }
-.contact-facts a, .contact-facts p { font-size: 13px; }
+/* Reference typography: Inter with readable 15–16px body copy and compact, tracked labels. */
+.reference-portfolio, .reference-portfolio button, .reference-portfolio input, .reference-portfolio textarea { font-family: "Inter", sans-serif; }
+.hero-copy-ref h1, .ref-section-title h2, .full-stack-top h2, .project-content h3, .job-name h3, .skills-ref-grid h3, .service-grid h3 { font-family: "Inter", sans-serif; font-weight: 700; letter-spacing: -0.055em; }
+.hero-blurb { font-size: 16px; font-weight: 400; line-height: 1.62; max-width: 365px; }
+.about-ref-grid p { font-size: 16px; font-weight: 400; line-height: 1.72; }
+.section-intro { font-size: 16px; font-weight: 400; line-height: 1.65; }
+.job-copy { font-size: 15px; font-weight: 400; line-height: 1.62; }
+.project-description p { font-size: 15px; font-weight: 400; line-height: 1.62; }
+.full-stack-top > span { font-size: 16px; font-weight: 400; line-height: 1.62; }
+.service-grid p { font-size: 15px; font-weight: 400; line-height: 1.62; }
+.contact-ref-copy > p { font-size: 16px; font-weight: 400; line-height: 1.65; }
+.contact-facts a, .contact-facts p { font-size: 14px; font-weight: 500; }
+.hero-caption span, .hero-caption small, .copy-row, .project-byline, .ref-tags span, .hashtag-cloud span, .delivery-row span { font-family: "Inter", sans-serif; font-weight: 500; }
+.ref-section-title > span, .project-class, .project-description strong, .project-meta strong, .job-date, .job-name p, .contact-facts span { font-family: "Inter", sans-serif; font-weight: 700; letter-spacing: 0.08em; }
 
 @media (max-width: 1020px) { .reference-hero{padding-left:32px;padding-right:32px;grid-template-columns:.85fr .9fr .58fr}.ref-section,.full-stack-ref,.ref-contact{padding-left:40px;padding-right:40px}.reference-job{grid-template-columns:.75fr 1fr 1.3fr}.reference-job .ref-tags{grid-column:2/-1}.ref-contact{gap:50px}.ref-nav{gap:18px} }
 @media (max-width: 780px) { .reference-portfolio{width:calc(100% - 24px);margin:12px auto;padding:0;border-radius:22px}.ref-header{height:66px;padding:0 20px;display:flex;justify-content:space-between}.ref-nav,.tone-toggle,.talk-button{display:none}.ref-menu{display:grid;place-items:center;border:0;background:transparent;color:var(--ink);padding:6px}.ref-mobile-nav{position:sticky;top:66px;z-index:29;display:grid;padding:8px 20px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 20px rgba(34,53,91,.08)}.dim-mode .ref-mobile-nav{background:#101b31}.ref-mobile-nav a{padding:12px 2px;border-bottom:1px solid var(--line);color:var(--ink);font-size:12px;font-weight:800}.ref-mobile-nav .ref-mobile-talk{margin-top:10px;padding:12px;color:white;background:var(--blue);border-radius:8px;display:flex;justify-content:space-between;border:0}.reference-hero{padding:55px 24px 45px;grid-template-columns:1fr;gap:13px}.reference-hero::before{inset:16px 10px 16px;border-radius:28px}.reference-hero::after{right:14%;top:51%;width:115px;height:115px}.hero-copy-ref{max-width:440px;z-index:3}.hero-copy-ref h1{font-size:55px}.portrait-zone{width:min(100%,430px);min-height:370px;margin:-22px auto 0}.portrait-zone img{width:310px;height:310px}.portrait-glow{width:320px;height:320px}.hero-role-stack{grid-template-columns:repeat(3,1fr);gap:9px;justify-items:stretch;padding:0;margin-top:-8px;z-index:3}.role-card{width:100%;padding:7px;border-radius:12px}.role-art{height:63px}.role-card b{font-size:8px;padding-top:6px}.phones span{width:20px;height:46px}.ref-section,.full-stack-ref,.ref-contact{padding:72px 24px}.ref-section-title h2{font-size:39px}.about-ref-grid,.ref-contact{grid-template-columns:1fr;gap:28px}.ref-stats{grid-template-columns:repeat(2,1fr);margin-top:40px}.reference-job{grid-template-columns:1fr 1fr;gap:13px}.job-copy,.reference-job .ref-tags{grid-column:2}.skills-ref-grid{grid-template-columns:repeat(2,1fr)}.full-stack-top{grid-template-columns:1fr;gap:14px}.service-grid{grid-template-columns:repeat(2,1fr);margin-top:40px}.ref-project{grid-template-columns:1fr;gap:25px}.project-thumb{height:260px}.ref-footer{padding:24px;flex-wrap:wrap}.ref-footer p{order:3;width:100%} }
