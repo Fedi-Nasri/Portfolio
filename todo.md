@@ -6,6 +6,12 @@
 
 ## Page-Frame Spacing Refinement
 
+## Reference Section Padding Correction
+
+- [x] Remove the global 56px inner frame padding and 283px desktop side margin.
+- [x] Apply the reference-style 100px vertical and 56px horizontal padding to portfolio sections.
+- [x] Verify the corrected spacing at desktop width and save a checkpoint.
+
 - [x] Distinguish the browser-inspector overlay colors from the actual reference-site visual treatment.
 - [x] Confirm whether the requested change is the 24px outer frame, a blue visual theme, or both.
 - [x] Apply the confirmed page-frame treatment and verify it on desktop and mobile.
