@@ -138,3 +138,63 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 780px) { .reference-portfolio{width:calc(100% - 24px);margin:12px auto;padding:0;border-radius:22px}.ref-header{height:66px;padding:0 20px;display:flex;justify-content:space-between}.ref-nav,.tone-toggle,.talk-button{display:none}.ref-menu{display:grid;place-items:center;border:0;background:transparent;color:var(--ink);padding:6px}.ref-mobile-nav{position:sticky;top:66px;z-index:29;display:grid;padding:8px 20px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 20px rgba(34,53,91,.08)}.dim-mode .ref-mobile-nav{background:#101b31}.ref-mobile-nav a{padding:12px 2px;border-bottom:1px solid var(--line);color:var(--ink);font-size:12px;font-weight:800}.ref-mobile-nav .ref-mobile-talk{margin-top:10px;padding:12px;color:white;background:var(--blue);border-radius:8px;display:flex;justify-content:space-between;border:0}.reference-hero{padding:55px 24px 45px;grid-template-columns:1fr;gap:13px}.reference-hero::before{inset:16px 10px 16px;border-radius:28px}.reference-hero::after{right:14%;top:51%;width:115px;height:115px}.hero-copy-ref{max-width:440px;z-index:3}.hero-copy-ref h1{font-size:55px}.portrait-zone{width:min(100%,430px);min-height:370px;margin:-22px auto 0}.portrait-zone img{width:310px;height:310px}.portrait-glow{width:320px;height:320px}.hero-role-stack{grid-template-columns:repeat(3,1fr);gap:9px;justify-items:stretch;padding:0;margin-top:-8px;z-index:3}.role-card{width:100%;padding:7px;border-radius:12px}.role-art{height:63px}.role-card b{font-size:8px;padding-top:6px}.phones span{width:20px;height:46px}.ref-section,.full-stack-ref,.ref-contact{padding:72px 24px}.ref-section-title h2{font-size:39px}.about-ref-grid,.ref-contact{grid-template-columns:1fr;gap:28px}.ref-stats{grid-template-columns:repeat(2,1fr);margin-top:40px}.reference-job{grid-template-columns:1fr 1fr;gap:13px}.job-copy,.reference-job .ref-tags{grid-column:2}.skills-ref-grid{grid-template-columns:repeat(2,1fr)}.full-stack-top{grid-template-columns:1fr;gap:14px}.service-grid{grid-template-columns:repeat(2,1fr);margin-top:40px}.ref-project{grid-template-columns:1fr;gap:25px}.project-thumb{height:260px}.ref-footer{padding:24px;flex-wrap:wrap}.ref-footer p{order:3;width:100%} }
 @media (max-width: 480px) { .reference-hero{padding-top:42px}.hero-copy-ref h1{font-size:48px}.portrait-zone{min-height:325px}.portrait-zone img{width:270px;height:270px}.portrait-glow{width:285px;height:285px}.hero-role-stack{grid-template-columns:1fr 1fr}.role-card:last-child{grid-column:1/-1;width:60%;justify-self:center}.ref-section-title h2{font-size:34px}.ref-stats div{min-height:96px;padding:17px}.ref-stats b{font-size:29px}.reference-job{grid-template-columns:1fr}.job-copy,.reference-job .ref-tags{grid-column:auto}.skills-ref-grid{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}.project-description,.project-meta{grid-template-columns:1fr}.project-class{display:block}.project-class b{display:block;margin-top:6px}.ref-contact{gap:40px}.ref-footer > div:last-child{flex-wrap:wrap}.floating-contact{right:14px;bottom:14px} }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+
+/* Audit refinement — preserve title hierarchy while strengthening readability and interaction affordances. */
+.reference-portfolio { --body: #526176; }
+.ref-brand { display: inline-flex; align-items: center; gap: 6px; font-family: "Inter", sans-serif; }
+.ref-brand .brand-name { color: var(--ink); }
+.ref-brand .brand-node { position: relative; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); box-shadow: 12px -6px 0 -3px var(--blue), 12px -6px 0 -2px rgba(69,103,244,.3); }
+.ref-brand .brand-node::before { content: ""; position: absolute; left: 7px; top: 2px; width: 8px; height: 1px; background: rgba(69,103,244,.52); transform: rotate(-28deg); transform-origin: left; }
+.ref-nav a { color: #59677d; font-size: 13px; font-weight: 600; }
+.tone-toggle { width: 42px; height: 42px; }
+.talk-button { min-height: 42px; padding: 10px 17px 10px 19px; font-size: 13px; font-weight: 700; }
+.hello-line { color: #64738a; font-size: 13px; }
+.hero-caption span { padding: 7px 11px; font-size: 12px; font-weight: 700; }
+.hero-caption small { color: #64738a; font-size: 12px; }
+.copy-row { min-height: 42px; padding: 10px 13px; color: #536178; font-size: 13px; border-radius: 10px; }
+.hero-social-row a { width: 40px; height: 40px; color: #526176; border-radius: 10px; }
+.connector { background: linear-gradient(90deg, rgba(126,167,229,.28), rgba(69,103,244,.76), rgba(126,167,229,.3)); }
+.node { width: 10px; height: 10px; border: 2px solid #8eb2eb; box-shadow: 0 0 0 4px rgba(217,231,251,.64); }
+.role-card b { padding: 9px 2px 2px; font-size: 13px; }
+.ref-section-title > span { color: #4f83d9; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.hashtag-cloud span { color: #426aa7; padding: 7px 9px; border-radius: 7px; font-size: 12px; font-weight: 600; }
+.ref-stats span { max-width: 120px; font-size: 13px; line-height: 1.4; }
+.job-date { color: #59677d; font-size: 12px; font-weight: 700; letter-spacing: .05em; }
+.job-date i { width: 8px; height: 8px; margin-right: 6px; }
+.job-name h3 { margin-bottom: 6px; font-size: 18px; }
+.job-name p { font-size: 12px; font-weight: 700; }
+.job-copy { font-size: 14px; }
+.ref-tags { gap: 7px; }
+.ref-tags span { color: #536178; padding: 6px 9px; border-radius: 7px; font-size: 12px; font-weight: 600; }
+.project-class { color: #59677d; font-size: 12px; font-weight: 700; }
+.project-class b { font-size: 11px; }
+.project-class b i { width: 7px; height: 7px; margin-right: 5px; }
+.project-byline { color: #59677d; font-size: 13px; }
+.project-description { gap: 22px; }
+.project-description strong, .project-meta strong { color: #4f83d9; font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+.project-description p { font-size: 14px; }
+.delivery-row { gap: 7px; }
+.delivery-row span { padding: 6px 9px; border-radius: 7px; font-size: 12px; font-weight: 600; }
+.contact-facts span { color: #59677d; font-size: 12px; font-weight: 700; }
+.contact-facts a, .contact-facts p { font-size: 14px; font-weight: 600; }
+.reference-form { padding: 28px; gap: 15px; }
+.reference-form label { color: #59677d; gap: 7px; font-size: 12px; font-weight: 700; }
+.reference-form input, .reference-form textarea { min-height: 44px; padding: 12px 13px; border-color: #d7e1ef; border-radius: 10px; font-size: 15px; }
+.reference-form textarea { min-height: 132px; }
+.reference-form input::placeholder, .reference-form textarea::placeholder { color: #718098; }
+.reference-form button { min-height: 46px; border-radius: 10px; font-size: 13px; font-weight: 700; }
+.ref-footer p, .ref-footer a { font-size: 12px; }
+.ref-footer a { font-weight: 600; }
+.floating-contact { width: 44px; height: 44px; }
+
+@media (max-width: 780px) {
+  .ref-menu { width: 44px; height: 44px; display: grid; place-items: center; }
+  .ref-mobile-nav a { min-height: 44px; font-size: 14px; font-weight: 700; }
+  .ref-mobile-nav .ref-mobile-talk { padding: 12px 14px; border-radius: 10px; }
+  .hero-role-stack { grid-template-columns: repeat(2,1fr); gap: 12px; }
+  .role-card { padding: 10px; border-radius: 14px; }
+  .role-card:last-child { grid-column: 1 / -1; width: 66%; justify-self: center; }
+  .role-art { height: 72px; }
+  .role-card b { padding-top: 8px; font-size: 12px; }
+  .phones span { width: 22px; height: 49px; }
+}

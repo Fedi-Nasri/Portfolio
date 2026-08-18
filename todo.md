@@ -10,6 +10,20 @@
 
 ## Reference Typography Refinement
 
+## UI/UX Readability Audit
+
+## Audit-Driven Refinement Pass
+
+- [x] Create consistent cloud, network, Linux, and DevOps project visuals for all featured case studies.
+- [x] Improve small-text scale, supporting-copy contrast, labels, tags, and contact details.
+- [x] Make mobile icon controls and role cards easier to read and interact with.
+- [x] Refine the personal wordmark and hero connector motif; replace placeholder availability language.
+- [x] Verify desktop and mobile refinement results, then save a checkpoint.
+
+- [x] Capture the current portfolio at desktop and mobile sizes.
+- [x] Review typography, readability, information density, hierarchy, and accessibility risks.
+- [x] Deliver a prioritized UI/UX report with practical recommendations.
+
 - [x] Match the supplied screenshots’ type family, text sizing, weights, line heights, and label treatment.
 - [x] Apply the typography system consistently to the hero, About, experience, projects, skills, capability, and contact sections.
 - [x] Verify desktop and mobile readability, then save a checkpoint.
