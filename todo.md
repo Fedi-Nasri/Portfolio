@@ -1,5 +1,13 @@
 # Reference-Style Redesign Checklist
 
+## CV-Led Personalization Checklist
+
+- [x] Extract the name, title, biography, experience, education, skills, and contact facts from the supplied CV.
+- [x] Upload the supplied professional photo for portfolio use.
+- [x] Confirm missing social links, target role, availability, and project-selection preferences.
+- [x] Replace the previous identity, portrait, copy, project content, and contact links with Fedi Nasri's details.
+- [x] Verify the personalized desktop and mobile portfolio, then save a delivery checkpoint.
+
 - [x] Re-map the reference hero into a white, portrait-led three-column composition.
 - [x] Replace the editorial paper and cobalt system with the reference's clean white, pale-blue, and royal-blue palette.
 - [x] Rebuild navigation, cards, section spacing, and rounded surfaces to mirror the reference rhythm.
