@@ -132,7 +132,7 @@ export default function Home() {
 
           <div className="hero-role-stack" aria-label="Professional focus areas">
             <div className="role-card cloud-card"><div className="role-art cloud-art"><i /><span /><span /><span /></div><b>Cloud</b></div>
-            <div className="role-card browser-card"><div className="role-art browser-art"><i /><span /><span /><span /></div><b>DevOps</b></div>
+            <div className="role-card browser-card"><div className="role-art infinity-art"><i /></div><b>DevOps</b></div>
             <div className="role-card design-card"><div className="role-art mark-shape"><i /><i /><i /></div><b>DevSecOps</b></div>
             <div className="role-card network-card"><div className="role-art network-art"><i /><span /><span /><span /></div><b>Security &amp; Networking</b></div>
           </div>

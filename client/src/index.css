@@ -270,6 +270,24 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .role-card b { left: 9px; right: 9px; bottom: 9px; min-height: 27px; font-size: 10px; }
 }
 
+/* Arc composition — four stable focus cards orbit the portrait without touching. */
+@media (min-width: 781px) {
+  .reference-hero { grid-template-columns: .76fr 1fr 1.02fr; }
+  .hero-role-stack { position: relative; display: block; min-height: 470px; padding: 0; }
+  .hero-role-stack .role-card { position: absolute; width: 174px; min-height: 150px; padding: 10px 10px 42px; }
+  .hero-role-stack .role-card:nth-child(1) { left: 0; top: 8px; }
+  .hero-role-stack .role-card:nth-child(2) { right: 0; top: 86px; }
+  .hero-role-stack .role-card:nth-child(3) { right: 0; top: 250px; }
+  .hero-role-stack .role-card:nth-child(4) { left: 0; bottom: 7px; }
+  .hero-role-stack .role-art { height: 88px; }
+  .hero-role-stack .role-card b { left: 9px; right: 9px; bottom: 9px; font-size: 11px; }
+}
+.infinity-art { position: relative; overflow: hidden; background: radial-gradient(circle at 50% 46%, #f6f9ff 0 32%, #edf3ff 72%); }
+.infinity-art::before, .infinity-art::after { content: ""; position: absolute; top: 28px; width: 53px; height: 34px; border: 8px solid #4567f4; border-radius: 999px; box-shadow: 0 8px 15px rgba(69,103,244,.17); }
+.infinity-art::before { left: calc(50% - 52px); transform: rotate(-28deg); }
+.infinity-art::after { right: calc(50% - 52px); border-color: #7c8fff; transform: rotate(28deg); }
+.infinity-art i { position: absolute; z-index: 2; left: 50%; top: 48px; width: 16px; height: 16px; border-radius: 4px; background: #fff; box-shadow: 0 3px 9px rgba(61,90,153,.16); transform: translateX(-50%) rotate(45deg); }
+
 @media (max-width: 780px) {
   .ref-menu { width: 44px; height: 44px; display: grid; place-items: center; }
   .ref-mobile-nav a { min-height: 44px; font-size: 14px; font-weight: 700; }

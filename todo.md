@@ -20,6 +20,12 @@
 
 ## Four-Card Hero Layout Correction
 
+## Hero Arc Composition Refinement
+
+- [x] Arrange the four focus cards in a balanced arc around the portrait without overlap.
+- [x] Replace the DevOps visual with a clear infinity-loop design.
+- [x] Verify the arc composition on desktop and mobile, then save a checkpoint.
+
 - [x] Remove the floating animation that causes role-card label overlap.
 - [x] Create four larger, clearly separated role cards for Cloud, DevOps, DevSecOps, and Security & Networking.
 - [x] Verify every visual and label is visible on desktop and mobile, then save a checkpoint.
