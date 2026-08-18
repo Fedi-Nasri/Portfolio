@@ -57,6 +57,19 @@ const services = [
   ["Applied AI", "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines."],
 ];
 
+const certifications = [
+  { name: "CCNA 1", provider: "cisco", issuer: "Cisco Networking Academy", issued: "Jan 2026", scope: "Networking foundations" },
+  { name: "CCNA 2", provider: "cisco", issuer: "Cisco Networking Academy", issued: "May 2026", scope: "Switching, routing & wireless" },
+  { name: "DevOps & Software Engineering", provider: "ibm", issuer: "IBM Professional Certificate", issued: "Mar 2026", scope: "DevOps engineering" },
+  { name: "DevOps, Cloud & Agile", provider: "ibm", issuer: "IBM Specialisation", issued: "Mar 2026", scope: "Cloud delivery practices" },
+  { name: "Azure AI Fundamentals", provider: "microsoft", issuer: "Microsoft · AZ-900", issued: "Nov 2024", scope: "AI fundamentals" },
+] as const;
+
+function ProviderMark({ provider }: { provider: (typeof certifications)[number]["provider"] }) {
+  if (provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
+  return <div className={`cert-provider-mark ${provider}-mark`} aria-label={provider === "cisco" ? "Cisco" : "IBM"}><span>{provider === "cisco" ? "CISCO" : "IBM"}</span></div>;
+}
+
 function TagList({ items }: { items: readonly string[] }) {
   return <div className="ref-tags">{items.map((tag) => <span key={tag}>{tag}</span>)}</div>;
 }
@@ -97,7 +110,7 @@ export default function Home() {
       <header className="ref-header">
         <a href="#home" className="ref-brand" aria-label="Fedi Nasri home"><span className="brand-name">fedi</span><span className="brand-node" /></a>
         <nav className="ref-nav" aria-label="Primary navigation">
-          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">About</a>
+          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a><a href="#projects">Projects</a><a href="#about">About</a>
         </nav>
         <div className="ref-header-actions">
           <button className="tone-toggle" aria-label="Toggle visual tone" onClick={() => setDimMode((value) => !value)}>{dimMode ? <Sun size={15} /> : <Moon size={15} />}</button>
@@ -105,7 +118,7 @@ export default function Home() {
           <button className="ref-menu" type="button" aria-label="Toggle navigation" aria-expanded={mobileNav} onClick={() => setMobileNav((value) => !value)}>{mobileNav ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </header>
-      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
+      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#certifications">Certifications</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
 
       <main>
         <section id="home" className="reference-hero">
@@ -158,6 +171,13 @@ export default function Home() {
         <section id="skills" className="ref-section ref-skills">
           <SectionTitle eyebrow="Toolbox">Skills, sorted by the systems<br />they help keep running.</SectionTitle>
           <div className="skills-ref-grid">{skills.map(([heading, entries]) => <article key={heading}><h3>{heading}</h3><TagList items={entries} /></article>)}</div>
+        </section>
+
+        <section id="certifications" className="ref-section ref-certifications">
+          <div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
+          <SectionTitle eyebrow="Credentials & Recognition">Certifications that<br />support the systems I build.</SectionTitle>
+          <p className="section-intro">A focused record across network infrastructure, DevOps practices, cloud delivery, and AI fundamentals.</p>
+          <div className="certifications-grid">{certifications.map((cert) => <article className="credential-card" key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p><div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div></article>)}</div>
         </section>
 
         <section className="full-stack-ref">

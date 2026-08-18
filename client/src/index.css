@@ -346,3 +346,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .role-art { height: 92px; border-radius: 13px; }
   .role-card b { bottom: -14px; min-height: 29px; padding: 7px 11px; font-size: 11px; }
 }
+
+/* Certifications — a light credential-grid adaptation of the reference's recognition cards. */
+.ref-certifications { position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(135deg, #fbfdff 0%, #f4f8ff 100%); }
+.ref-certifications > :not(.cert-mosaic) { position: relative; z-index: 1; }
+.cert-mosaic { position: absolute; z-index: 0; right: 6%; top: -35px; display: grid; grid-template-columns: repeat(3, 50px); grid-auto-rows: 50px; gap: 3px; opacity: .44; transform: rotate(17deg); }
+.cert-mosaic i { display: block; background: #dbe8ff; }.cert-mosaic i:nth-child(1), .cert-mosaic i:nth-child(6) { background: #a9c8ff; }.cert-mosaic i:nth-child(2), .cert-mosaic i:nth-child(5) { background: #e8effb; }.cert-mosaic i:nth-child(4) { background: #bfd8ff; }
+.certifications-grid { max-width: 1120px; margin: 52px auto 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.credential-card { min-height: 244px; padding: 20px 18px 17px; display: flex; flex-direction: column; border: 1px solid #e5edf8; border-radius: 18px; background: rgba(255,255,255,.94); box-shadow: 0 12px 26px rgba(69,104,158,.08); transition: transform .2s ease, box-shadow .2s ease; }
+.credential-card:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgba(69,104,158,.14); }
+.credential-card-top { min-height: 54px; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.credential-card-top > span { display: inline-flex; align-items: center; gap: 5px; color: #5a83cf; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.credential-card-top > span i { width: 6px; height: 6px; border-radius: 50%; background: #4f83d9; box-shadow: 0 0 0 3px #edf4ff; }
+.cert-provider-mark { min-width: 52px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.cert-provider-mark span { font-size: 13px; font-weight: 800; letter-spacing: -.05em; }
+.cisco-mark span { color: #1675cb; letter-spacing: .03em; font-size: 10px; }.ibm-mark span { color: #2554a8; font-size: 17px; letter-spacing: -.1em; }
+.microsoft-mark { width: 31px; min-width: 31px; height: 31px; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; }.microsoft-mark i { display: block; background: #f25022; }.microsoft-mark i:nth-child(2) { background: #7fba00; }.microsoft-mark i:nth-child(3) { background: #00a4ef; }.microsoft-mark i:nth-child(4) { background: #ffb900; }
+.credential-card h3 { margin: 22px 0 8px; color: var(--ink); font: 700 18px/1.12 "Inter", sans-serif; letter-spacing: -.05em; }
+.credential-card > p { min-height: 39px; margin: 0; color: var(--body); font-size: 13px; line-height: 1.45; }
+.credential-meta { margin-top: auto; padding-top: 16px; border-top: 1px solid #edf1f7; display: grid; gap: 5px; }
+.credential-meta span { color: #4f83d9; font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.credential-meta time { color: #64738a; font-size: 12px; font-weight: 600; }
+.reference-portfolio.dim-mode .ref-certifications { background: #13203a; }.reference-portfolio.dim-mode .credential-card { background: #182640; border-color: #2b4168; }.reference-portfolio.dim-mode .credential-meta { border-color: #2b4168; }
+
+@media (max-width: 1020px) { .certifications-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 780px) { .cert-mosaic { right: -28px; top: -18px; transform: rotate(17deg) scale(.72); }.certifications-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 38px; }.credential-card { min-height: 218px; padding: 17px 15px 14px; }.credential-card h3 { margin-top: 17px; font-size: 16px; }.credential-card > p { font-size: 12px; }.credential-card:last-child { grid-column: 1 / -1; } }

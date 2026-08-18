@@ -1,5 +1,12 @@
 # Reference-Style Redesign Checklist
 
+## Certifications Section
+
+- [x] Extract the actual certifications and providers from Fedi Nasri’s CV.
+- [x] Add a light-theme credential heading and responsive certification-card grid.
+- [x] Add provider marks and only verified links that are available from the CV.
+- [x] Verify the new section on desktop and mobile, then save a checkpoint.
+
 ## CV-Led Personalization Checklist
 
 ## Reference Background Panel Refinement
