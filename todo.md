@@ -24,6 +24,11 @@
 
 ## Hero Composition Polish
 
+## Manual Focus-Card Position Adjustment
+
+- [x] Shift the targeted hero-card group slightly upward and to the right.
+- [x] Verify the revised hero balance and save a checkpoint.
+
 - [x] Rebalance the four hero focus cards into a visually even orbit around the portrait.
 - [x] Refine the DevOps card into a continuous blue-violet-warm gradient infinity loop.
 - [x] Verify the refined hero composition on desktop and mobile, then save a checkpoint.

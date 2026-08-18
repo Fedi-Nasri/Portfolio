@@ -303,7 +303,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 /* Balanced orbit: even visual pacing around the portrait and a continuous DevOps loop. */
 @media (min-width: 781px) {
   .hero-role-stack { min-height: 470px; }
-  .hero-role-stack .role-card:nth-child(1) { left: 12px; top: 22px; }
+  .hero-role-stack .role-card:nth-child(1) { left: 28px; top: 10px; }
   .hero-role-stack .role-card:nth-child(2) { right: 0; top: 92px; }
   .hero-role-stack .role-card:nth-child(3) { right: 0; top: 262px; }
   .hero-role-stack .role-card:nth-child(4) { left: 12px; bottom: 22px; }
