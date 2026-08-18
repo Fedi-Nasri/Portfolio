@@ -22,6 +22,12 @@
 
 ## Hero Arc Composition Refinement
 
+## Hero Composition Polish
+
+- [x] Rebalance the four hero focus cards into a visually even orbit around the portrait.
+- [x] Refine the DevOps card into a continuous blue-violet-warm gradient infinity loop.
+- [x] Verify the refined hero composition on desktop and mobile, then save a checkpoint.
+
 - [x] Arrange the four focus cards in a balanced arc around the portrait without overlap.
 - [x] Replace the DevOps visual with a clear infinity-loop design.
 - [x] Verify the arc composition on desktop and mobile, then save a checkpoint.

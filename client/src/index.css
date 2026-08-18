@@ -299,3 +299,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .role-card b { padding-top: 8px; font-size: 12px; }
   .phones span { width: 22px; height: 49px; }
 }
+
+/* Balanced orbit: even visual pacing around the portrait and a continuous DevOps loop. */
+@media (min-width: 781px) {
+  .hero-role-stack { min-height: 470px; }
+  .hero-role-stack .role-card:nth-child(1) { left: 12px; top: 22px; }
+  .hero-role-stack .role-card:nth-child(2) { right: 0; top: 92px; }
+  .hero-role-stack .role-card:nth-child(3) { right: 0; top: 262px; }
+  .hero-role-stack .role-card:nth-child(4) { left: 12px; bottom: 22px; }
+  .hero-role-stack::before { content: ""; position: absolute; z-index: -1; inset: 41px 14px; border: 1px dashed rgba(110,154,222,.26); border-left: 0; border-radius: 0 130px 130px 0; pointer-events: none; }
+}
+.infinity-art { background: radial-gradient(circle at 50% 45%, #fbfcff 0 28%, #edf3ff 78%); }
+.infinity-art::before, .infinity-art::after { content: none; }
+.infinity-art i { display: none; }
+.infinity-art svg { width: min(100%, 148px); height: 78px; overflow: visible; filter: drop-shadow(0 8px 12px rgba(77,88,233,.18)); }

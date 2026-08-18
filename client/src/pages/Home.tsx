@@ -132,7 +132,7 @@ export default function Home() {
 
           <div className="hero-role-stack" aria-label="Professional focus areas">
             <div className="role-card cloud-card"><div className="role-art cloud-art"><i /><span /><span /><span /></div><b>Cloud</b></div>
-            <div className="role-card browser-card"><div className="role-art infinity-art"><i /></div><b>DevOps</b></div>
+            <div className="role-card browser-card"><div className="role-art infinity-art"><svg viewBox="0 0 240 120" aria-hidden="true"><defs><linearGradient id="devopsInfinityGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#1f8dff" /><stop offset="30%" stopColor="#5b4fff" /><stop offset="56%" stopColor="#9c3df4" /><stop offset="76%" stopColor="#ed4e7b" /><stop offset="100%" stopColor="#ff8a22" /></linearGradient></defs><path d="M30 60 C55 20 85 20 120 60 C155 100 185 100 210 60 C185 20 155 20 120 60 C85 100 55 100 30 60" fill="none" stroke="url(#devopsInfinityGradient)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" /></svg></div><b>DevOps</b></div>
             <div className="role-card design-card"><div className="role-art mark-shape"><i /><i /><i /></div><b>DevSecOps</b></div>
             <div className="role-card network-card"><div className="role-art network-art"><i /><span /><span /><span /></div><b>Security &amp; Networking</b></div>
           </div>
