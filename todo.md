@@ -15,6 +15,13 @@
 - [x] Add navigation access and responsive layout for the article cards.
 - [x] Verify the new section on desktop and mobile, then save a checkpoint.
 
+## Selected Work Realization Blocks
+
+- [x] Define a concise realization outcome for each portfolio project using the existing project descriptions.
+- [x] Add a Realization block below What it is in every Selected Work project.
+- [x] Adapt the project information layout to the supplied reference while preserving the light blue-and-white portfolio system.
+- [x] Verify desktop and mobile layouts, then save a checkpoint.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.
