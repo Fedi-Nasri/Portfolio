@@ -4,6 +4,12 @@
 
 ## Reference Background Panel Refinement
 
+## Page-Frame Spacing Refinement
+
+- [x] Distinguish the browser-inspector overlay colors from the actual reference-site visual treatment.
+- [x] Confirm whether the requested change is the 24px outer frame, a blue visual theme, or both.
+- [x] Apply the confirmed page-frame treatment and verify it on desktop and mobile.
+
 - [x] Inspect the reference site’s background layers and white information-card structure.
 - [x] Add matching pale background depth and white information panels to the personalized hero and content sections.
 - [x] Verify the refinement on desktop and mobile, then save a checkpoint.
