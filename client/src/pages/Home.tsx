@@ -92,6 +92,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
   const [dimMode, setDimMode] = useState(false);
+  const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
 
   const copyEmail = async () => {
     try {
@@ -187,7 +188,7 @@ export default function Home() {
           <div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
           <SectionTitle eyebrow="Credentials & Recognition">Certifications that<br />support the systems I build.</SectionTitle>
           <p className="section-intro">A focused record across network infrastructure, DevOps practices, cloud delivery, and AI fundamentals.</p>
-          <div className="certifications-grid">{certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p><div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div>{cert.pdf && cert.preview && <><a className="certificate-pdf-action" href={cert.pdf} target="_blank" rel="noreferrer">Open PDF <ArrowRight size={13} /></a><a className="certificate-pdf-preview" href={cert.pdf} target="_blank" rel="noreferrer" aria-label={`Open ${cert.name} certificate PDF`}><img src={cert.preview} alt={`Preview of ${cert.name} certificate`} /><span>View certificate <ArrowRight size={13} /></span></a></>}</article>)}</div>
+          <div className="certifications-grid">{certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div></article>)}</div>
         </section>
 
         <section className="full-stack-ref">
@@ -208,6 +209,7 @@ export default function Home() {
       </main>
       <footer className="ref-footer"><div className="ref-brand"><span className="brand-name">fedi</span><span className="brand-node" /></div><p>© 2026 Fedi Nasri · Crafted with care in Tunis</p><div><a href={linkedInUrl} target="_blank" rel="noreferrer">LinkedIn</a><a href={`mailto:${email}`}>Email</a><a href={`tel:${phone.replaceAll(" ", "")}`}>{phone}</a></div></footer>
       <a className="floating-contact" href="#contact" aria-label="Contact Fedi Nasri"><ChevronDown size={16} /></a>
+      {activeCertificate?.pdf && <div className="certificate-viewer-overlay" role="dialog" aria-modal="true" aria-label={`${activeCertificate.name} certificate viewer`} onMouseDown={() => setActiveCertificate(null)}><div className="certificate-viewer" onMouseDown={(event) => event.stopPropagation()}><div className="certificate-viewer-head"><div><span>Credential viewer</span><h2>{activeCertificate.name}</h2></div><button type="button" onClick={() => setActiveCertificate(null)} aria-label="Close certificate viewer"><X size={19} /></button></div><object className="certificate-pdf-object" data={activeCertificate.pdf} type="application/pdf"><a href={activeCertificate.pdf} target="_blank" rel="noreferrer">Open certificate PDF</a></object></div></div>}
     </div>
   );
 }

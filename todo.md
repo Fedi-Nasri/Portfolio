@@ -4,6 +4,13 @@
 
 ## Interactive Certificate PDF Preview
 
+## In-Page Certificate Viewer
+
+- [x] Remove the permanent PDF action button from the certificate card.
+- [x] Reveal a View certificate action on hover or keyboard focus between the card details and metadata.
+- [x] Open the supplied PDF in a centred in-page viewer with a clear close control.
+- [x] Verify desktop and mobile interaction, then save a checkpoint.
+
 - [x] Convert the supplied Coursera certificate PDF into a preview image and upload both assets for portfolio use.
 - [x] Add hover preview and full-PDF viewing interactions to the supplied certificate card.
 - [x] Keep certificates without a provided PDF in the standard static-card presentation.
