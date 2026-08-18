@@ -16,6 +16,13 @@
 
 ## Experience Timeline Enhancement
 
+## Floating Hero Role-Card Refinement
+
+- [x] Move the circular portrait slightly upward and centre it within the hero composition.
+- [x] Restyle the role cards as floating white cards with pill labels beneath the visual area.
+- [x] Update the role titles to Cloud & DevOps, Networking & Security, and DevSecOps.
+- [x] Add subtle staggered floating motion and verify desktop/mobile presentation.
+
 - [x] Add a vertical blue timeline spine and milestone circles to the experience entries.
 - [x] Use a filled, haloed marker to distinguish the current or most recent experience entry.
 - [x] Verify the desktop and mobile timeline layout, then save a checkpoint.

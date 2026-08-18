@@ -203,6 +203,43 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .timeline-marker { left: -27px; top: 25px; width: 13px; height: 13px; }
 }
 
+/* Hero card refinement — higher-centred portrait and a calm floating-card rhythm. */
+.portrait-zone { align-items: center; padding-bottom: 30px; }
+.portrait-zone img { transform: translateY(-16px); }
+.portrait-glow { bottom: 42px; }
+.hero-role-stack { position: relative; padding-top: 6px; }
+.role-card { position: relative; width: min(100%, 198px); padding: 12px; border: 1px solid #e8eef7; border-radius: 18px; box-shadow: 0 18px 34px rgba(46,76,135,.13), 0 3px 8px rgba(46,76,135,.06); }
+.role-card::after { content: ""; position: absolute; z-index: 2; left: 50%; bottom: -18px; width: max-content; max-width: calc(100% - 26px); padding: 8px 12px; border: 1px solid #e9eef7; border-radius: 999px; background: #fff; color: var(--ink); box-shadow: 0 8px 16px rgba(46,76,135,.11); font: 700 12px/1 "Inter", sans-serif; letter-spacing: -.02em; transform: translateX(-50%); white-space: nowrap; content: attr(data-label); }
+.role-card b { padding: 9px 2px 2px; font-size: 0; }
+.phone-card::after { content: "Cloud & DevOps"; }
+.design-card::after { content: "Networking & Security"; }
+.browser-card::after { content: "DevSecOps"; }
+.role-art { height: 94px; border-radius: 13px; }
+.phones { gap: 11px; }
+.phones span { width: 31px; height: 68px; }
+.role-card:nth-child(1) { animation: role-float-one 5.4s ease-in-out infinite; }
+.role-card:nth-child(2) { animation: role-float-two 6.2s ease-in-out .45s infinite; }
+.role-card:nth-child(3) { animation: role-float-three 5.8s ease-in-out .9s infinite; }
+@keyframes role-float-one { 0%,100% { transform: translateY(0) rotate(-.4deg); } 50% { transform: translateY(-9px) rotate(.45deg); } }
+@keyframes role-float-two { 0%,100% { transform: translateY(0) rotate(.35deg); } 50% { transform: translateY(8px) rotate(-.35deg); } }
+@keyframes role-float-three { 0%,100% { transform: translateY(0) rotate(-.3deg); } 50% { transform: translateY(-7px) rotate(.35deg); } }
+.role-card:hover { transform: translateY(-5px) scale(1.015); }
+
+@media (max-width: 780px) {
+  .portrait-zone { padding-bottom: 18px; }
+  .portrait-zone img { transform: translateY(-10px); }
+  .portrait-glow { bottom: 28px; }
+  .role-card { width: 100%; padding: 10px; border-radius: 16px; }
+  .role-art { height: 80px; }
+  .phones span { width: 25px; height: 57px; }
+  .role-card::after { bottom: -16px; padding: 7px 10px; font-size: 11px; }
+  .role-card:nth-child(1), .role-card:nth-child(2), .role-card:nth-child(3) { animation-duration: 6.2s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role-card:nth-child(1), .role-card:nth-child(2), .role-card:nth-child(3) { animation: none; }
+}
+
 @media (max-width: 780px) {
   .ref-menu { width: 44px; height: 44px; display: grid; place-items: center; }
   .ref-mobile-nav a { min-height: 44px; font-size: 14px; font-weight: 700; }
