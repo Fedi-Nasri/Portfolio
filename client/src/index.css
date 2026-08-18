@@ -352,8 +352,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .ref-certifications > :not(.cert-mosaic) { position: relative; z-index: 1; }
 .cert-mosaic { position: absolute; z-index: 0; right: 6%; top: -35px; display: grid; grid-template-columns: repeat(3, 50px); grid-auto-rows: 50px; gap: 3px; opacity: .44; transform: rotate(17deg); }
 .cert-mosaic i { display: block; background: #dbe8ff; }.cert-mosaic i:nth-child(1), .cert-mosaic i:nth-child(6) { background: #a9c8ff; }.cert-mosaic i:nth-child(2), .cert-mosaic i:nth-child(5) { background: #e8effb; }.cert-mosaic i:nth-child(4) { background: #bfd8ff; }
-.certifications-grid { max-width: 1120px; margin: 52px auto 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
-.credential-card { min-height: 244px; padding: 20px 18px 17px; display: flex; flex-direction: column; border: 1px solid #e5edf8; border-radius: 18px; background: rgba(255,255,255,.94); box-shadow: 0 12px 26px rgba(69,104,158,.08); transition: transform .2s ease, box-shadow .2s ease; }
+.certifications-grid { max-width: 1120px; margin: 52px auto 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; gap: 14px; }
+.credential-card { align-self: start; min-height: 244px; padding: 20px 18px 17px; display: flex; flex-direction: column; border: 1px solid #e5edf8; border-radius: 18px; background: rgba(255,255,255,.94); box-shadow: 0 12px 26px rgba(69,104,158,.08); transition: transform .2s ease, box-shadow .2s ease; }
 .credential-card:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgba(69,104,158,.14); }
 .credential-card-top { min-height: 54px; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .credential-card-top > span { display: inline-flex; align-items: center; gap: 5px; color: #5a83cf; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }

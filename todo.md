@@ -6,6 +6,12 @@
 
 ## In-Page Certificate Viewer
 
+## Certificate Hover Isolation Fix
+
+- [x] Scope the View certificate reveal to only the matching PDF-enabled card.
+- [x] Verify hover and keyboard-focus behavior is independent for every certification card.
+- [x] Save a checkpoint containing the fixed interaction.
+
 - [x] Remove the permanent PDF action button from the certificate card.
 - [x] Reveal a View certificate action on hover or keyboard focus between the card details and metadata.
 - [x] Open the supplied PDF in a centred in-page viewer with a clear close control.
