@@ -38,6 +38,12 @@
 
 ## DevSecOps SVG Integration
 
+## Framed DevOps Infinity Redesign
+
+- [x] Replace the plain DevOps infinity mark with the supplied reference's framed multi-line infinity motif in blue.
+- [x] Preserve the portfolio's light card and pale-blue visual-window treatment without the purple background.
+- [x] Verify the new DevOps icon at desktop and mobile size, then save a checkpoint.
+
 - [x] Adapt the supplied shield-and-infinity SVG into a compact icon without its dark backdrop or small unreadable labels.
 - [x] Replace the current DevSecOps visual with the adapted SVG inside the raised card.
 - [x] Verify the adapted SVG at desktop and mobile size, then save a checkpoint.

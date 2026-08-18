@@ -315,6 +315,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .infinity-art svg { width: min(100%, 148px); height: 78px; overflow: visible; filter: drop-shadow(0 8px 12px rgba(77,88,233,.18)); }
 .infinity-art .devops-loop { width: min(100%, 160px); height: 86px; filter: drop-shadow(0 7px 12px rgba(77,88,233,.13)); }
 .infinity-art .devops-logo { width: min(100%, 142px); height: 78px; overflow: visible; filter: drop-shadow(0 8px 12px rgba(30,116,255,.2)); }
+.infinity-art .devops-frame-logo { width: min(100%, 146px); height: 96px; overflow: visible; filter: drop-shadow(0 6px 11px rgba(24,119,232,.14)); }
 .devsecops-art { background: radial-gradient(circle at 50% 46%, #fbfdff 0 25%, #edf4ff 80%); }
 .devsecops-shield { width: min(100%, 92px); height: 92px; overflow: visible; filter: drop-shadow(0 8px 12px rgba(37,99,235,.16)); }
 
