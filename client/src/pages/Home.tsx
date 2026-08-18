@@ -150,7 +150,7 @@ export default function Home() {
           <SectionTitle eyebrow="Experience">Two internships,<br />one infrastructure-ready toolkit.</SectionTitle>
           <p className="section-intro">From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering.</p>
           <div className="reference-timeline">
-            {experience.map((item) => <article className="reference-job" key={`${item.date}-${item.company}`}><div className="job-date">{item.now && <i />} {item.date}</div><div className="job-name"><h3>{item.role}</h3><p>{item.company}</p></div><p className="job-copy">{item.text}</p><TagList items={item.tags} /></article>)}
+            {experience.map((item) => <article className={`reference-job${item.now ? " latest-job" : ""}`} key={`${item.date}-${item.company}`}><span className="timeline-marker" aria-hidden="true" /><div className="job-date">{item.date}</div><div className="job-name"><h3>{item.role}</h3><p>{item.company}</p></div><p className="job-copy">{item.text}</p><TagList items={item.tags} /></article>)}
           </div>
         </section>
 

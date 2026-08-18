@@ -187,6 +187,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .ref-footer a { font-weight: 600; }
 .floating-contact { width: 44px; height: 44px; }
 
+/* Experience timeline — a deliberate blue spine with a clear latest-entry marker. */
+.reference-timeline { position: relative; padding-left: 38px; }
+.reference-timeline::before { content: ""; position: absolute; top: 28px; bottom: 28px; left: 9px; width: 1px; background: linear-gradient(to bottom, #4f83d9 0%, #83a7e7 82%, rgba(131,167,231,.2) 100%); }
+.reference-job { position: relative; }
+.timeline-marker { position: absolute; z-index: 2; left: -34px; top: 29px; width: 14px; height: 14px; border: 2px solid #4f83d9; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px #f9fbfe; }
+.latest-job .timeline-marker { border-color: #3f78ea; background: #3f78ea; box-shadow: 0 0 0 5px #dce9ff, 0 0 0 8px rgba(220,233,255,.45); }
+.latest-job .job-date { color: #3f78ea; }
+.reference-portfolio.dim-mode .timeline-marker { background: #182640; border-color: #8eb2eb; box-shadow: 0 0 0 4px #15223b; }
+.reference-portfolio.dim-mode .latest-job .timeline-marker { background: #7598ff; border-color: #7598ff; box-shadow: 0 0 0 5px #263d69, 0 0 0 8px rgba(38,61,105,.6); }
+
+@media (max-width: 480px) {
+  .reference-timeline { padding-left: 30px; }
+  .reference-timeline::before { left: 7px; top: 22px; bottom: 22px; }
+  .timeline-marker { left: -27px; top: 25px; width: 13px; height: 13px; }
+}
+
 @media (max-width: 780px) {
   .ref-menu { width: 44px; height: 44px; display: grid; place-items: center; }
   .ref-mobile-nav a { min-height: 44px; font-size: 14px; font-weight: 700; }

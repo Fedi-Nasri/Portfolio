@@ -14,6 +14,12 @@
 
 ## Audit-Driven Refinement Pass
 
+## Experience Timeline Enhancement
+
+- [x] Add a vertical blue timeline spine and milestone circles to the experience entries.
+- [x] Use a filled, haloed marker to distinguish the current or most recent experience entry.
+- [x] Verify the desktop and mobile timeline layout, then save a checkpoint.
+
 - [x] Create consistent cloud, network, Linux, and DevOps project visuals for all featured case studies.
 - [x] Improve small-text scale, supporting-copy contrast, labels, tags, and contact details.
 - [x] Make mobile icon controls and role cards easier to read and interact with.
