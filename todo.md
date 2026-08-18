@@ -26,6 +26,12 @@
 
 ## Manual Focus-Card Position Adjustment
 
+## Visual-Editor Repair
+
+- [x] Remove duplicate and invalid inline style attributes from the hero focus cards.
+- [x] Apply the valid upward/right and vertical placement intentions through stable CSS rules.
+- [x] Verify the repaired desktop and mobile hero layout, then save a checkpoint.
+
 - [x] Shift the targeted hero-card group slightly upward and to the right.
 - [x] Verify the revised hero balance and save a checkpoint.
 
