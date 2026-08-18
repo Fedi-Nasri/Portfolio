@@ -313,6 +313,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .infinity-art::before, .infinity-art::after { content: none; }
 .infinity-art i { display: none; }
 .infinity-art svg { width: min(100%, 148px); height: 78px; overflow: visible; filter: drop-shadow(0 8px 12px rgba(77,88,233,.18)); }
+.infinity-art .devops-loop { width: min(100%, 160px); height: 86px; filter: drop-shadow(0 7px 12px rgba(77,88,233,.13)); }
 
 /* Manual visual-editor intent, translated into stable card offsets. */
 @media (min-width: 781px) {

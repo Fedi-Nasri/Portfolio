@@ -32,6 +32,11 @@
 
 ## Raised Focus-Card Redesign
 
+## DevOps SVG Refinement
+
+- [x] Replace the current DevOps infinity mark with a more expressive custom SVG.
+- [x] Verify the revised DevOps visual remains crisp within the raised-card system, then save a checkpoint.
+
 - [x] Restyle the focus cards as large white rounded cards with an inset pale-blue visual window.
 - [x] Apply the reference-style floating pill label and soft shadow without obscuring the card visuals.
 - [x] Verify desktop and mobile card presentation, then save a checkpoint.
