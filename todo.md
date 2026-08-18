@@ -8,6 +8,13 @@
 
 ## Certificate Hover Isolation Fix
 
+## Writing & Insights Section
+
+- [x] Add a reusable Writing & Insights section for blog, Medium, and article links.
+- [x] Create one clearly labelled sample article card in a Medium-inspired editorial style.
+- [x] Add navigation access and responsive layout for the article cards.
+- [x] Verify the new section on desktop and mobile, then save a checkpoint.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.

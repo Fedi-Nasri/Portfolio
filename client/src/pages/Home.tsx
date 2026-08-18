@@ -75,6 +75,39 @@ const certifications: readonly Certification[] = [
   { name: "Azure AI Fundamentals", provider: "microsoft", issuer: "Microsoft · AZ-900", issued: "Nov 2024", scope: "AI fundamentals" },
 ] as const;
 
+type WritingPost = {
+  title: string;
+  category: string;
+  readTime: string;
+  preview: string;
+  body: readonly string[];
+  status: string;
+  url?: string;
+};
+
+const writingPosts: readonly WritingPost[] = [
+  {
+    title: "From Commit to Cloud VM: Notes on a Practical CI/CD Pipeline",
+    category: "DevOps · Sample article",
+    readTime: "5 min read",
+    preview: "A short, practical field note on turning a Docker workflow into a repeatable build-test-deploy pipeline for cloud environments.",
+    body: [
+      "A useful CI/CD pipeline should reduce the distance between a small code change and a dependable deployment. For my infrastructure work, the essential loop was deliberately simple: validate the change, build a Docker image, then deploy a known version to a cloud VM.",
+      "The most valuable discipline is making the service observable after deployment. Health checks, clear environment configuration, persistent volumes, and an explicit dependency order turn a collection of containers into an environment that can be understood and maintained.",
+      "The goal is not automation for its own sake. It is creating a release path that is repeatable, easy to inspect, and safe enough to use again when the next change arrives."
+    ],
+    status: "Open sample"
+  },
+  {
+    title: "Your next Cloud, Linux, or Networking article",
+    category: "Future article slot",
+    readTime: "Add a Medium or blog URL",
+    preview: "Use this card for a real article, technical note, case-study recap, or link to a publication on Medium, LinkedIn, or your own blog.",
+    body: [],
+    status: "Link ready"
+  }
+];
+
 function ProviderMark({ provider }: { provider: Certification["provider"] }) {
   if (provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
   return <div className={`cert-provider-mark ${provider}-mark`} aria-label={provider === "cisco" ? "Cisco" : "IBM"}><span>{provider === "cisco" ? "CISCO" : "IBM"}</span></div>;
@@ -93,6 +126,7 @@ export default function Home() {
   const [mobileNav, setMobileNav] = useState(false);
   const [dimMode, setDimMode] = useState(false);
   const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
+  const [activeArticle, setActiveArticle] = useState<WritingPost | null>(null);
 
   const copyEmail = async () => {
     try {
@@ -121,7 +155,7 @@ export default function Home() {
       <header className="ref-header">
         <a href="#home" className="ref-brand" aria-label="Fedi Nasri home"><span className="brand-name">fedi</span><span className="brand-node" /></a>
         <nav className="ref-nav" aria-label="Primary navigation">
-          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a><a href="#projects">Projects</a><a href="#about">About</a>
+          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a><a href="#writing">Writing</a><a href="#projects">Projects</a><a href="#about">About</a>
         </nav>
         <div className="ref-header-actions">
           <button className="tone-toggle" aria-label="Toggle visual tone" onClick={() => setDimMode((value) => !value)}>{dimMode ? <Sun size={15} /> : <Moon size={15} />}</button>
@@ -129,7 +163,7 @@ export default function Home() {
           <button className="ref-menu" type="button" aria-label="Toggle navigation" aria-expanded={mobileNav} onClick={() => setMobileNav((value) => !value)}>{mobileNav ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </header>
-      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#certifications">Certifications</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
+      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#certifications">Certifications</a><a onClick={closeNav} href="#writing">Writing</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
 
       <main>
         <section id="home" className="reference-hero">
@@ -191,6 +225,12 @@ export default function Home() {
           <div className="certifications-grid">{certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div></article>)}</div>
         </section>
 
+        <section id="writing" className="ref-section ref-writing">
+          <SectionTitle eyebrow="Writing & Insights">Notes from the systems<br />behind the work.</SectionTitle>
+          <p className="section-intro">A home for future technical articles, build notes, and public links from Medium, LinkedIn, or your own blog.</p>
+          <div className="writing-grid">{writingPosts.map((post, index) => <article className={`writing-card${index === 0 ? " featured-writing" : ""}`} key={post.title}><div className="writing-card-top"><span>{post.category}</span><small>{post.readTime}</small></div><h3>{post.title}</h3><p>{post.preview}</p>{post.body.length > 0 ? <button type="button" className="writing-read" onClick={() => setActiveArticle(post)}>Read article <ArrowRight size={15} /></button> : <div className="writing-link-slot"><span>{post.status}</span><p>Add your article URL in the writing-post data list.</p></div>}</article>)}</div>
+        </section>
+
         <section className="full-stack-ref">
           <div className="full-stack-top"><p>Cloud &amp; Infrastructure</p><h2>One engineer,<br />every critical layer.</h2><span>Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.</span></div>
           <div className="service-grid">{services.map(([name, description], index) => <article key={name}><span>0{index + 1}</span><h3>{name}</h3><p>{description}</p></article>)}</div>
@@ -210,6 +250,7 @@ export default function Home() {
       <footer className="ref-footer"><div className="ref-brand"><span className="brand-name">fedi</span><span className="brand-node" /></div><p>© 2026 Fedi Nasri · Crafted with care in Tunis</p><div><a href={linkedInUrl} target="_blank" rel="noreferrer">LinkedIn</a><a href={`mailto:${email}`}>Email</a><a href={`tel:${phone.replaceAll(" ", "")}`}>{phone}</a></div></footer>
       <a className="floating-contact" href="#contact" aria-label="Contact Fedi Nasri"><ChevronDown size={16} /></a>
       {activeCertificate?.pdf && <div className="certificate-viewer-overlay" role="dialog" aria-modal="true" aria-label={`${activeCertificate.name} certificate viewer`} onMouseDown={() => setActiveCertificate(null)}><div className="certificate-viewer" onMouseDown={(event) => event.stopPropagation()}><div className="certificate-viewer-head"><div><span>Credential viewer</span><h2>{activeCertificate.name}</h2></div><button type="button" onClick={() => setActiveCertificate(null)} aria-label="Close certificate viewer"><X size={19} /></button></div><object className="certificate-pdf-object" data={activeCertificate.pdf} type="application/pdf"><a href={activeCertificate.pdf} target="_blank" rel="noreferrer">Open certificate PDF</a></object></div></div>}
+      {activeArticle && <div className="article-reader-overlay" role="dialog" aria-modal="true" aria-label={`${activeArticle.title} article`} onMouseDown={() => setActiveArticle(null)}><article className="article-reader" onMouseDown={(event) => event.stopPropagation()}><div className="article-reader-head"><span>{activeArticle.category}</span><button type="button" onClick={() => setActiveArticle(null)} aria-label="Close article"><X size={19} /></button></div><h2>{activeArticle.title}</h2><div className="article-reader-meta"><span>Fedi Nasri</span><i /> <span>{activeArticle.readTime}</span></div><div className="article-reader-copy">{activeArticle.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></article></div>}
     </div>
   );
 }
