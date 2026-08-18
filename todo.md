@@ -30,6 +30,12 @@
 
 ## Second Visual-Editor Repair
 
+## Raised Focus-Card Redesign
+
+- [x] Restyle the focus cards as large white rounded cards with an inset pale-blue visual window.
+- [x] Apply the reference-style floating pill label and soft shadow without obscuring the card visuals.
+- [x] Verify desktop and mobile card presentation, then save a checkpoint.
+
 - [x] Remove the second set of malformed duplicate inline style attributes.
 - [x] Translate the valid card-height and spacing intent into stable CSS offsets.
 - [x] Verify the repaired hero layout and create a checkpoint.
