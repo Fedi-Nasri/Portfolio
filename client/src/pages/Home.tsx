@@ -77,6 +77,7 @@ const certifications: readonly Certification[] = [
 
 type WritingPost = {
   title: string;
+  date: string;
   category: string;
   readTime: string;
   preview: string;
@@ -88,6 +89,7 @@ type WritingPost = {
 const writingPosts: readonly WritingPost[] = [
   {
     title: "From Commit to Cloud VM: Notes on a Practical CI/CD Pipeline",
+    date: "Mar 18, 2026",
     category: "DevOps · Sample article",
     readTime: "5 min read",
     preview: "A short, practical field note on turning a Docker workflow into a repeatable build-test-deploy pipeline for cloud environments.",
@@ -100,6 +102,7 @@ const writingPosts: readonly WritingPost[] = [
   },
   {
     title: "Your next Cloud, Linux, or Networking article",
+    date: "Future article",
     category: "Future article slot",
     readTime: "Add a Medium or blog URL",
     preview: "Use this card for a real article, technical note, case-study recap, or link to a publication on Medium, LinkedIn, or your own blog.",
@@ -155,7 +158,7 @@ export default function Home() {
       <header className="ref-header">
         <a href="#home" className="ref-brand" aria-label="Fedi Nasri home"><span className="brand-name">fedi</span><span className="brand-node" /></a>
         <nav className="ref-nav" aria-label="Primary navigation">
-          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a><a href="#writing">Writing</a><a href="#projects">Projects</a><a href="#about">About</a>
+          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a><a href="#projects">Projects</a><a href="#writing">Writing</a><a href="#about">About</a>
         </nav>
         <div className="ref-header-actions">
           <button className="tone-toggle" aria-label="Toggle visual tone" onClick={() => setDimMode((value) => !value)}>{dimMode ? <Sun size={15} /> : <Moon size={15} />}</button>
@@ -163,7 +166,7 @@ export default function Home() {
           <button className="ref-menu" type="button" aria-label="Toggle navigation" aria-expanded={mobileNav} onClick={() => setMobileNav((value) => !value)}>{mobileNav ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </header>
-      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#certifications">Certifications</a><a onClick={closeNav} href="#writing">Writing</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
+      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#certifications">Certifications</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#writing">Writing</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
 
       <main>
         <section id="home" className="reference-hero">
@@ -225,12 +228,6 @@ export default function Home() {
           <div className="certifications-grid">{certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div></article>)}</div>
         </section>
 
-        <section id="writing" className="ref-section ref-writing">
-          <SectionTitle eyebrow="Writing & Insights">Notes from the systems<br />behind the work.</SectionTitle>
-          <p className="section-intro">A home for future technical articles, build notes, and public links from Medium, LinkedIn, or your own blog.</p>
-          <div className="writing-grid">{writingPosts.map((post, index) => <article className={`writing-card${index === 0 ? " featured-writing" : ""}`} key={post.title}><div className="writing-card-top"><span>{post.category}</span><small>{post.readTime}</small></div><h3>{post.title}</h3><p>{post.preview}</p>{post.body.length > 0 ? <button type="button" className="writing-read" onClick={() => setActiveArticle(post)}>Read article <ArrowRight size={15} /></button> : <div className="writing-link-slot"><span>{post.status}</span><p>Add your article URL in the writing-post data list.</p></div>}</article>)}</div>
-        </section>
-
         <section className="full-stack-ref">
           <div className="full-stack-top"><p>Cloud &amp; Infrastructure</p><h2>One engineer,<br />every critical layer.</h2><span>Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.</span></div>
           <div className="service-grid">{services.map(([name, description], index) => <article key={name}><span>0{index + 1}</span><h3>{name}</h3><p>{description}</p></article>)}</div>
@@ -240,6 +237,12 @@ export default function Home() {
           <SectionTitle eyebrow="Selected Work">Four systems,<br />built to run reliably.</SectionTitle>
           <p className="section-intro">From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer.</p>
           <div className="ref-project-list">{projects.map((project, index) => <article className="ref-project" key={project.title}><div className="project-thumb"><img src={project.image} alt={`${project.title} technical illustration`} /><span>{String(index + 1).padStart(2, "0")}</span></div><div className="project-content"><div className="project-class"><span>{project.type}</span><b><i /> {project.state}</b></div><h3>{project.title}</h3><p className="project-byline">{project.byline}</p><div className="project-description"><div><strong>Problem</strong><p>{project.problem}</p></div><div><strong>What it is</strong><p>{project.body}</p></div></div><div className="project-meta"><div><strong>Tech stack</strong><TagList items={project.tech} /></div><div><strong>Delivery</strong><div className="delivery-row">{project.delivery.map((item) => <span key={item}>{item}</span>)}</div></div></div></div></article>)}</div>
+        </section>
+
+        <section id="writing" className="ref-section ref-writing">
+          <SectionTitle eyebrow="Writing & Insights">Notes from the systems<br />behind the work.</SectionTitle>
+          <p className="section-intro">A home for future technical articles, build notes, and public links from Medium, LinkedIn, or your own blog.</p>
+          <div className="writing-grid">{writingPosts.map((post) => <article className={`writing-card${post.body.length === 0 ? " future-writing" : ""}`} key={post.title}><div className="writing-card-main"><time>{post.date}</time><h3>{post.title}</h3></div><div className="writing-card-meta"><span className="writing-category">{post.category}</span><small>{post.readTime}</small>{post.body.length > 0 ? <button type="button" className="writing-read" aria-label={`Read ${post.title}`} onClick={() => setActiveArticle(post)}><ArrowRight size={16} /></button> : <span className="writing-link-slot">{post.status}</span>}</div></article>)}</div>
         </section>
 
         <section id="contact" className="ref-contact">
