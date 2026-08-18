@@ -1,414 +1,183 @@
 /**
- * Design reminder — Technical Field Notes: warm paper, charcoal ink, signal cobalt,
- * Swiss-editorial hierarchy, and evidence-led product dossiers.
+ * Design reminder — Reference Fidelity: light white canvas, dark navy typography,
+ * royal-blue accents, portrait-led hero, soft raised cards, and technical connectors.
  */
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
-  ArrowDownRight,
-  ArrowUpRight,
+  ArrowRight,
   Check,
+  ChevronDown,
   Copy,
   Github,
   Linkedin,
   Mail,
   MapPin,
   Menu,
+  Moon,
   Phone,
+  Send,
+  Smartphone,
+  Sparkles,
+  Sun,
+  X,
 } from "lucide-react";
 
 const email = "aladinhabibii@gmail.com";
 
 const experience = [
-  {
-    date: "Jan 2026 — now",
-    role: "Mobile Application Developer Intern",
-    company: "GALYLIO AI",
-    description:
-      "Building Dronia, an AI drone-management platform, with mobile UI, API integration, and real-time drone telemetry.",
-    tags: ["Flutter", "FastAPI", "PostgreSQL", "Prisma"],
-    current: true,
-  },
-  {
-    date: "Dec 2025",
-    role: "Web Developer",
-    company: "AlBaraka Enseigne",
-    description:
-      "Shipped a public catalog and secure content dashboard with JWT authentication, CRUD operations, and media management.",
-    tags: ["Next.js", "Tailwind", "Node", "JWT"],
-  },
-  {
-    date: "Jun — Aug 2025",
-    role: "iOS Mobile Developer Intern",
-    company: "Appaxis Innovations",
-    description:
-      "Designed native SwiftUI interfaces and consumed Swagger-documented APIs for clear front-to-back communication.",
-    tags: ["SwiftUI", "Xcode", "CocoaPods", "Swagger"],
-  },
-  {
-    date: "Jul — Aug 2024",
-    role: "Test Automation Intern",
-    company: "SAGEMCOM",
-    description:
-      "Set up reliable automation pipelines for manual test suites with device-level validation and computer vision checks.",
-    tags: ["Robot Framework", "Appium", "OpenCV", "Python"],
-  },
+  { date: "JAN 2026 — NOW", role: "Mobile Application Developer Intern", company: "GALYLIO AI", text: "Building Dronia, an AI drone-management platform with Flutter, API integration, and real-time drone telemetry.", tags: ["Flutter", "FastAPI", "PostgreSQL", "Prisma"], now: true },
+  { date: "DEC 2025", role: "Web Developer", company: "AlBaraka Enseigne", text: "Shipped a public catalogue and secure content dashboard with authentication, CRUD operations, and media management.", tags: ["Next.js", "Tailwind", "Node", "JWT"] },
+  { date: "JUN — AUG 2025", role: "iOS Mobile Developer Intern", company: "Appaxis Innovations", text: "Designed native SwiftUI interfaces and connected cleanly to Swagger-documented APIs.", tags: ["SwiftUI", "Xcode", "CocoaPods", "Swagger"] },
+  { date: "JUL — AUG 2024", role: "Test Automation Intern", company: "SAGEMCOM", text: "Built practical automation pipelines for manual suites with device-level and computer-vision validation.", tags: ["Robot Framework", "Appium", "OpenCV", "Python"] },
+  { date: "JUL — AUG 2023", role: "Web Developer Intern", company: "Aluco-LED Enseigne", text: "Delivered responsive marketing interfaces and visual assets for a signage company.", tags: ["HTML", "CSS", "JavaScript", "Bootstrap"] },
+  { date: "JUN — AUG 2022", role: "Graphic Designer Intern", company: "Rise-UP", text: "Created visual systems, brand collateral, and social content with the Adobe suite.", tags: ["Photoshop", "Illustrator", "Canva"] },
 ];
 
-const disciplines = [
-  {
-    number: "01",
-    title: "Mobile systems",
-    items: ["Flutter", "React Native", "SwiftUI", "iOS", "Android", "Xcode"],
-  },
-  {
-    number: "02",
-    title: "Web interfaces",
-    items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "HTML5", "CSS"],
-  },
-  {
-    number: "03",
-    title: "Backend & data",
-    items: ["FastAPI", "Node.js", "NestJS", "PostgreSQL", "Prisma", "Firebase"],
-  },
-  {
-    number: "04",
-    title: "AI, QA & design",
-    items: ["Python", "OpenCV", "Appium", "Figma", "Photoshop", "Illustrator"],
-  },
-];
+const skills = [
+  ["Mobile", ["Flutter", "React Native", "SwiftUI", "iOS", "Android", "CocoaPods", "Xcode"]],
+  ["Frontend", ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "HTML5", "CSS"]],
+  ["Backend", ["FastAPI", "NestJS", "Spring Boot", "Node.js", "PHP", "REST APIs", "Swagger"]],
+  ["Data & Infra", ["PostgreSQL", "Prisma ORM", "MySQL", "Firebase", "JWT Auth", "Git"]],
+  ["AI & Systems", ["Computer Vision", "OpenCV", "Python", "C++", "Java", "Arduino"]],
+  ["QA & Design", ["Robot Framework", "Appium", "ADB", "Figma", "Photoshop", "Illustrator", "Jira"]],
+] as const;
 
 const projects = [
-  {
-    number: "CASE / 01",
-    eyebrow: "Mobile · AI · Agronomy",
-    status: "In development",
-    title: "DronIA — Precision Agronomy",
-    subline: "GALYLIO AI · Final-year project · 2026",
-    image: "/manus-storage/ala-project-agri_e0df7983.jpg",
-    problem:
-      "Agronomists routinely switch between drone tooling, satellite imagery, crop diagnostics, and field follow-up. The loop needed one mobile-first operating surface.",
-    solution:
-      "A cross-platform Flutter app for AI-assisted precision agriculture: fleet management, mission planning, telemetry, Sentinel-2 sensing, disease detection, and an in-app assistant.",
-    stack: ["Flutter", "FastAPI", "MongoDB", "YOLO11s", "Docker"],
-    outcomes: ["Cloud backend", "iOS beta", "Android beta"],
-    kind: "image" as const,
-  },
-  {
-    number: "CASE / 02",
-    eyebrow: "Mobile · Commerce · Pharmacy",
-    status: "Built",
-    title: "ParaHouse",
-    subline: "Online parapharmacie · French market",
-    image: "/manus-storage/ala-project-commerce_45885a06.jpg",
-    problem:
-      "A local parapharmacie wanted a dedicated commerce journey that made browsing, orders, and tracking feel quick enough for everyday purchasing.",
-    solution:
-      "A Flutter storefront with a French-language catalog, search, cart, account flow, and secure checkout journey designed for low-friction use.",
-    stack: ["Flutter", "Dart", "REST API", "Provider"],
-    outcomes: ["Play Store-ready", "App Store-ready"],
-    kind: "image" as const,
-  },
-  {
-    number: "CASE / 03",
-    eyebrow: "Web + Mobile · Storefront · Supabase",
-    status: "Shipped",
-    title: "Watt Spot",
-    subline: "Electrical supplies & lighting · 2026",
-    problem:
-      "A lighting business needed one source of truth across a client storefront, admin workflows, inventory, and mobile operations.",
-    solution:
-      "A React web application and Flutter companion app sharing a Supabase Postgres backbone for live catalog data, images, notifications, and dashboard control.",
-    stack: ["React", "Flutter", "Supabase", "PostgreSQL", "Push notifications"],
-    outcomes: ["Web deployed", "Mobile built", "Supabase hosted"],
-    kind: "diagram" as const,
-  },
+  { image: "/manus-storage/ala-project-agri_e0df7983.jpg", type: "Mobile · AI · Agronomy", state: "In development", title: "DronIA — Precision Agronomy", byline: "GALYLIO AI · Final-Year Project · 2026", problem: "Agronomists juggle separate tools for drones, imagery, crop diagnostics, and field follow-up. The loop needed one mobile-first product.", body: "A cross-platform Flutter app for AI-assisted precision agriculture: fleet management, missions, live telemetry, remote sensing, crop disease detection, and an in-app assistant.", tech: ["Flutter", "FastAPI", "MongoDB", "YOLO11s", "Docker"], delivery: ["Cloud backend", "iOS beta", "Android beta"] },
+  { image: "/manus-storage/ala-project-commerce_45885a06.jpg", type: "Mobile · E-commerce · Pharmacy", state: "Built", title: "ParaHouse", byline: "Online Parapharmacie · French Market", problem: "A local parapharmacie needed an everyday mobile storefront for simple browsing, orders, and customer tracking.", body: "A French-language Flutter shopping app with catalogue browsing, category filtering, search, cart, account, and checkout experiences.", tech: ["Flutter", "Dart", "REST API", "Provider"], delivery: ["Play Store-ready", "App Store-ready"] },
+  { image: "/manus-storage/ala-technical-hero_a9a34cd5.jpg", type: "Mobile · Marketplace · Rebuild", state: "Shipped", title: "1111.tn — Smart Price Comparator", byline: "Frontend Rebuild + Notifications Backend · 2026", problem: "The existing price-comparison app required a complete Flutter UI renewal and a notifications backend before its Play Store release.", body: "Rebuilt navigation, screens, product browsing, and performance while designing and delivering the Python notifications backend.", tech: ["Flutter", "Dart", "Python", "FCM Push", "REST API"], delivery: ["Google Play released", "Release pipeline"] },
+  { image: "/manus-storage/ala-project-commerce_45885a06.jpg", type: "Web + Mobile · Storefront", state: "Shipped", title: "Watt Spot", byline: "Electrical Supplies & Lighting · 2026", problem: "A lighting business needed a connected client storefront, mobile companion, live inventory, and one source of truth.", body: "React web app and companion Flutter app sharing Supabase for catalogue, media, notifications, and admin workflows.", tech: ["React", "Flutter", "Supabase", "PostgreSQL"], delivery: ["Web deployed", "Mobile built", "Supabase hosted"] },
 ];
 
-function SectionLabel({ children }: { children: string }) {
-  return <p className="section-label">{children}</p>;
+const services = [
+  ["Frontend", "Next.js, React, Tailwind. Responsive, accessible, pixel-perfect UI."],
+  ["Backend", "FastAPI, NestJS, Spring Boot, Node. REST APIs, auth, and jobs."],
+  ["Mobile", "Flutter, React Native, SwiftUI. From design to in-store binary."],
+  ["Release", "Certificates, store listings, App Store Connect, and Play Console."],
+  ["Deployment", "Vercel, Railway, Supabase, Docker, and CI/CD pipelines."],
+  ["Testing & QA", "Robot Framework, Appium, OpenCV, and real-device automation."],
+];
+
+function TagList({ items }: { items: readonly string[] }) {
+  return <div className="ref-tags">{items.map((tag) => <span key={tag}>{tag}</span>)}</div>;
 }
 
-function TagList({ items }: { items: string[] }) {
-  return (
-    <ul className="tag-list" aria-label="Technologies used">
-      {items.map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
-  );
-}
-
-function ProjectVisual({ project }: { project: (typeof projects)[number] }) {
-  if (project.kind === "image") {
-    return (
-      <div className="project-image-wrap">
-        <img src={project.image} alt="" className="project-image" />
-        <span className="image-index">{project.number}</span>
-      </div>
-    );
-  }
-
-  return (
-    <div className="systems-visual" aria-hidden="true">
-      <span className="systems-label top">CLIENT WEB</span>
-      <span className="systems-label bottom">MOBILE APP</span>
-      <span className="systems-label right">SUPABASE</span>
-      <div className="system-node browser-node">
-        <span />
-        <span />
-        <span />
-      </div>
-      <div className="system-node phone-node">
-        <span />
-        <span />
-        <span />
-      </div>
-      <div className="system-node data-node">
-        <span />
-        <span />
-        <span />
-      </div>
-      <svg viewBox="0 0 500 360" fill="none" preserveAspectRatio="none">
-        <path d="M158 120C212 120 211 180 260 180C310 180 314 105 360 105" />
-        <path d="M158 235C215 235 211 185 260 185C310 185 315 250 360 250" />
-        <circle cx="158" cy="120" r="4" />
-        <circle cx="158" cy="235" r="4" />
-        <circle cx="360" cy="105" r="4" />
-        <circle cx="360" cy="250" r="4" />
-      </svg>
-      <span className="image-index">{project.number}</span>
-    </div>
-  );
+function SectionTitle({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {
+  return <div className="ref-section-title"><span>{eyebrow}</span><h2>{children}</h2></div>;
 }
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
+  const [dimMode, setDimMode] = useState(false);
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2200);
+      window.setTimeout(() => setCopied(false), 1900);
     } catch {
       window.location.href = `mailto:${email}`;
     }
   };
 
+  const sendMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const subject = String(data.get("subject") || "Portfolio enquiry");
+    const sender = String(data.get("name") || "");
+    const senderEmail = String(data.get("senderEmail") || "");
+    const message = String(data.get("message") || "");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${sender}\nEmail: ${senderEmail}\n\n${message}`)}`;
+  };
+
+  const closeNav = () => setMobileNav(false);
+
   return (
-    <div className="portfolio-shell">
-      <header className="site-header">
-        <a className="brand" href="#home" aria-label="Ala Din Habibi home">
-          <img src="/manus-storage/ala-logo_c1c8eb26.png" alt="" className="brand-mark" />
-          <span>ala<span className="brand-dot">.</span></span>
-        </a>
-        <nav className="primary-nav" aria-label="Primary navigation">
-          <a href="#work">Work</a>
-          <a href="#experience">Experience</a>
-          <a href="#toolbox">Toolbox</a>
-          <a href="#about">About</a>
+    <div className={`reference-portfolio${dimMode ? " dim-mode" : ""}`}>
+      <header className="ref-header">
+        <a href="#home" className="ref-brand" aria-label="Ala Din Habibi home">ala<span>.</span></a>
+        <nav className="ref-nav" aria-label="Primary navigation">
+          <a href="#home">Home</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">About</a>
         </nav>
-        <a className="header-contact" href="#contact">
-          Let&apos;s talk <ArrowUpRight size={16} strokeWidth={2.2} />
-        </a>
-        <button className="menu-button" type="button" aria-label="Open navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
-          <Menu size={20} />
-        </button>
+        <div className="ref-header-actions">
+          <button className="tone-toggle" aria-label="Toggle visual tone" onClick={() => setDimMode((value) => !value)}>{dimMode ? <Sun size={15} /> : <Moon size={15} />}</button>
+          <a href="#contact" className="talk-button">Let&apos;s talk <ArrowRight size={15} /></a>
+          <button className="ref-menu" type="button" aria-label="Toggle navigation" aria-expanded={mobileNav} onClick={() => setMobileNav((value) => !value)}>{mobileNav ? <X size={20} /> : <Menu size={20} />}</button>
+        </div>
       </header>
-      {menuOpen && (
-        <nav className="mobile-menu" aria-label="Mobile navigation">
-          <a href="#work" onClick={() => setMenuOpen(false)}>Selected work <ArrowDownRight size={17} /></a>
-          <a href="#experience" onClick={() => setMenuOpen(false)}>Experience <ArrowDownRight size={17} /></a>
-          <a href="#toolbox" onClick={() => setMenuOpen(false)}>Toolbox <ArrowDownRight size={17} /></a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>About <ArrowDownRight size={17} /></a>
-          <a className="mobile-menu-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let&apos;s talk <ArrowUpRight size={17} /></a>
-        </nav>
-      )}
+      {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation"><a onClick={closeNav} href="#home">Home</a><a onClick={closeNav} href="#experience">Experience</a><a onClick={closeNav} href="#skills">Skills</a><a onClick={closeNav} href="#projects">Projects</a><a onClick={closeNav} href="#about">About</a><a onClick={closeNav} className="ref-mobile-talk" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a></nav>}
 
       <main>
-        <section className="hero section-rule" id="home">
-          <div className="hero-copy">
-            <div className="hero-kicker">
-              <span className="pulse-dot" /> Available for opportunities from July 2026
-            </div>
-            <h1>
-              I make the <em>moving parts</em>
-              <br />of digital products move together.
-            </h1>
-            <p className="hero-intro">
-              I&apos;m <strong>Ala Din Habibi</strong>, a mobile and full-stack engineer in Tunis. I design, build, and ship cross-platform products from the first interface through to a working release.
-            </p>
-            <div className="hero-actions">
-              <a className="button-primary" href="#work">
-                Browse selected work <ArrowDownRight size={18} />
-              </a>
-              <button className="email-copy" type="button" onClick={copyEmail}>
-                {copied ? <Check size={17} /> : <Copy size={17} />}
-                {copied ? "Email copied" : "Copy email"}
-              </button>
-            </div>
-            <div className="hero-meta">
-              <span><MapPin size={15} /> Tunis, Tunisia</span>
-              <span>Open to remote</span>
-              <span>Mobile · Web · AI</span>
+        <section id="home" className="reference-hero">
+          <div className="hero-copy-ref">
+            <p className="hello-line"><Sparkles size={13} /> Hello, I&apos;m</p>
+            <h1>Ala Din<br /><strong>HABIBI.</strong></h1>
+            <div className="hero-caption"><span>Full-Stack Developer</span><i /><small>Tunis, TN</small></div>
+            <p className="hero-blurb">Mobile &amp; full-stack engineer building cross-platform apps with Flutter, React Native, Next.js and Node. Currently shipping a drone-management platform at GALYLIO AI.</p>
+            <button type="button" className="copy-row" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={15} />} <span>{copied ? "Copied to clipboard" : email}</span></button>
+            <div className="hero-social-row">
+              <a href={`mailto:${email}`} aria-label="Send email"><Mail size={15} /></a>
+              <a href="https://www.linkedin.com/in/ala-din-habibi-bb2058282" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={15} /></a>
+              <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={15} /></a>
+              <a href="tel:+21695836148" aria-label="Call"><Phone size={15} /></a>
             </div>
           </div>
-          <div className="hero-art">
-            <div className="hero-art-frame">
-              <img src="/manus-storage/ala-technical-hero_a9a34cd5.jpg" alt="Abstract engineering composition in cobalt and ivory" />
-              <span className="art-note note-one">INTERFACE / SYSTEM / RELEASE</span>
-              <span className="art-note note-two">EST. 2022</span>
-              <span className="art-orbit orbit-one" />
-              <span className="art-orbit orbit-two" />
-            </div>
-            <div className="role-stamp role-mobile">Mobile engineer</div>
-            <div className="role-stamp role-fullstack">Full-stack builder</div>
+
+          <div className="portrait-zone" aria-label="Portrait of Ala Din Habibi">
+            <span className="connector c-one" /><span className="connector c-two" /><span className="connector c-three" />
+            <span className="node n-one" /><span className="node n-two" /><span className="node n-three" />
+            <div className="portrait-glow" />
+            <img src="/manus-storage/ala-reference-portrait_97ac7701.webp" alt="Ala Din Habibi" />
+          </div>
+
+          <div className="hero-role-stack" aria-label="Roles">
+            <div className="role-card phone-card"><div className="role-art phones"><span /><span /><span /></div><b>Mobile Developer</b></div>
+            <div className="role-card design-card"><div className="role-art mark-shape"><i /><i /><i /></div><b>UI / UX Designer</b></div>
+            <div className="role-card browser-card"><div className="role-art browser-art"><i /><span /><span /><span /></div><b>Full-Stack Developer</b></div>
           </div>
         </section>
 
-        <section className="intro-strip" aria-label="Portfolio introduction">
-          <p>Working across <strong>mobile, web, backend, and delivery</strong> so an idea stays coherent from its first screen to its final release.</p>
-          <span className="strip-code">FIELD NOTES / 2026</span>
+        <section id="about" className="ref-section ref-about">
+          <SectionTitle eyebrow="About">A passionate engineer<br />chasing every layer of the stack.</SectionTitle>
+          <div className="about-ref-grid">
+            <div><p>I&apos;m a <b>Mobile Software Engineering student at ESPRIT</b>, graduating July 2026, with hands-on experience across mobile, web, and cloud. I enjoy exploring every facet of technology — from systems architecture to pixel-perfect interfaces.</p><p>Right now I&apos;m building the mobile app for <b>Dronia</b>, an AI-driven drone-management platform at GALYLIO AI, focused on real-time data interfaces and dependable API integration.</p></div>
+            <div><p>I turn rough ideas into shipped products and pick up the right tools fast. Open to opportunities and collaborations.</p><div className="hashtag-cloud"><span>#Mobile</span><span>#FullStack</span><span>#Flutter</span><span>#ReactNative</span><span>#NextJS</span><span>#NodeJS</span><span>#OpenToWork</span></div></div>
+          </div>
+          <div className="ref-stats"><div><b>04+</b><span>Years of coding</span></div><div><b>06</b><span>Internships shipped</span></div><div><b>30+</b><span>Technologies in toolbox</span></div><div><b>04</b><span>Platforms delivered</span></div></div>
         </section>
 
-        <section className="about-section section-rule" id="about">
-          <aside className="side-rail"><SectionLabel>01 / About</SectionLabel></aside>
-          <div className="about-main">
-            <h2>From interface sketch <br />to <em>signed release.</em></h2>
-            <div className="about-columns">
-              <div>
-                <p className="lead-copy">I&apos;m a Mobile Software Engineering student at ESPRIT, graduating in July 2026. I enjoy projects that require both a clear product eye and a practical engineering mindset.</p>
-                <p>At GALYLIO AI, I&apos;m building the mobile app for Dronia, an AI-driven drone-management platform. My work centres on real-time data interfaces and well-structured API integration.</p>
-              </div>
-              <div className="about-note">
-                <span className="note-marker">A</span>
-                <p>I learn quickly, make systems legible, and stay close to the implementation details. I&apos;m open to internship, freelance, and full-time opportunities.</p>
-                <div className="hashtag-row">
-                  <span>#Flutter</span><span>#ReactNative</span><span>#NextJS</span><span>#OpenToWork</span>
-                </div>
-              </div>
-            </div>
-            <div className="stats-row">
-              <div><strong>06</strong><span>Internships &amp; roles</span></div>
-              <div><strong>04</strong><span>Platforms shipped across</span></div>
-              <div><strong>∞</strong><span>Curiosity for the stack</span></div>
-            </div>
+        <section id="experience" className="ref-section ref-experience">
+          <SectionTitle eyebrow="Experience">Six internships,<br />one growing toolbox.</SectionTitle>
+          <p className="section-intro">From pixel-pushing in 2022 to shipping AI-powered mobile apps in 2026 — a steady climb through the stack.</p>
+          <div className="reference-timeline">
+            {experience.map((item) => <article className="reference-job" key={`${item.date}-${item.company}`}><div className="job-date">{item.now && <i />} {item.date}</div><div className="job-name"><h3>{item.role}</h3><p>{item.company}</p></div><p className="job-copy">{item.text}</p><TagList items={item.tags} /></article>)}
           </div>
         </section>
 
-        <section className="work-section section-rule" id="work">
-          <aside className="side-rail"><SectionLabel>02 / Selected work</SectionLabel></aside>
-          <div className="work-main">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">A focused selection</p>
-                <h2>Builds with <em>real stakes.</em></h2>
-              </div>
-              <p>Three systems, each owned across more than one layer of delivery.</p>
-            </div>
-            <div className="project-list">
-              {projects.map((project) => (
-                <article className="project-dossier" key={project.title}>
-                  <ProjectVisual project={project} />
-                  <div className="project-copy">
-                    <div className="project-topline">
-                      <span>{project.eyebrow}</span>
-                      <span className="status"><i /> {project.status}</span>
-                    </div>
-                    <h3>{project.title}</h3>
-                    <p className="project-subline">{project.subline}</p>
-                    <div className="project-brief">
-                      <div><span>Challenge</span><p>{project.problem}</p></div>
-                      <div><span>Build</span><p>{project.solution}</p></div>
-                    </div>
-                    <div className="project-footer">
-                      <TagList items={project.stack} />
-                      <div className="outcome-list">
-                        {project.outcomes.map((outcome) => <span key={outcome}>{outcome}</span>)}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
+        <section id="skills" className="ref-section ref-skills">
+          <SectionTitle eyebrow="Toolbox">Skills, sorted by where<br />they actually live.</SectionTitle>
+          <div className="skills-ref-grid">{skills.map(([heading, entries]) => <article key={heading}><h3>{heading}</h3><TagList items={entries} /></article>)}</div>
         </section>
 
-        <section className="experience-section section-rule" id="experience">
-          <aside className="side-rail"><SectionLabel>03 / Experience</SectionLabel></aside>
-          <div className="experience-main">
-            <div className="section-heading compact-heading">
-              <div><p className="eyebrow">The progression</p><h2>Each role added <em>another layer.</em></h2></div>
-              <p>From visual design foundations to AI-powered mobile systems.</p>
-            </div>
-            <ol className="timeline">
-              {experience.map((item) => (
-                <li key={`${item.company}-${item.date}`} className={item.current ? "is-current" : ""}>
-                  <div className="timeline-date"><span className="timeline-dot" />{item.date}</div>
-                  <div className="timeline-role"><h3>{item.role}</h3><p>{item.company}</p></div>
-                  <p className="timeline-description">{item.description}</p>
-                  <TagList items={item.tags} />
-                </li>
-              ))}
-            </ol>
-            <p className="experience-close">Also: web development at <strong>Aluco-LED Enseigne</strong> and visual identity work at <strong>Rise-UP</strong>, building a wider understanding of product, presentation, and production.</p>
-          </div>
+        <section className="full-stack-ref">
+          <div className="full-stack-top"><p>Full-Stack</p><h2>One developer,<br />every layer of delivery.</h2><span>Design, build, ship and maintain — across mobile and web, front-end to back-end, store submission to cloud deployment.</span></div>
+          <div className="service-grid">{services.map(([name, description], index) => <article key={name}><span>0{index + 1}</span><h3>{name}</h3><p>{description}</p></article>)}</div>
         </section>
 
-        <section className="toolbox-section section-rule" id="toolbox">
-          <aside className="side-rail"><SectionLabel>04 / Toolbox</SectionLabel></aside>
-          <div className="toolbox-main">
-            <div className="section-heading compact-heading">
-              <div><p className="eyebrow">Where the skills live</p><h2>A practical <em>working set.</em></h2></div>
-              <p>Tools are useful when they help the next decision become easier.</p>
-            </div>
-            <div className="discipline-grid">
-              {disciplines.map((discipline) => (
-                <article className="discipline" key={discipline.number}>
-                  <span className="discipline-number">{discipline.number}</span>
-                  <h3>{discipline.title}</h3>
-                  <ul>{discipline.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                </article>
-              ))}
-            </div>
-            <div className="capability-banner">
-              <span>FULL-STACK DELIVERY</span>
-              <p>Design <i>→</i> Build <i>→</i> Deploy <i>→</i> Maintain</p>
-              <span className="banner-end">ONE OWNER, MANY LAYERS</span>
-            </div>
-          </div>
+        <section id="projects" className="ref-section ref-projects">
+          <SectionTitle eyebrow="Selected Work">Nine case studies,<br />shipped end-to-end.</SectionTitle>
+          <p className="section-intro">From design and frontend to backend, deployment, and release — each project below was taken from idea to product.</p>
+          <div className="ref-project-list">{projects.map((project, index) => <article className="ref-project" key={project.title}><div className="project-thumb"><img src={project.image} alt="" /><span>{String(index + 1).padStart(2, "0")}</span></div><div className="project-content"><div className="project-class"><span>{project.type}</span><b><i /> {project.state}</b></div><h3>{project.title}</h3><p className="project-byline">{project.byline}</p><div className="project-description"><div><strong>Problem</strong><p>{project.problem}</p></div><div><strong>What it is</strong><p>{project.body}</p></div></div><div className="project-meta"><div><strong>Tech stack</strong><TagList items={project.tech} /></div><div><strong>Delivery</strong><div className="delivery-row">{project.delivery.map((item) => <span key={item}>{item}</span>)}</div></div></div></div></article>)}</div>
         </section>
 
-        <section className="contact-section" id="contact">
-          <div className="contact-gridline" aria-hidden="true" />
-          <div className="contact-copy">
-            <SectionLabel>05 / Contact</SectionLabel>
-            <h2>Have a product with <em>moving parts?</em></h2>
-            <p>Tell me where it needs to go. I&apos;m open to internships, freelance work, and full-time roles starting in July 2026.</p>
-            <div className="contact-details">
-              <a href={`mailto:${email}`}><Mail size={17} /> {email}</a>
-              <a href="tel:+21695836148"><Phone size={17} /> +216 95 836 148</a>
-              <a href="https://www.linkedin.com/in/ala-din-habibi-bb2058282" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn <ArrowUpRight size={14} /></a>
-              <a href="https://github.com" target="_blank" rel="noreferrer"><Github size={17} /> GitHub <ArrowUpRight size={14} /></a>
-            </div>
-          </div>
-          <div className="contact-card">
-            <span className="contact-card-code">OPEN CHANNEL / 01</span>
-            <h3>Let&apos;s make it useful.</h3>
-            <p>A concise note is enough to start. I normally reply within 24 hours.</p>
-            <a className="button-primary contact-button" href={`mailto:${email}?subject=Portfolio%20enquiry`}>
-              Write an email <ArrowUpRight size={18} />
-            </a>
-            <div className="contact-card-mark"><img src="/manus-storage/ala-logo_c1c8eb26.png" alt="" /></div>
-          </div>
+        <section id="contact" className="ref-contact">
+          <div className="contact-ref-copy"><SectionTitle eyebrow="Let&apos;s Talk">Have a project in mind?<br />Let&apos;s build it.</SectionTitle><p>Open to internships, freelance gigs, and full-time roles starting July 2026. Reply within 24 hours, usually faster.</p><div className="contact-facts"><div><span>Email</span><a href={`mailto:${email}`}>{email}</a></div><div><span>Phone</span><a href="tel:+21695836148">+216 95 836 148</a></div><div><span>Based in</span><p><MapPin size={15} /> Tunis, Tunisia · open to remote</p></div></div></div>
+          <form className="reference-form" onSubmit={sendMessage}><label>Name<input required name="name" placeholder="Jane Doe" /></label><label>Email<input required name="senderEmail" type="email" placeholder="jane@company.com" /></label><label>Subject<input required name="subject" placeholder="Internship opportunity" /></label><label>Message<textarea required name="message" placeholder="Tell me about your project…" rows={5} /></label><button type="submit">Send message <Send size={15} /></button></form>
         </section>
       </main>
-
-      <footer className="site-footer">
-        <a className="brand footer-brand" href="#home"><img src="/manus-storage/ala-logo_c1c8eb26.png" alt="" className="brand-mark" /><span>ala<span className="brand-dot">.</span></span></a>
-        <p>© 2026 Ala Din Habibi · Crafted in Tunis</p>
-        <a href="#home">Back to top <ArrowUpRight size={15} /></a>
-      </footer>
+      <footer className="ref-footer"><div className="ref-brand">ala<span>.</span></div><p>© 2026 Ala Din Habibi · Crafted with care in Tunis</p><div><a href="https://www.linkedin.com/in/ala-din-habibi-bb2058282" target="_blank" rel="noreferrer">LinkedIn</a><a href={`mailto:${email}`}>Email</a><a href="tel:+21695836148">+216 95 836 148</a></div></footer>
+      <a className="floating-contact" href="#contact" aria-label="Contact Ala Din Habibi"><ChevronDown size={16} /></a>
     </div>
   );
 }
