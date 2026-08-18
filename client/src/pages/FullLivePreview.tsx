@@ -1,7 +1,7 @@
 import React from "react";
 import type { PortfolioContent } from "@shared/portfolio";
 import type { ContentPath } from "@/lib/editorContent";
-import { Pencil } from "lucide-react";
+import { ImageUp, Pencil } from "lucide-react";
 import "./full-live-preview.css";
 
 export type PreviewSection = "home" | "about" | "experience" | "skills" | "certifications" | "capabilities" | "projects" | "writing" | "contact" | "footer";
@@ -15,6 +15,8 @@ type Props = {
   onSelect: (path: ContentPath) => void;
   onAddTag: () => void;
   onAddStat: () => void;
+  onUploadAsset: (file: File, category: "portrait" | "focus-visual", focusIndex?: number) => void;
+  uploadingAsset: string | null;
 };
 
 export function EditableText({ value, path, section, activeSection, activePath, onSection, onChange, onSelect, className = "" }: { value: string; path: ContentPath; section: PreviewSection; activeSection: PreviewSection | null; activePath: string; onSection: (section: PreviewSection) => void; onChange: (path: ContentPath, value: string) => void; onSelect: (path: ContentPath) => void; className?: string }) {
@@ -41,7 +43,15 @@ function SectionFrame({ id, label, activeSection, onSection, children }: { id: P
   </section>;
 }
 
-export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat }: Props) {
+function FocusVisual({ index, url }: { index: number; url?: string }) {
+  if (url) return <img className="focus-replacement-visual" src={url} alt="Custom focus visual" />;
+  if (index === 0) return <div className="focus-default-visual cloud-default"><i /><span /><span /><span /></div>;
+  if (index === 1) return <div className="focus-default-visual"><svg viewBox="0 0 240 120" aria-hidden="true"><path d="M29 60 C55 22 89 22 120 60 C151 98 185 98 211 60 C185 22 151 22 120 60 C89 98 55 98 29 60" fill="none" stroke="#377cf5" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" /></svg></div>;
+  if (index === 2) return <div className="focus-default-visual"><svg viewBox="0 0 160 120" aria-hidden="true"><path d="M80 10 C108 10 130 18 130 18 C130 64 111 94 80 110 C49 94 30 64 30 18 C30 18 52 10 80 10 Z" fill="#edf4ff" stroke="#397cf2" strokeWidth="4" /><path d="M80 63 C69 48 48 48 48 63 C48 77 67 78 80 63 M80 63 C91 48 112 48 112 63 C112 77 93 78 80 63" fill="none" stroke="#397cf2" strokeWidth="9" strokeLinecap="round" /><path d="M76 60 A4 4 0 0 1 84 60 L83 69 A3 3 0 1 1 77 69 Z" fill="#397cf2" /></svg></div>;
+  return <div className="focus-default-visual network-default"><i /><span /><span /><span /></div>;
+}
+
+export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat, onUploadAsset, uploadingAsset }: Props) {
   const edit = (value: string, path: ContentPath, section: PreviewSection, className = "") => <EditableText value={value} path={path} section={section} activeSection={activeSection} activePath={activePath} onSection={onSection} onChange={onChange} onSelect={onSelect} className={className} />;
   return <div className="reference-portfolio live-public-canvas" aria-label="Full editable portfolio preview">
     <header className="ref-header live-public-header"><button type="button" className="ref-brand" onClick={() => onSection("home")} aria-label="Edit Home"><span className="brand-name">fedi</span><span className="brand-node" /></button><nav className="ref-nav" aria-label="Preview section navigation"><button type="button" onClick={() => onSection("home")}>{content.navigation.home}</button><button type="button" onClick={() => onSection("experience")}>{content.navigation.experience}</button><button type="button" onClick={() => onSection("skills")}>{content.navigation.skills}</button><button type="button" onClick={() => onSection("certifications")}>{content.navigation.certifications}</button><button type="button" onClick={() => onSection("projects")}>{content.navigation.projects}</button><button type="button" onClick={() => onSection("writing")}>{content.navigation.writing}</button><button type="button" onClick={() => onSection("about")}>{content.navigation.about}</button></nav><button type="button" className="talk-button" onClick={() => onSection("contact")}>{content.navigation.contact}</button></header>
@@ -49,7 +59,7 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     <div className="full-live-preview-top"><span>Live draft preview · public desktop view</span><i /><small>Hover a section, select Edit section, then type directly in the matching public layout.</small></div>
 
     <SectionFrame id="home" label="Home" activeSection={activeSection} onSection={onSection}>
-      <div className="live-home-grid"><div className="live-home-copy"><p>{edit(content.hero.hello, ["hero", "hello"], "home", "live-kicker")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br />{edit(content.hero.lastName, ["hero", "lastName"], "home")}</h1><div className="live-hero-caption"><span>{edit(content.hero.role, ["hero", "role"], "home")}</span><i /><small>{edit(content.hero.location, ["hero", "location"], "home")}</small></div><p className="live-copy">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><span className="live-contact-chip">{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="live-home-visual"><i className="live-portrait-orbit" /><img src={content.hero.portraitUrl} alt="Portfolio portrait" /><div className="live-focus-grid">{content.hero.focusAreas.map((area, index) => <div key={`${area}-${index}`}>{edit(area, ["hero", "focusAreas", index], "home")}</div>)}</div></div></div>
+      <div className="live-home-grid"><div className="live-home-copy"><p>{edit(content.hero.hello, ["hero", "hello"], "home", "live-kicker")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br />{edit(content.hero.lastName, ["hero", "lastName"], "home")}</h1><div className="live-hero-caption"><span>{edit(content.hero.role, ["hero", "role"], "home")}</span><i /><small>{edit(content.hero.location, ["hero", "location"], "home")}</small></div><p className="live-copy">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><span className="live-contact-chip">{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="live-home-visual"><i className="live-portrait-orbit" /><img src={content.hero.portraitUrl} alt="Portfolio portrait" />{activeSection === "home" && <label className="home-asset-upload portrait-asset-upload"><ImageUp size={15} /> {uploadingAsset === "portrait" ? "Uploading…" : "Upload image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "portrait"); event.currentTarget.value = ""; }} /></label>}<div className="live-focus-grid">{content.hero.focusAreas.map((area, index) => <div className={`live-focus-card focus-card-${index}`} key={`${area}-${index}`}><FocusVisual index={index} url={content.hero.focusVisuals?.[index]} />{activeSection === "home" && <label className="home-asset-upload focus-asset-upload"><ImageUp size={12} /> {uploadingAsset === `focus-${index}` ? "Uploading…" : "Replace SVG / image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "focus-visual", index); event.currentTarget.value = ""; }} /></label>}<b>{edit(area, ["hero", "focusAreas", index], "home")}</b></div>)}</div></div></div>
     </SectionFrame>
 
     <SectionFrame id="about" label="About" activeSection={activeSection} onSection={onSection}>

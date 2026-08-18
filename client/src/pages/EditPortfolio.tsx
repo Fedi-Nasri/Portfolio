@@ -10,6 +10,14 @@ import { useEffect, useMemo, useState } from "react";
 type PathSegment = ContentPath[number];
 type SelectionState = { path: ContentPath; start: number; end: number } | null;
 
+async function fileToBase64(file: File) {
+  const buffer = await file.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+  return btoa(binary);
+}
+
 function pathKey(path: PathSegment[]) {
   return path.join(".");
 }
@@ -61,8 +69,10 @@ function EditWorkspace() {
   const [activePath, setActivePath] = useState("");
   const [activeSection, setActiveSection] = useState<PreviewSection | null>(null);
   const [publishOpen, setPublishOpen] = useState(false);
+  const [uploadingAsset, setUploadingAsset] = useState<string | null>(null);
   const saveDraft = trpc.portfolio.saveDraft.useMutation({ onSuccess: () => { toast.success("Draft saved"); utils.portfolio.editorContent.invalidate(); } });
   const publish = trpc.portfolio.publish.useMutation({ onSuccess: () => { toast.success("Portfolio published"); setPublishOpen(false); utils.portfolio.publicContent.invalidate(); utils.portfolio.editorContent.invalidate(); } });
+  const uploadAsset = trpc.assets.upload.useMutation();
 
   useEffect(() => {
     if (editorQuery.data?.content) setDraft(editorQuery.data.content);
@@ -75,6 +85,21 @@ function EditWorkspace() {
   const removeItem = (path: PathSegment[], index: number) => { if (draft) setDraft(removeListItem(draft, path, index)); toast.message("Item removed from this draft. Reset to undo it."); };
   const addAboutTag = () => { if (!draft) return; setDraft(appendAboutTag(draft)); setActiveSection("about"); toast.success("New editable tag added"); };
   const addAboutStat = () => { if (!draft) return; setDraft(appendAboutStat(draft)); setActiveSection("about"); toast.success("New editable statistic added"); };
+  const handleAssetUpload = async (file: File, category: "portrait" | "focus-visual", focusIndex?: number) => {
+    if (!draft) return;
+    const target = category === "portrait" ? "portrait" : `focus-${focusIndex}`;
+    try {
+      setUploadingAsset(target);
+      const uploaded = await uploadAsset.mutateAsync({ fileName: file.name, contentType: file.type, base64: await fileToBase64(file), category });
+      if (category === "portrait") setDraft(updateAtPath(draft, ["hero", "portraitUrl"], uploaded.url));
+      else if (typeof focusIndex === "number") setDraft(updateAtPath(draft, ["hero", "focusVisuals", focusIndex], uploaded.url));
+      toast.success(category === "portrait" ? "Portrait uploaded to this draft" : "Focus visual uploaded to this draft");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Upload failed. Try another image.");
+    } finally {
+      setUploadingAsset(null);
+    }
+  };
   const resetToSaved = () => { if (!editorQuery.data?.content) return; setDraft(structuredClone(editorQuery.data.content)); setSelection(null); toast.success("Draft reset to the last saved version"); };
   const selectPath = (path: PathSegment[], start = 0, end = 0) => { setActivePath(pathKey(path)); setSelection(start !== end ? { path, start, end } : null); };
   const selectPreviewPath = (path: ContentPath) => selectPath(path);
@@ -93,7 +118,7 @@ function EditWorkspace() {
 
   return <div className="editor-shell">
     <header className="editor-topbar"><div><span>Fedi Nasri · direct workspace</span><h1>Portfolio editor</h1></div><div className="editor-topbar-actions"><a className="editor-back-link" href="/">View public site</a><span className={`editor-save-state${contentChanged ? " has-changes" : ""}`}>{contentChanged ? "Unsaved changes" : "Saved draft"}</span>{contentChanged && <button type="button" className="editor-reset" onClick={resetToSaved}><RotateCcw size={14} /> Reset</button>}<button type="button" className="editor-button secondary" onClick={() => saveDraft.mutate({ content: draft })} disabled={saveDraft.isPending}><Save size={15} /> Save draft</button><button type="button" className="editor-button" onClick={() => setPublishOpen(true)} disabled={publish.isPending}><Upload size={15} /> Publish</button></div></header>
-    <div className="editor-workspace inspector-free"><main className="editor-canvas full-preview-canvas"><FullLivePreview content={draft} activeSection={activeSection} activePath={activePath} onSection={setActiveSection} onChange={handleChange} onSelect={selectPreviewPath} onAddTag={addAboutTag} onAddStat={addAboutStat} /></main></div>
+    <div className="editor-workspace inspector-free"><main className="editor-canvas full-preview-canvas"><FullLivePreview content={draft} activeSection={activeSection} activePath={activePath} onSection={setActiveSection} onChange={handleChange} onSelect={selectPreviewPath} onAddTag={addAboutTag} onAddStat={addAboutStat} onUploadAsset={handleAssetUpload} uploadingAsset={uploadingAsset} /></main></div>
     {selection && <div className="editor-floating-tools" role="toolbar" aria-label="Selected text formatting"><span><Type size={15} /> Text tools</span><OutlineButton icon={Bold} label="Bold selected text" onClick={() => applyFormat("bold")} /><OutlineButton icon={Italic} label="Italic selected text" onClick={() => applyFormat("italic")} /><OutlineButton icon={Underline} label="Underline selected text" onClick={() => applyFormat("underline")} /><OutlineButton icon={ChevronDown} label="Smaller text token" onClick={() => applyFormat("small")} /><OutlineButton icon={Palette} label="Lead text token" onClick={() => applyFormat("lead")} /><button type="button" onClick={() => applyFormat("clear")}>Clear</button></div>}
     {publishOpen && <div className="editor-confirm-overlay" role="dialog" aria-modal="true" aria-label="Confirm portfolio publish"><div><span>Publish portfolio</span><h2>Make this draft live?</h2><p>Your public portfolio will start using this content immediately. The current published version is kept in version history.</p><footer><button type="button" className="editor-button secondary" onClick={() => setPublishOpen(false)}>Cancel</button><button type="button" className="editor-button" onClick={() => publish.mutate({ content: draft })} disabled={publish.isPending}>{publish.isPending ? "Publishing…" : "Publish changes"}</button></footer></div></div>}
   </div>;

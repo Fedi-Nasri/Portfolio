@@ -78,6 +78,14 @@
 - [x] Add an in-preview Add statistic control in About that appends a new editable statistic box.
 - [x] Verify direct editing, About additions, save/publish persistence, desktop/mobile behavior, and no authentication.
 
+## Editable Public-Style Home Section
+
+- [x] Reuse the public Home hero’s portrait composition, focus-card visual language, and SVG treatment in the `/edit` preview.
+- [x] Add a portrait hover control that opens an image upload flow and writes the resulting storage URL into the draft.
+- [x] Add hover controls to each Cloud, DevOps, DevSecOps, and Security & Networking card for replacing its visual from an uploaded image or SVG upload.
+- [x] Verify a portrait replacement through draft save, publish, public Home rendering, and restoration.
+- [x] Verify the Home portrait and focus-card replacement controls on a mobile `/edit` layout, then confirm the restored public Home remains intact.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.

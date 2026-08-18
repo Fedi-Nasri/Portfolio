@@ -12,7 +12,11 @@ export function readAtPath(source: unknown, path: ContentPath): unknown {
 export function updateAtPath(source: PortfolioContent, path: ContentPath, value: unknown): PortfolioContent {
   const copy = structuredClone(source) as Record<string, unknown>;
   let target: Record<string, unknown> | unknown[] = copy;
-  path.slice(0, -1).forEach((segment) => {
+  path.slice(0, -1).forEach((segment, index) => {
+    const nextSegment = path[index + 1];
+    if (target[segment as never] === undefined || target[segment as never] === null) {
+      target[segment as never] = (typeof nextSegment === "number" ? [] : {}) as never;
+    }
     target = target[segment as never] as Record<string, unknown> | unknown[];
   });
   target[path[path.length - 1] as never] = value as never;
