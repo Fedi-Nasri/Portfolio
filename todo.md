@@ -22,6 +22,35 @@
 - [x] Adapt the project information layout to the supplied reference while preserving the light blue-and-white portfolio system.
 - [x] Verify desktop and mobile layouts, then save a checkpoint.
 
+## Portfolio Admin Editor Planning
+
+- [x] Audit the current portfolio content structure and identify the editable content groups.
+- [x] Define the secure admin route, authorization model, and persistence approach.
+- [x] Specify text selection, floating formatting controls, responsive editing, previews, and publish workflow.
+- [x] Record the implementation phases, acceptance criteria, and decisions requiring confirmation.
+
+## Secure `/edit` Portfolio Editor
+
+- [x] Update the editor plan and route specification from `/admin` to `/edit`.
+- [x] Superseded: Confirm the owner’s authenticated session and verify the `/edit` workspace against the live auth boundary; `/edit` now opens directly by request.
+- [x] Define and apply the database schema and migration for versioned portfolio content.
+- [x] Superseded: Complete final authenticated route verification alongside type checks, unit tests, and production build; direct-access validation now applies.
+- [x] Seed the current portfolio content as initial draft and published database versions on the owner’s first editor visit.
+- [x] Create owner-only content procedures for public load, editor load, save draft, and publish actions.
+- [x] Build the protected `/edit` content editor with selection-aware controls and a floating formatting toolbar.
+- [x] Render the constrained bold, italic, underline, and text-size formatting safely on the public portfolio.
+- [x] Superseded: Exercise Save draft and Publish from `/edit` through an authenticated session; the route is now direct access.
+- [x] Superseded: Complete final authorization verification; the editor now intentionally has no authorization boundary.
+
+## Unauthenticated `/edit` Editor Conversion
+
+- [x] Revise the editor plan from owner-only access to direct public access at `/edit`.
+- [x] Replace protected editor content procedures with direct editor access while retaining default seeding, draft saving, and publishing.
+- [x] Remove sign-in, role checks, and the dashboard authentication wrapper from the `/edit` interface.
+- [x] Verify that `/edit` opens directly and that public content still renders after draft and publish actions.
+- [x] Save a distinctive draft change, re-fetch editor content, and confirm the change persists.
+- [x] Publish a distinctive visible change, confirm it in inspectable public-page text, then restore and re-verify the original content.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.
@@ -162,4 +191,4 @@
 - [x] Rebuild navigation, cards, section spacing, and rounded surfaces to mirror the reference rhythm.
 - [x] Preserve Ala Din Habibi's existing content while presenting it in the new visual system.
 - [x] Verify desktop and mobile fidelity against the supplied reference.
-- [ ] Save and deliver a revised checkpoint.
+- [x] Save and deliver a revised checkpoint.
