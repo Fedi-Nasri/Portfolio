@@ -2,6 +2,13 @@
 
 ## Certifications Section
 
+## Interactive Certificate PDF Preview
+
+- [x] Convert the supplied Coursera certificate PDF into a preview image and upload both assets for portfolio use.
+- [x] Add hover preview and full-PDF viewing interactions to the supplied certificate card.
+- [x] Keep certificates without a provided PDF in the standard static-card presentation.
+- [x] Verify the PDF preview interaction on desktop and mobile, then save a checkpoint.
+
 - [x] Extract the actual certifications and providers from Fedi Nasri’s CV.
 - [x] Add a light-theme credential heading and responsive certification-card grid.
 - [x] Add provider marks and only verified links that are available from the CV.

@@ -57,15 +57,25 @@ const services = [
   ["Applied AI", "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines."],
 ];
 
-const certifications = [
+type Certification = {
+  name: string;
+  provider: "cisco" | "ibm" | "microsoft";
+  issuer: string;
+  issued: string;
+  scope: string;
+  pdf?: string;
+  preview?: string;
+};
+
+const certifications: readonly Certification[] = [
   { name: "CCNA 1", provider: "cisco", issuer: "Cisco Networking Academy", issued: "Jan 2026", scope: "Networking foundations" },
   { name: "CCNA 2", provider: "cisco", issuer: "Cisco Networking Academy", issued: "May 2026", scope: "Switching, routing & wireless" },
-  { name: "DevOps & Software Engineering", provider: "ibm", issuer: "IBM Professional Certificate", issued: "Mar 2026", scope: "DevOps engineering" },
+  { name: "DevOps & Software Engineering", provider: "ibm", issuer: "IBM Professional Certificate", issued: "Mar 2026", scope: "DevOps engineering", pdf: "/manus-storage/coursera-devops-certificate_dba78de4.pdf", preview: "/manus-storage/coursera-devops-certificate-preview_df0e1e24.png" },
   { name: "DevOps, Cloud & Agile", provider: "ibm", issuer: "IBM Specialisation", issued: "Mar 2026", scope: "Cloud delivery practices" },
   { name: "Azure AI Fundamentals", provider: "microsoft", issuer: "Microsoft · AZ-900", issued: "Nov 2024", scope: "AI fundamentals" },
 ] as const;
 
-function ProviderMark({ provider }: { provider: (typeof certifications)[number]["provider"] }) {
+function ProviderMark({ provider }: { provider: Certification["provider"] }) {
   if (provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
   return <div className={`cert-provider-mark ${provider}-mark`} aria-label={provider === "cisco" ? "Cisco" : "IBM"}><span>{provider === "cisco" ? "CISCO" : "IBM"}</span></div>;
 }
@@ -177,7 +187,7 @@ export default function Home() {
           <div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
           <SectionTitle eyebrow="Credentials & Recognition">Certifications that<br />support the systems I build.</SectionTitle>
           <p className="section-intro">A focused record across network infrastructure, DevOps practices, cloud delivery, and AI fundamentals.</p>
-          <div className="certifications-grid">{certifications.map((cert) => <article className="credential-card" key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p><div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div></article>)}</div>
+          <div className="certifications-grid">{certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{cert.name}</h3><p>{cert.issuer}</p><div className="credential-meta"><span>{cert.scope}</span><time>{cert.issued}</time></div>{cert.pdf && cert.preview && <><a className="certificate-pdf-action" href={cert.pdf} target="_blank" rel="noreferrer">Open PDF <ArrowRight size={13} /></a><a className="certificate-pdf-preview" href={cert.pdf} target="_blank" rel="noreferrer" aria-label={`Open ${cert.name} certificate PDF`}><img src={cert.preview} alt={`Preview of ${cert.name} certificate`} /><span>View certificate <ArrowRight size={13} /></span></a></>}</article>)}</div>
         </section>
 
         <section className="full-stack-ref">
