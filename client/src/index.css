@@ -320,3 +320,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-role-stack .role-card:nth-child(2) { top: 102px; }
   .hero-role-stack .role-card:nth-child(3) { right: 50px; top: 302px; }
 }
+
+/* Second visual-editor intent, applied as safe desktop offsets. */
+@media (min-width: 781px) {
+  .hero-role-stack { min-height: 500px; }
+  .hero-role-stack .role-card:nth-child(1) { top: 30px; }
+  .hero-role-stack .role-card:nth-child(3) { right: 30px; top: 292px; }
+  .hero-role-stack .role-card:nth-child(4) { bottom: -8px; }
+}

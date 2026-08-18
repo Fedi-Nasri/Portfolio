@@ -28,6 +28,12 @@
 
 ## Visual-Editor Repair
 
+## Second Visual-Editor Repair
+
+- [x] Remove the second set of malformed duplicate inline style attributes.
+- [x] Translate the valid card-height and spacing intent into stable CSS offsets.
+- [x] Verify the repaired hero layout and create a checkpoint.
+
 - [x] Remove duplicate and invalid inline style attributes from the hero focus cards.
 - [x] Apply the valid upward/right and vertical placement intentions through stable CSS rules.
 - [x] Verify the repaired desktop and mobile hero layout, then save a checkpoint.
