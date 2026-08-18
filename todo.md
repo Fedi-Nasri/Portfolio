@@ -18,6 +18,12 @@
 
 ## Floating Hero Role-Card Refinement
 
+## Four-Card Hero Layout Correction
+
+- [x] Remove the floating animation that causes role-card label overlap.
+- [x] Create four larger, clearly separated role cards for Cloud, DevOps, DevSecOps, and Security & Networking.
+- [x] Verify every visual and label is visible on desktop and mobile, then save a checkpoint.
+
 - [x] Move the circular portrait slightly upward and centre it within the hero composition.
 - [x] Restyle the role cards as floating white cards with pill labels beneath the visual area.
 - [x] Update the role titles to Cloud & DevOps, Networking & Security, and DevSecOps.
