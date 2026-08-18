@@ -49,3 +49,11 @@ export function removeListItem(source: PortfolioContent, path: ContentPath, inde
     return items;
   });
 }
+
+export function appendAboutTag(source: PortfolioContent, tag = "New tag"): PortfolioContent {
+  return updateAtPath(source, ["about", "tags"], [...source.about.tags, tag]);
+}
+
+export function appendAboutStat(source: PortfolioContent, stat: PortfolioContent["about"]["stats"][number] = { value: "00", label: "New statistic" }): PortfolioContent {
+  return updateAtPath(source, ["about", "stats"], [...source.about.stats, stat]);
+}

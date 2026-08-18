@@ -69,6 +69,15 @@
 - [x] Verify in-place editing, reset, save, publish, and responsive behavior without adding authentication.
 - [x] Verify that the active preview text handler writes the selected path and new text into the draft state before final delivery.
 
+## Inspector-Free Public-Layout Editor
+
+- [x] Remove the Content Inspector from `/edit` while retaining direct in-preview editing and save/publish controls.
+- [x] Reuse the public portfolio’s desktop header, hero-card composition, spacing, palette, and section visual system in the `/edit` preview.
+- [x] Compare the public and editor preview compositions across desktop and mobile viewports.
+- [x] Add an in-preview Add tag control in About that appends an editable tag.
+- [x] Add an in-preview Add statistic control in About that appends a new editable statistic box.
+- [x] Verify direct editing, About additions, save/publish persistence, desktop/mobile behavior, and no authentication.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.

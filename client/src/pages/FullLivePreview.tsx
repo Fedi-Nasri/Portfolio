@@ -13,6 +13,8 @@ type Props = {
   onSection: (section: PreviewSection) => void;
   onChange: (path: ContentPath, value: string) => void;
   onSelect: (path: ContentPath) => void;
+  onAddTag: () => void;
+  onAddStat: () => void;
 };
 
 export function EditableText({ value, path, section, activeSection, activePath, onSection, onChange, onSelect, className = "" }: { value: string; path: ContentPath; section: PreviewSection; activeSection: PreviewSection | null; activePath: string; onSection: (section: PreviewSection) => void; onChange: (path: ContentPath, value: string) => void; onSelect: (path: ContentPath) => void; className?: string }) {
@@ -39,17 +41,20 @@ function SectionFrame({ id, label, activeSection, onSection, children }: { id: P
   </section>;
 }
 
-export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect }: Props) {
+export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat }: Props) {
   const edit = (value: string, path: ContentPath, section: PreviewSection, className = "") => <EditableText value={value} path={path} section={section} activeSection={activeSection} activePath={activePath} onSection={onSection} onChange={onChange} onSelect={onSelect} className={className} />;
-  return <div className="full-live-preview" aria-label="Full editable portfolio preview">
-    <div className="full-live-preview-top"><span>Live draft preview · full portfolio</span><i /><small>Hover a section, then select Edit section to type directly in the preview.</small></div>
+  return <div className="reference-portfolio live-public-canvas" aria-label="Full editable portfolio preview">
+    <header className="ref-header live-public-header"><button type="button" className="ref-brand" onClick={() => onSection("home")} aria-label="Edit Home"><span className="brand-name">fedi</span><span className="brand-node" /></button><nav className="ref-nav" aria-label="Preview section navigation"><button type="button" onClick={() => onSection("home")}>{content.navigation.home}</button><button type="button" onClick={() => onSection("experience")}>{content.navigation.experience}</button><button type="button" onClick={() => onSection("skills")}>{content.navigation.skills}</button><button type="button" onClick={() => onSection("certifications")}>{content.navigation.certifications}</button><button type="button" onClick={() => onSection("projects")}>{content.navigation.projects}</button><button type="button" onClick={() => onSection("writing")}>{content.navigation.writing}</button><button type="button" onClick={() => onSection("about")}>{content.navigation.about}</button></nav><button type="button" className="talk-button" onClick={() => onSection("contact")}>{content.navigation.contact}</button></header>
+    <div className="full-live-preview">
+    <div className="full-live-preview-top"><span>Live draft preview · public desktop view</span><i /><small>Hover a section, select Edit section, then type directly in the matching public layout.</small></div>
 
     <SectionFrame id="home" label="Home" activeSection={activeSection} onSection={onSection}>
-      <div className="live-home-grid"><div className="live-home-copy"><p>{edit(content.hero.hello, ["hero", "hello"], "home", "live-kicker")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br />{edit(content.hero.lastName, ["hero", "lastName"], "home")}</h1><p className="live-role">{edit(content.hero.role, ["hero", "role"], "home")}</p><p className="live-copy">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><span className="live-contact-chip">{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="live-home-visual"><img src={content.hero.portraitUrl} alt="Portfolio portrait" /><div className="live-focus-grid">{content.hero.focusAreas.map((area, index) => <div key={`${area}-${index}`}>{edit(area, ["hero", "focusAreas", index], "home")}</div>)}</div></div></div>
+      <div className="live-home-grid"><div className="live-home-copy"><p>{edit(content.hero.hello, ["hero", "hello"], "home", "live-kicker")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br />{edit(content.hero.lastName, ["hero", "lastName"], "home")}</h1><div className="live-hero-caption"><span>{edit(content.hero.role, ["hero", "role"], "home")}</span><i /><small>{edit(content.hero.location, ["hero", "location"], "home")}</small></div><p className="live-copy">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><span className="live-contact-chip">{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="live-home-visual"><i className="live-portrait-orbit" /><img src={content.hero.portraitUrl} alt="Portfolio portrait" /><div className="live-focus-grid">{content.hero.focusAreas.map((area, index) => <div key={`${area}-${index}`}>{edit(area, ["hero", "focusAreas", index], "home")}</div>)}</div></div></div>
     </SectionFrame>
 
     <SectionFrame id="about" label="About" activeSection={activeSection} onSection={onSection}>
       <div className="live-heading"><p>{edit(content.about.eyebrow, ["about", "eyebrow"], "about")}</p><h2>{edit(content.about.title, ["about", "title"], "about")}</h2></div><div className="live-about-grid"><div>{content.about.paragraphs.slice(0, 2).map((paragraph, index) => <p key={index}>{edit(paragraph, ["about", "paragraphs", index], "about")}</p>)}</div><div><p>{edit(content.about.paragraphs[2] ?? "", ["about", "paragraphs", 2], "about")}</p><div className="live-tags">{content.about.tags.map((tag, index) => <span key={`${tag}-${index}`}>{edit(tag, ["about", "tags", index], "about")}</span>)}</div></div></div><div className="live-stats">{content.about.stats.map((stat, index) => <div key={index}><strong>{edit(stat.value, ["about", "stats", index, "value"], "about")}</strong><span>{edit(stat.label, ["about", "stats", index, "label"], "about")}</span></div>)}</div>
+      <div className="live-about-actions" aria-label="About content controls">{activeSection === "about" && <><button type="button" onClick={onAddTag}>+ Add tag</button><button type="button" onClick={onAddStat}>+ Add statistic</button></>}</div>
     </SectionFrame>
 
     <SectionFrame id="experience" label="Experience" activeSection={activeSection} onSection={onSection}>
@@ -83,5 +88,5 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     <SectionFrame id="footer" label="Footer" activeSection={activeSection} onSection={onSection}>
       <footer className="live-footer"><span>fedi</span><p>{edit(content.footer, ["footer"], "footer")}</p><small>{edit(content.hero.linkedInUrl, ["hero", "linkedInUrl"], "footer")}</small></footer>
     </SectionFrame>
-  </div>;
+    </div></div>;
 }
