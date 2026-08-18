@@ -59,6 +59,16 @@
 - [x] Expand in-context preview selection to more portfolio sections without changing the public design.
 - [x] Exercise the updated direct editor controls, save and publish a draft, verify public rendering, then re-check desktop and mobile layouts.
 
+## Full Live Preview Editor — No Authentication
+
+- [x] Render all public portfolio sections in the `/edit` live draft preview.
+- [x] Add an Edit section control to Home, About, Experience, Skills, Certifications, Capabilities, Projects, Writing, Contact, and Footer preview areas.
+- [x] Enable direct in-place text editing within an active preview section, with clear hover, text-cursor, and selected-section feedback.
+- [x] Keep structured controls for cards, tags, images, and list items while routing selected text edits into the live draft state.
+- [x] Add labelled thumbnail and URL controls for portrait and project image fields in the direct editor inspector.
+- [x] Verify in-place editing, reset, save, publish, and responsive behavior without adding authentication.
+- [x] Verify that the active preview text handler writes the selected path and new text into the draft state before final delivery.
+
 - [x] Scope the View certificate reveal to only the matching PDF-enabled card.
 - [x] Verify hover and keyboard-focus behavior is independent for every certification card.
 - [x] Save a checkpoint containing the fixed interaction.

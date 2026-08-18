@@ -2,6 +2,7 @@ import { trpc } from "@/lib/trpc";
 import "./edit-extensions.css";
 import { duplicateListItem, moveListItem, readAtPath, removeListItem, updateAtPath, type ContentPath } from "@/lib/editorContent";
 import type { PortfolioContent } from "@shared/portfolio";
+import FullLivePreview, { type PreviewSection } from "./FullLivePreview";
 import { toast } from "sonner";
 import { ArrowDown, ArrowUp, Bold, ChevronDown, Copy, Italic, Loader2, Palette, RotateCcw, Save, Trash2, Type, Underline, Upload, Wand2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -24,7 +25,9 @@ function OutlineButton({ icon: Icon, label, onClick, disabled = false }: { icon:
 function ContentTree({ value, path, activePath, onChange, onSelect, onDuplicate, onMove, onRemove }: { value: unknown; path: PathSegment[]; activePath: string; onChange: (path: PathSegment[], value: unknown) => void; onSelect: (path: PathSegment[], start: number, end: number) => void; onDuplicate: (path: PathSegment[], index: number) => void; onMove: (path: PathSegment[], index: number, direction: -1 | 1) => void; onRemove: (path: PathSegment[], index: number) => void }) {
   if (typeof value === "string") {
     const selected = pathKey(path) === activePath;
-    return <label className={`editor-text-field${selected ? " is-selected" : ""}`}><span>{displayLabel(String(path[path.length - 1]))}</span><textarea value={value} rows={value.length > 120 ? 5 : 2} onFocus={(event) => onSelect(path, event.currentTarget.selectionStart, event.currentTarget.selectionEnd)} onSelect={(event) => onSelect(path, event.currentTarget.selectionStart, event.currentTarget.selectionEnd)} onChange={(event) => onChange(path, event.target.value)} /></label>;
+    const fieldName = String(path[path.length - 1]);
+    const imageField = fieldName === "image" || fieldName === "portraitUrl" || fieldName === "previewImage";
+    return <label className={`editor-text-field${selected ? " is-selected" : ""}${imageField ? " editor-image-field" : ""}`}><span>{imageField ? "Image URL" : displayLabel(fieldName)}</span>{imageField && value && <img src={value} alt="Current portfolio asset preview" />}<textarea value={value} rows={imageField ? 2 : value.length > 120 ? 5 : 2} onFocus={(event) => onSelect(path, event.currentTarget.selectionStart, event.currentTarget.selectionEnd)} onSelect={(event) => onSelect(path, event.currentTarget.selectionStart, event.currentTarget.selectionEnd)} onChange={(event) => onChange(path, event.target.value)} /></label>;
   }
   if (typeof value === "boolean") {
     return <label className="editor-boolean-field"><input type="checkbox" checked={value} onChange={(event) => onChange(path, event.target.checked)} /><span>{displayLabel(String(path[path.length - 1]))}</span></label>;
@@ -55,7 +58,8 @@ function EditWorkspace() {
   const utils = trpc.useUtils();
   const [draft, setDraft] = useState<PortfolioContent | null>(null);
   const [selection, setSelection] = useState<SelectionState>(null);
-  const [activePath, setActivePath] = useState("hero.blurb");
+  const [activePath, setActivePath] = useState("");
+  const [activeSection, setActiveSection] = useState<PreviewSection | null>(null);
   const [publishOpen, setPublishOpen] = useState(false);
   const saveDraft = trpc.portfolio.saveDraft.useMutation({ onSuccess: () => { toast.success("Draft saved"); utils.portfolio.editorContent.invalidate(); } });
   const publish = trpc.portfolio.publish.useMutation({ onSuccess: () => { toast.success("Portfolio published"); setPublishOpen(false); utils.portfolio.publicContent.invalidate(); utils.portfolio.editorContent.invalidate(); } });
@@ -71,6 +75,7 @@ function EditWorkspace() {
   const removeItem = (path: PathSegment[], index: number) => { if (draft) setDraft(removeListItem(draft, path, index)); toast.message("Item removed from this draft. Reset to undo it."); };
   const resetToSaved = () => { if (!editorQuery.data?.content) return; setDraft(structuredClone(editorQuery.data.content)); setSelection(null); toast.success("Draft reset to the last saved version"); };
   const selectPath = (path: PathSegment[], start = 0, end = 0) => { setActivePath(pathKey(path)); setSelection(start !== end ? { path, start, end } : null); };
+  const selectPreviewPath = (path: ContentPath) => selectPath(path);
   const applyFormat = (kind: "bold" | "italic" | "underline" | "small" | "lead" | "clear") => {
     if (!draft || !selection || selection.start === selection.end) { toast.message("Select text inside a field first."); return; }
     const current = readAtPath(draft, selection.path);
@@ -86,7 +91,7 @@ function EditWorkspace() {
 
   return <div className="editor-shell">
     <header className="editor-topbar"><div><span>Fedi Nasri · direct workspace</span><h1>Portfolio editor</h1></div><div className="editor-topbar-actions"><a className="editor-back-link" href="/">View public site</a><span className={`editor-save-state${contentChanged ? " has-changes" : ""}`}>{contentChanged ? "Unsaved changes" : "Saved draft"}</span>{contentChanged && <button type="button" className="editor-reset" onClick={resetToSaved}><RotateCcw size={14} /> Reset</button>}<button type="button" className="editor-button secondary" onClick={() => saveDraft.mutate({ content: draft })} disabled={saveDraft.isPending}><Save size={15} /> Save draft</button><button type="button" className="editor-button" onClick={() => setPublishOpen(true)} disabled={publish.isPending}><Upload size={15} /> Publish</button></div></header>
-    <div className="editor-workspace"><aside className="editor-inspector"><div className="editor-inspector-heading"><div><span>Content inspector</span><h2>Edit every text field</h2></div><Wand2 size={18} /></div><p>Click in the preview or use these fields. Use list controls to reorder, duplicate, or remove items from this draft.</p><div className="editor-tree"><ContentTree value={draft} path={[]} activePath={activePath} onChange={handleChange} onSelect={selectPath} onDuplicate={duplicateItem} onMove={moveItem} onRemove={removeItem} /></div></aside><main className="editor-canvas"><EditorPreview content={draft} activePath={activePath} onSelect={(path) => selectPath(path)} /></main></div>
+    <div className="editor-workspace"><aside className="editor-inspector"><div className="editor-inspector-heading"><div><span>Content inspector</span><h2>Edit every text field</h2></div><Wand2 size={18} /></div><p>Select an Edit section control in the full preview, then click text to type directly. Structured list controls remain available here.</p><div className="editor-tree"><ContentTree value={draft} path={[]} activePath={activePath} onChange={handleChange} onSelect={selectPath} onDuplicate={duplicateItem} onMove={moveItem} onRemove={removeItem} /></div></aside><main className="editor-canvas full-preview-canvas"><FullLivePreview content={draft} activeSection={activeSection} activePath={activePath} onSection={setActiveSection} onChange={handleChange} onSelect={selectPreviewPath} /></main></div>
     {selection && <div className="editor-floating-tools" role="toolbar" aria-label="Selected text formatting"><span><Type size={15} /> Text tools</span><OutlineButton icon={Bold} label="Bold selected text" onClick={() => applyFormat("bold")} /><OutlineButton icon={Italic} label="Italic selected text" onClick={() => applyFormat("italic")} /><OutlineButton icon={Underline} label="Underline selected text" onClick={() => applyFormat("underline")} /><OutlineButton icon={ChevronDown} label="Smaller text token" onClick={() => applyFormat("small")} /><OutlineButton icon={Palette} label="Lead text token" onClick={() => applyFormat("lead")} /><button type="button" onClick={() => applyFormat("clear")}>Clear</button></div>}
     {publishOpen && <div className="editor-confirm-overlay" role="dialog" aria-modal="true" aria-label="Confirm portfolio publish"><div><span>Publish portfolio</span><h2>Make this draft live?</h2><p>Your public portfolio will start using this content immediately. The current published version is kept in version history.</p><footer><button type="button" className="editor-button secondary" onClick={() => setPublishOpen(false)}>Cancel</button><button type="button" className="editor-button" onClick={() => publish.mutate({ content: draft })} disabled={publish.isPending}>{publish.isPending ? "Publishing…" : "Publish changes"}</button></footer></div></div>}
   </div>;
