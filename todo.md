@@ -499,3 +499,9 @@
 - [x] Refine project title, metadata, case-study blocks, stack, and delivery presentation to follow the supplied reference’s compact hierarchy.
 - [x] Mirror the alternating project presentation in the editable live preview without removing existing project controls.
 - [x] Verify public/editor desktop and mobile layouts, regression tests, and production build before checkpointing.
+
+## Selected Work Media Column Consistency
+
+- [x] Lock every project visual to the same compact media-column width in alternating rows.
+- [x] Preserve the larger text/details column for both left- and right-aligned project visuals.
+- [x] Verify public/editor desktop and mobile layout consistency, tests, and production build before checkpointing.
