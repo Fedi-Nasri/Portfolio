@@ -37,18 +37,31 @@ describe("direct editor save and publish flow", () => {
     changed.hero.hello = "Automated multi-draft verification";
 
     try {
-      const saved = await caller.portfolio.saveDraft({ draftKey, content: changed });
+      const saved = await caller.portfolio.saveDraft({ draftKey, content: changed, note: "Added automatic multi-draft label" });
       expect(saved.versionNumber).toBe(2);
 
       const workspace = await caller.portfolio.editorContent({ draftKey });
       expect(workspace.activeDraftName).toBe(draftName);
       expect(workspace.versions.map((version) => version.number)).toEqual([2, 1]);
+      expect(workspace.versions[0]?.note).toBe("Added automatic multi-draft label");
 
       const firstVersion = await caller.portfolio.loadDraftVersion({ draftKey, versionNumber: 1 });
       expect(firstVersion.content.hero.hello).toBe(created.content.hero.hello);
 
+      await caller.portfolio.updateDraftVersionNote({ draftKey, versionNumber: 1, note: "Baseline before automation" });
+      expect((await caller.portfolio.editorContent({ draftKey })).versions.find((version) => version.number === 1)?.note).toBe("Baseline before automation");
+
       await caller.portfolio.selectPublicDraft({ draftKey });
       expect((await caller.portfolio.publicContent()).hero.hello).toBe("Automated multi-draft verification");
+
+      const restored = await caller.portfolio.restoreDraftVersion({ draftKey, versionNumber: 1 });
+      expect(restored).toMatchObject({ draftKey, versionNumber: 3, restoredFromVersion: 1 });
+      expect(restored.content.hero.hello).toBe(created.content.hero.hello);
+      const restoredWorkspace = await caller.portfolio.editorContent({ draftKey });
+      expect(restoredWorkspace.versions.map((version) => version.number)).toEqual([3, 2, 1]);
+      expect(restoredWorkspace.versions[0]?.note).toBe("Restored from version 1");
+      expect(restoredWorkspace.versions.find((version) => version.number === 1)?.note).toBe("Baseline before automation");
+      expect((await caller.portfolio.loadDraftVersion({ draftKey, versionNumber: 2 })).content.hero.hello).toBe("Automated multi-draft verification");
 
       await caller.portfolio.selectPublicDraft({ draftKey: originalPublicKey });
       await caller.portfolio.deleteDraft({ draftKey });

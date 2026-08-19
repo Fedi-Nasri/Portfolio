@@ -15,6 +15,13 @@
       "when": 1787136075953,
       "tag": "0001_wooden_riptide",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787137170221,
+      "tag": "0002_special_tarot",
+      "breakpoints": true
     }
   ]
 }

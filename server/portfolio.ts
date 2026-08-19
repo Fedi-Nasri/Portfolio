@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 import { DEFAULT_PORTFOLIO_CONTENT, type PortfolioContent } from "../shared/portfolio";
 import { portfolioContentVersions, portfolioDrafts, portfolioDraftVersions, type PortfolioDraft } from "../drizzle/schema";
@@ -7,7 +7,7 @@ import { getDb } from "./db";
 const DIRECT_EDITOR_ID = 1;
 
 export type PortfolioDraftSummary = { key: string; name: string; isPublic: boolean; versionCount: number; updatedAt: Date; latestVersion: number };
-export type PortfolioDraftWorkspace = { content: PortfolioContent; source: "draft" | "published" | "seeded"; activeDraftKey: string; activeDraftName: string; activeVersionNumber: number; drafts: PortfolioDraftSummary[]; versions: { number: number; createdAt: Date }[] };
+export type PortfolioDraftWorkspace = { content: PortfolioContent; source: "draft" | "published" | "seeded"; activeDraftKey: string; activeDraftName: string; activeVersionNumber: number; drafts: PortfolioDraftSummary[]; versions: { number: number; createdAt: Date; note: string | null }[] };
 
 function cloneDefaultContent(): PortfolioContent {
   return structuredClone(DEFAULT_PORTFOLIO_CONTENT);
@@ -32,6 +32,11 @@ function normalizeContent(content: unknown): PortfolioContent {
     throw new Error("The portfolio content document is incomplete.");
   }
   return content;
+}
+
+function normalizeVersionNote(note?: string): string | null {
+  const value = note?.trim();
+  return value ? value.slice(0, 500) : null;
 }
 
 async function latestLegacyContent(): Promise<{ content: PortfolioContent; source: "draft" | "published" | "seeded" }> {
@@ -95,7 +100,7 @@ export async function getEditorPortfolioContent(draftKey?: string): Promise<Port
   const latest = await getLatestDraftVersion(activeDraft.id);
   const db = await getDb();
   if (!db) throw new Error("The database is unavailable.");
-  const versions = await db.select({ number: portfolioDraftVersions.versionNumber, createdAt: portfolioDraftVersions.createdAt }).from(portfolioDraftVersions).where(eq(portfolioDraftVersions.draftId, activeDraft.id)).orderBy(desc(portfolioDraftVersions.versionNumber));
+  const versions = await db.select({ number: portfolioDraftVersions.versionNumber, createdAt: portfolioDraftVersions.createdAt, note: portfolioDraftVersions.note }).from(portfolioDraftVersions).where(eq(portfolioDraftVersions.draftId, activeDraft.id)).orderBy(desc(portfolioDraftVersions.versionNumber));
   return { content: normalizeContent(latest.contentJson), source: activeDraft.isPublic ? "published" : "draft", activeDraftKey: activeDraft.draftKey, activeDraftName: activeDraft.name, activeVersionNumber: latest.versionNumber, drafts, versions };
 }
 
@@ -110,7 +115,7 @@ export async function loadPortfolioDraftVersion(draftKey: string, versionNumber:
   return { content: normalizeContent(version.contentJson), draftKey, versionNumber };
 }
 
-export async function savePortfolioDraft(content: unknown, draftKey?: string): Promise<{ content: PortfolioContent; versionNumber: number; draftKey: string }> {
+export async function savePortfolioDraft(content: unknown, draftKey?: string, note?: string): Promise<{ content: PortfolioContent; versionNumber: number; draftKey: string }> {
   await ensurePortfolioDrafts();
   const nextContent = normalizeContent(content);
   const workspace = await getEditorPortfolioContent(draftKey);
@@ -119,9 +124,25 @@ export async function savePortfolioDraft(content: unknown, draftKey?: string): P
   const nextVersion = latest.versionNumber + 1;
   const db = await getDb();
   if (!db) throw new Error("The database is unavailable.");
-  await db.insert(portfolioDraftVersions).values({ draftId: draft.id, versionNumber: nextVersion, contentJson: nextContent, createdBy: DIRECT_EDITOR_ID });
+  await db.insert(portfolioDraftVersions).values({ draftId: draft.id, versionNumber: nextVersion, contentJson: nextContent, note: normalizeVersionNote(note), createdBy: DIRECT_EDITOR_ID });
   await db.update(portfolioDrafts).set({ updatedBy: DIRECT_EDITOR_ID, updatedAt: new Date() }).where(eq(portfolioDrafts.id, draft.id));
   return { content: nextContent, versionNumber: nextVersion, draftKey: draft.draftKey };
+}
+
+export async function restorePortfolioDraftVersion(draftKey: string, versionNumber: number, note?: string): Promise<{ content: PortfolioContent; versionNumber: number; draftKey: string; restoredFromVersion: number }> {
+  const version = await loadPortfolioDraftVersion(draftKey, versionNumber);
+  const saved = await savePortfolioDraft(version.content, draftKey, note ?? `Restored from version ${versionNumber}`);
+  return { ...saved, restoredFromVersion: versionNumber };
+}
+
+export async function updatePortfolioDraftVersionNote(draftKey: string, versionNumber: number, note?: string): Promise<void> {
+  await ensurePortfolioDrafts();
+  const draft = await getDraftByKey(draftKey);
+  const db = await getDb();
+  if (!db) throw new Error("The database is unavailable.");
+  const existing = await db.select({ id: portfolioDraftVersions.id }).from(portfolioDraftVersions).where(and(eq(portfolioDraftVersions.draftId, draft.id), eq(portfolioDraftVersions.versionNumber, versionNumber))).limit(1);
+  if (!existing[0]) throw new Error("This draft version no longer exists.");
+  await db.update(portfolioDraftVersions).set({ note: normalizeVersionNote(note) }).where(eq(portfolioDraftVersions.id, existing[0].id));
 }
 
 export async function createPortfolioDraft(name: string, sourceDraftKey?: string): Promise<PortfolioDraftWorkspace> {
@@ -174,8 +195,8 @@ export async function getPublishedPortfolioContent(): Promise<PortfolioContent> 
   return (await latestLegacyContent()).content;
 }
 
-export async function publishPortfolioContent(content: unknown, draftKey?: string): Promise<PortfolioContent> {
-  const saved = await savePortfolioDraft(content, draftKey);
+export async function publishPortfolioContent(content: unknown, draftKey?: string, note?: string): Promise<PortfolioContent> {
+  const saved = await savePortfolioDraft(content, draftKey, note);
   await selectPublicPortfolioDraft(saved.draftKey);
   return saved.content;
 }

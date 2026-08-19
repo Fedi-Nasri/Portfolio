@@ -451,3 +451,10 @@
 - [x] Allow the user to choose the public draft without losing other drafts or their versions.
 - [x] Keep the current public portfolio content safe throughout draft testing and restoration.
 - [x] Verify multi-draft persistence, version history, public selection, deletion safeguards, responsive behavior, tests, and production build before checkpointing.
+
+## Draft History Refinements
+
+- [x] Add restore-as-new-version so an older snapshot can become a new immutable version without overwriting history.
+- [x] Store and edit optional descriptive notes for each individual draft version.
+- [x] Add case-insensitive draft library search and status filtering for fast draft discovery.
+- [x] Verify restored content, version notes, draft filtering, responsive editor behavior, tests, and production build before checkpointing.

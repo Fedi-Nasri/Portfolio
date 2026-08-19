@@ -56,6 +56,7 @@ export const portfolioDraftVersions = mysqlTable("portfolio_draft_versions", {
   draftId: int("draftId").notNull(),
   versionNumber: int("versionNumber").notNull(),
   contentJson: json("contentJson").$type<PortfolioContent>().notNull(),
+  note: varchar("note", { length: 500 }),
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
