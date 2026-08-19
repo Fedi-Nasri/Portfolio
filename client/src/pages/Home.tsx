@@ -18,7 +18,7 @@ const PROVIDER_LABELS: Record<string, string> = { aws: "aws", azure: "Microsoft 
 
 function ProviderMark({ cert }: { cert: Certification }) {
   if (cert.providerLogo) return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? cert.provider}><img src={cert.providerLogo} alt={`${cert.providerLabel ?? cert.provider} provider logo`} /></div>;
-  if (cert.provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
+  if (cert.provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><span className="microsoft-squares"><i /><i /><i /><i /></span><b>Microsoft</b></div>;
   if (cert.provider === "custom") return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? "Provider"}><span>{cert.providerLabel ?? "Provider"}</span></div>;
   return <div className={`cert-provider-mark ${cert.provider}-mark`} aria-label={PROVIDER_LABELS[cert.provider] ?? cert.provider}><span>{PROVIDER_LABELS[cert.provider] ?? cert.provider}</span></div>;
 }

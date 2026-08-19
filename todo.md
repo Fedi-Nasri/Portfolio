@@ -332,3 +332,10 @@
 - [x] Add distinct compact text-logo treatments for Coursera and KodeKloud alongside the established Cisco, IBM, and Microsoft marks.
 - [x] Preserve custom provider text and uploaded-logo options in both the public portfolio and live editor preview.
 - [x] Verify provider switching, desktop/mobile display, tests, and production build before checkpointing.
+
+## Certificate Branding and Attachment Cleanup
+
+- [x] Ensure the Microsoft provider always displays a clear compact mark or text treatment in the public portfolio and `/edit` preview.
+- [x] Add a direct per-certificate control to remove the uploaded PDF reference from the draft.
+- [x] Add a direct per-certificate control to clear the external credential link from the draft.
+- [x] Verify provider visibility, removal behavior, persistence, tests, and production build before checkpointing.
