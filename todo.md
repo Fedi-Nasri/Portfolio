@@ -366,3 +366,9 @@
 - [x] Align the `/edit` navigation header structure, spacing, and label placement with the public portfolio view.
 - [x] Restore the public header’s separate compact theme control and compact Let’s talk call-to-action treatment in `/edit`.
 - [x] Verify desktop/mobile header parity, keyboard interaction, tests, and production build before checkpointing.
+
+## Public Contact Form Removal
+
+- [x] Remove the public contact form from the contact section.
+- [x] Preserve direct contact information and actionable email, phone, LinkedIn, and GitHub paths.
+- [x] Rebalance the public and editable contact layouts after form removal, then verify tests and production build before checkpointing.

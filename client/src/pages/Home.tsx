@@ -2,10 +2,10 @@
  * Public portfolio view. All visible content is sourced from the latest published
  * portfolio document while the established visual system remains unchanged.
  */
-import { FormEvent, useState, type ReactNode } from "react";
+import React, { useState, type ReactNode } from "react";
 import {
   ArrowRight, Check, ChevronDown, Copy, Github, Linkedin, Mail, MapPin,
-  Menu, Moon, Phone, Send, Sparkles, Sun, X,
+  Menu, Moon, Phone, Sparkles, Sun, X,
 } from "lucide-react";
 import { DEFAULT_PORTFOLIO_CONTENT, type PortfolioContent } from "@shared/portfolio";
 import { trpc } from "@/lib/trpc";
@@ -53,16 +53,6 @@ export default function Home() {
     } catch {
       window.location.href = `mailto:${hero.email}`;
     }
-  };
-
-  const sendMessage = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const subject = String(data.get("subject") || "Portfolio enquiry");
-    const sender = String(data.get("name") || "");
-    const senderEmail = String(data.get("senderEmail") || "");
-    const message = String(data.get("message") || "");
-    window.location.href = `mailto:${hero.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${sender}\nEmail: ${senderEmail}\n\n${message}`)}`;
   };
 
   const closeNav = () => setMobileNav(false);
@@ -134,7 +124,7 @@ export default function Home() {
 
         <section id="writing" className="ref-section ref-writing"><SectionTitle eyebrow={content.writingSection.eyebrow}><Multiline value={content.writingSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.writingSection.intro} /></p><div className="writing-grid">{content.writing.map((post) => <article className={`writing-card${post.body.length === 0 ? " future-writing" : ""}`} key={post.title}><div className="writing-card-main"><span className="writing-site-name"><RichText value={post.siteName ?? post.category} /></span><h3><RichText value={post.title} /></h3><time className="writing-post-date"><RichText value={post.date} /></time></div><div className="writing-card-meta"><span className="writing-category"><RichText value={post.category} /></span><small><RichText value={post.readTime} /></small>{post.url ? <a className="writing-read" href={post.url} target="_blank" rel="noreferrer" aria-label={`Open ${post.title}`}><ArrowRight size={16} /></a> : post.body.length > 0 ? <button type="button" className="writing-read" aria-label={`Read ${post.title}`} onClick={() => setActiveArticle(post)}><ArrowRight size={16} /></button> : <span className="writing-link-slot"><RichText value={post.status} /></span>}</div></article>)}</div></section>
 
-        <section id="contact" className="ref-contact"><div className="contact-ref-copy"><SectionTitle eyebrow={content.contact.eyebrow}><Multiline value={content.contact.title} /></SectionTitle><p><RichText value={content.contact.intro} /></p><div className="contact-facts"><div><span>Email</span><a href={`mailto:${hero.email}`}><RichText value={hero.email} /></a></div><div><span>Phone</span><a href={`tel:${hero.phone.replaceAll(" ", "")}`}><RichText value={hero.phone} /></a></div><div><span>Based in</span><p><MapPin size={16} /> <RichText value={content.contact.location} /></p></div></div></div><form className="reference-form" onSubmit={sendMessage}><label>Name<input required name="name" placeholder="Your name" /></label><label>Email<input required name="senderEmail" type="email" placeholder="your.email@domain.com" /></label><label>Subject<input required name="subject" placeholder="Collaboration or internship enquiry" /></label><label>Message<textarea required name="message" placeholder="Briefly describe the opportunity or project." rows={5} /></label><button type="submit"><RichText value={content.contact.submitLabel} /> <Send size={17} /></button></form></section>
+        <section id="contact" className="ref-contact contact-without-form"><div className="contact-ref-copy"><SectionTitle eyebrow={content.contact.eyebrow}><Multiline value={content.contact.title} /></SectionTitle><p><RichText value={content.contact.intro} /></p><div className="contact-facts"><div><span>Email</span><a href={`mailto:${hero.email}`}><RichText value={hero.email} /></a></div><div><span>Phone</span><a href={`tel:${hero.phone.replaceAll(" ", "")}`}><RichText value={hero.phone} /></a></div><div><span>Based in</span><p><MapPin size={16} /> <RichText value={content.contact.location} /></p></div></div><div className="contact-direct-actions"><a href={hero.linkedInUrl} target="_blank" rel="noreferrer"><Linkedin size={16} /> LinkedIn</a><a href={hero.githubUrl} target="_blank" rel="noreferrer"><Github size={16} /> GitHub</a></div></div></section>
       </main>
       <footer className="ref-footer"><div className="ref-brand"><span className="brand-name">fedi</span><span className="brand-node" /></div><p><RichText value={content.footer} /></p><div><a href={hero.linkedInUrl} target="_blank" rel="noreferrer">LinkedIn</a><a href={`mailto:${hero.email}`}>Email</a><a href={`tel:${hero.phone.replaceAll(" ", "")}`}><RichText value={hero.phone} /></a></div></footer>
       <a className="floating-contact" href="#contact" aria-label={`Contact ${hero.firstName} ${hero.lastName}`}><ChevronDown size={16} /></a>
