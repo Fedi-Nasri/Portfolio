@@ -354,3 +354,9 @@
 - [x] Add move-up and move-down controls to reorder articles in the live editor.
 - [x] Replace the card’s upper date display with editable site-name metadata and place the editable posting date below each article title.
 - [x] Verify article navigation, additions, deletion safeguards, ordering, metadata layout, draft persistence, desktop/mobile behavior, tests, and production build before checkpointing.
+
+## Writing Article Metadata Alignment
+
+- [x] Keep the article category, read-time, and action button in a protected right-side metadata column on desktop, even for long titles.
+- [x] Preserve readable title wrapping in the left content column without allowing it to push metadata below the title.
+- [x] Preserve the intentional stacked mobile metadata layout and verify editor controls, tests, and production build before checkpointing.
