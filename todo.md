@@ -339,3 +339,9 @@
 - [x] Add a direct per-certificate control to remove the uploaded PDF reference from the draft.
 - [x] Add a direct per-certificate control to clear the external credential link from the draft.
 - [x] Verify provider visibility, removal behavior, persistence, tests, and production build before checkpointing.
+
+## Public-Style Editable Writing & Insights Composition
+
+- [x] Reuse the public Writing & Insights heading, horizontal article-row layout, metadata chips, future-entry treatment, and reader affordance in the active `/edit` preview.
+- [x] Preserve direct in-place editing for every available Writing & Insights field within the matched public composition.
+- [x] Verify direct editing, article reader behavior, desktop/mobile presentation, automated tests, and production build before checkpointing.
