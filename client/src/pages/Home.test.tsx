@@ -27,10 +27,11 @@ describe("public contact section", () => {
     expect(html).toContain("https://github.com/Fedi-Nasri");
   });
 
-  it("renders a collapsed Experience detail disclosure for each seeded experience", () => {
+  it("renders a collapsed Experience detail disclosure and visible tags for each seeded experience", () => {
     const html = renderToStaticMarkup(<Home />);
 
-    expect((html.match(/View details/g) ?? []).length).toBe(2);
+    expect((html.match(/See details/g) ?? []).length).toBe(2);
     expect(html).toContain("experience-detail-toggle");
+    expect(html).toContain("experience-tag-list");
   });
 });

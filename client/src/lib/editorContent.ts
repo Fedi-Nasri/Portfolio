@@ -116,6 +116,16 @@ export function removeExperienceDetail(source: PortfolioContent, experienceIndex
   return updateAtPath(source, ["experience", experienceIndex, "details"], details.filter((_, index) => index !== detailIndex));
 }
 
+export function reorderExperienceDetail(source: PortfolioContent, experienceIndex: number, fromIndex: number, toIndex: number): PortfolioContent {
+  const experience = source.experience[experienceIndex];
+  const details = experience?.details ?? [];
+  if (!experience || fromIndex < 0 || toIndex < 0 || fromIndex >= details.length || toIndex >= details.length || fromIndex === toIndex) return source;
+  const reordered = [...details];
+  const [moved] = reordered.splice(fromIndex, 1);
+  reordered.splice(toIndex, 0, moved!);
+  return updateAtPath(source, ["experience", experienceIndex, "details"], reordered);
+}
+
 export function createSkillToolbox(): PortfolioContent["skills"][number] {
   return { heading: "New toolbox", entries: ["New tool"] };
 }

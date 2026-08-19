@@ -10,7 +10,7 @@ export type PortfolioContent = {
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };
   experienceSection: { eyebrow: string; title: string; intro: string };
-  experience: { date: string; role: string; company: string; text: string; tags: string[]; details?: string[]; now?: boolean }[];
+  experience: { date: string; role: string; company: string; companyLogo?: string; text: string; tags: string[]; details?: string[]; now?: boolean }[];
   skillsSection: { eyebrow: string; title: string };
   skills: { heading: string; entries: string[] }[];
   credentialsSection: { eyebrow: string; title: string; intro: string };

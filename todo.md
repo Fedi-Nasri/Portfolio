@@ -410,3 +410,12 @@
 - [x] Add expandable per-entry detail bullet points using the existing portfolio visual system.
 - [x] Add direct `/edit` controls to add, edit, and delete detail bullet points for every Experience entry.
 - [x] Verify public expansion, editor management, draft persistence, responsive presentation, tests, and production build before checkpointing.
+
+## Experience Two-State Refinement
+
+- [x] Keep date, company, concise description, and tags visible in the collapsed Experience state.
+- [x] In the expanded Experience state, hide the concise description and present visible-bullet details above the tags.
+- [x] Replace the current detail control with a clearer, polished disclosure design and smooth expand/collapse motion.
+- [x] Add optional per-experience company logo upload and rendering without requiring a logo.
+- [x] Add direct drag-to-reorder controls for Experience detail bullets in the active `/edit` preview.
+- [x] Verify public/editor state transitions, logo fallback/upload, detail reordering, responsive behavior, tests, and production build before checkpointing.

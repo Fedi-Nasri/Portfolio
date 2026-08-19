@@ -87,9 +87,11 @@ describe("FullLivePreview", () => {
     const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddExperienceDetail={() => {}} onRemoveExperienceDetail={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
-    expect(inactive).toContain("View details");
-    expect(active).toContain("View details");
+    expect(inactive).toContain("See details");
+    expect(active).toContain("See details");
     expect(active).toContain("Add detail");
+    expect(active).toContain("Add logo");
+    expect(active).toContain("Drag experience detail 1");
   });
 
   it("writes direct preview text edits to the selected content path", () => {

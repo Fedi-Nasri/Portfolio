@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -63,6 +63,15 @@ describe("Experience quick additions", () => {
     expect(withDetail.experience[0]?.details?.at(-1)).toBe("New experience detail");
     expect(removeExperienceDetail(withDetail, 0, (withDetail.experience[0]?.details.length ?? 1) - 1).experience[0]?.details).toEqual(DEFAULT_PORTFOLIO_CONTENT.experience[0]?.details);
     expect(removeExperienceDetail(withOneDetail, 0, 0).experience[0]?.details).toEqual([]);
+  });
+
+  it("reorders Experience detail bullets without changing the saved source or accepting invalid moves", () => {
+    const original = DEFAULT_PORTFOLIO_CONTENT.experience[0]?.details ?? [];
+    const moved = reorderExperienceDetail(DEFAULT_PORTFOLIO_CONTENT, 0, 0, 2);
+
+    expect(moved.experience[0]?.details).toEqual([original[1], original[2], original[0]]);
+    expect(DEFAULT_PORTFOLIO_CONTENT.experience[0]?.details).toEqual(original);
+    expect(reorderExperienceDetail(DEFAULT_PORTFOLIO_CONTENT, 0, 0, 99)).toBe(DEFAULT_PORTFOLIO_CONTENT);
   });
 
   it("adds and removes toolbox categories and individual tools safely", () => {
