@@ -40,7 +40,9 @@ export default function Home() {
   const content = hydrateExperienceDetails(publishedContent ?? DEFAULT_PORTFOLIO_CONTENT);
   const { hero, navigation } = content;
   const sectionOrder = content.sectionOrder ?? DEFAULT_SECTION_ORDER;
-  const hasSection = (sectionId: string) => sectionOrder.includes(sectionId);
+  const hiddenSections = new Set(content.hiddenSections ?? []);
+  const hasSection = (sectionId: string) => sectionOrder.includes(sectionId) && !hiddenSections.has(sectionId);
+  const firstVisibleSection = sectionOrder.find(hasSection);
   const sectionStyle = (sectionId: string): CSSProperties => ({ order: Math.max(0, sectionOrder.indexOf(sectionId) + 1), display: hasSection(sectionId) ? undefined : "none" });
   const focusPositions = hero.focusPositions ?? [{ x: 4, y: 6 }, { x: 47, y: 22 }, { x: 47, y: 66 }, { x: 6, y: 66 }];
   const [copied, setCopied] = useState(false);
@@ -65,7 +67,7 @@ export default function Home() {
   return (
     <div className={`reference-portfolio${dimMode ? " dim-mode" : ""}`}>
       <header className="ref-header">
-        <a href="#home" className="ref-brand" aria-label={`${hero.firstName} ${hero.lastName} home`}><span className="brand-name">fedi</span><span className="brand-node" /></a>
+        <a href={firstVisibleSection ? `#${firstVisibleSection}` : "#"} className="ref-brand" aria-label={`${hero.firstName} ${hero.lastName} portfolio`}><span className="brand-name">fedi</span><span className="brand-node" /></a>
         <nav className="ref-nav" aria-label="Primary navigation">
           {hasSection("home") && <a href="#home">{navigation.home}</a>}{hasSection("experience") && <a href="#experience">{navigation.experience}</a>}{hasSection("skills") && <a href="#skills">{navigation.skills}</a>}{hasSection("certifications") && <a href="#certifications">{navigation.certifications}</a>}{hasSection("projects") && <a href="#projects">{navigation.projects}</a>}{hasSection("writing") && <a href="#writing">{navigation.writing}</a>}{hasSection("about") && <a href="#about">{navigation.about}</a>}
         </nav>
@@ -132,7 +134,7 @@ export default function Home() {
         <section id="contact" className="ref-contact contact-card-refinement" style={sectionStyle("contact")}><div className="contact-ref-copy"><SectionTitle eyebrow={content.contact.eyebrow}><Multiline value={content.contact.title} /></SectionTitle><p><RichText value={content.contact.intro} /></p></div><aside className="contact-direct-card" aria-label="Direct contact details"><div className="contact-facts"><div><span>Email</span><a href={`mailto:${hero.email}`}><RichText value={hero.email} /></a></div><div><span>Phone</span><a href={`tel:${hero.phone.replaceAll(" ", "")}`}><RichText value={hero.phone} /></a></div><div><span>Based in</span><p><MapPin size={16} /> <RichText value={content.contact.location} /></p></div></div><div className="contact-direct-actions"><a href={hero.linkedInUrl} target="_blank" rel="noreferrer"><Linkedin size={16} /> LinkedIn</a><a href={hero.githubUrl} target="_blank" rel="noreferrer"><Github size={16} /> GitHub</a></div></aside></section>{content.customSections?.map((section) => <section id={section.id} className="ref-section public-custom-section" style={sectionStyle(section.id)} key={section.id}><SectionTitle eyebrow={section.eyebrow}><RichText value={section.title} /></SectionTitle><p className="section-intro"><RichText value={section.body} /></p></section>)}
       </main>
       <footer className="ref-footer"><div className="ref-brand"><span className="brand-name">fedi</span><span className="brand-node" /></div><p><RichText value={content.footer} /></p><div><a href={hero.linkedInUrl} target="_blank" rel="noreferrer">LinkedIn</a><a href={`mailto:${hero.email}`}>Email</a><a href={`tel:${hero.phone.replaceAll(" ", "")}`}><RichText value={hero.phone} /></a></div></footer>
-      <a className="floating-contact" href="#contact" aria-label={`Contact ${hero.firstName} ${hero.lastName}`}><ChevronDown size={16} /></a>
+      {hasSection("contact") && <a className="floating-contact" href="#contact" aria-label={`Contact ${hero.firstName} ${hero.lastName}`}><ChevronDown size={16} /></a>}
       {activeCertificate?.pdf && <div className="certificate-viewer-overlay" role="dialog" aria-modal="true" aria-label={`${activeCertificate.name} certificate viewer`} onMouseDown={() => setActiveCertificate(null)}><div className="certificate-viewer" onMouseDown={(event) => event.stopPropagation()}><div className="certificate-viewer-head"><div><span>Credential viewer</span><h2>{activeCertificate.name}</h2></div><button type="button" onClick={() => setActiveCertificate(null)} aria-label="Close certificate viewer"><X size={19} /></button></div><object className="certificate-pdf-object" data={activeCertificate.pdf} type="application/pdf"><a href={activeCertificate.pdf} target="_blank" rel="noreferrer">Open certificate PDF</a></object></div></div>}
       {activeArticle && <div className="article-reader-overlay" role="dialog" aria-modal="true" aria-label={`${activeArticle.title} article`} onMouseDown={() => setActiveArticle(null)}><article className="article-reader" onMouseDown={(event) => event.stopPropagation()}><div className="article-reader-head"><span>{activeArticle.category}</span><button type="button" onClick={() => setActiveArticle(null)} aria-label="Close article"><X size={19} /></button></div><h2>{activeArticle.title}</h2><div className="article-reader-meta"><span>{hero.firstName} {hero.lastName.replace(".", "")}</span><i /> <span>{activeArticle.readTime}</span></div><div className="article-reader-copy">{activeArticle.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></article></div>}
     </div>

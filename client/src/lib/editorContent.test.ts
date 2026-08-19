@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getHiddenPortfolioSections, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, isPortfolioSectionHidden, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail, togglePortfolioSectionVisibility } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -196,6 +196,17 @@ describe("Portfolio section management", () => {
     expect(getPortfolioSectionOrder(removed)).not.toContain("writing");
     expect(getPortfolioSectionOrder(restored).at(-2)).toBe("writing");
     expect(getPortfolioSectionOrder(restored).at(-1)).toBe("contact");
+  });
+
+  it("hides and restores a section without changing its order or content", () => {
+    const hidden = togglePortfolioSectionVisibility(DEFAULT_PORTFOLIO_CONTENT, "about");
+    const restored = togglePortfolioSectionVisibility(hidden, "about");
+
+    expect(getHiddenPortfolioSections(hidden)).toEqual(["about"]);
+    expect(isPortfolioSectionHidden(hidden, "about")).toBe(true);
+    expect(getPortfolioSectionOrder(hidden)).toEqual(getPortfolioSectionOrder(DEFAULT_PORTFOLIO_CONTENT));
+    expect(restored.hiddenSections).toEqual([]);
+    expect(restored.about).toEqual(DEFAULT_PORTFOLIO_CONTENT.about);
   });
 
   it("adds a complete custom section template and removes its data when deleted", () => {

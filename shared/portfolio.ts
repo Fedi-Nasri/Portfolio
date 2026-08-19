@@ -5,6 +5,7 @@ export const createDefaultFocusPositions = (): FocusPosition[] => DEFAULT_FOCUS_
 
 export type PortfolioContent = {
   sectionOrder?: string[];
+  hiddenSections?: string[];
   customSections?: { id: string; eyebrow: string; title: string; body: string }[];
   navigation: { home: string; experience: string; skills: string; certifications: string; projects: string; writing: string; about: string; contact: string };
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
@@ -30,6 +31,7 @@ export const DEFAULT_SECTION_ORDER: PortfolioSectionId[] = ["home", "about", "ex
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
+  hiddenSections: [],
   customSections: [],
   navigation: { home: "Home", experience: "Experience", skills: "Skills", certifications: "Certifications", projects: "Projects", writing: "Writing", about: "About", contact: "Let's talk" },
   hero: {

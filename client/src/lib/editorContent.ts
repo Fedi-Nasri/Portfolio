@@ -277,6 +277,22 @@ export function getPortfolioSectionOrder(source: PortfolioContent): string[] {
   return source.sectionOrder.filter((sectionId, index, order) => validIds.has(sectionId) && order.indexOf(sectionId) === index);
 }
 
+export function getHiddenPortfolioSections(source: PortfolioContent): string[] {
+  const order = getPortfolioSectionOrder(source);
+  return (source.hiddenSections ?? []).filter((sectionId, index, hidden) => order.includes(sectionId) && hidden.indexOf(sectionId) === index);
+}
+
+export function isPortfolioSectionHidden(source: PortfolioContent, sectionId: string): boolean {
+  return getHiddenPortfolioSections(source).includes(sectionId);
+}
+
+export function togglePortfolioSectionVisibility(source: PortfolioContent, sectionId: string): PortfolioContent {
+  const order = getPortfolioSectionOrder(source);
+  if (!order.includes(sectionId)) return source;
+  const hidden = getHiddenPortfolioSections(source);
+  return updateAtPath(source, ["hiddenSections"], hidden.includes(sectionId) ? hidden.filter((candidate) => candidate !== sectionId) : [...hidden, sectionId]);
+}
+
 export function movePortfolioSection(source: PortfolioContent, sectionId: string, direction: -1 | 1): PortfolioContent {
   const order = getPortfolioSectionOrder(source);
   const index = order.indexOf(sectionId);
@@ -291,6 +307,7 @@ export function removePortfolioSection(source: PortfolioContent, sectionId: stri
   const order = getPortfolioSectionOrder(source);
   if (!order.includes(sectionId)) return source;
   const next = updateAtPath(source, ["sectionOrder"], order.filter((candidate) => candidate !== sectionId));
+  next.hiddenSections = getHiddenPortfolioSections(source).filter((candidate) => candidate !== sectionId);
   if (!sectionId.startsWith("custom-")) return next;
   return { ...next, customSections: (next.customSections ?? []).filter((section) => section.id !== sectionId) };
 }
@@ -298,7 +315,9 @@ export function removePortfolioSection(source: PortfolioContent, sectionId: stri
 export function addPortfolioSection(source: PortfolioContent, sectionId: PortfolioSectionId): PortfolioContent {
   const order = getPortfolioSectionOrder(source);
   if (order.includes(sectionId)) return source;
-  return updateAtPath(source, ["sectionOrder"], insertBeforeContact(order, sectionId));
+  const next = updateAtPath(source, ["sectionOrder"], insertBeforeContact(order, sectionId));
+  next.hiddenSections = getHiddenPortfolioSections(source).filter((candidate) => candidate !== sectionId);
+  return next;
 }
 
 export function createCustomSectionTemplate(id: string): NonNullable<PortfolioContent["customSections"]>[number] {

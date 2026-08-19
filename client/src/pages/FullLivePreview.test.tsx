@@ -35,6 +35,16 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Custom focus");
   });
 
+  it("keeps a public-hidden section in the editor with a Show action", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.hiddenSections = ["about"];
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onToggleSectionVisibility={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("section-about is-active is-hidden-public");
+    expect(html).toContain("Hidden publicly");
+    expect(html).toContain("Show About section on public site");
+  });
+
   it("enables in-place text editing only for the active preview section", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="hero.blurb" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain('contentEditable="true"');

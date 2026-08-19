@@ -435,3 +435,10 @@
 
 - [x] Reduce the vertical space and divider separation between the collapsed Experience summary and its technology-tag group.
 - [x] Verify the tightened desktop/mobile Experience spacing, then run tests and a production build before checkpointing.
+
+## Reversible Section Visibility
+
+- [x] Add persisted section visibility preferences that keep hidden sections in the direct editor.
+- [x] Add Hide / Show controls for every eligible section in `/edit` without changing the section’s content or ordering.
+- [x] Omit hidden sections from the public page and public navigation, while allowing them to be restored in `/edit`.
+- [x] Verify hide/show behavior, draft/save persistence, public navigation, responsive layout, tests, and production build before checkpointing.
