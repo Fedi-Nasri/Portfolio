@@ -430,3 +430,8 @@
 
 - [x] Refine the Experience technology-tag grouping, surfaces, spacing, and wrapping in public and editable views.
 - [x] Verify desktop/mobile tag readability and interaction controls, then run tests and a production build before checkpointing.
+
+## Experience Tag Spacing Correction
+
+- [x] Reduce the vertical space and divider separation between the collapsed Experience summary and its technology-tag group.
+- [x] Verify the tightened desktop/mobile Experience spacing, then run tests and a production build before checkpointing.
