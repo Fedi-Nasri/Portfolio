@@ -62,6 +62,16 @@ export function appendAboutStat(source: PortfolioContent, stat: PortfolioContent
   return updateAtPath(source, ["about", "stats"], [...source.about.stats, stat]);
 }
 
+export function removeAboutTag(source: PortfolioContent, tagIndex: number): PortfolioContent {
+  if (tagIndex < 0 || tagIndex >= source.about.tags.length) return source;
+  return updateAtPath(source, ["about", "tags"], source.about.tags.filter((_, index) => index !== tagIndex));
+}
+
+export function removeAboutStat(source: PortfolioContent, statIndex: number): PortfolioContent {
+  if (statIndex < 0 || statIndex >= source.about.stats.length) return source;
+  return updateAtPath(source, ["about", "stats"], source.about.stats.filter((_, index) => index !== statIndex));
+}
+
 export function createExperienceTemplate(): PortfolioContent["experience"][number] {
   return {
     date: "MONTH — YEAR",
@@ -90,4 +100,29 @@ export function removeExperienceTag(source: PortfolioContent, experienceIndex: n
   const experience = source.experience[experienceIndex];
   if (!experience || tagIndex < 0 || tagIndex >= experience.tags.length) return source;
   return updateAtPath(source, ["experience", experienceIndex, "tags"], experience.tags.filter((_, index) => index !== tagIndex));
+}
+
+export function createSkillToolbox(): PortfolioContent["skills"][number] {
+  return { heading: "New toolbox", entries: ["New tool"] };
+}
+
+export function appendSkillToolbox(source: PortfolioContent): PortfolioContent {
+  return updateAtPath(source, ["skills"], [...source.skills, createSkillToolbox()]);
+}
+
+export function appendSkillTool(source: PortfolioContent, toolboxIndex: number, tool = "New tool"): PortfolioContent {
+  const toolbox = source.skills[toolboxIndex];
+  if (!toolbox) return source;
+  return updateAtPath(source, ["skills", toolboxIndex, "entries"], [...toolbox.entries, tool]);
+}
+
+export function removeSkillTool(source: PortfolioContent, toolboxIndex: number, toolIndex: number): PortfolioContent {
+  const toolbox = source.skills[toolboxIndex];
+  if (!toolbox || toolIndex < 0 || toolIndex >= toolbox.entries.length) return source;
+  return updateAtPath(source, ["skills", toolboxIndex, "entries"], toolbox.entries.filter((_, index) => index !== toolIndex));
+}
+
+export function removeSkillToolbox(source: PortfolioContent, toolboxIndex: number): PortfolioContent {
+  if (source.skills.length <= 1 || toolboxIndex < 0 || toolboxIndex >= source.skills.length) return source;
+  return updateAtPath(source, ["skills"], source.skills.filter((_, index) => index !== toolboxIndex));
 }

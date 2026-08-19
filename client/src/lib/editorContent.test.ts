@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { appendAboutStat, appendAboutTag, appendExperienceTag, duplicateListItem, insertExperienceTemplate, moveListItem, removeExperienceTag, removeListItem } from "./editorContent";
+import { appendAboutStat, appendAboutTag, appendExperienceTag, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, moveListItem, removeAboutStat, removeAboutTag, removeExperienceTag, removeListItem, removeSkillTool, removeSkillToolbox } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -53,5 +53,29 @@ describe("Experience quick additions", () => {
 
     expect(removeExperienceTag(DEFAULT_PORTFOLIO_CONTENT, 0, 1).experience[0]?.tags).not.toContain("Flask");
     expect(removeExperienceTag(withOneTag, 0, 0).experience[0]?.tags).toEqual([]);
+  });
+
+  it("adds and removes toolbox categories and individual tools safely", () => {
+    const withToolbox = appendSkillToolbox(DEFAULT_PORTFOLIO_CONTENT);
+    const withTool = appendSkillTool(DEFAULT_PORTFOLIO_CONTENT, 0);
+    const withoutTool = removeSkillTool(withTool, 0, withTool.skills[0]!.entries.length - 1);
+    const oneToolbox = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    oneToolbox.skills = [oneToolbox.skills[0]!];
+
+    expect(withToolbox.skills).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.skills.length + 1);
+    expect(withToolbox.skills.at(-1)).toEqual({ heading: "New toolbox", entries: ["New tool"] });
+    expect(withoutTool.skills[0]!.entries).toEqual(DEFAULT_PORTFOLIO_CONTENT.skills[0]!.entries);
+    expect(removeSkillToolbox(oneToolbox, 0).skills).toEqual(oneToolbox.skills);
+  });
+
+  it("removes individual About tags and statistics, including the final item", () => {
+    const oneTagAndStat = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    oneTagAndStat.about.tags = ["Only tag"];
+    oneTagAndStat.about.stats = [{ value: "01", label: "Only statistic" }];
+
+    expect(removeAboutTag(DEFAULT_PORTFOLIO_CONTENT, 0).about.tags).not.toContain("#Cloud");
+    expect(removeAboutStat(DEFAULT_PORTFOLIO_CONTENT, 0).about.stats).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.about.stats.length - 1);
+    expect(removeAboutTag(oneTagAndStat, 0).about.tags).toEqual([]);
+    expect(removeAboutStat(oneTagAndStat, 0).about.stats).toEqual([]);
   });
 });

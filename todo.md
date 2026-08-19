@@ -252,3 +252,50 @@
 ## Experience Tag Deletion Control
 
 - [x] Add a direct Delete tag action for each tag in an active Experience entry, including the final tag when an entry should have none.
+
+## Skills & Toolbox Management Controls
+
+- [x] Add a new editable toolbox category from the active Skills & Toolbox editor.
+- [x] Add an editable tool inside each existing toolbox category.
+- [x] Add direct deletion controls for individual tools, including the final tool when a category should be empty.
+- [x] Add a direct delete control for each toolbox category, disabling it when only one category remains.
+- [x] Verify toolbox and tool additions/deletions through the live editor, persistence flow, responsive layout, tests, build, and restoration before checkpointing.
+
+## About Tags and Statistics Management
+
+- [x] Add a direct Delete tag control for every editable About tag.
+- [x] Add a direct Delete statistic control for every editable About statistic box.
+- [x] Centre incomplete About statistic rows so one, two, or three boxes remain centred, with four boxes occupying a full row.
+- [x] Verify About additions/deletions, responsive statistic centring, draft persistence, tests, build, and restoration before checkpointing.
+
+## About Control Spacing Repair
+
+- [x] Separate the About add-control row from the per-statistic delete controls so they do not overlap on desktop or mobile.
+
+## Public-Style Editable Home Composition
+
+- [x] Reuse the public Home hero frame, copy card, portrait scale, connector motif, and focus-card orbit in the active `/edit` Home preview.
+- [x] Preserve in-place Home text editing plus portrait and focus-card visual replacement controls in the matched public composition.
+- [x] Verify desktop and mobile visual fidelity, editing/upload controls, persistence, tests, build, and restoration before checkpointing.
+
+## Public-Style Editable About Composition
+
+- [x] Reuse the public About heading, two-column copy layout, tag treatment, and statistic-card system in the active `/edit` About preview.
+- [x] Preserve direct in-place About text editing plus tag/statistic add and delete controls in the matched public composition.
+- [x] Verify desktop and mobile visual fidelity, About management controls, persistence, tests, build, and restoration before checkpointing.
+
+## About Statistic Visual-Parity Repair
+
+- [x] Make editable About statistic values use the public page’s large blue display-number typography and matching card hierarchy.
+- [x] Verify desktop and mobile visual parity between public and editable About statistic cards without disrupting edit controls.
+- [x] Match the public mobile About statistic layout with two cards per row and 29px blue display values at phone widths.
+
+## Public-Style Editable Selected Work Composition
+
+- [x] Reuse the public Selected Work heading, project-card media layout, metadata, and Problem / What it is / Realization structure in the active `/edit` preview.
+- [x] Preserve direct in-place Selected Work text editing in the matched public composition.
+- [x] Verify desktop and mobile visual fidelity, direct editing, persistence, tests, build, and restoration before checkpointing.
+
+## Skills Mobile Verification Follow-up
+
+- [x] Verify Skills & Toolbox add/delete controls and layout at a mobile `/edit` viewport, then re-confirm the restored public Skills section before checkpointing.

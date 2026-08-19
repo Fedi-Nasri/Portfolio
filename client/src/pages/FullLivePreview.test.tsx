@@ -18,6 +18,16 @@ describe("FullLivePreview", () => {
     expect(html).toContain("section-home is-active");
   });
 
+  it("uses the public Home hero composition while keeping Home asset replacement controls active", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    expect(html).toContain("reference-hero live-reference-hero");
+    expect(html).toContain("hero-copy-ref");
+    expect(html).toContain("portrait-zone live-portrait-zone");
+    expect(html).toContain("hero-role-stack live-hero-role-stack");
+    expect((html.match(/Replace SVG/g) ?? []).length).toBe(4);
+    expect(html).toContain("Upload image");
+  });
+
   it("writes direct preview text edits to the selected content path", () => {
     const changes: Array<{ path: unknown; value: string }> = [];
     const text = EditableText({ value: "Before", path: ["hero", "blurb"], section: "home", activeSection: "home", activePath: "", onSection: () => {}, onSelect: () => {}, onChange: (path, value) => changes.push({ path, value }) });
@@ -32,6 +42,34 @@ describe("FullLivePreview", () => {
     expect(active).toContain("Add tag");
     expect(active).toContain("Add statistic");
     expect(active).toContain("live-public-header");
+  });
+
+  it("shows direct About tag and statistic deletion controls only while About is active", () => {
+    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onRemoveAboutTag={() => {}} onRemoveAboutStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    expect(inactive).not.toContain("Delete tag #Cloud");
+    expect(inactive).not.toContain("Delete statistic");
+    expect(active).toContain("Delete tag #Cloud");
+    expect(active).toContain("Delete statistic");
+  });
+
+  it("uses the public About composition while preserving its active management controls", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onRemoveAboutTag={() => {}} onRemoveAboutStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    expect(html).toContain("ref-section ref-about live-reference-about");
+    expect(html).toContain("about-ref-grid");
+    expect(html).toContain("hashtag-cloud about-tag-list");
+    expect(html).toContain("ref-stats");
+    expect(html).toContain("Add statistic");
+  });
+
+  it("uses the public Selected Work composition while keeping project text editable", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    expect(html).toContain("ref-section ref-projects live-reference-projects");
+    expect(html).toContain("ref-project-list");
+    expect(html).toContain("project-thumb");
+    expect(html).toContain("project-realization");
+    expect(html).toContain("project-meta");
+    expect(html).toContain('contentEditable="true"');
   });
 
   it("shows per-entry Experience insertion, tag, and delete controls only while Experience is active", () => {
@@ -60,5 +98,15 @@ describe("FullLivePreview", () => {
     content.experience = [content.experience[0]!];
     const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain('class="experience-delete-button" disabled=""');
+  });
+
+  it("shows toolbox and tool management controls only while Skills is active", () => {
+    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="skills" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSkillToolbox={() => {}} onAddSkillTool={() => {}} onRemoveSkillTool={() => {}} onRemoveSkillToolbox={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    expect(inactive).not.toContain("Add toolbox");
+    expect(active).toContain("Add toolbox");
+    expect(active).toContain("Add tool");
+    expect(active).toContain("Delete toolbox");
+    expect(active).toContain("Delete tool Linux");
   });
 });
