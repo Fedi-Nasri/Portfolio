@@ -468,3 +468,12 @@
 - [x] Add pointer resizing for title and text component dimensions with visible measurement feedback.
 - [x] Render saved custom-section content safely in the public portfolio with a readable responsive fallback.
 - [x] Verify canvas creation, component reuse, drag/resize persistence, mobile behavior, tests, and production build before checkpointing.
+
+## Expanded Canvas Component Library
+
+- [x] Add reusable existing-portfolio block templates to the canvas component library.
+- [x] Add image and action-button components with direct editing and public rendering.
+- [x] Add snap-to-grid and alignment-guide feedback for accurate block positioning.
+- [x] Add per-block duplicate and delete controls while preserving the selected layout state.
+- [x] Add custom-layout editing support that applies reusable patterns from existing sections without changing their saved content until explicitly used.
+- [x] Verify extended canvas interactions, persisted public rendering, responsive behavior, tests, and production build before checkpointing.

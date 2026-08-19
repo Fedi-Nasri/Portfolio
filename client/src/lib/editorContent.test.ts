@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getHiddenPortfolioSections, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, isPortfolioSectionHidden, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail, togglePortfolioSectionVisibility } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCanvasCopyFromSection, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getHiddenPortfolioSections, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, isPortfolioSectionHidden, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail, togglePortfolioSectionVisibility } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -222,5 +222,18 @@ describe("Portfolio section management", () => {
     expect(getPortfolioSectionOrder(withCustom).at(-2)).toBe("custom-1");
     expect(withoutCustom.customSections).toEqual([]);
     expect(getPortfolioSectionOrder(withoutCustom)).not.toContain("custom-1");
+  });
+
+  it("copies an existing section into a separate editable canvas without changing the source section", () => {
+    const copied = appendCanvasCopyFromSection(DEFAULT_PORTFOLIO_CONTENT, "projects");
+    const section = copied.customSections?.[0];
+
+    expect(section).toMatchObject({ eyebrow: DEFAULT_PORTFOLIO_CONTENT.projectsSection.eyebrow, title: DEFAULT_PORTFOLIO_CONTENT.projectsSection.title, canvasHeight: 420 });
+    expect(section?.components).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: "image", imageUrl: DEFAULT_PORTFOLIO_CONTENT.projects[0]?.image }),
+      expect.objectContaining({ type: "button", href: "#projects" }),
+    ]));
+    expect(copied.projectsSection).toEqual(DEFAULT_PORTFOLIO_CONTENT.projectsSection);
+    expect(getPortfolioSectionOrder(copied).at(-2)).toBe(section?.id);
   });
 });

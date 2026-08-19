@@ -347,6 +347,23 @@ export function appendCustomPortfolioSection(source: PortfolioContent): Portfoli
   return { ...source, customSections, sectionOrder };
 }
 
+export function appendCanvasCopyFromSection(source: PortfolioContent, sectionId: string): PortfolioContent {
+  const existing = source.customSections ?? [];
+  let number = existing.length + 1;
+  let id = `custom-${number}`;
+  while (existing.some((section) => section.id === id)) { number += 1; id = `custom-${number}`; }
+  const templates: Record<string, { eyebrow: string; title: string; body: string; components: NonNullable<PortfolioContent["customSections"]>[number]["components"] }> = {
+    about: { eyebrow: source.about.eyebrow, title: source.about.title, body: source.about.paragraphs[0] ?? "", components: [{ id: `${id}-title`, type: "title", content: source.about.title, x: 48, y: 50, width: 560, height: 116 }, { id: `${id}-text`, type: "text", content: source.about.paragraphs.slice(0, 2).join("\n\n"), x: 48, y: 188, width: 500, height: 136 }, { id: `${id}-tags`, type: "tag-list", content: "Focus areas", items: source.about.tags, x: 580, y: 50, width: 300, height: 122 }, { id: `${id}-stat`, type: "stat", content: source.about.stats[0]?.value ?? "00", items: [source.about.stats[0]?.label ?? "Statistic"], x: 580, y: 200, width: 220, height: 126 }] },
+    skills: { eyebrow: source.skillsSection.eyebrow, title: source.skillsSection.title, body: "A reusable Skills & Toolbox canvas pattern.", components: [{ id: `${id}-title`, type: "title", content: source.skillsSection.title, x: 48, y: 50, width: 560, height: 112 }, { id: `${id}-tags`, type: "tag-list", content: source.skills[0]?.heading ?? "Toolbox", items: source.skills.flatMap((skill) => skill.entries).slice(0, 8), x: 48, y: 190, width: 540, height: 130 }, { id: `${id}-button`, type: "button", content: "View selected work", href: "#projects", x: 625, y: 210, width: 200, height: 52 }] },
+    capabilities: { eyebrow: source.capabilities.eyebrow, title: source.capabilities.title, body: source.capabilities.description, components: [{ id: `${id}-title`, type: "title", content: source.capabilities.title, x: 48, y: 50, width: 510, height: 112 }, { id: `${id}-text`, type: "text", content: source.capabilities.description, x: 48, y: 190, width: 480, height: 120 }, { id: `${id}-tags`, type: "tag-list", content: "Services", items: source.capabilities.services.map((service) => service.name), x: 570, y: 50, width: 300, height: 160 }] },
+    projects: { eyebrow: source.projectsSection.eyebrow, title: source.projectsSection.title, body: source.projectsSection.intro, components: [{ id: `${id}-title`, type: "title", content: source.projectsSection.title, x: 48, y: 50, width: 500, height: 112 }, { id: `${id}-image`, type: "image", content: source.projects[0]?.title ?? "Project visual", imageUrl: source.projects[0]?.image, x: 580, y: 50, width: 300, height: 200 }, { id: `${id}-text`, type: "text", content: source.projects[0]?.realization ?? source.projectsSection.intro, x: 48, y: 190, width: 480, height: 120 }, { id: `${id}-button`, type: "button", content: "Explore project", href: "#projects", x: 580, y: 275, width: 190, height: 52 }] },
+    contact: { eyebrow: source.contact.eyebrow, title: source.contact.title, body: source.contact.intro, components: [{ id: `${id}-title`, type: "title", content: source.contact.title, x: 48, y: 50, width: 500, height: 112 }, { id: `${id}-text`, type: "text", content: source.contact.intro, x: 48, y: 190, width: 440, height: 120 }, { id: `${id}-contact`, type: "contact-card", content: "Direct contact", items: [source.hero.email, source.hero.phone, source.contact.location], x: 555, y: 50, width: 315, height: 185 }] },
+  };
+  const template = templates[sectionId] ?? { eyebrow: "Custom layout", title: "Customised portfolio section", body: "Build a new reusable composition with portfolio components.", components: createCustomSectionTemplate(id).components };
+  const customSection = { id, eyebrow: template.eyebrow, title: template.title, body: template.body, components: template.components, canvasHeight: 420 };
+  return { ...source, customSections: [...existing, customSection], sectionOrder: insertBeforeContact(getPortfolioSectionOrder(source), id) };
+}
+
 export function removeWritingArticle(source: PortfolioContent, articleIndex: number): PortfolioContent {
   return removeListItem(source, ["writing"], articleIndex);
 }

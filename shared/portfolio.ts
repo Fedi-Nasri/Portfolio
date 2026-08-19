@@ -1,6 +1,6 @@
 export type FocusPosition = { x: number; y: number };
-export type CanvasComponentType = "title" | "text";
-export type CustomSectionCanvasComponent = { id: string; type: CanvasComponentType; content: string; x: number; y: number; width: number; height: number };
+export type CanvasComponentType = "title" | "text" | "image" | "button" | "tag-list" | "stat" | "contact-card";
+export type CustomSectionCanvasComponent = { id: string; type: CanvasComponentType; content: string; x: number; y: number; width: number; height: number; imageUrl?: string; href?: string; items?: string[] };
 export type CustomPortfolioSection = { id: string; eyebrow: string; title: string; body: string; components?: CustomSectionCanvasComponent[]; canvasHeight?: number };
 
 export function getCustomSectionCanvasComponents(section: CustomPortfolioSection): CustomSectionCanvasComponent[] {

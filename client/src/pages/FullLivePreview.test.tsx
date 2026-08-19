@@ -37,6 +37,11 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Component library");
     expect(html).toContain("Title box");
     expect(html).toContain("Text box");
+    expect(html).toContain("Image block");
+    expect(html).toContain("Action button");
+    expect(html).toContain("Tool tags");
+    expect(html).toContain("Statistic card");
+    expect(html).toContain("Contact card");
   });
 
   it("keeps a public-hidden section in the editor with a Show action", () => {

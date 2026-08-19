@@ -60,6 +60,7 @@ type Props = {
   onClearWritingLink?: (articleIndex: number) => void;
   onAddSection?: (sectionId: PortfolioSectionId) => void;
   onAddCustomSection?: () => void;
+  onCreateCanvasCopyFromSection?: (sectionId: string) => void;
   onMoveSection?: (sectionId: string, direction: -1 | 1) => void;
   onRemoveSection?: (sectionId: string) => void;
   onToggleSectionVisibility?: (sectionId: string) => void;
@@ -84,14 +85,14 @@ export function EditableText({ value, path, section, activeSection, activePath, 
   >{value}</span>;
 }
 
-function SectionFrame({ id, label, activeSection, onSection, children, sectionOrder, hiddenSections, sectionKey = id, onMoveSection, onRemoveSection, onToggleSectionVisibility, alwaysVisible = false }: { id: PreviewSection; label: string; activeSection: PreviewSection | null; onSection: (section: PreviewSection) => void; children: React.ReactNode; sectionOrder: string[]; hiddenSections: string[]; sectionKey?: string; onMoveSection?: (sectionId: string, direction: -1 | 1) => void; onRemoveSection?: (sectionId: string) => void; onToggleSectionVisibility?: (sectionId: string) => void; alwaysVisible?: boolean }) {
+function SectionFrame({ id, label, activeSection, onSection, children, sectionOrder, hiddenSections, sectionKey = id, onMoveSection, onRemoveSection, onToggleSectionVisibility, onCreateCanvasCopyFromSection, alwaysVisible = false }: { id: PreviewSection; label: string; activeSection: PreviewSection | null; onSection: (section: PreviewSection) => void; children: React.ReactNode; sectionOrder: string[]; hiddenSections: string[]; sectionKey?: string; onMoveSection?: (sectionId: string, direction: -1 | 1) => void; onRemoveSection?: (sectionId: string) => void; onToggleSectionVisibility?: (sectionId: string) => void; onCreateCanvasCopyFromSection?: (sectionId: string) => void; alwaysVisible?: boolean }) {
   const active = activeSection === id;
   const index = sectionOrder.indexOf(sectionKey);
   if (!alwaysVisible && index < 0) return null;
   const locked = sectionKey === "home" || alwaysVisible;
   const hidden = hiddenSections.includes(sectionKey);
   return <section style={{ order: alwaysVisible ? sectionOrder.length + 1 : index + 1 }} className={`live-preview-section section-${id}${active ? " is-active" : ""}${hidden ? " is-hidden-public" : ""}`}>
-    <div className="live-section-hoverbar"><span>{label}{hidden && <small>Hidden publicly</small>}</span><button type="button" onClick={() => onSection(id)}><Pencil size={13} /> {active ? "Editing section" : "Edit section"}</button>{active && !alwaysVisible && <div className="section-order-actions" aria-label={`${label} section controls`}><button type="button" className="section-visibility-button" aria-label={`${hidden ? "Show" : "Hide"} ${label} section on public site`} title={hidden ? "Show on public site" : "Hide from public site"} onClick={() => onToggleSectionVisibility?.(sectionKey)}>{hidden ? <Eye size={13} /> : <EyeOff size={13} />}<span>{hidden ? "Show" : "Hide"}</span></button>{!locked && <><button type="button" aria-label={`Move ${label} section up`} disabled={index <= 1} onClick={() => onMoveSection?.(sectionKey, -1)}><ArrowUp size={13} /></button><button type="button" aria-label={`Move ${label} section down`} disabled={index === sectionOrder.length - 1} onClick={() => onMoveSection?.(sectionKey, 1)}><ArrowDown size={13} /></button><button type="button" className="section-delete-button" aria-label={`Delete ${label} section`} onClick={() => onRemoveSection?.(sectionKey)}><Trash2 size={13} /></button></>}</div>}</div>
+    <div className="live-section-hoverbar"><span>{label}{hidden && <small>Hidden publicly</small>}</span><button type="button" onClick={() => onSection(id)}><Pencil size={13} /> {active ? "Editing section" : "Edit section"}</button>{active && !alwaysVisible && <div className="section-order-actions" aria-label={`${label} section controls`}><button type="button" className="section-visibility-button" aria-label={`${hidden ? "Show" : "Hide"} ${label} section on public site`} title={hidden ? "Show on public site" : "Hide from public site"} onClick={() => onToggleSectionVisibility?.(sectionKey)}>{hidden ? <Eye size={13} /> : <EyeOff size={13} />}<span>{hidden ? "Show" : "Hide"}</span></button>{!sectionKey.startsWith("custom-") && <button type="button" className="section-canvas-copy-button" onClick={() => onCreateCanvasCopyFromSection?.(sectionKey)}><Copy size={13} /> Canvas copy</button>}{!locked && <><button type="button" aria-label={`Move ${label} section up`} disabled={index <= 1} onClick={() => onMoveSection?.(sectionKey, -1)}><ArrowUp size={13} /></button><button type="button" aria-label={`Move ${label} section down`} disabled={index === sectionOrder.length - 1} onClick={() => onMoveSection?.(sectionKey, 1)}><ArrowDown size={13} /></button><button type="button" className="section-delete-button" aria-label={`Delete ${label} section`} onClick={() => onRemoveSection?.(sectionKey)}><Trash2 size={13} /></button></>}</div>}</div>
     {children}
   </section>;
 }
@@ -111,7 +112,7 @@ function ProviderMark({ cert }: { cert: Certification }) {
   return <div className={`cert-provider-mark ${cert.provider}-mark`} aria-label={PROVIDER_LABELS[cert.provider] ?? cert.provider}><span>{PROVIDER_LABELS[cert.provider] ?? cert.provider}</span></div>;
 }
 
-export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat, onRemoveAboutTag, onRemoveAboutStat, onInsertExperience, onAddExperienceTag, onRemoveExperience, onRemoveExperienceTag, onAddExperienceDetail, onRemoveExperienceDetail, onMoveExperienceDetail, onUploadExperienceLogo, onClearExperienceLogo, onAddSkillToolbox, onAddSkillTool, onRemoveSkillTool, onRemoveSkillToolbox, onAddCertificate, onRemoveCertificate, onUploadCertificatePdf, onUploadProviderLogo, onRemoveCertificatePdf, onClearCertificateLink, onAddProject, onInsertProject, onMoveProject, onRemoveProject, onAddProjectTech, onRemoveProjectTech, onAddProjectDelivery, onRemoveProjectDelivery, onAddProjectCaseStudyBlock, onRemoveProjectCaseStudyBlock, onUploadProjectImage, onAddWritingArticle, onRemoveWritingArticle, onMoveWritingArticle, onClearWritingLink, onAddSection, onAddCustomSection, onMoveSection, onRemoveSection, onToggleSectionVisibility, onResetFocusPositions, onUploadAsset, uploadingAsset }: Props) {
+export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat, onRemoveAboutTag, onRemoveAboutStat, onInsertExperience, onAddExperienceTag, onRemoveExperience, onRemoveExperienceTag, onAddExperienceDetail, onRemoveExperienceDetail, onMoveExperienceDetail, onUploadExperienceLogo, onClearExperienceLogo, onAddSkillToolbox, onAddSkillTool, onRemoveSkillTool, onRemoveSkillToolbox, onAddCertificate, onRemoveCertificate, onUploadCertificatePdf, onUploadProviderLogo, onRemoveCertificatePdf, onClearCertificateLink, onAddProject, onInsertProject, onMoveProject, onRemoveProject, onAddProjectTech, onRemoveProjectTech, onAddProjectDelivery, onRemoveProjectDelivery, onAddProjectCaseStudyBlock, onRemoveProjectCaseStudyBlock, onUploadProjectImage, onAddWritingArticle, onRemoveWritingArticle, onMoveWritingArticle, onClearWritingLink, onAddSection, onAddCustomSection, onCreateCanvasCopyFromSection, onMoveSection, onRemoveSection, onToggleSectionVisibility, onResetFocusPositions, onUploadAsset, uploadingAsset }: Props) {
   const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
   const [activeArticleIndex, setActiveArticleIndex] = useState<number | null>(null);
   const [previewDimMode, setPreviewDimMode] = useState(false);
@@ -124,7 +125,7 @@ export default function FullLivePreview({ content, activeSection, activePath, on
   const sectionOrder = content.sectionOrder ?? DEFAULT_SECTION_ORDER;
   const hiddenSections = content.hiddenSections ?? [];
   const missingBuiltInSections = PORTFOLIO_SECTION_IDS.filter((sectionId) => !sectionOrder.includes(sectionId));
-  const sectionFrameProps = { sectionOrder, hiddenSections, onMoveSection, onRemoveSection, onToggleSectionVisibility };
+  const sectionFrameProps = { sectionOrder, hiddenSections, onMoveSection, onRemoveSection, onToggleSectionVisibility, onCreateCanvasCopyFromSection };
   const defaultFocusPositions = createDefaultFocusPositions();
   const focusPositions = content.hero.focusPositions ?? defaultFocusPositions;
   const updateFocusPosition = (index: number, x: number, y: number) => {
