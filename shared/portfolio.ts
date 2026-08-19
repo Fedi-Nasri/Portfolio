@@ -1,4 +1,15 @@
 export type FocusPosition = { x: number; y: number };
+export type CanvasComponentType = "title" | "text";
+export type CustomSectionCanvasComponent = { id: string; type: CanvasComponentType; content: string; x: number; y: number; width: number; height: number };
+export type CustomPortfolioSection = { id: string; eyebrow: string; title: string; body: string; components?: CustomSectionCanvasComponent[]; canvasHeight?: number };
+
+export function getCustomSectionCanvasComponents(section: CustomPortfolioSection): CustomSectionCanvasComponent[] {
+  if (section.components?.length) return section.components;
+  return [
+    { id: `${section.id}-title`, type: "title", content: section.title, x: 48, y: 58, width: 560, height: 116 },
+    { id: `${section.id}-text`, type: "text", content: section.body, x: 48, y: 204, width: 500, height: 126 },
+  ];
+}
 
 export const DEFAULT_FOCUS_POSITIONS: FocusPosition[] = [{ x: 4, y: 6 }, { x: 47, y: 22 }, { x: 47, y: 66 }, { x: 6, y: 66 }];
 export const createDefaultFocusPositions = (): FocusPosition[] => DEFAULT_FOCUS_POSITIONS.map(({ x, y }) => ({ x, y }));
@@ -6,7 +17,7 @@ export const createDefaultFocusPositions = (): FocusPosition[] => DEFAULT_FOCUS_
 export type PortfolioContent = {
   sectionOrder?: string[];
   hiddenSections?: string[];
-  customSections?: { id: string; eyebrow: string; title: string; body: string }[];
+  customSections?: CustomPortfolioSection[];
   navigation: { home: string; experience: string; skills: string; certifications: string; projects: string; writing: string; about: string; contact: string };
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };

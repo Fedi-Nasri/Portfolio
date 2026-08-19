@@ -326,6 +326,11 @@ export function createCustomSectionTemplate(id: string): NonNullable<PortfolioCo
     eyebrow: "New section",
     title: "A new portfolio section",
     body: "Add the context, result, or story you want visitors to see here.",
+    components: [
+      { id: `${id}-title`, type: "title", content: "A new portfolio section", x: 48, y: 58, width: 560, height: 116 },
+      { id: `${id}-text`, type: "text", content: "Add the context, result, or story you want visitors to see here.", x: 48, y: 204, width: 500, height: 126 },
+    ],
+    canvasHeight: 420,
   };
 }
 

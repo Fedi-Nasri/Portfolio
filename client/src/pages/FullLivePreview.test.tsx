@@ -26,13 +26,17 @@ describe("FullLivePreview", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.customSections = [{ id: "custom-1", eyebrow: "New section", title: "Custom focus", body: "Custom section copy" }];
     content.sectionOrder = [...(content.sectionOrder ?? []), "custom-1"];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSection={() => {}} onAddCustomSection={() => {}} onMoveSection={() => {}} onRemoveSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="custom" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSection={() => {}} onAddCustomSection={() => {}} onMoveSection={() => {}} onRemoveSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
     expect(html).toContain("Portfolio layout");
     expect(html).toContain("Add custom section");
-    expect(html).toContain("Move About section up");
-    expect(html).toContain("Delete About section");
+    expect(html).toContain("Move Custom focus section up");
+    expect(html).toContain("Delete Custom focus section");
     expect(html).toContain("Custom focus");
+    expect(html).toContain("Canvas section editor");
+    expect(html).toContain("Component library");
+    expect(html).toContain("Title box");
+    expect(html).toContain("Text box");
   });
 
   it("keeps a public-hidden section in the editor with a Show action", () => {

@@ -214,7 +214,11 @@ describe("Portfolio section management", () => {
     const customId = withCustom.customSections?.[0]?.id ?? "";
     const withoutCustom = removePortfolioSection(withCustom, customId);
 
-    expect(withCustom.customSections?.[0]).toMatchObject({ id: "custom-1", eyebrow: "New section", title: "A new portfolio section" });
+    expect(withCustom.customSections?.[0]).toMatchObject({ id: "custom-1", eyebrow: "New section", title: "A new portfolio section", canvasHeight: 420 });
+    expect(withCustom.customSections?.[0]?.components).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: "custom-1-title", type: "title", width: 560, height: 116 }),
+      expect.objectContaining({ id: "custom-1-text", type: "text", width: 500, height: 126 }),
+    ]));
     expect(getPortfolioSectionOrder(withCustom).at(-2)).toBe("custom-1");
     expect(withoutCustom.customSections).toEqual([]);
     expect(getPortfolioSectionOrder(withoutCustom)).not.toContain("custom-1");

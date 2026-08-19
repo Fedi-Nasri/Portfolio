@@ -458,3 +458,13 @@
 - [x] Store and edit optional descriptive notes for each individual draft version.
 - [x] Add case-insensitive draft library search and status filtering for fast draft discovery.
 - [x] Verify restored content, version notes, draft filtering, responsive editor behavior, tests, and production build before checkpointing.
+
+## Custom Section Canvas Builder
+
+- [x] Define reusable, persisted canvas components for custom portfolio sections.
+- [x] Add customizable section templates that can reuse title and text components from the portfolio design system.
+- [x] Add a right-side component palette for title and text boxes.
+- [x] Add pointer drag placement with live pixel-position guides for selected canvas components.
+- [x] Add pointer resizing for title and text component dimensions with visible measurement feedback.
+- [x] Render saved custom-section content safely in the public portfolio with a readable responsive fallback.
+- [x] Verify canvas creation, component reuse, drag/resize persistence, mobile behavior, tests, and production build before checkpointing.
