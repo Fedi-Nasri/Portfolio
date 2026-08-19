@@ -548,3 +548,10 @@
 - [x] Package exported HTML and required portfolio assets into a downloadable ZIP archive.
 - [x] Add clear direct-editor export actions and download feedback.
 - [x] Verify exported files, asset references, tests, and production build before checkpointing.
+
+## Faithful Static Public ZIP Export
+
+- [x] Replace the simplified ZIP export page with a faithful static rendering of the public portfolio.
+- [x] Include offline HTML, CSS, JavaScript interactions and animations, and local exported assets.
+- [x] Preserve public navigation, certificate interactions, experience disclosure, and project image presentation in the static package.
+- [x] Verify ZIP structure, offline behavior, responsive rendering, tests, and production build before checkpointing.

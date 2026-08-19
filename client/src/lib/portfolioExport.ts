@@ -1,6 +1,7 @@
 // @ts-nocheck
 import JSZip from "jszip";
 import type { PortfolioContent } from "@shared/portfolio";
+import { renderFaithfulStaticPortfolio, STATIC_PUBLIC_CSS, STATIC_PUBLIC_JS } from "./staticPublicExport";
 
 const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character] ?? character);
 const text = (value: unknown) => escapeHtml(String(value ?? "").replace(/\*\*|__|_/g, ""));
@@ -59,6 +60,6 @@ export async function downloadPortfolioExport(content: PortfolioContent, format:
   const inlined = await inlineImages(content);
   const html = renderPortfolioHtml(inlined.content);
   if (format === "html") download(new Blob([html], { type: "text/html;charset=utf-8" }), "fedi-nasri-portfolio.html");
-  else { const zip = new JSZip(); zip.file("index.html", html); zip.file("README.txt", "Open index.html in a modern browser. Image assets available from the active draft were embedded directly into the HTML file."); download(await zip.generateAsync({ type: "blob" }), "fedi-nasri-portfolio-export.zip"); }
+  else { const zip = new JSZip(); zip.file("index.html", renderFaithfulStaticPortfolio(inlined.content)); zip.file("styles.css", STATIC_PUBLIC_CSS); zip.file("app.js", STATIC_PUBLIC_JS); zip.file("README.txt", "Open index.html in a modern browser. This static package contains the public portfolio layout, responsive CSS, JavaScript interactions, and embedded image assets from the active draft."); download(await zip.generateAsync({ type: "blob" }), "fedi-nasri-portfolio-static.zip"); }
   return { assetCount: inlined.assetCount };
 }
