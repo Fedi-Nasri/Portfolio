@@ -31,7 +31,7 @@ export const appRouter = router({
     updateDraftVersionNote: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64), versionNumber: z.number().int().min(1), note: z.string().trim().max(500).optional() })).mutation(({ input }) => updatePortfolioDraftVersionNote(input.draftKey, input.versionNumber, input.note)),
   }),
   assets: router({
-    upload: publicProcedure.input(z.object({ fileName: z.string().min(1).max(120), contentType: z.string(), base64: z.string().min(1), category: z.enum(["portrait", "focus-visual", "project-image", "provider-logo", "company-logo", "certificate-pdf"]) })).mutation(({ input }) => uploadPortfolioAsset(input)),
+    upload: publicProcedure.input(z.object({ fileName: z.string().min(1).max(120), contentType: z.string(), base64: z.string().min(1), category: z.enum(["portrait", "focus-visual", "project-image", "canvas-image", "provider-logo", "company-logo", "certificate-pdf"]) })).mutation(({ input }) => uploadPortfolioAsset(input)),
   }),
 });
 

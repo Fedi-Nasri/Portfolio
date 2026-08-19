@@ -39,6 +39,7 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Text box");
     expect(html).toContain("Image block");
     expect(html).toContain("Action button");
+    expect(html).toContain("Visual with direct upload");
     expect(html).toContain("Tool tags");
     expect(html).toContain("Statistic card");
     expect(html).toContain("Contact card");
@@ -60,6 +61,13 @@ describe("FullLivePreview", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onCreateCanvasCopyFromSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
     expect(html).toContain("Canvas section editor");
+  });
+
+  it("uses alternating project feature rows in the active Selected Work editor", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("project-editor-card");
+    expect(html).toContain("project-layout-reversed");
   });
 
   it("enables in-place text editing only for the active preview section", () => {

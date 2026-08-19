@@ -34,4 +34,11 @@ describe("public contact section", () => {
     expect(html).toContain("experience-detail-toggle");
     expect(html).toContain("experience-tag-list");
   });
+
+  it("renders alternating left and right Selected Work project feature rows", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
+  });
 });

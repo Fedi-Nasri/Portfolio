@@ -4,7 +4,7 @@ const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "
 const PDF_CONTENT_TYPE = "application/pdf";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MAX_PDF_BYTES = 12 * 1024 * 1024;
-type PortfolioAssetCategory = "portrait" | "focus-visual" | "project-image" | "provider-logo" | "company-logo" | "certificate-pdf";
+type PortfolioAssetCategory = "portrait" | "focus-visual" | "project-image" | "canvas-image" | "provider-logo" | "company-logo" | "certificate-pdf";
 
 export async function uploadPortfolioAsset(input: { fileName: string; contentType: string; base64: string; category: PortfolioAssetCategory }) {
   const isCertificatePdf = input.category === "certificate-pdf";

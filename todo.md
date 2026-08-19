@@ -485,3 +485,17 @@
 - [x] Add persisted reusable canvas layout presets with save and apply controls.
 - [x] Add a direct existing-section action that opens a protected canvas editing mode for that section.
 - [x] Verify advanced canvas controls, preset persistence, direct section editing, responsive behavior, tests, and production build before checkpointing.
+
+## Canvas Image Upload
+
+- [x] Add direct image-file upload from a selected canvas image block.
+- [x] Persist the uploaded image URL into the active draft while retaining manual URL entry.
+- [x] Add upload progress and error feedback without disrupting canvas selection or editing.
+- [x] Verify image upload, draft persistence, responsive behavior, tests, and production build before checkpointing.
+
+## Alternating Selected Work Layout
+
+- [x] Restyle public Selected Work projects as alternating left/right image-and-details feature rows.
+- [x] Refine project title, metadata, case-study blocks, stack, and delivery presentation to follow the supplied reference’s compact hierarchy.
+- [x] Mirror the alternating project presentation in the editable live preview without removing existing project controls.
+- [x] Verify public/editor desktop and mobile layouts, regression tests, and production build before checkpointing.
