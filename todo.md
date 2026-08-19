@@ -505,3 +505,10 @@
 - [x] Lock every project visual to the same compact media-column width in alternating rows.
 - [x] Preserve the larger text/details column for both left- and right-aligned project visuals.
 - [x] Verify public/editor desktop and mobile layout consistency, tests, and production build before checkpointing.
+
+## Selected Work Image Focal Point
+
+- [x] Add persisted X/Y focal-point data for each project image.
+- [x] Add an in-preview image focal-point picker that lets the user position the crop cursor over an image.
+- [x] Apply the saved focal point to project-image cropping in both public and editable previews.
+- [x] Verify focal-point editing, persistence, responsive behavior, tests, and production build before checkpointing.

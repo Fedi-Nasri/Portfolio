@@ -70,6 +70,15 @@ describe("FullLivePreview", () => {
     expect(html).toContain("project-layout-reversed");
   });
 
+  it("uses a saved focal point to crop a project image and exposes the positioning control", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.projects[0]!.imageFocus = { x: 22, y: 74 };
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("object-position:22% 74%");
+    expect(html).toContain("Position image");
+  });
+
   it("enables in-place text editing only for the active preview section", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="hero.blurb" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain('contentEditable="true"');
