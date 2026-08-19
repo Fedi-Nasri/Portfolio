@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { appendAboutStat, appendAboutTag, duplicateListItem, moveListItem, removeListItem } from "./editorContent";
+import { appendAboutStat, appendAboutTag, appendExperienceTag, duplicateListItem, insertExperienceTemplate, moveListItem, removeExperienceTag, removeListItem } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -24,5 +24,34 @@ describe("About quick additions", () => {
     expect(withTag.about.tags.at(-1)).toBe("New tag");
     expect(withStat.about.stats.at(-1)).toEqual({ value: "00", label: "New statistic" });
     expect(DEFAULT_PORTFOLIO_CONTENT.about.tags).not.toContain("New tag");
+  });
+});
+
+describe("Experience quick additions", () => {
+  it("inserts a clean editable template above or below an entry and appends a tag without mutating saved content", () => {
+    const above = insertExperienceTemplate(DEFAULT_PORTFOLIO_CONTENT, 0, "above");
+    const below = insertExperienceTemplate(DEFAULT_PORTFOLIO_CONTENT, 0, "below");
+    const withTag = appendExperienceTag(above, 0);
+
+    expect(above.experience).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.experience.length + 1);
+    expect(above.experience[0]).toMatchObject({ date: "MONTH — YEAR", role: "New experience title", tags: ["New tag"] });
+    expect(below.experience[1]?.role).toBe("New experience title");
+    expect(withTag.experience[0]?.tags).toEqual(["New tag", "New tag"]);
+    expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(2);
+  });
+
+  it("does not remove the final Experience entry from a draft", () => {
+    const single = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    single.experience = [single.experience[0]!];
+
+    expect(removeListItem(single, ["experience"], 0).experience).toEqual(single.experience);
+  });
+
+  it("removes an individual Experience tag, including the final tag when needed", () => {
+    const withOneTag = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    withOneTag.experience[0]!.tags = ["Only tag"];
+
+    expect(removeExperienceTag(DEFAULT_PORTFOLIO_CONTENT, 0, 1).experience[0]?.tags).not.toContain("Flask");
+    expect(removeExperienceTag(withOneTag, 0, 0).experience[0]?.tags).toEqual([]);
   });
 });

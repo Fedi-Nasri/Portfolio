@@ -61,3 +61,33 @@ export function appendAboutTag(source: PortfolioContent, tag = "New tag"): Portf
 export function appendAboutStat(source: PortfolioContent, stat: PortfolioContent["about"]["stats"][number] = { value: "00", label: "New statistic" }): PortfolioContent {
   return updateAtPath(source, ["about", "stats"], [...source.about.stats, stat]);
 }
+
+export function createExperienceTemplate(): PortfolioContent["experience"][number] {
+  return {
+    date: "MONTH — YEAR",
+    role: "New experience title",
+    company: "Company / organisation",
+    text: "Describe the work, outcome, and tools you used in this experience.",
+    tags: ["New tag"],
+  };
+}
+
+export function insertExperienceTemplate(source: PortfolioContent, index: number, placement: "above" | "below"): PortfolioContent {
+  return transformList(source, ["experience"], (items) => {
+    const insertionIndex = Math.max(0, Math.min(placement === "above" ? index : index + 1, items.length));
+    items.splice(insertionIndex, 0, createExperienceTemplate());
+    return items;
+  });
+}
+
+export function appendExperienceTag(source: PortfolioContent, experienceIndex: number, tag = "New tag"): PortfolioContent {
+  const experience = source.experience[experienceIndex];
+  if (!experience) return source;
+  return updateAtPath(source, ["experience", experienceIndex, "tags"], [...experience.tags, tag]);
+}
+
+export function removeExperienceTag(source: PortfolioContent, experienceIndex: number, tagIndex: number): PortfolioContent {
+  const experience = source.experience[experienceIndex];
+  if (!experience || tagIndex < 0 || tagIndex >= experience.tags.length) return source;
+  return updateAtPath(source, ["experience", experienceIndex, "tags"], experience.tags.filter((_, index) => index !== tagIndex));
+}

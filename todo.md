@@ -227,3 +227,28 @@
 - [x] Preserve Ala Din Habibi's existing content while presenting it in the new visual system.
 - [x] Verify desktop and mobile fidelity against the supplied reference.
 - [x] Save and deliver a revised checkpoint.
+
+## Centred Experience Editor Enhancement
+
+- [x] Centre the `/edit` live draft preview within the editor workspace while preserving responsive width and clear section controls.
+- [x] Render the Experience editing view with the public portfolio’s timeline structure, visual hierarchy, spacing, and milestone styling.
+- [x] Add in-preview actions to insert an editable experience template immediately above or below every existing experience entry.
+- [x] Make every template field and its tags editable in place, including an action to append an editable tag.
+- [x] Verify desktop and mobile editing, draft/save/publish persistence, public rendering, automated tests, and production build before checkpointing.
+
+## Mobile Live Preview Repair
+
+- [x] Restore the single-column Home preview layout at mobile widths so the portrait and focus cards do not overflow beside the copy card.
+
+## Experience Current Marker Order
+
+- [x] Keep the filled blue timeline marker on the topmost Experience entry, including after adding a new entry above it, while all later entries use outlined markers.
+
+## Experience Deletion Control
+
+- [x] Add a direct Delete experience action for every editable Experience entry, disabling it when only one entry remains.
+- [x] Verify a new Experience template and tag through the live `/edit` Save draft and Publish controls, confirm public rendering, then restore the original two-entry content.
+
+## Experience Tag Deletion Control
+
+- [x] Add a direct Delete tag action for each tag in an active Experience entry, including the final tag when an entry should have none.
