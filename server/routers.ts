@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { getEditorPortfolioContent, getPublishedPortfolioContent, publishPortfolioContent, savePortfolioDraft } from "./portfolio";
+import { createPortfolioDraft, deletePortfolioDraft, getEditorPortfolioContent, getPublishedPortfolioContent, loadPortfolioDraftVersion, publishPortfolioContent, renamePortfolioDraft, savePortfolioDraft, selectPublicPortfolioDraft } from "./portfolio";
 import { uploadPortfolioAsset } from "./assets";
 
 export const appRouter = router({
@@ -19,9 +19,14 @@ export const appRouter = router({
   }),
   portfolio: router({
     publicContent: publicProcedure.query(() => getPublishedPortfolioContent()),
-    editorContent: publicProcedure.query(() => getEditorPortfolioContent()),
-    saveDraft: publicProcedure.input(z.object({ content: z.unknown() })).mutation(({ input }) => savePortfolioDraft(input.content)),
-    publish: publicProcedure.input(z.object({ content: z.unknown() })).mutation(({ input }) => publishPortfolioContent(input.content)),
+    editorContent: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64).optional() }).optional()).query(({ input }) => getEditorPortfolioContent(input?.draftKey)),
+    saveDraft: publicProcedure.input(z.object({ content: z.unknown(), draftKey: z.string().min(1).max(64).optional() })).mutation(({ input }) => savePortfolioDraft(input.content, input.draftKey)),
+    publish: publicProcedure.input(z.object({ content: z.unknown(), draftKey: z.string().min(1).max(64).optional() })).mutation(({ input }) => publishPortfolioContent(input.content, input.draftKey)),
+    createDraft: publicProcedure.input(z.object({ name: z.string().trim().min(1).max(120), sourceDraftKey: z.string().min(1).max(64).optional() })).mutation(({ input }) => createPortfolioDraft(input.name, input.sourceDraftKey)),
+    renameDraft: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64), name: z.string().trim().min(1).max(120) })).mutation(({ input }) => renamePortfolioDraft(input.draftKey, input.name)),
+    deleteDraft: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64) })).mutation(({ input }) => deletePortfolioDraft(input.draftKey)),
+    selectPublicDraft: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64) })).mutation(({ input }) => selectPublicPortfolioDraft(input.draftKey)),
+    loadDraftVersion: publicProcedure.input(z.object({ draftKey: z.string().min(1).max(64), versionNumber: z.number().int().min(1) })).mutation(({ input }) => loadPortfolioDraftVersion(input.draftKey, input.versionNumber)),
   }),
   assets: router({
     upload: publicProcedure.input(z.object({ fileName: z.string().min(1).max(120), contentType: z.string(), base64: z.string().min(1), category: z.enum(["portrait", "focus-visual", "project-image", "provider-logo", "company-logo", "certificate-pdf"]) })).mutation(({ input }) => uploadPortfolioAsset(input)),

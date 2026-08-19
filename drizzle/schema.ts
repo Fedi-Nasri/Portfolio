@@ -1,4 +1,4 @@
-import { int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 import type { PortfolioContent } from "../shared/portfolio";
 
 /**
@@ -39,3 +39,26 @@ export const portfolioContentVersions = mysqlTable("portfolio_content_versions",
 
 export type PortfolioContentVersion = typeof portfolioContentVersions.$inferSelect;
 export type InsertPortfolioContentVersion = typeof portfolioContentVersions.$inferInsert;
+
+export const portfolioDrafts = mysqlTable("portfolio_drafts", {
+  id: int("id").autoincrement().primaryKey(),
+  draftKey: varchar("draftKey", { length: 64 }).notNull().unique(),
+  name: varchar("name", { length: 120 }).notNull(),
+  isPublic: boolean("isPublic").notNull().default(false),
+  createdBy: int("createdBy").notNull(),
+  updatedBy: int("updatedBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export const portfolioDraftVersions = mysqlTable("portfolio_draft_versions", {
+  id: int("id").autoincrement().primaryKey(),
+  draftId: int("draftId").notNull(),
+  versionNumber: int("versionNumber").notNull(),
+  contentJson: json("contentJson").$type<PortfolioContent>().notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PortfolioDraft = typeof portfolioDrafts.$inferSelect;
+export type PortfolioDraftVersion = typeof portfolioDraftVersions.$inferSelect;

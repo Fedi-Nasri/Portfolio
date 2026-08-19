@@ -442,3 +442,12 @@
 - [x] Add Hide / Show controls for every eligible section in `/edit` without changing the section’s content or ordering.
 - [x] Omit hidden sections from the public page and public navigation, while allowing them to be restored in `/edit`.
 - [x] Verify hide/show behavior, draft/save persistence, public navigation, responsive layout, tests, and production build before checkpointing.
+
+## Multi-Draft Portfolio Workspace
+
+- [x] Define persisted portfolio draft records, human-readable draft names, version history, and a selected public draft.
+- [x] Add direct editor operations to create, save, load, duplicate, rename, and safely delete drafts.
+- [x] Add a draft sidebar that lists available drafts, selected draft state, version history, and creation/deletion controls.
+- [x] Allow the user to choose the public draft without losing other drafts or their versions.
+- [x] Keep the current public portfolio content safe throughout draft testing and restoration.
+- [x] Verify multi-draft persistence, version history, public selection, deletion safeguards, responsive behavior, tests, and production build before checkpointing.
