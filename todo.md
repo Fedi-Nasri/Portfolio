@@ -419,3 +419,14 @@
 - [x] Add optional per-experience company logo upload and rendering without requiring a logo.
 - [x] Add direct drag-to-reorder controls for Experience detail bullets in the active `/edit` preview.
 - [x] Verify public/editor state transitions, logo fallback/upload, detail reordering, responsive behavior, tests, and production build before checkpointing.
+
+## Experience Tag Placement and Detail Markers
+
+- [x] Place collapsed-state Experience tags beneath the complete entry content instead of a separate right-side tag column.
+- [x] Add an explicit blue bullet marker design for expanded Experience responsibility items in public and editable views.
+- [x] Verify the refined public/editor layout on desktop and mobile, then run tests and a production build before checkpointing.
+
+## Experience Tag Visual Polish
+
+- [x] Refine the Experience technology-tag grouping, surfaces, spacing, and wrapping in public and editable views.
+- [x] Verify desktop/mobile tag readability and interaction controls, then run tests and a production build before checkpointing.
