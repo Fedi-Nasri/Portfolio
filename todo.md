@@ -477,3 +477,11 @@
 - [x] Add per-block duplicate and delete controls while preserving the selected layout state.
 - [x] Add custom-layout editing support that applies reusable patterns from existing sections without changing their saved content until explicitly used.
 - [x] Verify extended canvas interactions, persisted public rendering, responsive behavior, tests, and production build before checkpointing.
+
+## Advanced Canvas Editing
+
+- [x] Repair reusable canvas block deletion and cover the regression.
+- [x] Add multi-select, grouped movement, and group resizing for canvas blocks.
+- [x] Add persisted reusable canvas layout presets with save and apply controls.
+- [x] Add a direct existing-section action that opens a protected canvas editing mode for that section.
+- [x] Verify advanced canvas controls, preset persistence, direct section editing, responsive behavior, tests, and production build before checkpointing.

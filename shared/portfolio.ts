@@ -1,6 +1,7 @@
 export type FocusPosition = { x: number; y: number };
 export type CanvasComponentType = "title" | "text" | "image" | "button" | "tag-list" | "stat" | "contact-card";
 export type CustomSectionCanvasComponent = { id: string; type: CanvasComponentType; content: string; x: number; y: number; width: number; height: number; imageUrl?: string; href?: string; items?: string[] };
+export type CanvasLayoutPreset = { id: string; name: string; components: CustomSectionCanvasComponent[]; canvasHeight: number };
 export type CustomPortfolioSection = { id: string; eyebrow: string; title: string; body: string; components?: CustomSectionCanvasComponent[]; canvasHeight?: number };
 
 export function getCustomSectionCanvasComponents(section: CustomPortfolioSection): CustomSectionCanvasComponent[] {
@@ -18,6 +19,7 @@ export type PortfolioContent = {
   sectionOrder?: string[];
   hiddenSections?: string[];
   customSections?: CustomPortfolioSection[];
+  canvasPresets?: CanvasLayoutPreset[];
   navigation: { home: string; experience: string; skills: string; certifications: string; projects: string; writing: string; about: string; contact: string };
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };

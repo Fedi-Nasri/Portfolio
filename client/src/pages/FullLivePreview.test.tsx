@@ -42,6 +42,8 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Tool tags");
     expect(html).toContain("Statistic card");
     expect(html).toContain("Contact card");
+    expect(html).toContain("Reusable layouts");
+    expect(html).toContain("Save this layout");
   });
 
   it("keeps a public-hidden section in the editor with a Show action", () => {
@@ -52,6 +54,12 @@ describe("FullLivePreview", () => {
     expect(html).toContain("section-about is-active is-hidden-public");
     expect(html).toContain("Hidden publicly");
     expect(html).toContain("Show About section on public site");
+  });
+
+  it("offers a direct Canvas section editor action for active existing sections", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onCreateCanvasCopyFromSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("Canvas section editor");
   });
 
   it("enables in-place text editing only for the active preview section", () => {
