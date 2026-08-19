@@ -1,0 +1,1 @@
+ALTER TABLE `portfolio_draft_versions` ADD `note` varchar(500);
