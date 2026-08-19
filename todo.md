@@ -541,3 +541,10 @@
 - [x] Add balanced inner spacing to right-aligned project media in alternating Selected Work rows.
 - [x] Preserve matching media dimensions and readable text width in public and editable previews.
 - [x] Verify desktop/mobile balance, tests, and production build before checkpointing.
+
+## Portfolio HTML and ZIP Export
+
+- [x] Generate a portable standalone HTML export from the active portfolio draft.
+- [x] Package exported HTML and required portfolio assets into a downloadable ZIP archive.
+- [x] Add clear direct-editor export actions and download feedback.
+- [x] Verify exported files, asset references, tests, and production build before checkpointing.
