@@ -309,3 +309,9 @@
 ## Skills Mobile Verification Follow-up
 
 - [x] Verify Skills & Toolbox add/delete controls and layout at a mobile `/edit` viewport, then re-confirm the restored public Skills section before checkpointing.
+
+## Public-Style Editable Certifications Composition
+
+- [x] Reuse the public Certifications heading, credential-card layout, provider marks, metadata, hover state, and certificate-view affordance in the active `/edit` preview.
+- [x] Preserve direct in-place editing for every available credential field inside the matched public composition.
+- [x] Verify public-layout parity, certificate viewing, desktop/mobile behavior, automated tests, and production build before checkpointing.

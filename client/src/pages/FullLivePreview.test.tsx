@@ -72,6 +72,18 @@ describe("FullLivePreview", () => {
     expect(html).toContain('contentEditable="true"');
   });
 
+  it("uses the public Certifications composition while keeping credential fields editable and the PDF viewer affordance available", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("ref-section ref-certifications live-reference-certifications");
+    expect(html).toContain("cert-mosaic");
+    expect(html).toContain("certifications-grid");
+    expect(html).toContain("credential-card has-pdf");
+    expect(html).toContain("cert-provider-mark");
+    expect(html).toContain("View certificate");
+    expect(html).toContain('contentEditable="true"');
+  });
+
   it("shows Selected Work template, image, metadata, case-study, ordering, and deletion controls only while projects are active", () => {
     const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddProject={() => {}} onInsertProject={() => {}} onMoveProject={() => {}} onRemoveProject={() => {}} onAddProjectTech={() => {}} onRemoveProjectTech={() => {}} onAddProjectDelivery={() => {}} onRemoveProjectDelivery={() => {}} onAddProjectCaseStudyBlock={() => {}} onRemoveProjectCaseStudyBlock={() => {}} onUploadProjectImage={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);

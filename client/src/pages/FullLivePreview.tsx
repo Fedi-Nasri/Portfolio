@@ -1,10 +1,13 @@
 import React from "react";
 import type { PortfolioContent } from "@shared/portfolio";
 import type { ContentPath } from "@/lib/editorContent";
-import { ArrowDown, ArrowUp, Check, Copy, Github, ImageUp, Linkedin, Mail, Pencil, Phone, Sparkles, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, Check, Copy, Github, ImageUp, Linkedin, Mail, Pencil, Phone, Sparkles, Trash2, X } from "lucide-react";
+import { useState } from "react";
 import "./full-live-preview.css";
 
 export type PreviewSection = "home" | "about" | "experience" | "skills" | "certifications" | "capabilities" | "projects" | "writing" | "contact" | "footer";
+
+type Certification = PortfolioContent["certifications"][number];
 
 type Props = {
   content: PortfolioContent;
@@ -72,7 +75,13 @@ function FocusVisual({ index, url }: { index: number; url?: string }) {
   return <><i /><span /><span /><span /></>;
 }
 
+function ProviderMark({ provider }: { provider: Certification["provider"] }) {
+  if (provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
+  return <div className={`cert-provider-mark ${provider}-mark`} aria-label={provider === "cisco" ? "Cisco" : "IBM"}><span>{provider === "cisco" ? "CISCO" : "IBM"}</span></div>;
+}
+
 export default function FullLivePreview({ content, activeSection, activePath, onSection, onChange, onSelect, onAddTag, onAddStat, onRemoveAboutTag, onRemoveAboutStat, onInsertExperience, onAddExperienceTag, onRemoveExperience, onRemoveExperienceTag, onAddSkillToolbox, onAddSkillTool, onRemoveSkillTool, onRemoveSkillToolbox, onAddProject, onInsertProject, onMoveProject, onRemoveProject, onAddProjectTech, onRemoveProjectTech, onAddProjectDelivery, onRemoveProjectDelivery, onAddProjectCaseStudyBlock, onRemoveProjectCaseStudyBlock, onUploadProjectImage, onUploadAsset, uploadingAsset }: Props) {
+  const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
   const edit = (value: string, path: ContentPath, section: PreviewSection, className = "") => <EditableText value={value} path={path} section={section} activeSection={activeSection} activePath={activePath} onSection={onSection} onChange={onChange} onSelect={onSelect} className={className} />;
   return <div className="reference-portfolio live-public-canvas" aria-label="Full editable portfolio preview">
     <header className="ref-header live-public-header"><button type="button" className="ref-brand" onClick={() => onSection("home")} aria-label="Edit Home"><span className="brand-name">fedi</span><span className="brand-node" /></button><nav className="ref-nav" aria-label="Preview section navigation"><button type="button" onClick={() => onSection("home")}>{content.navigation.home}</button><button type="button" onClick={() => onSection("experience")}>{content.navigation.experience}</button><button type="button" onClick={() => onSection("skills")}>{content.navigation.skills}</button><button type="button" onClick={() => onSection("certifications")}>{content.navigation.certifications}</button><button type="button" onClick={() => onSection("projects")}>{content.navigation.projects}</button><button type="button" onClick={() => onSection("writing")}>{content.navigation.writing}</button><button type="button" onClick={() => onSection("about")}>{content.navigation.about}</button></nav><button type="button" className="talk-button" onClick={() => onSection("contact")}>{content.navigation.contact}</button></header>
@@ -96,7 +105,7 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     </SectionFrame>
 
     <SectionFrame id="certifications" label="Certifications" activeSection={activeSection} onSection={onSection}>
-      <div className="live-heading"><p>{edit(content.credentialsSection.eyebrow, ["credentialsSection", "eyebrow"], "certifications")}</p><h2>{edit(content.credentialsSection.title, ["credentialsSection", "title"], "certifications")}</h2><span>{edit(content.credentialsSection.intro, ["credentialsSection", "intro"], "certifications")}</span></div><div className="live-cert-grid">{content.certifications.map((cert, index) => <article key={`${cert.name}-${index}`}><small>{edit(cert.provider, ["certifications", index, "provider"], "certifications")}</small><h3>{edit(cert.name, ["certifications", index, "name"], "certifications")}</h3><p>{edit(cert.issuer, ["certifications", index, "issuer"], "certifications")}</p><span>{edit(cert.scope, ["certifications", index, "scope"], "certifications")}</span><time>{edit(cert.issued, ["certifications", index, "issued"], "certifications")}</time></article>)}</div>
+      <div className="ref-section ref-certifications live-reference-certifications"><div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div><div className="ref-section-title"><span>{edit(content.credentialsSection.eyebrow, ["credentialsSection", "eyebrow"], "certifications")}</span><h2>{edit(content.credentialsSection.title, ["credentialsSection", "title"], "certifications")}</h2></div><p className="section-intro">{edit(content.credentialsSection.intro, ["credentialsSection", "intro"], "certifications")}</p><div className="certifications-grid">{content.certifications.map((cert, index) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={`${cert.name}-${index}`}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3>{edit(cert.name, ["certifications", index, "name"], "certifications")}</h3><p>{edit(cert.issuer, ["certifications", index, "issuer"], "certifications")}</p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span>{edit(cert.scope, ["certifications", index, "scope"], "certifications")}</span><time>{edit(cert.issued, ["certifications", index, "issued"], "certifications")}</time></div></article>)}</div></div>
     </SectionFrame>
 
     <SectionFrame id="capabilities" label="Capabilities" activeSection={activeSection} onSection={onSection}>
@@ -122,5 +131,5 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     <SectionFrame id="footer" label="Footer" activeSection={activeSection} onSection={onSection}>
       <footer className="live-footer"><span>fedi</span><p>{edit(content.footer, ["footer"], "footer")}</p><small>{edit(content.hero.linkedInUrl, ["hero", "linkedInUrl"], "footer")}</small></footer>
     </SectionFrame>
-    </div></div>;
+    </div>{activeCertificate?.pdf && <div className="certificate-viewer-overlay" role="dialog" aria-modal="true" aria-label={`${activeCertificate.name} certificate viewer`} onMouseDown={() => setActiveCertificate(null)}><div className="certificate-viewer" onMouseDown={(event) => event.stopPropagation()}><div className="certificate-viewer-head"><div><span>Credential viewer</span><h2>{activeCertificate.name}</h2></div><button type="button" onClick={() => setActiveCertificate(null)} aria-label="Close certificate viewer"><X size={19} /></button></div><object className="certificate-pdf-object" data={activeCertificate.pdf} type="application/pdf"><a href={activeCertificate.pdf} target="_blank" rel="noreferrer">Open certificate PDF</a></object></div></div>}</div>;
 }
