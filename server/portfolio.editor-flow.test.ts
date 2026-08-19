@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { appendCertificate, duplicateListItem, insertProjectTemplate } from "../client/src/lib/editorContent";
+import { appendCertificate, appendWritingArticle, duplicateListItem, insertProjectTemplate } from "../client/src/lib/editorContent";
 import type { TrpcContext } from "./_core/context";
 import { appRouter } from "./routers";
 
@@ -82,6 +82,34 @@ describe("direct editor save and publish flow", () => {
       const publicContent = await caller.portfolio.publicContent();
       expect(publicContent.certifications.at(-1)?.name).toBe("Automated certificate management verification");
       expect(publicContent.certifications.at(-1)?.url).toBe("https://example.com/credential");
+    } finally {
+      await caller.portfolio.saveDraft({ content: original });
+      await caller.portfolio.publish({ content: original });
+    }
+  });
+
+  it("persists and publishes a managed featured article with site metadata and an external link, then restores the saved portfolio", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const original = (await caller.portfolio.editorContent()).content;
+    const changed = appendWritingArticle(original);
+    const articleIndex = changed.writing.length - 1;
+    changed.writing[articleIndex] = {
+      ...changed.writing[articleIndex]!,
+      title: "Automated Writing management verification",
+      siteName: "Verification publication",
+      date: "Aug 19, 2026",
+      url: "https://example.com/featured-article",
+    };
+
+    try {
+      await caller.portfolio.saveDraft({ content: changed });
+      const saved = (await caller.portfolio.editorContent()).content;
+      expect(saved.writing.at(-1)).toMatchObject({ title: "Automated Writing management verification", siteName: "Verification publication", date: "Aug 19, 2026", url: "https://example.com/featured-article" });
+
+      await caller.portfolio.publish({ content: changed });
+      const publicContent = await caller.portfolio.publicContent();
+      expect(publicContent.writing.at(-1)?.siteName).toBe("Verification publication");
+      expect(publicContent.writing.at(-1)?.url).toBe("https://example.com/featured-article");
     } finally {
       await caller.portfolio.saveDraft({ content: original });
       await caller.portfolio.publish({ content: original });

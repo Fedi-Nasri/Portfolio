@@ -138,6 +138,29 @@ describe("FullLivePreview", () => {
     expect(html).toContain('contentEditable="true"');
   });
 
+  it("shows article management controls, an external destination, and revised site-name/date metadata while Writing is active", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.writing[0]!.url = "https://example.com/article";
+    const active = renderToStaticMarkup(<FullLivePreview content={content} activeSection="writing" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddWritingArticle={() => {}} onRemoveWritingArticle={() => {}} onMoveWritingArticle={() => {}} onClearWritingLink={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(active).toContain("Add featured article");
+    expect(active).toContain("writing-site-name");
+    expect(active).toContain("writing-post-date");
+    expect(active).toContain("https://example.com/article");
+    expect(active).toContain("Clear link");
+    expect(active).toContain("Move up");
+    expect(active).toContain("Move down");
+    expect(active).toContain("Delete article");
+  });
+
+  it("protects the final Writing & Insights article from deletion", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.writing = [content.writing[0]!];
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="writing" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain('class="writing-delete-button" disabled=""');
+  });
+
   it("shows Selected Work template, image, metadata, case-study, ordering, and deletion controls only while projects are active", () => {
     const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddProject={() => {}} onInsertProject={() => {}} onMoveProject={() => {}} onRemoveProject={() => {}} onAddProjectTech={() => {}} onRemoveProjectTech={() => {}} onAddProjectDelivery={() => {}} onRemoveProjectDelivery={() => {}} onAddProjectCaseStudyBlock={() => {}} onRemoveProjectCaseStudyBlock={() => {}} onUploadProjectImage={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);

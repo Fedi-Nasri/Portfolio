@@ -345,3 +345,12 @@
 - [x] Reuse the public Writing & Insights heading, horizontal article-row layout, metadata chips, future-entry treatment, and reader affordance in the active `/edit` preview.
 - [x] Preserve direct in-place editing for every available Writing & Insights field within the matched public composition.
 - [x] Verify direct editing, article reader behavior, desktop/mobile presentation, automated tests, and production build before checkpointing.
+
+## Writing & Insights Management Controls
+
+- [x] Add a new editable featured-article template from the active Writing & Insights editor.
+- [x] Add direct article deletion controls while retaining at least one Writing & Insights entry.
+- [x] Add an editable external article link and make the article action navigate to it when present.
+- [x] Add move-up and move-down controls to reorder articles in the live editor.
+- [x] Replace the card’s upper date display with editable site-name metadata and place the editable posting date below each article title.
+- [x] Verify article navigation, additions, deletion safeguards, ordering, metadata layout, draft persistence, desktop/mobile behavior, tests, and production build before checkpointing.

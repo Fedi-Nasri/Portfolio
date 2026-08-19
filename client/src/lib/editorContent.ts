@@ -220,3 +220,25 @@ export function appendCertificate(source: PortfolioContent): PortfolioContent {
 export function removeCertificate(source: PortfolioContent, certificateIndex: number): PortfolioContent {
   return removeListItem(source, ["certifications"], certificateIndex);
 }
+
+export function createWritingArticleTemplate(): PortfolioContent["writing"][number] {
+  return {
+    title: "New featured article",
+    date: "Month DD, YYYY",
+    siteName: "Your site or publication",
+    category: "Cloud · DevOps · Insight",
+    readTime: "4 min read",
+    preview: "Introduce the article’s practical takeaway, technical point of view, or field note.",
+    body: ["Write the opening paragraph for this featured article.", "Add a second paragraph with the practical detail, result, or lesson for readers."],
+    status: "Read article",
+    url: "",
+  };
+}
+
+export function appendWritingArticle(source: PortfolioContent): PortfolioContent {
+  return updateAtPath(source, ["writing"], [...source.writing, createWritingArticleTemplate()]);
+}
+
+export function removeWritingArticle(source: PortfolioContent, articleIndex: number): PortfolioContent {
+  return removeListItem(source, ["writing"], articleIndex);
+}

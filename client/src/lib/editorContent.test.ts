@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox } from "./editorContent";
+import { addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -139,5 +139,25 @@ describe("Certifications management", () => {
 
     expect(removeCertificate(DEFAULT_PORTFOLIO_CONTENT, 0).certifications).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.certifications.length - 1);
     expect(removeCertificate(single, 0).certifications).toEqual(single.certifications);
+  });
+});
+
+describe("Writing & Insights management", () => {
+  it("adds a complete featured-article template and preserves external link fields", () => {
+    const withArticle = appendWritingArticle(DEFAULT_PORTFOLIO_CONTENT);
+
+    expect(withArticle.writing).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.writing.length + 1);
+    expect(withArticle.writing.at(-1)).toMatchObject({ title: "New featured article", siteName: "Your site or publication", status: "Read article", url: "" });
+    expect(DEFAULT_PORTFOLIO_CONTENT.writing).toHaveLength(2);
+  });
+
+  it("reorders articles and protects the final article from deletion", () => {
+    const moved = moveListItem(DEFAULT_PORTFOLIO_CONTENT, ["writing"], 0, 1);
+    const single = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    single.writing = [single.writing[0]!];
+
+    expect(moved.writing[0]!.title).toBe(DEFAULT_PORTFOLIO_CONTENT.writing[1]!.title);
+    expect(removeWritingArticle(DEFAULT_PORTFOLIO_CONTENT, 0).writing).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.writing.length - 1);
+    expect(removeWritingArticle(single, 0).writing).toEqual(single.writing);
   });
 });

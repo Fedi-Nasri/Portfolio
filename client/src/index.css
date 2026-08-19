@@ -394,8 +394,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .writing-card { min-height: 126px; padding: 27px 30px; display: flex; align-items: center; justify-content: space-between; gap: 32px; border: 1px solid #dfe9f8; border-radius: 18px; background: linear-gradient(105deg, #fff 0%, #f4f8ff 100%); box-shadow: 0 12px 26px rgba(69,104,158,.06); transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
 .writing-card:hover { border-color: #a9c5f5; box-shadow: 0 17px 34px rgba(69,104,158,.11); transform: translateY(-2px); }
 .writing-card-main { min-width: 0; }
-.writing-card-main time { display: block; color: #6d7e97; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; letter-spacing: .025em; }
+.writing-site-name { display: block; color: #356fc7; font-size: 10px; font-weight: 800; letter-spacing: .085em; text-transform: uppercase; }
+.writing-post-date, .writing-card-main time { display: block; color: #6d7e97; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; letter-spacing: .025em; }
 .writing-card h3 { max-width: 760px; margin: 13px 0 0; color: var(--ink); font-size: clamp(19px, 2.2vw, 27px); font-weight: 750; line-height: 1.16; letter-spacing: -.035em; }
+.writing-card h3 + .writing-post-date { margin-top: 10px; }
 .writing-card-meta { display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex: 0 0 auto; }
 .writing-category, .writing-link-slot { padding: 7px 10px; border: 1px solid #b8cef2; border-radius: 8px; color: #356fc7; background: rgba(255,255,255,.72); font-size: 11px; font-weight: 700; line-height: 1; white-space: nowrap; }
 .writing-card-meta small { color: #71819a; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; white-space: nowrap; }
