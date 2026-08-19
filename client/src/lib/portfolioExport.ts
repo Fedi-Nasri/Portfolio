@@ -37,6 +37,25 @@ async function inlineImages(content: PortfolioContent) {
   return { content: walk(source) as unknown as PortfolioContent, assetCount: [...replacements.values()].filter((url) => url.startsWith("data:")).length };
 }
 
+export async function packageCertificatePdfs(content: PortfolioContent, zip: JSZip) {
+  const paths = new Map<string, string>();
+  let count = 0;
+  for (const [index, certificate] of content.certifications.entries()) {
+    if (!certificate.pdf || certificate.pdf.startsWith("data:")) continue;
+    try {
+      const response = await fetch(certificate.pdf);
+      if (!response.ok) continue;
+      const path = `assets/certificates/certificate-${index + 1}.pdf`;
+      zip.file(path, await response.arrayBuffer());
+      paths.set(certificate.pdf, path);
+      count += 1;
+    } catch {
+      // Keep inaccessible PDF URLs unchanged in the exported document.
+    }
+  }
+  return { paths, count };
+}
+
 export function renderPortfolioHtml(content: any) {
   content.hero.portrait ??= content.hero.portraitUrl;
   content.about.intro ??= (content.about.paragraphs ?? []).join(" ");
@@ -60,6 +79,6 @@ export async function downloadPortfolioExport(content: PortfolioContent, format:
   const inlined = await inlineImages(content);
   const html = renderPortfolioHtml(inlined.content);
   if (format === "html") download(new Blob([html], { type: "text/html;charset=utf-8" }), "fedi-nasri-portfolio.html");
-  else { const zip = new JSZip(); zip.file("index.html", renderFaithfulStaticPortfolio(inlined.content)); zip.file("styles.css", STATIC_PUBLIC_CSS); zip.file("app.js", STATIC_PUBLIC_JS); zip.file("README.txt", "Open index.html in a modern browser. This static package contains the public portfolio layout, responsive CSS, JavaScript interactions, and embedded image assets from the active draft."); download(await zip.generateAsync({ type: "blob" }), "fedi-nasri-portfolio-static.zip"); }
+  else { const zip = new JSZip(); const localPdfs = await packageCertificatePdfs(content, zip); const staticContent = structuredClone(inlined.content); staticContent.certifications.forEach((certificate) => { const localPath = certificate.pdf ? localPdfs.paths.get(certificate.pdf) : undefined; if (localPath) certificate.pdf = localPath; }); zip.file("index.html", renderFaithfulStaticPortfolio(staticContent)); zip.file("styles.css", STATIC_PUBLIC_CSS); zip.file("app.js", STATIC_PUBLIC_JS); zip.file("README.txt", "Open index.html in a modern browser. This static package contains the public portfolio layout, responsive CSS, JavaScript interactions, embedded available image assets, and local certificate PDFs in assets/certificates/."); download(await zip.generateAsync({ type: "blob" }), "fedi-nasri-portfolio-static.zip"); }
   return { assetCount: inlined.assetCount };
 }

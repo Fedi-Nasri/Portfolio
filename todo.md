@@ -555,3 +555,9 @@
 - [x] Include offline HTML, CSS, JavaScript interactions and animations, and local exported assets.
 - [x] Preserve public navigation, certificate interactions, experience disclosure, and project image presentation in the static package.
 - [x] Verify ZIP structure, offline behavior, responsive rendering, tests, and production build before checkpointing.
+
+## Local Certificate PDFs in Static ZIP Export
+
+- [x] Download certificate PDFs into a local assets folder inside the static ZIP export.
+- [x] Rewrite exported certificate viewer paths to use their packaged local PDF files.
+- [x] Verify local certificate PDFs, offline viewer behavior, ZIP structure, tests, and production build before checkpointing.
