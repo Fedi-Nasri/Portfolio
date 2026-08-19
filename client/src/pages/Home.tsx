@@ -4,10 +4,10 @@
  */
 import React, { useState, type CSSProperties, type ReactNode } from "react";
 import {
-  ArrowRight, Check, ChevronDown, Copy, Github, Linkedin, Mail, MapPin,
+  ArrowRight, Check, ChevronDown, ChevronUp, Copy, Github, Linkedin, Mail, MapPin,
   Menu, Moon, Phone, Sparkles, Sun, X,
 } from "lucide-react";
-import { DEFAULT_PORTFOLIO_CONTENT, DEFAULT_SECTION_ORDER, type PortfolioContent } from "@shared/portfolio";
+import { DEFAULT_PORTFOLIO_CONTENT, DEFAULT_SECTION_ORDER, hydrateExperienceDetails, type PortfolioContent } from "@shared/portfolio";
 import { trpc } from "@/lib/trpc";
 import { RichText } from "@/components/RichText";
 
@@ -37,7 +37,7 @@ function SectionTitle({ eyebrow, children }: { eyebrow: string; children: ReactN
 
 export default function Home() {
   const { data: publishedContent } = trpc.portfolio.publicContent.useQuery();
-  const content = publishedContent ?? DEFAULT_PORTFOLIO_CONTENT;
+  const content = hydrateExperienceDetails(publishedContent ?? DEFAULT_PORTFOLIO_CONTENT);
   const { hero, navigation } = content;
   const sectionOrder = content.sectionOrder ?? DEFAULT_SECTION_ORDER;
   const hasSection = (sectionId: string) => sectionOrder.includes(sectionId);
@@ -48,6 +48,7 @@ export default function Home() {
   const [dimMode, setDimMode] = useState(false);
   const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
   const [activeArticle, setActiveArticle] = useState<WritingPost | null>(null);
+  const [expandedExperienceIndex, setExpandedExperienceIndex] = useState<number | null>(null);
 
   const copyEmail = async () => {
     try {
@@ -115,7 +116,7 @@ export default function Home() {
 
         <section id="experience" className="ref-section ref-experience" style={sectionStyle("experience")}>
           <SectionTitle eyebrow={content.experienceSection.eyebrow}><Multiline value={content.experienceSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.experienceSection.intro} /></p>
-          <div className="reference-timeline">{content.experience.map((item, index) => <article className={`reference-job${index === 0 ? " latest-job" : ""}`} key={`${item.date}-${item.company}`}><span className="timeline-marker" aria-hidden="true" /><div className="job-date"><RichText value={item.date} /></div><div className="job-name"><h3><RichText value={item.role} /></h3><p><RichText value={item.company} /></p></div><p className="job-copy"><RichText value={item.text} /></p><TagList items={item.tags} /></article>)}</div>
+          <div className="reference-timeline">{content.experience.map((item, index) => { const details = item.details ?? []; const expanded = expandedExperienceIndex === index; return <article className={`reference-job${index === 0 ? " latest-job" : ""}${expanded ? " is-expanded" : ""}`} key={`${item.date}-${item.company}`}><span className="timeline-marker" aria-hidden="true" /><div className="job-date"><RichText value={item.date} /></div><div className="job-name"><h3><RichText value={item.role} /></h3><p><RichText value={item.company} /></p></div><p className="job-copy"><RichText value={item.text} /></p>{details.length > 0 && <button type="button" className="experience-detail-toggle" aria-expanded={expanded} aria-controls={`experience-details-${index}`} onClick={() => setExpandedExperienceIndex((current) => current === index ? null : index)}>{expanded ? "Hide details" : "View details"}{expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}</button>}{expanded && <div className="experience-details" id={`experience-details-${index}`}><ul>{details.map((detail, detailIndex) => <li key={`${detail}-${detailIndex}`}><RichText value={detail} /></li>)}</ul><TagList items={item.tags} /></div>}</article>; })}</div>
         </section>
 
         <section id="skills" className="ref-section ref-skills" style={sectionStyle("skills")}><SectionTitle eyebrow={content.skillsSection.eyebrow}><Multiline value={content.skillsSection.title} /></SectionTitle><div className="skills-ref-grid">{content.skills.map((skill) => <article key={skill.heading}><h3><RichText value={skill.heading} /></h3><TagList items={skill.entries} /></article>)}</div></section>

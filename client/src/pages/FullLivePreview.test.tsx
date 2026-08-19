@@ -83,6 +83,15 @@ describe("FullLivePreview", () => {
     expect(inactiveHtml).not.toContain("Reset card layout");
   });
 
+  it("renders Experience detail disclosure controls and active detail-management actions", () => {
+    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddExperienceDetail={() => {}} onRemoveExperienceDetail={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(inactive).toContain("View details");
+    expect(active).toContain("View details");
+    expect(active).toContain("Add detail");
+  });
+
   it("writes direct preview text edits to the selected content path", () => {
     const changes: Array<{ path: unknown; value: string }> = [];
     const text = EditableText({ value: "Before", path: ["hero", "blurb"], section: "home", activeSection: "home", activePath: "", onSection: () => {}, onSelect: () => {}, onChange: (path, value) => changes.push({ path, value }) });

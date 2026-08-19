@@ -10,7 +10,7 @@ export type PortfolioContent = {
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };
   experienceSection: { eyebrow: string; title: string; intro: string };
-  experience: { date: string; role: string; company: string; text: string; tags: string[]; now?: boolean }[];
+  experience: { date: string; role: string; company: string; text: string; tags: string[]; details?: string[]; now?: boolean }[];
   skillsSection: { eyebrow: string; title: string };
   skills: { heading: string; entries: string[] }[];
   credentialsSection: { eyebrow: string; title: string; intro: string };
@@ -46,8 +46,8 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   },
   experienceSection: { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." },
   experience: [
-    { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"], now: true },
-    { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] }
+    { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"], now: true },
+    { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", details: ["Developed patient, doctor, and consultation management workflows for an internal healthcare application.", "Created interactive reporting dashboards that helped hospital administrators review operational information.", "Worked with Symfony 7, Twig, PostgreSQL, Docker, and Linux in a structured full-stack environment."], tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] }
   ],
   skillsSection: { eyebrow: "Toolbox", title: "Skills, sorted by the systems\nthey help keep running." },
   skills: [
@@ -77,3 +77,13 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   contact: { eyebrow: "Let's Talk", title: "Have an infrastructure challenge?\nLet's solve it.", intro: "Open to internship, graduate, and engineering opportunities in cloud infrastructure, networking, Linux systems, and secure deployment.", location: "Tunis, Tunisia · open to remote", submitLabel: "Send message" },
   footer: "© 2026 Fedi Nasri · Crafted with care in Tunis"
 };
+
+export function hydrateExperienceDetails(content: PortfolioContent): PortfolioContent {
+  return {
+    ...content,
+    experience: content.experience.map((experience) => {
+      const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
+      return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
+    }),
+  };
+}

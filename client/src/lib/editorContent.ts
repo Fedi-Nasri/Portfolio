@@ -78,6 +78,7 @@ export function createExperienceTemplate(): PortfolioContent["experience"][numbe
     role: "New experience title",
     company: "Company / organisation",
     text: "Describe the work, outcome, and tools you used in this experience.",
+    details: ["Describe a key responsibility, delivery, or measurable outcome."],
     tags: ["New tag"],
   };
 }
@@ -100,6 +101,19 @@ export function removeExperienceTag(source: PortfolioContent, experienceIndex: n
   const experience = source.experience[experienceIndex];
   if (!experience || tagIndex < 0 || tagIndex >= experience.tags.length) return source;
   return updateAtPath(source, ["experience", experienceIndex, "tags"], experience.tags.filter((_, index) => index !== tagIndex));
+}
+
+export function appendExperienceDetail(source: PortfolioContent, experienceIndex: number, detail = "New experience detail"): PortfolioContent {
+  const experience = source.experience[experienceIndex];
+  if (!experience) return source;
+  return updateAtPath(source, ["experience", experienceIndex, "details"], [...(experience.details ?? []), detail]);
+}
+
+export function removeExperienceDetail(source: PortfolioContent, experienceIndex: number, detailIndex: number): PortfolioContent {
+  const experience = source.experience[experienceIndex];
+  const details = experience?.details ?? [];
+  if (!experience || detailIndex < 0 || detailIndex >= details.length) return source;
+  return updateAtPath(source, ["experience", experienceIndex, "details"], details.filter((_, index) => index !== detailIndex));
 }
 
 export function createSkillToolbox(): PortfolioContent["skills"][number] {

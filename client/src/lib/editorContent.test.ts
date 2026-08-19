@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -34,7 +34,7 @@ describe("Experience quick additions", () => {
     const withTag = appendExperienceTag(above, 0);
 
     expect(above.experience).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.experience.length + 1);
-    expect(above.experience[0]).toMatchObject({ date: "MONTH — YEAR", role: "New experience title", tags: ["New tag"] });
+    expect(above.experience[0]).toMatchObject({ date: "MONTH — YEAR", role: "New experience title", details: ["Describe a key responsibility, delivery, or measurable outcome."], tags: ["New tag"] });
     expect(below.experience[1]?.role).toBe("New experience title");
     expect(withTag.experience[0]?.tags).toEqual(["New tag", "New tag"]);
     expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(2);
@@ -53,6 +53,16 @@ describe("Experience quick additions", () => {
 
     expect(removeExperienceTag(DEFAULT_PORTFOLIO_CONTENT, 0, 1).experience[0]?.tags).not.toContain("Flask");
     expect(removeExperienceTag(withOneTag, 0, 0).experience[0]?.tags).toEqual([]);
+  });
+
+  it("adds and removes expandable Experience detail bullets, including the final detail", () => {
+    const withDetail = appendExperienceDetail(DEFAULT_PORTFOLIO_CONTENT, 0);
+    const withOneDetail = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    withOneDetail.experience[0]!.details = ["Only detail"];
+
+    expect(withDetail.experience[0]?.details?.at(-1)).toBe("New experience detail");
+    expect(removeExperienceDetail(withDetail, 0, (withDetail.experience[0]?.details.length ?? 1) - 1).experience[0]?.details).toEqual(DEFAULT_PORTFOLIO_CONTENT.experience[0]?.details);
+    expect(removeExperienceDetail(withOneDetail, 0, 0).experience[0]?.details).toEqual([]);
   });
 
   it("adds and removes toolbox categories and individual tools safely", () => {

@@ -403,3 +403,10 @@
 
 - [x] Add an active-Home editor action that restores all four focus cards to the default saved arrangement.
 - [x] Verify the reset action leaves other draft content unchanged, supports a subsequent drag, and passes desktop/mobile, tests, and production build checks before checkpointing.
+
+## Expandable Experience Details
+
+- [x] Add a right-aligned View details / Hide details control to each public and editable Experience entry.
+- [x] Add expandable per-entry detail bullet points using the existing portfolio visual system.
+- [x] Add direct `/edit` controls to add, edit, and delete detail bullet points for every Experience entry.
+- [x] Verify public expansion, editor management, draft persistence, responsive presentation, tests, and production build before checkpointing.
