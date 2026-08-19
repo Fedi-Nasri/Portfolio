@@ -1,8 +1,13 @@
+export type FocusPosition = { x: number; y: number };
+
+export const DEFAULT_FOCUS_POSITIONS: FocusPosition[] = [{ x: 4, y: 6 }, { x: 47, y: 22 }, { x: 47, y: 66 }, { x: 6, y: 66 }];
+export const createDefaultFocusPositions = (): FocusPosition[] => DEFAULT_FOCUS_POSITIONS.map(({ x, y }) => ({ x, y }));
+
 export type PortfolioContent = {
   sectionOrder?: string[];
   customSections?: { id: string; eyebrow: string; title: string; body: string }[];
   navigation: { home: string; experience: string; skills: string; certifications: string; projects: string; writing: string; about: string; contact: string };
-  hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: { x: number; y: number }[] };
+  hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[]; focusPositions?: FocusPosition[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };
   experienceSection: { eyebrow: string; title: string; intro: string };
   experience: { date: string; role: string; company: string; text: string; tags: string[]; now?: boolean }[];
@@ -31,7 +36,7 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     hello: "Hello, I'm", firstName: "Fedi", lastName: "NASRI.", role: "Cloud & Network Engineer", location: "Tunis, TN",
     blurb: "Computer Engineering Master's student specialising in cloud infrastructure, networking, Linux systems, and secure deployment. I build reliable systems from network design to deployed services.",
     email: "fedinasri.fsb@gmail.com", phone: "+216 95730139", githubUrl: "https://github.com/Fedi-Nasri", linkedInUrl: "https://www.linkedin.com/in/fedinasri", portraitUrl: "/manus-storage/1759348095958_6c4dcf4b.jpeg",
-    focusAreas: ["Cloud", "DevOps", "DevSecOps", "Security & Networking"], focusVisuals: ["", "", "", ""], focusPositions: [{ x: 4, y: 6 }, { x: 47, y: 22 }, { x: 47, y: 66 }, { x: 6, y: 66 }]
+    focusAreas: ["Cloud", "DevOps", "DevSecOps", "Security & Networking"], focusVisuals: ["", "", "", ""], focusPositions: createDefaultFocusPositions()
   },
   about: {
     eyebrow: "About", title: "A systems-focused engineer\nconnecting every layer of the stack.",

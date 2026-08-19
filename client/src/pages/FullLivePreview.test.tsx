@@ -75,6 +75,14 @@ describe("FullLivePreview", () => {
     expect(inactiveHtml).not.toContain("Drag DevOps card");
   });
 
+  it("shows the reset card layout action only while Home editing is active", () => {
+    const activeHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(activeHtml).toContain("Reset card layout");
+    expect(inactiveHtml).not.toContain("Reset card layout");
+  });
+
   it("writes direct preview text edits to the selected content path", () => {
     const changes: Array<{ path: unknown; value: string }> = [];
     const text = EditableText({ value: "Before", path: ["hero", "blurb"], section: "home", activeSection: "home", activePath: "", onSection: () => {}, onSelect: () => {}, onChange: (path, value) => changes.push({ path, value }) });

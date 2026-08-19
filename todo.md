@@ -398,3 +398,8 @@
 
 - [x] Prevent the Home focus-card visual-replacement control from obscuring artwork or labels while a card is being repositioned.
 - [x] Verify focus-card dragging and replacement controls on desktop and mobile, then run tests and a production build before checkpointing.
+
+## Focus-Card Layout Reset
+
+- [x] Add an active-Home editor action that restores all four focus cards to the default saved arrangement.
+- [x] Verify the reset action leaves other draft content unchanged, supports a subsequent drag, and passes desktop/mobile, tests, and production build checks before checkpointing.
