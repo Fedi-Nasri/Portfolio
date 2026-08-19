@@ -393,3 +393,8 @@
 - [x] Add direct pointer drag controls for focus cards in the active Home editor preview.
 - [x] Apply saved focus-card placement to the public desktop hero after Save draft and Publish, while preserving a readable mobile fallback.
 - [x] Verify drag interactions, saved placement, public rendering, responsive behavior, tests, and production build before checkpointing.
+
+## Focus-Card Overlay Repair
+
+- [x] Prevent the Home focus-card visual-replacement control from obscuring artwork or labels while a card is being repositioned.
+- [x] Verify focus-card dragging and replacement controls on desktop and mobile, then run tests and a production build before checkpointing.

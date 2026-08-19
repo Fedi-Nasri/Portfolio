@@ -1,4 +1,5 @@
 import React from "react";
+import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
@@ -49,6 +50,17 @@ describe("FullLivePreview", () => {
     expect(html).toContain("hero-role-stack live-hero-role-stack");
     expect((html.match(/Replace SVG/g) ?? []).length).toBe(4);
     expect(html).toContain("Upload image");
+  });
+
+  it("keeps the active focus-visual replacement control compact so it cannot cover the artwork", () => {
+    const stylesheet = readFileSync(new URL("./full-live-preview.css", import.meta.url), "utf8");
+    const focusControlRule = stylesheet.match(/\.live-reference-hero \.focus-asset-upload \{[^}]+\}/)?.[0] ?? "";
+
+    expect(focusControlRule).toContain("width:26px");
+    expect(focusControlRule).toContain("height:26px");
+    expect(focusControlRule).toContain("top:8px");
+    expect(focusControlRule).toContain("right:8px");
+    expect(focusControlRule).not.toContain("inset:0");
   });
 
   it("renders draggable Home focus-card handles with saved coordinate styling only when Home is active", () => {
