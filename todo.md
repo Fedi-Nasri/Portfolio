@@ -519,3 +519,12 @@
 - [x] Add in-preview zoom controls that work alongside the focal-point picker.
 - [x] Add a Reset position action that clears a project’s custom focal point and returns its crop to centre.
 - [x] Verify zoom, reset, public rendering, responsive behavior, tests, and production build before checkpointing.
+
+## Project Image Crop and Frame Controls
+
+- [x] Prevent zoom-out from revealing blank space by enforcing the fitted image size as the minimum zoom.
+- [x] Add precise zoom plus/minus controls, mouse-wheel zooming, and keyboard adjustment for image position.
+- [x] Add saved project-image aspect-ratio choices for portrait, square, standard, and widescreen frames.
+- [x] Add a directly resizable image frame with an accessible resize handle and saved dimensions.
+- [x] Apply saved crop, ratio, and frame dimensions consistently in public and editable project rows.
+- [x] Verify crop safety, interactions, responsive behavior, tests, and production build before checkpointing.
