@@ -535,3 +535,9 @@
 - [x] Present project image controls in a responsive, non-intrusive overlay or drawer.
 - [x] Restore consistent media sizing and vertical alignment in public and editable Selected Work rows.
 - [x] Verify desktop/mobile layout, regression tests, and production build before checkpointing.
+
+## Reversed Project Media Inset
+
+- [x] Add balanced inner spacing to right-aligned project media in alternating Selected Work rows.
+- [x] Preserve matching media dimensions and readable text width in public and editable previews.
+- [x] Verify desktop/mobile balance, tests, and production build before checkpointing.
