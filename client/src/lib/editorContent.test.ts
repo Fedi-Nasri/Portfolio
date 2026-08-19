@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendCustomPortfolioSection, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -159,5 +159,34 @@ describe("Writing & Insights management", () => {
     expect(moved.writing[0]!.title).toBe(DEFAULT_PORTFOLIO_CONTENT.writing[1]!.title);
     expect(removeWritingArticle(DEFAULT_PORTFOLIO_CONTENT, 0).writing).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.writing.length - 1);
     expect(removeWritingArticle(single, 0).writing).toEqual(single.writing);
+  });
+});
+
+describe("Portfolio section management", () => {
+  it("persists safe section ordering while keeping Home fixed at the top", () => {
+    const moved = movePortfolioSection(DEFAULT_PORTFOLIO_CONTENT, "about", 1);
+
+    expect(getPortfolioSectionOrder(moved).slice(0, 3)).toEqual(["home", "experience", "about"]);
+    expect(movePortfolioSection(DEFAULT_PORTFOLIO_CONTENT, "home", 1)).toBe(DEFAULT_PORTFOLIO_CONTENT);
+  });
+
+  it("removes and restores an optional built-in section around the contact position", () => {
+    const removed = removePortfolioSection(DEFAULT_PORTFOLIO_CONTENT, "writing");
+    const restored = addPortfolioSection(removed, "writing");
+
+    expect(getPortfolioSectionOrder(removed)).not.toContain("writing");
+    expect(getPortfolioSectionOrder(restored).at(-2)).toBe("writing");
+    expect(getPortfolioSectionOrder(restored).at(-1)).toBe("contact");
+  });
+
+  it("adds a complete custom section template and removes its data when deleted", () => {
+    const withCustom = appendCustomPortfolioSection(DEFAULT_PORTFOLIO_CONTENT);
+    const customId = withCustom.customSections?.[0]?.id ?? "";
+    const withoutCustom = removePortfolioSection(withCustom, customId);
+
+    expect(withCustom.customSections?.[0]).toMatchObject({ id: "custom-1", eyebrow: "New section", title: "A new portfolio section" });
+    expect(getPortfolioSectionOrder(withCustom).at(-2)).toBe("custom-1");
+    expect(withoutCustom.customSections).toEqual([]);
+    expect(getPortfolioSectionOrder(withoutCustom)).not.toContain("custom-1");
   });
 });

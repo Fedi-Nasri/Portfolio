@@ -378,3 +378,11 @@
 - [x] Rebuild the public Contact section using the structured heading-and-contact-card composition from the editable preview.
 - [x] Preserve direct email, phone, location, LinkedIn, and GitHub actions within the refined layout.
 - [x] Verify desktop/mobile layout parity, automated tests, and production build before checkpointing.
+
+## Portfolio Section Management Controls
+
+- [x] Add persistent section ordering so the public portfolio and `/edit` preview use the same saved sequence.
+- [x] Add move-up and move-down controls to reorder eligible sections from the live editor.
+- [x] Add an optional-section template workflow for inserting a new portfolio section into the chosen position.
+- [x] Add safe deletion controls for removable sections while preserving essential structural sections.
+- [x] Verify section ordering, insertion, deletion safeguards, draft/publish persistence, public rendering, responsive behavior, tests, and production build before checkpointing.

@@ -1,4 +1,6 @@
 export type PortfolioContent = {
+  sectionOrder?: string[];
+  customSections?: { id: string; eyebrow: string; title: string; body: string }[];
   navigation: { home: string; experience: string; skills: string; certifications: string; projects: string; writing: string; about: string; contact: string };
   hero: { hello: string; firstName: string; lastName: string; role: string; location: string; blurb: string; email: string; phone: string; githubUrl: string; linkedInUrl: string; portraitUrl: string; focusAreas: string[]; focusVisuals?: string[] };
   about: { eyebrow: string; title: string; paragraphs: string[]; tags: string[]; stats: { value: string; label: string }[] };
@@ -17,7 +19,13 @@ export type PortfolioContent = {
   footer: string;
 };
 
+export const PORTFOLIO_SECTION_IDS = ["home", "about", "experience", "skills", "certifications", "capabilities", "projects", "writing", "contact"] as const;
+export type PortfolioSectionId = (typeof PORTFOLIO_SECTION_IDS)[number];
+export const DEFAULT_SECTION_ORDER: PortfolioSectionId[] = ["home", "about", "experience", "skills", "certifications", "capabilities", "projects", "writing", "contact"];
+
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
+  sectionOrder: [...DEFAULT_SECTION_ORDER],
+  customSections: [],
   navigation: { home: "Home", experience: "Experience", skills: "Skills", certifications: "Certifications", projects: "Projects", writing: "Writing", about: "About", contact: "Let's talk" },
   hero: {
     hello: "Hello, I'm", firstName: "Fedi", lastName: "NASRI.", role: "Cloud & Network Engineer", location: "Tunis, TN",

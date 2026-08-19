@@ -1,4 +1,4 @@
-import type { PortfolioContent } from "@shared/portfolio";
+import { DEFAULT_SECTION_ORDER, PORTFOLIO_SECTION_IDS, type PortfolioContent, type PortfolioSectionId } from "@shared/portfolio";
 
 export type ContentPath = (string | number)[];
 
@@ -237,6 +237,66 @@ export function createWritingArticleTemplate(): PortfolioContent["writing"][numb
 
 export function appendWritingArticle(source: PortfolioContent): PortfolioContent {
   return updateAtPath(source, ["writing"], [...source.writing, createWritingArticleTemplate()]);
+}
+
+function insertBeforeContact(order: string[], sectionId: string): string[] {
+  const contactIndex = order.indexOf("contact");
+  const insertionIndex = contactIndex >= 0 ? contactIndex : order.length;
+  const next = [...order];
+  next.splice(insertionIndex, 0, sectionId);
+  return next;
+}
+
+export function getPortfolioSectionOrder(source: PortfolioContent): string[] {
+  if (!source.sectionOrder) return [...DEFAULT_SECTION_ORDER];
+  const validIds = new Set<string>([...PORTFOLIO_SECTION_IDS, ...(source.customSections ?? []).map((section) => section.id)]);
+  return source.sectionOrder.filter((sectionId, index, order) => validIds.has(sectionId) && order.indexOf(sectionId) === index);
+}
+
+export function movePortfolioSection(source: PortfolioContent, sectionId: string, direction: -1 | 1): PortfolioContent {
+  const order = getPortfolioSectionOrder(source);
+  const index = order.indexOf(sectionId);
+  const destination = index + direction;
+  if (sectionId === "home" || index < 0 || destination < 1 || destination >= order.length) return source;
+  [order[index], order[destination]] = [order[destination]!, order[index]!];
+  return updateAtPath(source, ["sectionOrder"], order);
+}
+
+export function removePortfolioSection(source: PortfolioContent, sectionId: string): PortfolioContent {
+  if (sectionId === "home") return source;
+  const order = getPortfolioSectionOrder(source);
+  if (!order.includes(sectionId)) return source;
+  const next = updateAtPath(source, ["sectionOrder"], order.filter((candidate) => candidate !== sectionId));
+  if (!sectionId.startsWith("custom-")) return next;
+  return { ...next, customSections: (next.customSections ?? []).filter((section) => section.id !== sectionId) };
+}
+
+export function addPortfolioSection(source: PortfolioContent, sectionId: PortfolioSectionId): PortfolioContent {
+  const order = getPortfolioSectionOrder(source);
+  if (order.includes(sectionId)) return source;
+  return updateAtPath(source, ["sectionOrder"], insertBeforeContact(order, sectionId));
+}
+
+export function createCustomSectionTemplate(id: string): NonNullable<PortfolioContent["customSections"]>[number] {
+  return {
+    id,
+    eyebrow: "New section",
+    title: "A new portfolio section",
+    body: "Add the context, result, or story you want visitors to see here.",
+  };
+}
+
+export function appendCustomPortfolioSection(source: PortfolioContent): PortfolioContent {
+  const existing = source.customSections ?? [];
+  let number = existing.length + 1;
+  let id = `custom-${number}`;
+  while (existing.some((section) => section.id === id)) {
+    number += 1;
+    id = `custom-${number}`;
+  }
+  const customSections = [...existing, createCustomSectionTemplate(id)];
+  const sectionOrder = insertBeforeContact(getPortfolioSectionOrder(source), id);
+  return { ...source, customSections, sectionOrder };
 }
 
 export function removeWritingArticle(source: PortfolioContent, articleIndex: number): PortfolioContent {

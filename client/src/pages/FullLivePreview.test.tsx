@@ -21,6 +21,19 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Toggle navigation");
   });
 
+  it("renders section ordering controls and an editable custom-section template", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.customSections = [{ id: "custom-1", eyebrow: "New section", title: "Custom focus", body: "Custom section copy" }];
+    content.sectionOrder = [...(content.sectionOrder ?? []), "custom-1"];
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSection={() => {}} onAddCustomSection={() => {}} onMoveSection={() => {}} onRemoveSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("Portfolio layout");
+    expect(html).toContain("Add custom section");
+    expect(html).toContain("Move About section up");
+    expect(html).toContain("Delete About section");
+    expect(html).toContain("Custom focus");
+  });
+
   it("enables in-place text editing only for the active preview section", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="hero.blurb" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain('contentEditable="true"');
