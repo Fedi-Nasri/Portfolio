@@ -512,3 +512,10 @@
 - [x] Add an in-preview image focal-point picker that lets the user position the crop cursor over an image.
 - [x] Apply the saved focal point to project-image cropping in both public and editable previews.
 - [x] Verify focal-point editing, persistence, responsive behavior, tests, and production build before checkpointing.
+
+## Selected Work Image Zoom and Reset
+
+- [x] Add a persisted per-project image zoom level with safe default sizing.
+- [x] Add in-preview zoom controls that work alongside the focal-point picker.
+- [x] Add a Reset position action that clears a project’s custom focal point and returns its crop to centre.
+- [x] Verify zoom, reset, public rendering, responsive behavior, tests, and production build before checkpointing.

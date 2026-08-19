@@ -73,10 +73,13 @@ describe("FullLivePreview", () => {
   it("uses a saved focal point to crop a project image and exposes the positioning control", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.projects[0]!.imageFocus = { x: 22, y: 74 };
+    content.projects[0]!.imageZoom = 1.35;
     const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
     expect(html).toContain("object-position:22% 74%");
+    expect(html).toContain("scale(1.35)");
     expect(html).toContain("Position image");
+    expect(html).toContain("Reset position");
   });
 
   it("enables in-place text editing only for the active preview section", () => {
