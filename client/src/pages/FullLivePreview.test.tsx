@@ -11,6 +11,16 @@ describe("FullLivePreview", () => {
     expect((html.match(/live-section-hoverbar/g) ?? []).length).toBe(10);
   });
 
+  it("uses the public navigation structure with a separate action group and compact call-to-action", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("live-public-header");
+    expect(html).toContain("ref-header-actions");
+    expect(html).toContain("tone-toggle");
+    expect(html).toContain("talk-button");
+    expect(html).toContain("Toggle navigation");
+  });
+
   it("enables in-place text editing only for the active preview section", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="hero.blurb" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain('contentEditable="true"');

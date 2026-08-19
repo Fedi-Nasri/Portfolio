@@ -360,3 +360,9 @@
 - [x] Keep the article category, read-time, and action button in a protected right-side metadata column on desktop, even for long titles.
 - [x] Preserve readable title wrapping in the left content column without allowing it to push metadata below the title.
 - [x] Preserve the intentional stacked mobile metadata layout and verify editor controls, tests, and production build before checkpointing.
+
+## Public-Style Editable Navigation Header
+
+- [x] Align the `/edit` navigation header structure, spacing, and label placement with the public portfolio view.
+- [x] Restore the public header’s separate compact theme control and compact Let’s talk call-to-action treatment in `/edit`.
+- [x] Verify desktop/mobile header parity, keyboard interaction, tests, and production build before checkpointing.
