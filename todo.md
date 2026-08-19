@@ -528,3 +528,10 @@
 - [x] Add a directly resizable image frame with an accessible resize handle and saved dimensions.
 - [x] Apply saved crop, ratio, and frame dimensions consistently in public and editable project rows.
 - [x] Verify crop safety, interactions, responsive behavior, tests, and production build before checkpointing.
+
+## Project Image Control Layout Repair
+
+- [x] Remove project image controls from the editor workspace flow so they cannot squeeze the live preview.
+- [x] Present project image controls in a responsive, non-intrusive overlay or drawer.
+- [x] Restore consistent media sizing and vertical alignment in public and editable Selected Work rows.
+- [x] Verify desktop/mobile layout, regression tests, and production build before checkpointing.
