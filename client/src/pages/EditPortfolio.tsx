@@ -1,6 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import "./edit-extensions.css";
-import { addProjectCaseStudyBlock as addProjectCaseStudyBlockToDraft, appendAboutStat, appendAboutTag, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, readAtPath, removeAboutStat as removeAboutStatAtIndex, removeAboutTag as removeAboutTagAtIndex, removeExperienceTag as removeExperienceTagAtIndex, removeListItem, removeProject as removeProjectFromDraft, removeProjectCaseStudyBlock as removeProjectCaseStudyBlockFromDraft, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, updateAtPath, type ContentPath, type ProjectCaseStudyBlock } from "@/lib/editorContent";
+import { addProjectCaseStudyBlock as addProjectCaseStudyBlockToDraft, appendAboutStat, appendAboutTag, appendCertificate, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, readAtPath, removeAboutStat as removeAboutStatAtIndex, removeAboutTag as removeAboutTagAtIndex, removeCertificate, removeExperienceTag as removeExperienceTagAtIndex, removeListItem, removeProject as removeProjectFromDraft, removeProjectCaseStudyBlock as removeProjectCaseStudyBlockFromDraft, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, updateAtPath, type ContentPath, type ProjectCaseStudyBlock } from "@/lib/editorContent";
 import type { PortfolioContent } from "@shared/portfolio";
 import FullLivePreview, { type PreviewSection } from "./FullLivePreview";
 import { toast } from "sonner";
@@ -105,6 +105,8 @@ function EditWorkspace() {
   const deleteProjectDelivery = (projectIndex: number, deliveryIndex: number) => { if (!draft) return; setDraft(removeProjectDelivery(draft, projectIndex, deliveryIndex)); setActiveSection("projects"); setActivePath(""); toast.message("Delivery item removed from this draft. Reset to undo it."); };
   const addProjectCaseStudyBlock = (projectIndex: number, block: ProjectCaseStudyBlock) => { if (!draft) return; setDraft(addProjectCaseStudyBlockToDraft(draft, projectIndex, block)); setActiveSection("projects"); setActivePath(`projects.${projectIndex}.${block}`); toast.success("Case-study block added"); };
   const deleteProjectCaseStudyBlock = (projectIndex: number, block: ProjectCaseStudyBlock) => { if (!draft) return; setDraft(removeProjectCaseStudyBlockFromDraft(draft, projectIndex, block)); setActiveSection("projects"); setActivePath(""); toast.message("Case-study block removed from this draft. Reset to undo it."); };
+  const addCertificate = () => { if (!draft) return; const certificateIndex = draft.certifications.length; setDraft(appendCertificate(draft)); setActiveSection("certifications"); setActivePath(`certifications.${certificateIndex}.name`); toast.success("Editable certificate template added"); };
+  const deleteCertificate = (certificateIndex: number) => { if (!draft) return; if (draft.certifications.length <= 1) { toast.message("Keep at least one certificate."); return; } setDraft(removeCertificate(draft, certificateIndex)); setActiveSection("certifications"); setActivePath(""); toast.message("Certificate removed from this draft. Reset to undo it."); };
   const handleAssetUpload = async (file: File, category: "portrait" | "focus-visual", focusIndex?: number) => {
     if (!draft) return;
     const target = category === "portrait" ? "portrait" : `focus-${focusIndex}`;
@@ -133,6 +135,32 @@ function EditWorkspace() {
       setUploadingAsset(null);
     }
   };
+  const handleCertificatePdfUpload = async (file: File, certificateIndex: number) => {
+    if (!draft) return;
+    try {
+      setUploadingAsset(`certificate-pdf-${certificateIndex}`);
+      const uploaded = await uploadAsset.mutateAsync({ fileName: file.name, contentType: file.type, base64: await fileToBase64(file), category: "certificate-pdf" });
+      setDraft(updateAtPath(draft, ["certifications", certificateIndex, "pdf"], uploaded.url));
+      toast.success("Certificate PDF uploaded to this draft");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "PDF upload failed. Try another PDF.");
+    } finally {
+      setUploadingAsset(null);
+    }
+  };
+  const handleProviderLogoUpload = async (file: File, certificateIndex: number) => {
+    if (!draft) return;
+    try {
+      setUploadingAsset(`provider-logo-${certificateIndex}`);
+      const uploaded = await uploadAsset.mutateAsync({ fileName: file.name, contentType: file.type, base64: await fileToBase64(file), category: "provider-logo" });
+      setDraft(updateAtPath(draft, ["certifications", certificateIndex, "providerLogo"], uploaded.url));
+      toast.success("Provider logo uploaded to this draft");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Logo upload failed. Try another image.");
+    } finally {
+      setUploadingAsset(null);
+    }
+  };
   const resetToSaved = () => { if (!editorQuery.data?.content) return; setDraft(structuredClone(editorQuery.data.content)); setSelection(null); toast.success("Draft reset to the last saved version"); };
   const selectPath = (path: PathSegment[], start = 0, end = 0) => { setActivePath(pathKey(path)); setSelection(start !== end ? { path, start, end } : null); };
   const selectPreviewPath = (path: ContentPath) => selectPath(path);
@@ -151,7 +179,7 @@ function EditWorkspace() {
 
   return <div className="editor-shell">
     <header className="editor-topbar"><div><span>Fedi Nasri · direct workspace</span><h1>Portfolio editor</h1></div><div className="editor-topbar-actions"><a className="editor-back-link" href="/">View public site</a><span className={`editor-save-state${contentChanged ? " has-changes" : ""}`}>{contentChanged ? "Unsaved changes" : "Saved draft"}</span>{contentChanged && <button type="button" className="editor-reset" onClick={resetToSaved}><RotateCcw size={14} /> Reset</button>}<button type="button" className="editor-button secondary" onClick={() => saveDraft.mutate({ content: draft })} disabled={saveDraft.isPending}><Save size={15} /> Save draft</button><button type="button" className="editor-button" onClick={() => setPublishOpen(true)} disabled={publish.isPending}><Upload size={15} /> Publish</button></div></header>
-    <div className="editor-workspace inspector-free"><main className="editor-canvas full-preview-canvas"><FullLivePreview content={draft} activeSection={activeSection} activePath={activePath} onSection={setActiveSection} onChange={handleChange} onSelect={selectPreviewPath} onAddTag={addAboutTag} onAddStat={addAboutStat} onRemoveAboutTag={deleteAboutTag} onRemoveAboutStat={deleteAboutStat} onInsertExperience={insertExperience} onAddExperienceTag={addExperienceTag} onRemoveExperience={removeExperience} onRemoveExperienceTag={removeExperienceTag} onAddSkillToolbox={addSkillToolbox} onAddSkillTool={addSkillTool} onRemoveSkillTool={deleteSkillTool} onRemoveSkillToolbox={deleteSkillToolbox} onAddProject={addProject} onInsertProject={insertProject} onMoveProject={moveProject} onRemoveProject={deleteProject} onAddProjectTech={addProjectTech} onRemoveProjectTech={deleteProjectTech} onAddProjectDelivery={addProjectDelivery} onRemoveProjectDelivery={deleteProjectDelivery} onAddProjectCaseStudyBlock={addProjectCaseStudyBlock} onRemoveProjectCaseStudyBlock={deleteProjectCaseStudyBlock} onUploadProjectImage={handleProjectImageUpload} onUploadAsset={handleAssetUpload} uploadingAsset={uploadingAsset} /></main></div>
+    <div className="editor-workspace inspector-free"><main className="editor-canvas full-preview-canvas"><FullLivePreview content={draft} activeSection={activeSection} activePath={activePath} onSection={setActiveSection} onChange={handleChange} onSelect={selectPreviewPath} onAddTag={addAboutTag} onAddStat={addAboutStat} onRemoveAboutTag={deleteAboutTag} onRemoveAboutStat={deleteAboutStat} onInsertExperience={insertExperience} onAddExperienceTag={addExperienceTag} onRemoveExperience={removeExperience} onRemoveExperienceTag={removeExperienceTag} onAddSkillToolbox={addSkillToolbox} onAddSkillTool={addSkillTool} onRemoveSkillTool={deleteSkillTool} onRemoveSkillToolbox={deleteSkillToolbox} onAddCertificate={addCertificate} onRemoveCertificate={deleteCertificate} onUploadCertificatePdf={handleCertificatePdfUpload} onUploadProviderLogo={handleProviderLogoUpload} onAddProject={addProject} onInsertProject={insertProject} onMoveProject={moveProject} onRemoveProject={deleteProject} onAddProjectTech={addProjectTech} onRemoveProjectTech={deleteProjectTech} onAddProjectDelivery={addProjectDelivery} onRemoveProjectDelivery={deleteProjectDelivery} onAddProjectCaseStudyBlock={addProjectCaseStudyBlock} onRemoveProjectCaseStudyBlock={deleteProjectCaseStudyBlock} onUploadProjectImage={handleProjectImageUpload} onUploadAsset={handleAssetUpload} uploadingAsset={uploadingAsset} /></main></div>
     {selection && <div className="editor-floating-tools" role="toolbar" aria-label="Selected text formatting"><span><Type size={15} /> Text tools</span><OutlineButton icon={Bold} label="Bold selected text" onClick={() => applyFormat("bold")} /><OutlineButton icon={Italic} label="Italic selected text" onClick={() => applyFormat("italic")} /><OutlineButton icon={Underline} label="Underline selected text" onClick={() => applyFormat("underline")} /><OutlineButton icon={ChevronDown} label="Smaller text token" onClick={() => applyFormat("small")} /><OutlineButton icon={Palette} label="Lead text token" onClick={() => applyFormat("lead")} /><button type="button" onClick={() => applyFormat("clear")}>Clear</button></div>}
     {publishOpen && <div className="editor-confirm-overlay" role="dialog" aria-modal="true" aria-label="Confirm portfolio publish"><div><span>Publish portfolio</span><h2>Make this draft live?</h2><p>Your public portfolio will start using this content immediately. The current published version is kept in version history.</p><footer><button type="button" className="editor-button secondary" onClick={() => setPublishOpen(false)}>Cancel</button><button type="button" className="editor-button" onClick={() => publish.mutate({ content: draft })} disabled={publish.isPending}>{publish.isPending ? "Publishing…" : "Publish changes"}</button></footer></div></div>}
   </div>;

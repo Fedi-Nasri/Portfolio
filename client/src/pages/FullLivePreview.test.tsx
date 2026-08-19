@@ -84,6 +84,35 @@ describe("FullLivePreview", () => {
     expect(html).toContain('contentEditable="true"');
   });
 
+  it("shows certificate template, PDF, link, branding, and guarded deletion controls while Certifications is active", () => {
+    const single = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    single.certifications = [single.certifications[0]!];
+    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(<FullLivePreview content={single} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddCertificate={() => {}} onRemoveCertificate={() => {}} onUploadCertificatePdf={() => {}} onUploadProviderLogo={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(inactive).not.toContain("Add certificate");
+    expect(active).toContain("Add certificate");
+    expect(active).toContain("Credential link");
+    expect(active).toContain("Upload logo");
+    expect(active).toContain("Upload PDF");
+    expect(active).toContain("Delete certificate");
+    expect(active).toContain('class="certificate-delete-button" disabled=""');
+  });
+
+  it("renders extended Cloud and DevOps provider text-logo treatments, including Coursera and KodeKloud", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.certifications[0]!.provider = "coursera";
+    content.certifications[1]!.provider = "kodekloud";
+    content.certifications[2]!.provider = "aws";
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("coursera-mark");
+    expect(html).toContain("kodekloud-mark");
+    expect(html).toContain("aws-mark");
+    expect(html).toContain("coursera");
+    expect(html).toContain("KodeKloud");
+  });
+
   it("shows Selected Work template, image, metadata, case-study, ordering, and deletion controls only while projects are active", () => {
     const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddProject={() => {}} onInsertProject={() => {}} onMoveProject={() => {}} onRemoveProject={() => {}} onAddProjectTech={() => {}} onRemoveProjectTech={() => {}} onAddProjectDelivery={() => {}} onRemoveProjectDelivery={() => {}} onAddProjectCaseStudyBlock={() => {}} onRemoveProjectCaseStudyBlock={() => {}} onUploadProjectImage={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);

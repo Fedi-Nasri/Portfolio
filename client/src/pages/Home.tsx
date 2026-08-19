@@ -14,9 +14,13 @@ import { RichText } from "@/components/RichText";
 type Certification = PortfolioContent["certifications"][number];
 type WritingPost = PortfolioContent["writing"][number];
 
-function ProviderMark({ provider }: { provider: Certification["provider"] }) {
-  if (provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
-  return <div className={`cert-provider-mark ${provider}-mark`} aria-label={provider === "cisco" ? "Cisco" : "IBM"}><span>{provider === "cisco" ? "CISCO" : "IBM"}</span></div>;
+const PROVIDER_LABELS: Record<string, string> = { aws: "aws", azure: "Microsoft Azure", cisco: "CISCO", cloudflare: "Cloudflare", comptia: "CompTIA", coursera: "coursera", docker: "docker", fortinet: "FORTINET", github: "GitHub", gitlab: "GitLab", "google-cloud": "Google Cloud", hashicorp: "HashiCorp", ibm: "IBM", isc2: "ISC2", jenkins: "Jenkins", kodekloud: "KodeKloud", kubernetes: "Kubernetes", "linux-foundation": "Linux Foundation", oracle: "ORACLE", redhat: "Red Hat", terraform: "Terraform" };
+
+function ProviderMark({ cert }: { cert: Certification }) {
+  if (cert.providerLogo) return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? cert.provider}><img src={cert.providerLogo} alt={`${cert.providerLabel ?? cert.provider} provider logo`} /></div>;
+  if (cert.provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><i /><i /><i /><i /></div>;
+  if (cert.provider === "custom") return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? "Provider"}><span>{cert.providerLabel ?? "Provider"}</span></div>;
+  return <div className={`cert-provider-mark ${cert.provider}-mark`} aria-label={PROVIDER_LABELS[cert.provider] ?? cert.provider}><span>{PROVIDER_LABELS[cert.provider] ?? cert.provider}</span></div>;
 }
 
 function TagList({ items }: { items: readonly string[] }) {
@@ -122,7 +126,7 @@ export default function Home() {
 
         <section id="skills" className="ref-section ref-skills"><SectionTitle eyebrow={content.skillsSection.eyebrow}><Multiline value={content.skillsSection.title} /></SectionTitle><div className="skills-ref-grid">{content.skills.map((skill) => <article key={skill.heading}><h3><RichText value={skill.heading} /></h3><TagList items={skill.entries} /></article>)}</div></section>
 
-        <section id="certifications" className="ref-section ref-certifications"><div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div><SectionTitle eyebrow={content.credentialsSection.eyebrow}><Multiline value={content.credentialsSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.credentialsSection.intro} /></p><div className="certifications-grid">{content.certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark provider={cert.provider} /><span><i /> Credential</span></div><h3><RichText value={cert.name} /></h3><p><RichText value={cert.issuer} /></p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span><RichText value={cert.scope} /></span><time><RichText value={cert.issued} /></time></div></article>)}</div></section>
+        <section id="certifications" className="ref-section ref-certifications"><div className="cert-mosaic" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div><SectionTitle eyebrow={content.credentialsSection.eyebrow}><Multiline value={content.credentialsSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.credentialsSection.intro} /></p><div className="certifications-grid">{content.certifications.map((cert) => <article className={`credential-card${cert.pdf ? " has-pdf" : ""}`} key={cert.name}><div className="credential-card-top"><ProviderMark cert={cert} /><span><i /> Credential</span></div><h3><RichText value={cert.name} /></h3><p><RichText value={cert.issuer} /></p>{cert.pdf && <button type="button" className="certificate-view-action" onClick={() => setActiveCertificate(cert)}>View certificate <ArrowRight size={13} /></button>}<div className="credential-meta"><span><RichText value={cert.scope} /></span><time><RichText value={cert.issued} /></time>{cert.url && <a className="credential-link" href={cert.url} target="_blank" rel="noreferrer">Credential link <ArrowRight size={12} /></a>}</div></article>)}</div></section>
 
         <section className="full-stack-ref"><div className="full-stack-top"><p><RichText value={content.capabilities.eyebrow} /></p><h2><Multiline value={content.capabilities.title} /></h2><span><RichText value={content.capabilities.description} /></span></div><div className="service-grid">{content.capabilities.services.map((service, index) => <article key={service.name}><span>0{index + 1}</span><h3><RichText value={service.name} /></h3><p><RichText value={service.description} /></p></article>)}</div></section>
 

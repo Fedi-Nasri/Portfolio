@@ -1,13 +1,21 @@
 import { storagePut } from "./storage";
 
 const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"]);
+const PDF_CONTENT_TYPE = "application/pdf";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const MAX_PDF_BYTES = 12 * 1024 * 1024;
+type PortfolioAssetCategory = "portrait" | "focus-visual" | "project-image" | "provider-logo" | "certificate-pdf";
 
-export async function uploadPortfolioImage(input: { fileName: string; contentType: string; base64: string; category: "portrait" | "focus-visual" | "project-image" }) {
-  if (!ACCEPTED_IMAGE_TYPES.has(input.contentType)) throw new Error("Use a JPG, PNG, WebP, GIF, or SVG image.");
+export async function uploadPortfolioAsset(input: { fileName: string; contentType: string; base64: string; category: PortfolioAssetCategory }) {
+  const isCertificatePdf = input.category === "certificate-pdf";
+  if (isCertificatePdf && input.contentType !== PDF_CONTENT_TYPE) throw new Error("Use a PDF document for a certificate.");
+  if (!isCertificatePdf && !ACCEPTED_IMAGE_TYPES.has(input.contentType)) throw new Error("Use a JPG, PNG, WebP, GIF, or SVG image.");
   const data = Buffer.from(input.base64, "base64");
-  if (!data.length || data.length > MAX_IMAGE_BYTES) throw new Error("Images must be smaller than 5 MB.");
-  const extension = input.contentType === "image/svg+xml" ? "svg" : input.contentType.split("/")[1] ?? "png";
-  const safeName = input.fileName.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48) || "portfolio-image";
+  const maximumBytes = isCertificatePdf ? MAX_PDF_BYTES : MAX_IMAGE_BYTES;
+  if (!data.length || data.length > maximumBytes) throw new Error(isCertificatePdf ? "Certificate PDFs must be smaller than 12 MB." : "Images must be smaller than 5 MB.");
+  const extension = isCertificatePdf ? "pdf" : input.contentType === "image/svg+xml" ? "svg" : input.contentType.split("/")[1] ?? "png";
+  const safeName = input.fileName.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48) || (isCertificatePdf ? "certificate" : "portfolio-image");
   return storagePut(`portfolio-editor/${input.category}/${safeName}.${extension}`, data, input.contentType);
 }
+
+export const uploadPortfolioImage = uploadPortfolioAsset;

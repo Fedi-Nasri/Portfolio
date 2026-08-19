@@ -200,3 +200,23 @@ export function removeProjectCaseStudyBlock(source: PortfolioContent, projectInd
 export function removeProject(source: PortfolioContent, projectIndex: number): PortfolioContent {
   return removeListItem(source, ["projects"], projectIndex);
 }
+
+export function createCertificateTemplate(): PortfolioContent["certifications"][number] {
+  return {
+    name: "New professional certificate",
+    provider: "custom",
+    providerLabel: "Provider",
+    issuer: "Issuing organisation",
+    issued: "Month YEAR",
+    scope: "Credential focus area",
+    url: "",
+  };
+}
+
+export function appendCertificate(source: PortfolioContent): PortfolioContent {
+  return updateAtPath(source, ["certifications"], [...source.certifications, createCertificateTemplate()]);
+}
+
+export function removeCertificate(source: PortfolioContent, certificateIndex: number): PortfolioContent {
+  return removeListItem(source, ["certifications"], certificateIndex);
+}

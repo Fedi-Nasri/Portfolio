@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, removeAboutStat, removeAboutTag, removeExperienceTag, removeListItem, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox } from "./editorContent";
+import { addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCertificate, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, duplicateListItem, insertExperienceTemplate, insertProjectTemplate, moveListItem, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceTag, removeListItem, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -121,5 +121,23 @@ describe("Selected Work project management", () => {
 
     expect(moved.projects[0]!.title).toBe(DEFAULT_PORTFOLIO_CONTENT.projects[1]!.title);
     expect(removeProject(single, 0).projects).toEqual(single.projects);
+  });
+});
+
+describe("Certifications management", () => {
+  it("adds a complete editable certificate template without mutating saved content", () => {
+    const withCertificate = appendCertificate(DEFAULT_PORTFOLIO_CONTENT);
+
+    expect(withCertificate.certifications).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.certifications.length + 1);
+    expect(withCertificate.certifications.at(-1)).toMatchObject({ name: "New professional certificate", provider: "custom", providerLabel: "Provider", url: "" });
+    expect(DEFAULT_PORTFOLIO_CONTENT.certifications).toHaveLength(5);
+  });
+
+  it("protects the final certificate while allowing a credential list with multiple items to shrink", () => {
+    const single = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    single.certifications = [single.certifications[0]!];
+
+    expect(removeCertificate(DEFAULT_PORTFOLIO_CONTENT, 0).certifications).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.certifications.length - 1);
+    expect(removeCertificate(single, 0).certifications).toEqual(single.certifications);
   });
 });

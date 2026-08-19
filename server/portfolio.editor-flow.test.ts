@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { duplicateListItem, insertProjectTemplate } from "../client/src/lib/editorContent";
+import { appendCertificate, duplicateListItem, insertProjectTemplate } from "../client/src/lib/editorContent";
 import type { TrpcContext } from "./_core/context";
 import { appRouter } from "./routers";
 
@@ -53,6 +53,35 @@ describe("direct editor save and publish flow", () => {
       const publicContent = await caller.portfolio.publicContent();
       expect(publicContent.projects.at(-1)?.title).toBe("Automated Selected Work verification");
       expect(publicContent.projects.at(-1)?.caseStudyBlocks).toEqual(["problem", "realization"]);
+    } finally {
+      await caller.portfolio.saveDraft({ content: original });
+      await caller.portfolio.publish({ content: original });
+    }
+  });
+
+  it("persists and publishes a managed certificate template, then restores the saved portfolio", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const original = (await caller.portfolio.editorContent()).content;
+    const changed = appendCertificate(original);
+    const certificateIndex = changed.certifications.length - 1;
+    changed.certifications[certificateIndex] = {
+      ...changed.certifications[certificateIndex]!,
+      name: "Automated certificate management verification",
+      provider: "custom",
+      providerLabel: "Verification Institute",
+      pdf: "/manus-storage/verification-certificate.pdf",
+      url: "https://example.com/credential",
+    };
+
+    try {
+      await caller.portfolio.saveDraft({ content: changed });
+      const saved = (await caller.portfolio.editorContent()).content;
+      expect(saved.certifications.at(-1)).toMatchObject({ name: "Automated certificate management verification", provider: "custom", providerLabel: "Verification Institute", pdf: "/manus-storage/verification-certificate.pdf", url: "https://example.com/credential" });
+
+      await caller.portfolio.publish({ content: changed });
+      const publicContent = await caller.portfolio.publicContent();
+      expect(publicContent.certifications.at(-1)?.name).toBe("Automated certificate management verification");
+      expect(publicContent.certifications.at(-1)?.url).toBe("https://example.com/credential");
     } finally {
       await caller.portfolio.saveDraft({ content: original });
       await caller.portfolio.publish({ content: original });

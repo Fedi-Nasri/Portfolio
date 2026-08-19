@@ -7,7 +7,7 @@ export type PortfolioContent = {
   skillsSection: { eyebrow: string; title: string };
   skills: { heading: string; entries: string[] }[];
   credentialsSection: { eyebrow: string; title: string; intro: string };
-  certifications: { name: string; provider: "cisco" | "ibm" | "microsoft"; issuer: string; issued: string; scope: string; pdf?: string; preview?: string }[];
+  certifications: { name: string; provider: "aws" | "azure" | "cisco" | "cloudflare" | "comptia" | "coursera" | "custom" | "docker" | "fortinet" | "github" | "gitlab" | "google-cloud" | "hashicorp" | "ibm" | "isc2" | "jenkins" | "kodekloud" | "kubernetes" | "linux-foundation" | "microsoft" | "oracle" | "redhat" | "terraform"; providerLabel?: string; providerLogo?: string; issuer: string; issued: string; scope: string; pdf?: string; preview?: string; url?: string }[];
   capabilities: { eyebrow: string; title: string; description: string; services: { name: string; description: string }[] };
   projectsSection: { eyebrow: string; title: string; intro: string; problemLabel: string; descriptionLabel: string; realizationLabel: string; techLabel: string; deliveryLabel: string };
   projects: { image: string; type: string; state: string; title: string; byline: string; problem: string; body: string; realization: string; tech: string[]; delivery: string[]; caseStudyBlocks?: ("problem" | "body" | "realization")[] }[];

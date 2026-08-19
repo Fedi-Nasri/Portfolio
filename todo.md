@@ -315,3 +315,20 @@
 - [x] Reuse the public Certifications heading, credential-card layout, provider marks, metadata, hover state, and certificate-view affordance in the active `/edit` preview.
 - [x] Preserve direct in-place editing for every available credential field inside the matched public composition.
 - [x] Verify public-layout parity, certificate viewing, desktop/mobile behavior, automated tests, and production build before checkpointing.
+
+## Certifications Management Controls
+
+- [x] Add a new editable certificate template from the active Certifications editor.
+- [x] Add direct certificate deletion controls while retaining at least one credential.
+- [x] Add per-certificate PDF upload with persisted storage URL and in-page viewer support.
+- [x] Add a direct editable external certificate link per credential.
+- [x] Add a per-certificate provider branding control supporting built-in Cisco, IBM, and Microsoft marks, a custom logo URL, or editable provider text.
+- [x] Centre incomplete certificate rows after the first five-card row on desktop and preserve responsive wrapping.
+- [x] Verify certificate management, saved draft and publish persistence, public rendering, desktop/mobile layout, tests, and production build before checkpointing.
+
+## Certificate Provider Brand Library
+
+- [x] Add curated Cloud, DevOps, security, container, networking, and infrastructure provider options to the editable certificate selector.
+- [x] Add distinct compact text-logo treatments for Coursera and KodeKloud alongside the established Cisco, IBM, and Microsoft marks.
+- [x] Preserve custom provider text and uploaded-logo options in both the public portfolio and live editor preview.
+- [x] Verify provider switching, desktop/mobile display, tests, and production build before checkpointing.
