@@ -386,3 +386,10 @@
 - [x] Add an optional-section template workflow for inserting a new portfolio section into the chosen position.
 - [x] Add safe deletion controls for removable sections while preserving essential structural sections.
 - [x] Verify section ordering, insertion, deletion safeguards, draft/publish persistence, public rendering, responsive behavior, tests, and production build before checkpointing.
+
+## Draggable Home Focus Cards
+
+- [x] Add persisted per-card placement coordinates for the four Home focus cards.
+- [x] Add direct pointer drag controls for focus cards in the active Home editor preview.
+- [x] Apply saved focus-card placement to the public desktop hero after Save draft and Publish, while preserving a readable mobile fallback.
+- [x] Verify drag interactions, saved placement, public rendering, responsive behavior, tests, and production build before checkpointing.

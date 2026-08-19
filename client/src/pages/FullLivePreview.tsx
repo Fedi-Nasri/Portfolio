@@ -1,8 +1,8 @@
 import React from "react";
 import { DEFAULT_SECTION_ORDER, PORTFOLIO_SECTION_IDS, type PortfolioContent, type PortfolioSectionId } from "@shared/portfolio";
 import type { ContentPath } from "@/lib/editorContent";
-import { ArrowDown, ArrowRight, ArrowUp, Check, Copy, Github, ImageUp, Linkedin, Mail, Menu, Moon, Pencil, Phone, Sparkles, Sun, Trash2, X } from "lucide-react";
-import { useState } from "react";
+import { ArrowDown, ArrowRight, ArrowUp, Check, Copy, Github, GripVertical, ImageUp, Linkedin, Mail, Menu, Moon, Pencil, Phone, Sparkles, Sun, Trash2, X } from "lucide-react";
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import "./full-live-preview.css";
 
 export type PreviewSection = "home" | "about" | "experience" | "skills" | "certifications" | "capabilities" | "projects" | "writing" | "contact" | "footer" | "custom";
@@ -17,7 +17,7 @@ type Props = {
   activeSection: PreviewSection | null;
   activePath: string;
   onSection: (section: PreviewSection) => void;
-  onChange: (path: ContentPath, value: string) => void;
+  onChange: (path: ContentPath, value: unknown) => void;
   onSelect: (path: ContentPath) => void;
   onAddTag: () => void;
   onAddStat: () => void;
@@ -107,9 +107,45 @@ export default function FullLivePreview({ content, activeSection, activePath, on
   const [activeArticleIndex, setActiveArticleIndex] = useState<number | null>(null);
   const [previewDimMode, setPreviewDimMode] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [draggingFocusIndex, setDraggingFocusIndex] = useState<number | null>(null);
+  const focusStackRef = useRef<HTMLDivElement | null>(null);
   const sectionOrder = content.sectionOrder ?? DEFAULT_SECTION_ORDER;
   const missingBuiltInSections = PORTFOLIO_SECTION_IDS.filter((sectionId) => !sectionOrder.includes(sectionId));
   const sectionFrameProps = { sectionOrder, onMoveSection, onRemoveSection };
+  const focusPositions = content.hero.focusPositions ?? [{ x: 4, y: 6 }, { x: 47, y: 22 }, { x: 47, y: 66 }, { x: 6, y: 66 }];
+  const updateFocusPosition = (index: number, x: number, y: number) => {
+    const next = content.hero.focusAreas.map((_, positionIndex) => positionIndex === index ? { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 } : focusPositions[positionIndex] ?? { x: 4, y: 6 });
+    onChange(["hero", "focusPositions"], next);
+  };
+  const beginFocusDrag = (event: ReactPointerEvent<HTMLButtonElement>, index: number) => {
+    if (activeSection !== "home" || !focusStackRef.current) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const container = focusStackRef.current;
+    const card = event.currentTarget.closest(".role-card");
+    if (!(card instanceof HTMLElement)) return;
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const pointerOffsetX = event.clientX - cardRect.left;
+    const pointerOffsetY = event.clientY - cardRect.top;
+    setDraggingFocusIndex(index);
+    const move = (moveEvent: PointerEvent) => {
+      const maxX = Math.max(0, containerRect.width - cardRect.width);
+      const maxY = Math.max(0, containerRect.height - cardRect.height);
+      const left = Math.min(maxX, Math.max(0, moveEvent.clientX - containerRect.left - pointerOffsetX));
+      const top = Math.min(maxY, Math.max(0, moveEvent.clientY - containerRect.top - pointerOffsetY));
+      updateFocusPosition(index, (left / Math.max(1, containerRect.width)) * 100, (top / Math.max(1, containerRect.height)) * 100);
+    };
+    const end = () => {
+      setDraggingFocusIndex(null);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+  };
   const selectHeaderSection = (section: PreviewSection) => { onSection(section); setMobileNavOpen(false); };
   const edit = (value: string, path: ContentPath, section: PreviewSection, className = "") => <EditableText value={value} path={path} section={section} activeSection={activeSection} activePath={activePath} onSection={onSection} onChange={onChange} onSelect={onSelect} className={className} />;
   return <div className={`reference-portfolio live-public-canvas${previewDimMode ? " dim-mode" : ""}`} aria-label="Full editable portfolio preview">
@@ -118,7 +154,7 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     <div className="full-live-preview-top"><span>Live draft preview · public desktop view</span><i /><small>Hover a section, select Edit section, then type directly in the matching public layout.</small></div>{(onAddSection || onAddCustomSection) && <div className="section-library" aria-label="Portfolio section controls"><span>Portfolio layout</span>{missingBuiltInSections.map((sectionId) => <button type="button" key={sectionId} onClick={() => onAddSection?.(sectionId)}>+ Add {sectionId === "capabilities" ? "Capabilities" : sectionId}</button>)}<button type="button" onClick={() => onAddCustomSection?.()}>+ Add custom section</button></div>}
 
     <SectionFrame id="home" label="Home" activeSection={activeSection} onSection={onSection} {...sectionFrameProps}>
-      <div className="reference-hero live-reference-hero"><div className="hero-copy-ref"><p className="hello-line"><Sparkles size={13} /> {edit(content.hero.hello, ["hero", "hello"], "home")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br /><strong>{edit(content.hero.lastName, ["hero", "lastName"], "home")}</strong></h1><div className="hero-caption"><span>{edit(content.hero.role, ["hero", "role"], "home")}</span><i /><small>{edit(content.hero.location, ["hero", "location"], "home")}</small></div><p className="hero-blurb">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><div className="copy-row"><Copy size={15} /><span>{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="hero-social-row"><a href={`mailto:${content.hero.email}`} aria-label="Send email"><Mail size={17} /></a><a href={content.hero.linkedInUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a href={content.hero.githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a><a href={`tel:${content.hero.phone.replaceAll(" ", "")}`} aria-label="Call"><Phone size={17} /></a></div></div><div className="portrait-zone live-portrait-zone" aria-label="Editable portfolio portrait"><span className="connector c-one" /><span className="connector c-two" /><span className="connector c-three" /><span className="node n-one" /><span className="node n-two" /><span className="node n-three" /><div className="portrait-glow" /><img src={content.hero.portraitUrl} alt="Portfolio portrait" />{activeSection === "home" && <label className="home-asset-upload portrait-asset-upload"><ImageUp size={15} /> {uploadingAsset === "portrait" ? "Uploading…" : "Upload image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "portrait"); event.currentTarget.value = ""; }} /></label>}</div><div className="hero-role-stack live-hero-role-stack" aria-label="Editable professional focus areas">{content.hero.focusAreas.map((area, index) => { const cardClass = ["cloud-card", "browser-card", "design-card", "network-card"][index] ?? ""; const artClass = ["cloud-art", "infinity-art", "devsecops-art", "network-art"][index] ?? ""; return <div className={`role-card ${cardClass}`} key={`${area}-${index}`}><div className={`role-art ${artClass}`}><FocusVisual index={index} url={content.hero.focusVisuals?.[index]} />{activeSection === "home" && <label className="home-asset-upload focus-asset-upload"><ImageUp size={12} /> {uploadingAsset === `focus-${index}` ? "Uploading…" : "Replace SVG / image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "focus-visual", index); event.currentTarget.value = ""; }} /></label>}</div><b>{edit(area, ["hero", "focusAreas", index], "home")}</b></div>; })}</div></div>
+      <div className="reference-hero live-reference-hero"><div className="hero-copy-ref"><p className="hello-line"><Sparkles size={13} /> {edit(content.hero.hello, ["hero", "hello"], "home")}</p><h1>{edit(content.hero.firstName, ["hero", "firstName"], "home")}<br /><strong>{edit(content.hero.lastName, ["hero", "lastName"], "home")}</strong></h1><div className="hero-caption"><span>{edit(content.hero.role, ["hero", "role"], "home")}</span><i /><small>{edit(content.hero.location, ["hero", "location"], "home")}</small></div><p className="hero-blurb">{edit(content.hero.blurb, ["hero", "blurb"], "home")}</p><div className="copy-row"><Copy size={15} /><span>{edit(content.hero.email, ["hero", "email"], "home")}</span></div><div className="hero-social-row"><a href={`mailto:${content.hero.email}`} aria-label="Send email"><Mail size={17} /></a><a href={content.hero.linkedInUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a href={content.hero.githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a><a href={`tel:${content.hero.phone.replaceAll(" ", "")}`} aria-label="Call"><Phone size={17} /></a></div></div><div className="portrait-zone live-portrait-zone" aria-label="Editable portfolio portrait"><span className="connector c-one" /><span className="connector c-two" /><span className="connector c-three" /><span className="node n-one" /><span className="node n-two" /><span className="node n-three" /><div className="portrait-glow" /><img src={content.hero.portraitUrl} alt="Portfolio portrait" />{activeSection === "home" && <label className="home-asset-upload portrait-asset-upload"><ImageUp size={15} /> {uploadingAsset === "portrait" ? "Uploading…" : "Upload image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "portrait"); event.currentTarget.value = ""; }} /></label>}</div><div ref={focusStackRef} className={`hero-role-stack live-hero-role-stack${activeSection === "home" ? " is-layout-editing" : ""}`} aria-label="Editable professional focus areas">{content.hero.focusAreas.map((area, index) => { const cardClass = ["cloud-card", "browser-card", "design-card", "network-card"][index] ?? ""; const artClass = ["cloud-art", "infinity-art", "devsecops-art", "network-art"][index] ?? ""; const position = focusPositions[index] ?? { x: 4, y: 6 }; return <div style={{ left: `${position.x}%`, top: `${position.y}%` }} className={`role-card ${cardClass}${draggingFocusIndex === index ? " is-dragging" : ""}`} key={`${area}-${index}`}><div className={`role-art ${artClass}`}><FocusVisual index={index} url={content.hero.focusVisuals?.[index]} />{activeSection === "home" && <label className="home-asset-upload focus-asset-upload"><ImageUp size={12} /> {uploadingAsset === `focus-${index}` ? "Uploading…" : "Replace SVG / image"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={uploadingAsset !== null} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) onUploadAsset(file, "focus-visual", index); event.currentTarget.value = ""; }} /></label>}</div>{activeSection === "home" && <button type="button" className="focus-card-drag-handle" aria-label={`Drag ${area} card`} title="Drag to reposition" onPointerDown={(event) => beginFocusDrag(event, index)}><GripVertical size={15} /></button>}<b>{edit(area, ["hero", "focusAreas", index], "home")}</b></div>; })}</div></div>
     </SectionFrame>
 
     <SectionFrame id="about" label="About" activeSection={activeSection} onSection={onSection} {...sectionFrameProps}>

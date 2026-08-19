@@ -51,6 +51,18 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Upload image");
   });
 
+  it("renders draggable Home focus-card handles with saved coordinate styling only when Home is active", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.hero.focusPositions = [{ x: 8, y: 10 }, { x: 45, y: 20 }, { x: 45, y: 62 }, { x: 7, y: 63 }];
+    const activeHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(activeHtml).toContain("Drag DevOps card");
+    expect(activeHtml).toContain("left:45%");
+    expect(activeHtml).toContain("top:20%");
+    expect(inactiveHtml).not.toContain("Drag DevOps card");
+  });
+
   it("writes direct preview text edits to the selected content path", () => {
     const changes: Array<{ path: unknown; value: string }> = [];
     const text = EditableText({ value: "Before", path: ["hero", "blurb"], section: "home", activeSection: "home", activePath: "", onSection: () => {}, onSelect: () => {}, onChange: (path, value) => changes.push({ path, value }) });
