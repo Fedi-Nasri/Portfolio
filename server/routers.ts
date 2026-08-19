@@ -24,7 +24,7 @@ export const appRouter = router({
     publish: publicProcedure.input(z.object({ content: z.unknown() })).mutation(({ input }) => publishPortfolioContent(input.content)),
   }),
   assets: router({
-    upload: publicProcedure.input(z.object({ fileName: z.string().min(1).max(120), contentType: z.string(), base64: z.string().min(1), category: z.enum(["portrait", "focus-visual"]) })).mutation(({ input }) => uploadPortfolioImage(input)),
+    upload: publicProcedure.input(z.object({ fileName: z.string().min(1).max(120), contentType: z.string(), base64: z.string().min(1), category: z.enum(["portrait", "focus-visual", "project-image"]) })).mutation(({ input }) => uploadPortfolioImage(input)),
   }),
 });
 

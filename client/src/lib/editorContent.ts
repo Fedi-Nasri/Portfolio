@@ -126,3 +126,77 @@ export function removeSkillToolbox(source: PortfolioContent, toolboxIndex: numbe
   if (source.skills.length <= 1 || toolboxIndex < 0 || toolboxIndex >= source.skills.length) return source;
   return updateAtPath(source, ["skills"], source.skills.filter((_, index) => index !== toolboxIndex));
 }
+
+export type ProjectCaseStudyBlock = "problem" | "body" | "realization";
+
+const PROJECT_CASE_STUDY_BLOCKS: ProjectCaseStudyBlock[] = ["problem", "body", "realization"];
+
+function projectBlocks(project: PortfolioContent["projects"][number]): ProjectCaseStudyBlock[] {
+  return project.caseStudyBlocks ?? PROJECT_CASE_STUDY_BLOCKS;
+}
+
+export function createProjectTemplate(): PortfolioContent["projects"][number] {
+  return {
+    image: "/manus-storage/fedi-project-autonomous-boat_69519cd9.jpg",
+    type: "Project category · platform",
+    state: "Draft template",
+    title: "New infrastructure project",
+    byline: "Organisation or personal project · YEAR",
+    problem: "Describe the operational or technical problem this work addressed.",
+    body: "Explain what you designed, built, configured, or delivered.",
+    realization: "Summarise the outcome, impact, and the system that now works reliably.",
+    tech: ["New technology"],
+    delivery: ["Project outcome"],
+    caseStudyBlocks: [...PROJECT_CASE_STUDY_BLOCKS],
+  };
+}
+
+export function insertProjectTemplate(source: PortfolioContent, index: number, placement: "above" | "below"): PortfolioContent {
+  return transformList(source, ["projects"], (items) => {
+    const insertionIndex = Math.max(0, Math.min(placement === "above" ? index : index + 1, items.length));
+    items.splice(insertionIndex, 0, createProjectTemplate());
+    return items;
+  });
+}
+
+export function appendProjectTech(source: PortfolioContent, projectIndex: number, item = "New technology"): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project) return source;
+  return updateAtPath(source, ["projects", projectIndex, "tech"], [...project.tech, item]);
+}
+
+export function removeProjectTech(source: PortfolioContent, projectIndex: number, techIndex: number): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project || techIndex < 0 || techIndex >= project.tech.length) return source;
+  return updateAtPath(source, ["projects", projectIndex, "tech"], project.tech.filter((_, index) => index !== techIndex));
+}
+
+export function appendProjectDelivery(source: PortfolioContent, projectIndex: number, item = "Project outcome"): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project) return source;
+  return updateAtPath(source, ["projects", projectIndex, "delivery"], [...project.delivery, item]);
+}
+
+export function removeProjectDelivery(source: PortfolioContent, projectIndex: number, deliveryIndex: number): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project || deliveryIndex < 0 || deliveryIndex >= project.delivery.length) return source;
+  return updateAtPath(source, ["projects", projectIndex, "delivery"], project.delivery.filter((_, index) => index !== deliveryIndex));
+}
+
+export function addProjectCaseStudyBlock(source: PortfolioContent, projectIndex: number, block: ProjectCaseStudyBlock): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project) return source;
+  const blocks = projectBlocks(project);
+  if (blocks.includes(block)) return source;
+  return updateAtPath(source, ["projects", projectIndex, "caseStudyBlocks"], PROJECT_CASE_STUDY_BLOCKS.filter((candidate) => blocks.includes(candidate) || candidate === block));
+}
+
+export function removeProjectCaseStudyBlock(source: PortfolioContent, projectIndex: number, block: ProjectCaseStudyBlock): PortfolioContent {
+  const project = source.projects[projectIndex];
+  if (!project) return source;
+  return updateAtPath(source, ["projects", projectIndex, "caseStudyBlocks"], projectBlocks(project).filter((candidate) => candidate !== block));
+}
+
+export function removeProject(source: PortfolioContent, projectIndex: number): PortfolioContent {
+  return removeListItem(source, ["projects"], projectIndex);
+}

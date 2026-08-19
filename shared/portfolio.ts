@@ -10,7 +10,7 @@ export type PortfolioContent = {
   certifications: { name: string; provider: "cisco" | "ibm" | "microsoft"; issuer: string; issued: string; scope: string; pdf?: string; preview?: string }[];
   capabilities: { eyebrow: string; title: string; description: string; services: { name: string; description: string }[] };
   projectsSection: { eyebrow: string; title: string; intro: string; problemLabel: string; descriptionLabel: string; realizationLabel: string; techLabel: string; deliveryLabel: string };
-  projects: { image: string; type: string; state: string; title: string; byline: string; problem: string; body: string; realization: string; tech: string[]; delivery: string[] }[];
+  projects: { image: string; type: string; state: string; title: string; byline: string; problem: string; body: string; realization: string; tech: string[]; delivery: string[]; caseStudyBlocks?: ("problem" | "body" | "realization")[] }[];
   writingSection: { eyebrow: string; title: string; intro: string };
   writing: { title: string; date: string; category: string; readTime: string; preview: string; body: string[]; status: string; url?: string }[];
   contact: { eyebrow: string; title: string; intro: string; location: string; submitLabel: string };

@@ -9,4 +9,9 @@ describe("direct portfolio asset upload validation", () => {
     const caller = appRouter.createCaller(context);
     await expect(caller.assets.upload({ fileName: "notes.txt", contentType: "text/plain", base64: "aGVsbG8=", category: "portrait" })).rejects.toThrow("Use a JPG, PNG, WebP, GIF, or SVG image.");
   });
+
+  it("accepts the project-image category at the router before shared file validation", async () => {
+    const caller = appRouter.createCaller(context);
+    await expect(caller.assets.upload({ fileName: "notes.txt", contentType: "text/plain", base64: "aGVsbG8=", category: "project-image" })).rejects.toThrow("Use a JPG, PNG, WebP, GIF, or SVG image.");
+  });
 });

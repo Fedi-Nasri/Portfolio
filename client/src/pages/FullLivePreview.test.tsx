@@ -72,6 +72,32 @@ describe("FullLivePreview", () => {
     expect(html).toContain('contentEditable="true"');
   });
 
+  it("shows Selected Work template, image, metadata, case-study, ordering, and deletion controls only while projects are active", () => {
+    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddProject={() => {}} onInsertProject={() => {}} onMoveProject={() => {}} onRemoveProject={() => {}} onAddProjectTech={() => {}} onRemoveProjectTech={() => {}} onAddProjectDelivery={() => {}} onRemoveProjectDelivery={() => {}} onAddProjectCaseStudyBlock={() => {}} onRemoveProjectCaseStudyBlock={() => {}} onUploadProjectImage={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(inactive).not.toContain("Add project");
+    expect(active).toContain("Add project");
+    expect(active).toContain("Upload image");
+    expect(active).toContain("Add tech");
+    expect(active).toContain("Add delivery");
+    expect(active).toContain("Remove block");
+    expect(active).toContain("Move up");
+    expect(active).toContain("Move down");
+    expect(active).toContain("Delete project");
+  });
+
+  it("offers restoration actions for hidden case-study blocks and protects the final project from deletion", () => {
+    const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    content.projects = [content.projects[0]!];
+    content.projects[0]!.caseStudyBlocks = ["problem"];
+    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("Add What it is");
+    expect(html).toContain("Add Realization");
+    expect(html).toContain('class="project-delete-button" disabled=""');
+  });
+
   it("shows per-entry Experience insertion, tag, and delete controls only while Experience is active", () => {
     const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);

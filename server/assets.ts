@@ -3,7 +3,7 @@ import { storagePut } from "./storage";
 const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"]);
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-export async function uploadPortfolioImage(input: { fileName: string; contentType: string; base64: string; category: "portrait" | "focus-visual" }) {
+export async function uploadPortfolioImage(input: { fileName: string; contentType: string; base64: string; category: "portrait" | "focus-visual" | "project-image" }) {
   if (!ACCEPTED_IMAGE_TYPES.has(input.contentType)) throw new Error("Use a JPG, PNG, WebP, GIF, or SVG image.");
   const data = Buffer.from(input.base64, "base64");
   if (!data.length || data.length > MAX_IMAGE_BYTES) throw new Error("Images must be smaller than 5 MB.");

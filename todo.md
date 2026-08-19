@@ -296,6 +296,16 @@
 - [x] Preserve direct in-place Selected Work text editing in the matched public composition.
 - [x] Verify desktop and mobile visual fidelity, direct editing, persistence, tests, build, and restoration before checkpointing.
 
+## Selected Work Management Controls
+
+- [x] Add a new editable project template from the active Selected Work editor.
+- [x] Add a per-project image upload control that persists its storage URL to the draft.
+- [x] Add and delete individual Tech Stack items and Delivery items within each project.
+- [x] Add and delete individual Problem, What it is, and Realization case-study blocks within each project.
+- [x] Add direct project deletion, retaining at least one project in the Selected Work list.
+- [x] Add move-up and move-down controls to reorder projects in the live preview.
+- [x] Verify all project management controls through live save/publish/public restoration, desktop/mobile layout, tests, and production build before checkpointing.
+
 ## Skills Mobile Verification Follow-up
 
 - [x] Verify Skills & Toolbox add/delete controls and layout at a mobile `/edit` viewport, then re-confirm the restored public Skills section before checkpointing.
