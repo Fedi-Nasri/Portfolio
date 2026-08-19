@@ -18,7 +18,8 @@ describe("public contact section", () => {
   it("removes the contact form while preserving direct contact and social actions", () => {
     const html = renderToStaticMarkup(<Home />);
 
-    expect(html).toContain("contact-without-form");
+    expect(html).toContain("contact-card-refinement");
+    expect(html).toContain("contact-direct-card");
     expect(html).not.toContain("reference-form");
     expect(html).not.toContain('placeholder="Your name"');
     expect(html).toContain("mailto:fedinasri.fsb@gmail.com");

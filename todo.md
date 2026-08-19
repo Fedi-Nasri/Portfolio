@@ -372,3 +372,9 @@
 - [x] Remove the public contact form from the contact section.
 - [x] Preserve direct contact information and actionable email, phone, LinkedIn, and GitHub paths.
 - [x] Rebalance the public and editable contact layouts after form removal, then verify tests and production build before checkpointing.
+
+## Public Contact Card Refinement
+
+- [x] Rebuild the public Contact section using the structured heading-and-contact-card composition from the editable preview.
+- [x] Preserve direct email, phone, location, LinkedIn, and GitHub actions within the refined layout.
+- [x] Verify desktop/mobile layout parity, automated tests, and production build before checkpointing.
