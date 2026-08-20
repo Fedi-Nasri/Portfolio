@@ -3,18 +3,17 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-20 (GMT+2)  
-**Latest saved project checkpoint:** `4f13ca77` — documented non-deployment and AI-agent continuity improvement recommendations.  
-**Current immediate task:** Save the validated architecture diagram, worked AI workflow example, capability map, and automated testing/CI plan as a checkpoint.  
+**Latest saved project checkpoint:** `b7252cb3` — standalone architecture diagram, agent workflow example, capability map, and staged automated testing/CI plan.  
+**Current immediate task:** Wait for a new user request. Vercel work remains paused.  
 **Deployment status:** **Paused by user.** Do not resume Vercel or Neon actions without a new explicit request.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | In progress | Save the standalone architecture, feature-workflow, capability, and CI planning records for future agents. | Create a checkpoint, record its identifier, then wait for a new user request. |
-| 2 | Paused | Vercel deployment for the full editor application. | Wait for user to explicitly resume deployment. First verify whether Neon was actually created; do not assume it was. |
-| 3 | Pending after deployment resumes | Port current MySQL/TiDB Drizzle layer to PostgreSQL if Neon is selected. | Perform a deliberate schema/driver/migration port; do not paste a PostgreSQL URL into MySQL code. |
-| 4 | Pending after database decision | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |
+| 1 | Paused | Vercel deployment for the full editor application. | Wait for user to explicitly resume deployment. First verify whether Neon was actually created; do not assume it was. |
+| 2 | Pending after deployment resumes | Port current MySQL/TiDB Drizzle layer to PostgreSQL if Neon is selected. | Perform a deliberate schema/driver/migration port; do not paste a PostgreSQL URL into MySQL code. |
+| 3 | Pending after database decision | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |
 
 ## Paused Vercel / Neon state
 
