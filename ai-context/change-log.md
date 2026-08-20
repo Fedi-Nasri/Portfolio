@@ -20,6 +20,7 @@ This is a concise continuation history. The complete checkpoint ledger is availa
 | Current continuity extension | Added a standalone architecture diagram, a worked agent feature-request workflow, a design/full-stack capability map, and a staged automated testing/CI plan. | Future agents can now select specialist roles, follow a concrete cross-layer workflow, and implement GitHub Actions CI from a documented staged plan. |
 | Checkpoint `b7252cb3` | Validated and saved the comprehensive architecture, workflow, capability, and CI planning extension. | Use this as the current documentation/AI-context baseline; Vercel work remains paused. |
 | Current visual repair | Corrected dark-mode focus-card labels, surfaces, boundaries, connector hierarchy, and orbit prominence; re-centred the Security & Networking network illustration with responsive geometry. | Preserve focus-card public/editor parity and keep each artwork fully within its visual window across themes and breakpoints. |
+| Checkpoint `3e35d774` | Validated and saved the dark-mode focus-card contrast/hierarchy repair and the Security & Networking artwork framing correction. | This is the current visual baseline for Home focus cards; retain high-contrast captions and the mobile network-art geometry. |
 
 ## How to add a new entry
 
