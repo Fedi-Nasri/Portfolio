@@ -3,15 +3,15 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-20 (GMT+2)  
-**Latest saved project checkpoint:** `e48bfd30` — reusable AI agent prompt, detailed end-to-end architecture diagram, and documentation cross-links.  
-**Current immediate task:** Save the beginner-friendly Vercel deployment guide checkpoint, then wait for a new user request.  
+**Latest saved project checkpoint:** `4f13ca77` — documented non-deployment and AI-agent continuity improvement recommendations.  
+**Current immediate task:** Save the validated architecture diagram, worked AI workflow example, capability map, and automated testing/CI plan as a checkpoint.  
 **Deployment status:** **Paused by user.** Do not resume Vercel or Neon actions without a new explicit request.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | In progress | Save the validated `docs/vercel-deployment.md` beginner guide that explains required services, compatibility, variables, verification, and recovery. | Create a checkpoint, record its identifier, then wait for a new user request. |
+| 1 | In progress | Save the standalone architecture, feature-workflow, capability, and CI planning records for future agents. | Create a checkpoint, record its identifier, then wait for a new user request. |
 | 2 | Paused | Vercel deployment for the full editor application. | Wait for user to explicitly resume deployment. First verify whether Neon was actually created; do not assume it was. |
 | 3 | Pending after deployment resumes | Port current MySQL/TiDB Drizzle layer to PostgreSQL if Neon is selected. | Perform a deliberate schema/driver/migration port; do not paste a PostgreSQL URL into MySQL code. |
 | 4 | Pending after database decision | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |

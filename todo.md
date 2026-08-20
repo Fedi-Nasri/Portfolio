@@ -613,3 +613,11 @@
 
 - [x] Review the existing documentation and AI-context system for gaps in agent onboarding, decision traceability, validation, and continuous maintenance.
 - [x] Present prioritized documentation and agentic-workflow recommendations without implementing them until the user selects a direction.
+
+## Expanded AI Context Architecture and Quality Plan
+
+- [x] Create a standalone comprehensive Markdown architecture diagram covering frontend, backend, database, asset storage, certificate PDFs, export, and paused deployment boundaries.
+- [x] Add a worked example showing how an AI agent reads, plans, implements, validates, documents, and checkpoints a new feature request.
+- [x] Organize the project-relevant design and full-stack capability guidance for future AI agents.
+- [x] Propose a concrete automated testing and continuous-integration plan with phases, checks, ownership, and implementation prerequisites.
+- [x] Validate the new AI-context materials, cross-links, and CI plan against the current codebase before checkpointing.

@@ -10,13 +10,16 @@ This folder is the **mandatory operating context** for any AI agent, developer, 
 |---:|---|---|
 | 1 | [`AI_AGENT_SYSTEM_PROMPT.md`](./AI_AGENT_SYSTEM_PROMPT.md) | Copy or apply the reusable project-specific operating prompt before delegating work to another AI. |
 | 2 | [`current-work.md`](./current-work.md) | Establish active priorities, paused work, current blockers, next actions, and validation baseline. |
-| 3 | [`product-context.md`](./product-context.md) | Understand what is being built, for whom, and the non-negotiable product/design decisions. |
-| 4 | [`technical-architecture.md`](./technical-architecture.md) | Trace routes, React pages, APIs, storage, exports, serverless adapter, and the end-to-end data diagram. |
-| 5 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, migrations, stored URLs, and the MySQL-to-PostgreSQL deployment risk. |
-| 6 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
-| 7 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |
-| 8 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
-| 9 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
+| 3 | [`architecture-diagram.md`](./architecture-diagram.md) | Trace the standalone frontend, backend, database, asset/PDF, export, and deployment-boundary diagrams. |
+| 4 | [`product-context.md`](./product-context.md) | Understand what is being built, for whom, and the non-negotiable product/design decisions. |
+| 5 | [`technical-architecture.md`](./technical-architecture.md) | Locate source ownership, API/data flows, and the existing concise architecture reference. |
+| 6 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, migrations, stored URLs, and the MySQL-to-PostgreSQL deployment risk. |
+| 7 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
+| 8 | [`feature-request-workflow-example.md`](./feature-request-workflow-example.md) | Follow a worked end-to-end example before implementing a cross-layer feature. |
+| 9 | [`capability-map.md`](./capability-map.md) | Select design, frontend, data, storage, quality, and continuity capabilities for a request. |
+| 10 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |
+| 11 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
+| 12 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
 
 ## What this folder is and is not
 
