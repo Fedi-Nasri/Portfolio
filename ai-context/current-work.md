@@ -3,15 +3,15 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-20 (GMT+2)  
-**Latest saved project checkpoint:** `93795ce2` — comprehensive `docs/` folder, TypeScript check, 71 tests, and production build passed.  
-**Current immediate task:** Create and maintain this `ai-context/` knowledge base.  
+**Latest saved project checkpoint:** `372adacb` — initial `ai-context/` living handoff system, TypeScript check, and 71 tests passed.  
+**Current immediate task:** Complete the checkpoint for the reusable AI agent prompt and detailed end-to-end relationship diagram, then wait for a new user request.  
 **Deployment status:** **Paused by user.** Do not resume Vercel or Neon actions without a new explicit request.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | In progress | Create the `ai-context/` living handoff system. | Complete files, verify coverage, run project validation, checkpoint. |
+| 1 | In progress | Save the validated agent prompt and detailed frontend/backend/database/asset/PDF architecture diagram. | Create a checkpoint, record its identifier, then wait for a new user request. |
 | 2 | Paused | Vercel deployment for the full editor application. | Wait for user to explicitly resume deployment. First verify whether Neon was actually created; do not assume it was. |
 | 3 | Pending after deployment resumes | Port current MySQL/TiDB Drizzle layer to PostgreSQL if Neon is selected. | Perform a deliberate schema/driver/migration port; do not paste a PostgreSQL URL into MySQL code. |
 | 4 | Pending after database decision | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |

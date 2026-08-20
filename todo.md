@@ -592,3 +592,9 @@
 - [x] Add dedicated technical architecture, database schema/lifecycle, and UI/UX design-system context records for future agents.
 - [x] Add decision, issue, and change-history records that distinguish facts, active risks, resolved work, and intentionally deferred items.
 - [x] Validate the AI context against existing project documentation and save a checkpoint.
+
+## AI Context Prompt and Detailed Architecture Diagram
+
+- [x] Add a reusable system prompt that instructs future AI agents to read and maintain the AI context before and after project work.
+- [x] Add an explicit architecture diagram and explanation for public/editor frontend, tRPC/Express backend, draft database, asset storage, and certificate PDF flow.
+- [x] Cross-link the AI-context diagram with the existing full project architecture documentation and validate the new materials.

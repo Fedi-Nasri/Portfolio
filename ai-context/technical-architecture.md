@@ -4,6 +4,100 @@
 
 The portfolio is a React 19 single-page application with a public route and a direct editor route. Both consume a typed tRPC API served from Express. The server reads and writes JSON snapshots of `PortfolioContent` using Drizzle ORM. Images and PDFs are stored outside the database and referenced by URL. Vite builds the client, while a shared Express app factory supports local development and a Vercel serverless API adapter.
 
+## End-to-end application and data diagram
+
+This is the detailed relationship map for future agents. It covers the public/editor frontend, typed backend, draft database, object storage, certificate PDFs, static export, and the currently paused Vercel target.
+
+```mermaid
+flowchart LR
+  subgraph Browser[Visitor or trusted editor browser]
+    Public[Public route /]
+    Edit[Direct editor route /edit]
+    Export[Export HTML or static ZIP]
+  end
+
+  subgraph Client[React 19 SPA · Vite · Wouter · Tailwind]
+    Home[Home.tsx\nPublic portfolio renderer]
+    Workspace[EditPortfolio.tsx\nDraft workspace and mutations]
+    Preview[FullLivePreview.tsx\nPublic-style editable preview]
+    Canvas[CustomSectionCanvas.tsx\nCustom layout editor]
+    ClientTRPC[tRPC React Query client]
+  end
+
+  subgraph Server[Express 4 application]
+    API[/api/trpc\ntRPC middleware]
+    Router[server/routers.ts\nportfolio and assets procedures]
+    PortfolioService[server/portfolio.ts\nseed, save, restore, publish]
+    StorageService[server/storage.ts\nasset write/read helpers]
+    StorageProxy[/api/manus-storage/*\nstorage proxy]
+  end
+
+  subgraph Data[Persistent data and files]
+    Drafts[(portfolio_drafts\nname, draft key, public flag)]
+    Versions[(portfolio_draft_versions\nimmutable PortfolioContent JSON)]
+    Legacy[(portfolio_content_versions\nlegacy fallback)]
+    Assets[(Object storage\nportraits, project images, logos)]
+    PDFs[(Object storage\ncertificate PDFs and previews)]
+  end
+
+  subgraph ExportPackage[Generated offline package]
+    ZipHTML[index.html]
+    ZipCSS[styles.css]
+    ZipJS[app.js]
+    ZipPDF[assets/certificates/*.pdf]
+  end
+
+  subgraph VercelPaused[Vercel target — deployment work paused]
+    Static[dist/public static SPA]
+    Function[api/[...path].ts\nserverless Express adapter]
+    Neon[(Planned Neon PostgreSQL\nrequires code port)]
+    Blob[(Planned Vercel Blob\nrequires storage adapter)]
+  end
+
+  Public --> Home
+  Edit --> Workspace
+  Workspace --> Preview
+  Preview --> Canvas
+  Home --> ClientTRPC
+  Workspace --> ClientTRPC
+  ClientTRPC --> API
+  API --> Router
+  Router --> PortfolioService
+  PortfolioService --> Drafts
+  PortfolioService --> Versions
+  PortfolioService -. bootstrap fallback .-> Legacy
+  Router --> StorageService
+  StorageService --> Assets
+  StorageService --> PDFs
+  Public -->|asset URL /manus-storage/*| StorageProxy
+  Edit -->|asset URL /manus-storage/*| StorageProxy
+  StorageProxy --> Assets
+  StorageProxy --> PDFs
+  Workspace --> Export
+  Export --> ZipHTML
+  Export --> ZipCSS
+  Export --> ZipJS
+  Export -->|download accessible certificate PDFs| ZipPDF
+  Static -. future host .-> Client
+  Function -. future API host .-> Server
+  Neon -. future database after PostgreSQL port .-> PortfolioService
+  Blob -. future asset provider after adapter .-> StorageService
+```
+
+### Relationship explanation
+
+| Relationship | What happens | Important constraint |
+|---|---|---|
+| Public browser → `Home.tsx` | `/` queries the newest version of the selected public draft and renders it. | Public content is a draft snapshot, not hard-coded page copy. |
+| Editor browser → `EditPortfolio.tsx` | `/edit` loads a complete draft workspace, then holds unsaved changes in local browser state. | Browser edits are not durable until Save version or Publish succeeds. |
+| Editor → `FullLivePreview.tsx` | The editor displays public-style sections with scoped editing controls. | Layout changes must preserve parity with `Home.tsx`. |
+| Client → tRPC / Express | React Query calls typed tRPC procedures at `/api/trpc`. | Do not introduce untyped internal fetch paths without a clear reason. |
+| Portfolio service → draft tables | The service seeds, saves, restores, renames, deletes, publishes, and reads JSON snapshots. | Versions are immutable; restore writes a new version rather than overwriting one. |
+| Asset service → object storage | Images, logos, previews, and certificate PDFs are uploaded separately and their URLs are embedded in content JSON. | No binary asset data belongs in database tables. |
+| Storage proxy → browser | Current `/manus-storage/*` URLs are rewritten/proxied so stored URLs can be rendered. | A Vercel Blob migration must preserve historical asset access or migrate URLs deliberately. |
+| Export → ZIP files | Export consumes the current editor draft, builds static public files, and packages accessible certificate PDFs locally. | Export does not automatically save a database version. |
+| Vercel target | Vite static build and serverless adapter are present, but database/storage are not production-compatible yet. | Vercel is paused; Neon means PostgreSQL port, Blob means storage adapter. |
+
 ```mermaid
 flowchart TD
   Browser[Browser] --> Public[/ public portfolio]

@@ -124,3 +124,7 @@ When changing an editable feature, trace the full path below rather than modifyi
 | New file attachment | Upload category validation, storage provider, draft URL field, public display, editor removal path, export packaging if offline behavior matters. |
 | Design-token change | `index.css`, public render, editor preview parity, responsive breakpoints, contrast and focus verification. |
 | New deployment provider | Environment documentation, provider abstraction, local fallback, production migration/runbook, smoke tests. |
+
+## AI continuation reference
+
+For a future-agent-focused end-to-end relationship diagram covering the public/editor frontend, Express/tRPC backend, draft database, assets, certificate PDF storage, static export, and the paused Vercel target, read [`ai-context/technical-architecture.md`](../ai-context/technical-architecture.md#end-to-end-application-and-data-diagram). The reusable agent onboarding prompt is available at [`ai-context/AI_AGENT_SYSTEM_PROMPT.md`](../ai-context/AI_AGENT_SYSTEM_PROMPT.md).

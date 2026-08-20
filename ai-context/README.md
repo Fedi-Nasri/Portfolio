@@ -8,14 +8,15 @@ This folder is the **mandatory operating context** for any AI agent, developer, 
 
 | Order | Read this file | Purpose |
 |---:|---|---|
-| 1 | [`current-work.md`](./current-work.md) | Establish active priorities, paused work, current blockers, next actions, and validation baseline. |
-| 2 | [`product-context.md`](./product-context.md) | Understand what is being built, for whom, and the non-negotiable product/design decisions. |
-| 3 | [`technical-architecture.md`](./technical-architecture.md) | Trace routes, React pages, APIs, storage, exports, serverless adapter, and change impact. |
-| 4 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, migrations, stored URLs, and the MySQL-to-PostgreSQL deployment risk. |
-| 5 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
-| 6 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |
-| 7 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
-| 8 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
+| 1 | [`AI_AGENT_SYSTEM_PROMPT.md`](./AI_AGENT_SYSTEM_PROMPT.md) | Copy or apply the reusable project-specific operating prompt before delegating work to another AI. |
+| 2 | [`current-work.md`](./current-work.md) | Establish active priorities, paused work, current blockers, next actions, and validation baseline. |
+| 3 | [`product-context.md`](./product-context.md) | Understand what is being built, for whom, and the non-negotiable product/design decisions. |
+| 4 | [`technical-architecture.md`](./technical-architecture.md) | Trace routes, React pages, APIs, storage, exports, serverless adapter, and the end-to-end data diagram. |
+| 5 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, migrations, stored URLs, and the MySQL-to-PostgreSQL deployment risk. |
+| 6 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
+| 7 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |
+| 8 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
+| 9 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
 
 ## What this folder is and is not
 
