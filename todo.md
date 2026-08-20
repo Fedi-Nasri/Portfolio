@@ -621,3 +621,15 @@
 - [x] Organize the project-relevant design and full-stack capability guidance for future AI agents.
 - [x] Propose a concrete automated testing and continuous-integration plan with phases, checks, ownership, and implementation prerequisites.
 - [x] Validate the new AI-context materials, cross-links, and CI plan against the current codebase before checkpointing.
+
+## Dark-Mode Hero Focus-Card UX Repair
+
+- [x] Audit the dark-mode Home hero focus-card labels, visual surfaces, borders, shadows, connector details, and hover/focus hierarchy against the reported screenshot.
+- [x] Correct dark-mode focus-card contrast and visual hierarchy while preserving the light-mode design and editable preview parity.
+- [x] Verify the corrected hero in dark mode at desktop and mobile sizes, run relevant regression checks, and save a checkpoint.
+
+## Security & Networking Focus-Card Artwork Repair
+
+- [x] Audit the Security & Networking network illustration for clipping, visual-centre alignment, and consistency with the other Home focus-card artwork.
+- [x] Correct the network illustration’s framing in public and editor hero cards without changing the shared card shell, caption treatment, or saved position behavior.
+- [x] Verify light/dark desktop and responsive focus-card presentation, run relevant checks, and save a checkpoint.
