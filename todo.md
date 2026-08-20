@@ -603,3 +603,13 @@
 
 - [x] Create a step-by-step Vercel deployment guide explaining required services, provider compatibility, environment variables, deployment, migrations, storage, and verification in beginner-friendly language.
 - [x] Link the new guide from the main documentation index and validate it against the current Vercel configuration and paused deployment state.
+
+## Non-Deployment Improvement Review
+
+- [x] Review the current public portfolio, editor workflow, technical risks, and documentation to identify the highest-value non-deployment improvements while Vercel remains paused.
+- [x] Present prioritized, actionable improvement options and wait for the user’s selected direction before implementation.
+
+## Documentation and AI-Agent Continuous Development Review
+
+- [x] Review the existing documentation and AI-context system for gaps in agent onboarding, decision traceability, validation, and continuous maintenance.
+- [x] Present prioritized documentation and agentic-workflow recommendations without implementing them until the user selects a direction.
