@@ -561,3 +561,24 @@
 - [x] Download certificate PDFs into a local assets folder inside the static ZIP export.
 - [x] Rewrite exported certificate viewer paths to use their packaged local PDF files.
 - [x] Verify local certificate PDFs, offline viewer behavior, ZIP structure, tests, and production build before checkpointing.
+
+## Vercel Deployment
+
+- [ ] Review the connected Vercel workspace and this app’s production requirements.
+- [ ] Prepare Vercel serverless routing and environment configuration for the full editor application.
+- [ ] Adapt draft persistence for the selected Vercel-connected database.
+- [ ] Adapt uploads and asset reads for Vercel Blob storage.
+- [ ] Configure secure Vercel production values for the database, Blob storage, and application runtime.
+- [ ] Deploy the public portfolio and direct `/edit` editor to the existing Vercel project.
+- [ ] Verify public, editor, draft persistence, and upload flows in production and share the live URL.
+
+## Documentation for Developers, Editors, and AI Agents
+
+- [x] Create a documentation index that explains the portfolio’s documentation map and intended audiences.
+- [x] Document the full-stack architecture, data model, storage path, API boundary, and Vercel serverless adapter.
+- [x] Document page, component, editor-canvas, and export workflows with source-file ownership.
+- [x] Document the UI/UX design system, including visual tokens, layout rules, typography, interactions, responsive behavior, and accessibility expectations.
+- [x] Document local development prerequisites, installation, database workflow, test commands, build commands, and debugging guidance.
+- [x] Document production deployment, environment-variable responsibilities, database and storage setup, migrations, and post-deployment verification.
+- [x] Document the direct `/edit` editor workflow, including drafts, history, public selection, custom canvas layouts, and export.
+- [x] Validate all documentation against the current implementation, run checks, and save a checkpoint.
