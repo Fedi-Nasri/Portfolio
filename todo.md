@@ -598,3 +598,8 @@
 - [x] Add a reusable system prompt that instructs future AI agents to read and maintain the AI context before and after project work.
 - [x] Add an explicit architecture diagram and explanation for public/editor frontend, tRPC/Express backend, draft database, asset storage, and certificate PDF flow.
 - [x] Cross-link the AI-context diagram with the existing full project architecture documentation and validate the new materials.
+
+## Beginner-Friendly Vercel Deployment Guide
+
+- [x] Create a step-by-step Vercel deployment guide explaining required services, provider compatibility, environment variables, deployment, migrations, storage, and verification in beginner-friendly language.
+- [x] Link the new guide from the main documentation index and validate it against the current Vercel configuration and paused deployment state.

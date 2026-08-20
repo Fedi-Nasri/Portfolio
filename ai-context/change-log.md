@@ -16,6 +16,7 @@ This is a concise continuation history. The complete checkpoint ledger is availa
 | Checkpoint `93795ce2` | Added `docs/` architecture/component/design/development/deployment/editor manuals. Passed TypeScript, 71 tests, build. | Read `docs/` for detailed manuals; this is the latest completed checkpoint before AI-context work. |
 | Current work | Creating `ai-context/` folder with living memory for agents. Vercel work paused. | Complete/validate/checkpoint this folder next. |
 | Current extension | Added `AI_AGENT_SYSTEM_PROMPT.md` and expanded the technical architecture context with an end-to-end diagram for public/editor frontend, tRPC/Express, drafts, assets/PDFs, export, and paused Vercel services. | Future agents should apply the prompt and read the diagram before changing data, UI, storage, or deployment work. |
+| Current documentation extension | Added `docs/vercel-deployment.md`, a beginner-friendly deployment guide covering services, MySQL-vs-Neon compatibility, Blob storage, environment variables, Preview/Production testing, security, and recovery. | The guide is instructional only; Vercel work remains paused until the user explicitly resumes it. |
 
 ## How to add a new entry
 

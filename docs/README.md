@@ -15,6 +15,7 @@ The documentation is intentionally written for three audiences. Editors can use 
 | [UI/UX design system](./ui-design-system.md) | Designers, developers, and AI agents | Extend the visual language without breaking its palette, rhythm, responsiveness, or accessibility. |
 | [Development environment](./development.md) | Developers | Install dependencies, connect a database, run checks, build, test, and debug locally. |
 | [Production deployment](./production-deployment.md) | Developers and deployers | Configure Vercel, understand environment variables, choose compatible managed services, migrate data, and verify production. |
+| [Vercel deployment for beginners](./vercel-deployment.md) | First-time deployers, editors, and AI agents | Learn the required Vercel services, compatibility choices, variables, safe deployment sequence, verification, and recovery in plain language. |
 | [Editor workflow](./editor-workflow.md) | Portfolio editors, developers, and AI agents | Work safely with drafts, history, public selection, custom canvas sections, uploads, and exports. |
 
 ## Source-of-truth hierarchy
