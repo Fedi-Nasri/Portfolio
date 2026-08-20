@@ -582,3 +582,13 @@
 - [x] Document production deployment, environment-variable responsibilities, database and storage setup, migrations, and post-deployment verification.
 - [x] Document the direct `/edit` editor workflow, including drafts, history, public selection, custom canvas layouts, and export.
 - [x] Validate all documentation against the current implementation, run checks, and save a checkpoint.
+
+## AI Context for Future Agents
+
+- [x] Create an `ai-context/` index with a mandatory agent onboarding and update protocol.
+- [x] Add a concise project brief covering product purpose, audience, functional scope, non-negotiable requirements, and key routes.
+- [x] Add a current-work ledger for active priorities, paused work, next actions, validation state, and ownership rules.
+- [x] Add an architecture and code map linking data models, public/editor UI, API, storage, export, tests, and deployment adapters.
+- [x] Add dedicated technical architecture, database schema/lifecycle, and UI/UX design-system context records for future agents.
+- [x] Add decision, issue, and change-history records that distinguish facts, active risks, resolved work, and intentionally deferred items.
+- [x] Validate the AI context against existing project documentation and save a checkpoint.
