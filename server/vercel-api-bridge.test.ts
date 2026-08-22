@@ -39,7 +39,8 @@ describe("Vercel API bridge", () => {
       routes?: Array<{ handle?: string; src?: string; dest?: string }>;
     };
 
-    expect(config.routes?.[0]).toEqual({ handle: "filesystem" });
+    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].ts" });
+    expect(config.routes?.[1]).toEqual({ handle: "filesystem" });
     expect(config.routes?.at(-1)).toEqual({ src: "/(.*)", dest: "/index.html" });
   });
 });
