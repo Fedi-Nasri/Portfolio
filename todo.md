@@ -562,7 +562,177 @@
 - [x] Rewrite exported certificate viewer paths to use their packaged local PDF files.
 - [x] Verify local certificate PDFs, offline viewer behavior, ZIP structure, tests, and production build before checkpointing.
 
+## Vercel Deployment
+
+- [x] Review the connected Vercel workspace and this app’s production requirements.
+- [x] Prepare Vercel serverless routing and environment configuration for the full editor application.
+- [x] Adapt draft persistence for the selected Vercel-connected database.
+- [x] Adapt uploads and asset reads for Vercel Blob storage.
+- [x] Configure secure Vercel production values for the database, Blob storage, and application runtime.
+- [x] Deploy the public portfolio and direct `/edit` editor to the existing Vercel project.
+- [x] Verify public, editor, draft persistence, and upload flows in production and share the live URL.
+
+## Documentation for Developers, Editors, and AI Agents
+
+- [x] Create a documentation index that explains the portfolio’s documentation map and intended audiences.
+- [x] Document the full-stack architecture, data model, storage path, API boundary, and Vercel serverless adapter.
+- [x] Document page, component, editor-canvas, and export workflows with source-file ownership.
+- [x] Document the UI/UX design system, including visual tokens, layout rules, typography, interactions, responsive behavior, and accessibility expectations.
+- [x] Document local development prerequisites, installation, database workflow, test commands, build commands, and debugging guidance.
+- [x] Document production deployment, environment-variable responsibilities, database and storage setup, migrations, and post-deployment verification.
+- [x] Document the direct `/edit` editor workflow, including drafts, history, public selection, custom canvas layouts, and export.
+- [x] Validate all documentation against the current implementation, run checks, and save a checkpoint.
+
+## AI Context for Future Agents
+
+- [x] Create an `ai-context/` index with a mandatory agent onboarding and update protocol.
+- [x] Add a concise project brief covering product purpose, audience, functional scope, non-negotiable requirements, and key routes.
+- [x] Add a current-work ledger for active priorities, paused work, next actions, validation state, and ownership rules.
+- [x] Add an architecture and code map linking data models, public/editor UI, API, storage, export, tests, and deployment adapters.
+- [x] Add dedicated technical architecture, database schema/lifecycle, and UI/UX design-system context records for future agents.
+- [x] Add decision, issue, and change-history records that distinguish facts, active risks, resolved work, and intentionally deferred items.
+- [x] Validate the AI context against existing project documentation and save a checkpoint.
+
+## AI Context Prompt and Detailed Architecture Diagram
+
+- [x] Add a reusable system prompt that instructs future AI agents to read and maintain the AI context before and after project work.
+- [x] Add an explicit architecture diagram and explanation for public/editor frontend, tRPC/Express backend, draft database, asset storage, and certificate PDF flow.
+- [x] Cross-link the AI-context diagram with the existing full project architecture documentation and validate the new materials.
+
+## Beginner-Friendly Vercel Deployment Guide
+
+- [x] Create a step-by-step Vercel deployment guide explaining required services, provider compatibility, environment variables, deployment, migrations, storage, and verification in beginner-friendly language.
+- [x] Link the new guide from the main documentation index and validate it against the current Vercel configuration and paused deployment state.
+
+## Non-Deployment Improvement Review
+
+- [x] Review the current public portfolio, editor workflow, technical risks, and documentation to identify the highest-value non-deployment improvements while Vercel remains paused.
+- [x] Present prioritized, actionable improvement options and wait for the user’s selected direction before implementation.
+
+## Documentation and AI-Agent Continuous Development Review
+
+- [x] Review the existing documentation and AI-context system for gaps in agent onboarding, decision traceability, validation, and continuous maintenance.
+- [x] Present prioritized documentation and agentic-workflow recommendations without implementing them until the user selects a direction.
+
+## Expanded AI Context Architecture and Quality Plan
+
+- [x] Create a standalone comprehensive Markdown architecture diagram covering frontend, backend, database, asset storage, certificate PDFs, export, and paused deployment boundaries.
+- [x] Add a worked example showing how an AI agent reads, plans, implements, validates, documents, and checkpoints a new feature request.
+- [x] Organize the project-relevant design and full-stack capability guidance for future AI agents.
+- [x] Propose a concrete automated testing and continuous-integration plan with phases, checks, ownership, and implementation prerequisites.
+- [x] Validate the new AI-context materials, cross-links, and CI plan against the current codebase before checkpointing.
+
+## Dark-Mode Hero Focus-Card UX Repair
+
+- [x] Audit the dark-mode Home hero focus-card labels, visual surfaces, borders, shadows, connector details, and hover/focus hierarchy against the reported screenshot.
+- [x] Correct dark-mode focus-card contrast and visual hierarchy while preserving the light-mode design and editable preview parity.
+- [x] Verify the corrected hero in dark mode at desktop and mobile sizes, run relevant regression checks, and save a checkpoint.
+
+## Security & Networking Focus-Card Artwork Repair
+
+- [x] Audit the Security & Networking network illustration for clipping, visual-centre alignment, and consistency with the other Home focus-card artwork.
+- [x] Correct the network illustration’s framing in public and editor hero cards without changing the shared card shell, caption treatment, or saved position behavior.
+- [x] Verify light/dark desktop and responsive focus-card presentation, run relevant checks, and save a checkpoint.
+
+## UI and UX Improvement Review — Vercel Paused
+
+- [x] Review the current portfolio and direct editor to identify the highest-value visual, usability, accessibility, and content-flow improvements without resuming Vercel work.
+- [x] Present prioritized UI/UX recommendations and wait for the user to choose before implementation.
+
+## Visual Form, Background, and Color Direction Review
+
+- [x] Review the portfolio’s section shapes, background layers, color rhythm, and decorative geometry without changing the site.
+- [x] Present coherent visual-form and background/color directions for the user to select before implementation.
+
+## Free-Tier Vercel Deployment Walkthrough
+
+- [x] Review and present the project-specific Vercel deployment URL, free-tier services, environment variables, database/storage compatibility requirements, and step-by-step verification guidance without initiating deployment.
+
+## Mermaid Architecture Diagram Rendering Repair
+
+- [x] Replace unsafe Mermaid route labels in architecture documentation with renderer-safe text and validate all related diagrams.
+
+## Vercel-Neon Database Compatibility Decision
+
+- [x] Confirm whether to port the current MySQL/TiDB application to PostgreSQL for Neon or instead use a MySQL-compatible database before connecting the Vercel project.
+
+## Neon PostgreSQL Connection and Compatibility
+
+- [x] Confirm the Neon database `neon-citrine-mountain` was created on the Free plan; do not copy database secrets from the provider interface.
+- [x] Connect the Neon database to the `portfolio` Vercel project with the final `DATABASE_URL` variable name and confirm the integration-created variable without revealing its value.
+- [x] Port the application’s MySQL/TiDB database layer, Drizzle dialect, migrations, and persistence tests to PostgreSQL before configuring the direct editor to use Neon.
+
+## Provider-Neutral PostgreSQL Database Port
+
+- [x] Audit MySQL-specific drivers, schema types, raw queries, migration configuration, and persistence tests for PostgreSQL conversion.
+- [x] Convert Drizzle schema, database client, and migration configuration to standard PostgreSQL-compatible implementations, without coupling application code to Neon.
+- [x] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
+- [x] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
+- [x] Create a Vercel Preview deployment and exercise PostgreSQL persistence with a disposable draft while preserving the Main public draft and production boundary.
+- [x] Reconcile the existing Vercel project’s connected Git source and build target with the checkpointed portfolio repository before requesting a Preview deployment.
+- [x] Commit and push the checkpointed portfolio source to `Fedi-Nasri/Portfolio` on the approved `deployment_versel` branch without changing `main`.
+- [x] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
+- [x] Expose the CommonJS Vercel API bridge through a Vercel-recognized `.js` function so Preview `/api/trpc` does not fall through to the SPA.
+- [x] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
+- [x] Restore local `/edit` persistence when the sandbox lacks a usable PostgreSQL `DATABASE_URL`, without weakening deployed PostgreSQL requirements.
+- [ ] Restore Preview rendering for the remaining legacy portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs. One private-draft project-image migration is verified; Main remains unchanged.
+- [x] Superseded: Vercel Production intentionally tracks `deployment_versel`; require explicit user approval immediately before every push to that branch.
+- [x] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
+- [ ] Replace historical Preview media references with an object-storage-compatible delivery path while preserving existing portfolio content URLs where feasible.
+- [x] Provision or connect a Vercel Blob store for `deployment_versel` and record only Blob object metadata in PostgreSQL.
+- [x] Add a migration, tRPC media API, and editor workflow for Vercel Blob image/PDF uploads without storing file bytes in database rows.
+
+## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
+
+- [x] Preserve the direct `/edit` data model and public portfolio behavior while converting the database implementation to PostgreSQL.
+- [x] Replace MySQL/TiDB-specific Drizzle imports, driver configuration, schema types, and upsert behavior with PostgreSQL equivalents.
+- [x] Generate, inspect, and safely apply the PostgreSQL schema to the configured provider only after regression validation and migration review.
+- [x] Validate all existing draft, version-history, public-selection, upload-reference, export, and direct-editor persistence tests after the port.
+
+- [x] Update developer, deployment, and AI-context documentation to describe PostgreSQL as the general technology and Neon only as the currently connected hosting option.
+
+## Branch Comparison: Development Baseline and `deployment_versel`
+
+- [x] Identify the prior development baseline and compare it with `deployment_versel` without modifying either branch.
+- [x] Summarize the resulting deployment, database, media, API, and documentation differences in plain language.
+
+## Stable Development and Vercel Deployment Documentation
+
+- [x] Define `main` as the stable development branch and `deployment_versel` as the Vercel-connected deployment branch, including ownership and safety boundaries.
+- [x] Create a `docs/vercel-deployment/` documentation suite with a beginner guide, detailed deployment runbook, Vercel services guide, project URLs, and environment-variable responsibilities.
+- [x] Document safe procedures for Vercel changes, including PostgreSQL database changes, Vercel Blob media, custom domains, environment variables, deployment verification, and rollback.
+- [x] Document the development workflow for new features, files, database tables, Blob assets, migrations, testing, checkpoints, and handoff from `main` to `deployment_versel`.
+- [x] Update the `docs/` index and `ai-context/` records so future agents understand the branch flow, service architecture, current safeguards, and documentation maintenance process.
+- [x] Validate the documentation structure and internal links, then checkpoint the completed documentation update.
+
+## Vercel Media Upload Reliability
+
+- [x] Prepare oversized editor image uploads in the browser before Base64 tRPC transport so Vercel request-size limits do not reject otherwise valid portfolio media.
+- [x] Preserve original image dimensions and avoid modifying images that already fit the safe upload budget.
+- [x] Add regression coverage for upload preparation and verify the remaining legacy media only in private Draft 2 before any public-selection decision.
+
+## Vercel API Bridge Documentation and Main Sync
+
+- [x] Document the Vercel API bridge problem, the role of `api/[...path].js`, the CommonJS packaging choice, and the tRPC routes it enables.
+- [x] Synchronize the Vercel deployment documentation suite and API-bridge explanation from `deployment_versel` into the stable `main` branch without changing application deployment settings.
+- [x] Validate documentation links and commit the documentation-only updates on both branches.
+
+## AI Context: API Bridge and Branch Documentation Sync
+
+- [x] Record the deployed API bridge purpose, prior routing/module failures, generated-artifact maintenance rule, and Preview verification evidence in `deployment_versel` AI context.
+- [x] Record the documentation synchronization to `main`, explicitly distinguishing copied documentation from the Vercel-only application implementation on `deployment_versel`.
+- [x] Synchronize the relevant AI-context records into `main`, validate cross-links, and commit the documentation-only updates on both branches.
+
 ## Approved Vercel Production Branch Policy
 
 - [x] Set the Vercel project Production Branch to `deployment_versel` after the user’s explicit confirmation, without promoting an existing deployment.
 - [x] Verify the saved Vercel setting and update the branch workflow, Vercel handbook, and AI context to state that future Production deployments originate from `deployment_versel`.
+
+## Single-Source Development Workflow and Local Docker Compose
+
+- [x] Define a one-working-branch workflow so normal development stays on `main` and only an explicitly approved release commit reaches `deployment_versel`.
+- [x] Add a Docker Compose configuration for local PostgreSQL-backed development without replacing Vercel’s managed Production services.
+- [x] Add safe local environment templates and Compose usage documentation without committing credentials or Vercel secrets.
+- [x] Validate the Compose configuration structure and the existing TypeScript, test, and production-build checks before checkpointing.
+- [x] Keep this implementation local-only: do not change Vercel settings, production data, domains, secrets, or push to `deployment_versel`.
+- [x] Synchronize the local-only Compose workflow and documentation to GitHub `main` without creating a Production deployment.

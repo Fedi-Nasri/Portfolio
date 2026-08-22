@@ -9,6 +9,8 @@
 
 **Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
 
+**Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow at commit `7e58b4c` (`docs: add local compose development workflow`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
+
 **API bridge documentation boundary:** `main` now mirrors the Vercel handbook and AI-context guidance so work can be planned safely there. The Vercel route configuration, generated CommonJS `api/[...path].js` function, Blob service integration, and Preview runtime behavior remain on `deployment_versel` until a deliberate release handoff occurs.
 
 ## Active priorities
