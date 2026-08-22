@@ -1,0 +1,63 @@
+name: fedi-portfolio-local
+
+# Local development only. Vercel remains the Production platform and this file
+# must never receive Vercel tokens, Blob tokens, or a Production DATABASE_URL.
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${LOCAL_POSTGRES_DB:-portfolio_dev}
+      POSTGRES_USER: ${LOCAL_POSTGRES_USER:-portfolio}
+      POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD:-local-development-only}
+    ports:
+      - "${LOCAL_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - portfolio-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  app:
+    image: node:22-bookworm-slim
+    working_dir: /workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://${LOCAL_POSTGRES_USER:-portfolio}:${LOCAL_POSTGRES_PASSWORD:-local-development-only}@postgres:5432/${LOCAL_POSTGRES_DB:-portfolio_dev}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      - .:/workspace
+      - portfolio-pnpm-store:/pnpm/store
+      - portfolio-node-modules:/workspace/node_modules
+    command: >-
+      sh -c "corepack enable && pnpm config set store-dir /pnpm/store &&
+      pnpm install --frozen-lockfile && pnpm dev"
+
+  migrate:
+    image: node:22-bookworm-slim
+    working_dir: /workspace
+    profiles: ["tools"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${LOCAL_POSTGRES_USER:-portfolio}:${LOCAL_POSTGRES_PASSWORD:-local-development-only}@postgres:5432/${LOCAL_POSTGRES_DB:-portfolio_dev}
+    volumes:
+      - .:/workspace
+      - portfolio-pnpm-store:/pnpm/store
+      - portfolio-node-modules:/workspace/node_modules
+    command: >-
+      sh -c "corepack enable && pnpm config set store-dir /pnpm/store &&
+      pnpm install --frozen-lockfile && pnpm drizzle-kit migrate"
+
+volumes:
+  portfolio-postgres-data:
+  portfolio-pnpm-store:
+  portfolio-node-modules:

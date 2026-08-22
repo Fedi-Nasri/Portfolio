@@ -33,6 +33,8 @@ export DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=requi
 
 Connection-string details vary by provider. The implementation requires a valid **PostgreSQL** URL, not merely any SQL connection string.
 
+For an isolated PostgreSQL database managed on your own computer, use the optional [Local Docker Compose development](./local-docker-development.md) workflow. It supplies a container-only local `DATABASE_URL` and must not be pointed at Vercel or any Production database.
+
 For the complete variable reference and production responsibilities, read [Production deployment](./production-deployment.md#environment-variables).
 
 ## Database workflow

@@ -14,6 +14,7 @@ The documentation is intentionally written for three audiences. Editors can use 
 | [Component structure and workflow](./components.md) | Developers and AI agents | Locate a feature, decide where a change belongs, or trace an editor interaction. |
 | [UI/UX design system](./ui-design-system.md) | Designers, developers, and AI agents | Extend the visual language without breaking its palette, rhythm, responsiveness, or accessibility. |
 | [Development environment](./development.md) | Developers | Install dependencies, connect a database, run checks, build, test, and debug locally. |
+| [Local Docker Compose development](./local-docker-development.md) | Developers | Start an isolated local PostgreSQL database and application without touching Vercel or Production data. |
 | [Stable development and branch workflow](./development-branch-workflow.md) | Developers and AI agents | Build features safely on `main`, assess cross-layer impact, and prepare a deliberate Vercel release candidate. |
 | [Legacy production deployment overview](./production-deployment.md) | Developers and deployers | Read historical implementation context; use the current Vercel handbook for operational actions. |
 | [Legacy Vercel deployment overview](./vercel-deployment.md) | First-time deployers, editors, and AI agents | Read supporting background; use the current Vercel handbook for the branch workflow and service procedures. |
