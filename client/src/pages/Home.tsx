@@ -149,6 +149,10 @@ export default function Home() {
             <img src={hero.portraitUrl} alt={`${hero.firstName} ${hero.lastName}`} />
           </div>
 
+          <div className="hero-floating-labels" aria-label="Professional focus areas">
+            {hero.focusAreas.map((area, index) => <span className={`floating-specialty floating-specialty-${index + 1}`} key={`${area}-${index}`}><i>0{index + 1}</i><b>{area}</b></span>)}
+          </div>
+
           <div className="hero-role-stack role-featured-layout" aria-label="Professional focus areas">
             <div style={{ "--focus-x": `${focusPositions[0]?.x ?? 4}%`, "--focus-y": `${focusPositions[0]?.y ?? 6}%` } as CSSProperties} className={`role-card cloud-card${activeFocusIndex === 0 ? " is-featured" : ""}`}><div className="role-art cloud-art">{hero.focusVisuals?.[0] ? <img className="role-custom-visual" src={hero.focusVisuals[0]} alt="Cloud focus visual" /> : <><i /><span /><span /><span /></>}</div><b>{hero.focusAreas[0] ?? "Cloud"}</b></div>
             <div style={{ "--focus-x": `${focusPositions[1]?.x ?? 47}%`, "--focus-y": `${focusPositions[1]?.y ?? 22}%` } as CSSProperties} className={`role-card browser-card${activeFocusIndex === 1 ? " is-featured" : ""}`}><div className="role-art infinity-art">{hero.focusVisuals?.[1] ? <img className="role-custom-visual" src={hero.focusVisuals[1]} alt="DevOps focus visual" /> : <svg className="devops-logo" viewBox="0 0 240 120" aria-hidden="true"><defs><linearGradient id="devopsBlueInfinity" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#1e74ff" /><stop offset="48%" stopColor="#4b8cff" /><stop offset="100%" stopColor="#1f5ce8" /></linearGradient></defs><path d="M29 60 C55 22 89 22 120 60 C151 98 185 98 211 60 C185 22 151 22 120 60 C89 98 55 98 29 60" fill="none" stroke="url(#devopsBlueInfinity)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" /></svg>}</div><b>{hero.focusAreas[1] ?? "DevOps"}</b></div>

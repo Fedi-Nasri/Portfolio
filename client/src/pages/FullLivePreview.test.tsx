@@ -89,45 +89,34 @@ describe("FullLivePreview", () => {
     expect(html).toContain("section-home is-active");
   });
 
-  it("uses the public Home hero composition while keeping Home asset replacement controls active", () => {
+  it("uses the public Home hero composition with editable text-only floating specialties", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain("reference-hero live-reference-hero");
     expect(html).toContain("hero-copy-ref");
     expect(html).toContain("portrait-zone live-portrait-zone");
-    expect(html).toContain("hero-role-stack role-featured-layout live-hero-role-stack");
-    expect(html).toContain("Select editable professional focus area");
-    expect((html.match(/Replace SVG/g) ?? []).length).toBe(4);
+    expect(html).toContain("hero-floating-labels live-floating-specialty-labels");
+    expect(html).toContain("floating-specialty-1");
+    expect(html).not.toContain("Replace SVG / image");
     expect(html).toContain("Upload image");
   });
 
-  it("keeps the active focus-visual replacement control compact so it cannot cover the artwork", () => {
-    const stylesheet = readFileSync(new URL("./full-live-preview.css", import.meta.url), "utf8");
-    const focusControlRule = stylesheet.match(/\.live-reference-hero \.focus-asset-upload \{[^}]+\}/)?.[0] ?? "";
-
-    expect(focusControlRule).toContain("width:26px");
-    expect(focusControlRule).toContain("height:26px");
-    expect(focusControlRule).toContain("top:8px");
-    expect(focusControlRule).toContain("right:8px");
-    expect(focusControlRule).not.toContain("inset:0");
-  });
-
-  it("renders draggable Home focus-card handles with saved coordinate styling only when Home is active", () => {
+  it("renders editable Home specialty labels without card-drag controls", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.hero.focusPositions = [{ x: 8, y: 10 }, { x: 45, y: 20 }, { x: 45, y: 62 }, { x: 7, y: 63 }];
     const activeHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
-    expect(activeHtml).toContain("Drag DevOps card");
+    expect(activeHtml).toContain("DevOps");
+    expect(activeHtml).not.toContain("Drag DevOps card");
     expect(activeHtml).toContain("--focus-x:45%");
-    expect(activeHtml).toContain("--focus-y:20%");
-    expect(inactiveHtml).not.toContain("Drag DevOps card");
+    expect(inactiveHtml).not.toContain("contentEditable=\"true\"");
   });
 
-  it("shows the reset card layout action only while Home editing is active", () => {
+  it("does not show retired card-layout reset controls in the text-only specialty composition", () => {
     const activeHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
-    expect(activeHtml).toContain("Reset card layout");
+    expect(activeHtml).not.toContain("Reset card layout");
     expect(inactiveHtml).not.toContain("Reset card layout");
   });
 

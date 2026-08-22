@@ -1,6 +1,6 @@
 # Home Specialty Presentation Research
 
-**Status:** Approved and implemented on the isolated `feature/public-motion-prototype` branch. Await user review before any merge.
+**Status:** Superseded at the user’s direction. The isolated branch now uses editable floating text labels with no specialty SVGs or images; await user review before any merge.
 
 ## Observations
 

@@ -621,3 +621,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-wide-layout .role-featured-layout .focus-role-rail button:nth-child(3), .hero-wide-layout .role-featured-layout .focus-role-rail button:nth-child(4) { border-bottom:0; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-wide-layout .role-featured-layout .role-card.is-featured { animation:none; } }
+
+/* Text-only specialty constellation: the expertise labels replace visual cards without competing with the portrait. */
+.hero-wide-layout { overflow:hidden; }
+.hero-wide-layout::before { background-image:radial-gradient(circle at 70% 32%,rgba(156,196,255,.2) 0 2px,transparent 3px),radial-gradient(circle at 83% 68%,rgba(112,161,233,.15) 0 2px,transparent 3px),linear-gradient(135deg,#fbfdff 0%,#eef5ff 52%,#f8fbff 100%); background-size:74px 74px,106px 106px,auto; }
+.hero-wide-layout::after { width:220px; height:220px; right:5%; top:32px; border-color:rgba(98,145,218,.2); box-shadow:0 0 0 20px rgba(255,255,255,.18),0 0 0 44px rgba(221,234,253,.22); }
+.hero-wide-layout .hero-role-stack.role-featured-layout { display:none; }
+.hero-floating-labels { position:relative; z-index:3; align-self:center; min-height:400px; }
+.hero-floating-labels::before { content:""; position:absolute; inset:22px 18px; border:1px dashed rgba(97,144,216,.28); border-radius:48% 52% 54% 46%; transform:rotate(-10deg); }
+.hero-floating-labels::after { content:""; position:absolute; inset:64px 45px; border:1px solid rgba(185,210,245,.4); border-radius:50%; box-shadow:0 0 0 26px rgba(255,255,255,.16); }
+.floating-specialty { position:absolute; z-index:1; min-height:42px; display:inline-flex; align-items:center; gap:8px; padding:9px 13px; border:1px solid rgba(199,216,244,.92); border-radius:999px; color:#365a91; background:rgba(255,255,255,.77); box-shadow:0 12px 24px rgba(62,94,145,.09),inset 0 1px 0 rgba(255,255,255,.92); backdrop-filter:blur(10px); font-size:11px; font-weight:800; line-height:1.15; transition:transform .18s ease,box-shadow .18s ease; }
+.floating-specialty:hover { transform:translateY(-3px); box-shadow:0 17px 28px rgba(62,94,145,.14),inset 0 1px 0 rgba(255,255,255,.92); }
+.floating-specialty i { color:#7ca2dc; font:800 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-style:normal; letter-spacing:.06em; }
+.floating-specialty-1 { top:62px; left:8px; }.floating-specialty-2 { top:128px; right:4px; }.floating-specialty-3 { bottom:116px; left:22px; }.floating-specialty-4 { right:0; bottom:50px; max-width:158px; }
+.live-floating-specialty-labels .live-editable-text { display:inline; min-width:0; color:inherit; font:inherit; }
+.live-floating-specialty-labels .live-editable-text.is-editable { padding:1px 3px; border-radius:4px; }
+.reference-portfolio.dim-mode .hero-wide-layout::before { background-image:radial-gradient(circle at 70% 32%,rgba(137,180,247,.16) 0 2px,transparent 3px),radial-gradient(circle at 83% 68%,rgba(117,155,222,.13) 0 2px,transparent 3px),linear-gradient(135deg,#13213b 0%,#182d50 52%,#12213d 100%); }
+.reference-portfolio.dim-mode .floating-specialty { border-color:rgba(100,142,205,.55); color:#d1e1fb; background:rgba(24,45,78,.78); }.reference-portfolio.dim-mode .floating-specialty i { color:#8fb8f4; }
+@media (max-width:780px) {
+  .hero-floating-labels { width:100%; min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:10px 0 2px; }
+  .hero-floating-labels::before,.hero-floating-labels::after { display:none; }
+  .floating-specialty { position:relative; inset:auto !important; width:auto; min-height:48px; justify-content:flex-start; padding:10px 11px; font-size:10px; }
+  .floating-specialty-4 { max-width:none; }
+}
+@media (prefers-reduced-motion: reduce) { .floating-specialty,.floating-specialty:hover { transform:none; transition:none; } }

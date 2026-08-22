@@ -785,3 +785,11 @@
 - [x] Mirror the selected-panel and role-rail experience in `/edit` while retaining direct label edits, image upload/replacement, focus-card positioning controls, and reset behavior.
 - [x] Validate public/editor desktop and mobile interaction, keyboard access, reduced-motion behavior, TypeScript, tests, and production build.
 - [ ] Present the isolated featured-specialty prototype for review before any merge to `main` or separately approved Production release.
+
+## Floating Specialty Labels and Hero Theme
+
+- [x] Replace the featured visual panel and numbered rail with four editable rounded floating specialty labels; do not display SVGs or uploaded focus images in this Home composition.
+- [x] Arrange the labels as a balanced orbit around the portrait area while retaining saved label text and direct editor in-place editing.
+- [x] Add a subtle pale-blue technical background theme with low-contrast orbital, grid, and glow details that preserve the portfolio’s readability.
+- [x] Validate public/editor desktop and mobile layout, reduced-motion treatment, keyboard editing, TypeScript, tests, and production build.
+- [ ] Present the revised isolated floating-label prototype for review before any merge to `main` or separately approved Production release.
