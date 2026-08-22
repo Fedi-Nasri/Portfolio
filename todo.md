@@ -762,4 +762,4 @@
 - [x] Rebuild the public Home composition on the isolated feature branch to match the supplied hierarchy and spacing without replacing Fedi’s identity or content.
 - [x] Preserve Home editing, focus-card management, image replacement, and public/editor visual parity in the redesigned composition.
 - [x] Retain the motion prototype and validate desktop/mobile layout, reduced-motion behavior, editor controls, TypeScript, tests, and production build.
-- [ ] Present the revised isolated prototype before merging to `main` or making any separate Production-release decision.
+- [x] Present the revised isolated prototype before merging to `main` or making any separate Production-release decision.
