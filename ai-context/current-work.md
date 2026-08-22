@@ -49,3 +49,7 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 ## Existing TODO status
 
 The PostgreSQL conversion and initial schema application are recorded in `todo.md`. The current Vercel production deployment was inspected only and serves server source rather than the portfolio, indicating a source/build-target mismatch that must be reconciled before Preview-backed persistence testing. The Blob adapter and deployment verification remain unchecked.
+
+## Preview deployment investigation (2026-08-22)
+
+The completed source was pushed to GitHub branch `deployment_versel`, which Vercel correctly deploys as Preview without touching `main` or production. The public Preview UI renders, but its historical `/manus-storage` media is unavailable. The editor is stalled because its tRPC calls initially matched the SPA fallback; after an explicit API route was added, Vercel reached the function but failed to resolve `/var/task/server/_core/app`. A follow-up `@vercel/node` builder configuration also failed at install because Vercel chose pnpm 9 and reported `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` for the repository’s patched-dependency configuration. Preserve this evidence and finish API packaging before using the editor or testing PostgreSQL writes.
