@@ -12,6 +12,7 @@ This folder is the operational reference for deploying and maintaining Fedi Nasr
 | Developer or AI agent preparing a release | [Release runbook](./02-release-runbook.md) | Move an already-tested change from `main` to a verified Preview safely. |
 | Person changing Vercel services | [Services and change guide](./03-services-and-change-guide.md) | Choose and change PostgreSQL, Blob, domains, and other Vercel services. |
 | Person handling configuration | [Environment and access guide](./04-environment-and-access.md) | Manage variable names and scope without revealing values. |
+| Person debugging the editor backend | [API bridge guide](./05-api-bridge.md) | Understand why the catch-all serverless function exists and how to maintain it safely. |
 
 ## Portfolio-specific Vercel map
 

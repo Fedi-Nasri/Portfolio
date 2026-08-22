@@ -710,3 +710,9 @@
 - [x] Prepare oversized editor image uploads in the browser before Base64 tRPC transport so Vercel request-size limits do not reject otherwise valid portfolio media.
 - [x] Preserve original image dimensions and avoid modifying images that already fit the safe upload budget.
 - [x] Add regression coverage for upload preparation and verify the remaining legacy media only in private Draft 2 before any public-selection decision.
+
+## Vercel API Bridge Documentation and Main Sync
+
+- [ ] Document the Vercel API bridge problem, the role of `api/[...path].js`, the CommonJS packaging choice, and the tRPC routes it enables.
+- [ ] Synchronize the Vercel deployment documentation suite and API-bridge explanation from `deployment_versel` into the stable `main` branch without changing application deployment settings.
+- [ ] Validate documentation links and commit the documentation-only updates on both branches.
