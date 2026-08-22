@@ -25,10 +25,10 @@ Vercel hosts two parts of this application. The first is the **frontend**: the R
 
 ```mermaid
 flowchart LR
-  Visitor[Visitor or editor browser] --> Frontend[React SPA\n/ and /edit]
-  Frontend --> API[Vercel Function\n/api/[...path].ts]
-  API --> DraftDB[(SQL database\ndrafts and history)]
-  API --> Blob[(Object storage\nimages and PDFs)]
+  Visitor[Visitor or editor browser] --> Frontend[React single-page application]
+  Frontend --> API[Vercel serverless API adapter]
+  API --> DraftDB[(SQL database: drafts and history)]
+  API --> Blob[(Object storage: images and PDFs)]
   Blob --> Frontend
 ```
 

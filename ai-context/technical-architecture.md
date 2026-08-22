@@ -25,11 +25,11 @@ flowchart LR
   end
 
   subgraph Server[Express 4 application]
-    API[/api/trpc\ntRPC middleware]
+    API[tRPC API endpoint]
     Router[server/routers.ts\nportfolio and assets procedures]
     PortfolioService[server/portfolio.ts\nseed, save, restore, publish]
     StorageService[server/storage.ts\nasset write/read helpers]
-    StorageProxy[/api/manus-storage/*\nstorage proxy]
+    StorageProxy[Asset storage proxy]
   end
 
   subgraph Data[Persistent data and files]
@@ -49,7 +49,7 @@ flowchart LR
 
   subgraph VercelPaused[Vercel target — deployment work paused]
     Static[dist/public static SPA]
-    Function[api/[...path].ts\nserverless Express adapter]
+    Function[Vercel API adapter]
     Neon[(Planned Neon PostgreSQL\nrequires code port)]
     Blob[(Planned Vercel Blob\nrequires storage adapter)]
   end
@@ -100,21 +100,21 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  Browser[Browser] --> Public[/ public portfolio]
-  Browser --> Editor[/edit workspace]
+  Browser[Browser] --> Public[Public portfolio]
+  Browser --> Editor[Editor workspace]
   Public --> Client[React + Wouter + Tailwind]
   Editor --> Client
   Client --> TRPCClient[tRPC React Query client]
-  TRPCClient --> API[/api/trpc on Express]
+  TRPCClient --> API[tRPC endpoint on Express]
   API --> Router[server/routers.ts]
   Router --> Domain[server/portfolio.ts]
   Domain --> DB[(Drizzle + MySQL/TiDB today)]
   Router --> Assets[server/storage.ts]
   Assets --> ObjectStorage[Forge/S3-style storage today]
-  ObjectStorage --> AssetProxy[/manus-storage proxy]
+  ObjectStorage --> AssetProxy[Asset URL proxy]
   Editor --> Export[HTML / ZIP export utilities]
-  Vercel[Vercel target] --> Static[dist/public]
-  Vercel --> Serverless[api/[...path].ts]
+  Vercel[Vercel target] --> Static[Static SPA output]
+  Vercel --> Serverless[Vercel API adapter]
   Serverless --> API
 ```
 

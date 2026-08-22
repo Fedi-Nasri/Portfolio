@@ -18,11 +18,11 @@ flowchart LR
   Portfolio --> DB[(MySQL / TiDB)]
   Router --> Upload[Asset upload service]
   Upload --> Storage[Object storage]
-  Storage --> Proxy[/manus-storage proxy/]
+  Storage --> Proxy[Asset URL proxy]
   SPA --> Export[HTML and ZIP export utilities]
 
-  Vercel[Vercel deployment] --> Static[dist/public SPA assets]
-  Vercel --> Serverless[api/[...path].ts]
+  Vercel[Vercel deployment] --> Static[Static SPA assets]
+  Vercel --> Serverless[Vercel API adapter]
   Serverless --> API
 ```
 

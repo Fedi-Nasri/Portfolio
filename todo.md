@@ -647,3 +647,7 @@
 ## Free-Tier Vercel Deployment Walkthrough
 
 - [x] Review and present the project-specific Vercel deployment URL, free-tier services, environment variables, database/storage compatibility requirements, and step-by-step verification guidance without initiating deployment.
+
+## Mermaid Architecture Diagram Rendering Repair
+
+- [x] Replace unsafe Mermaid route labels in architecture documentation with renderer-safe text and validate all related diagrams.

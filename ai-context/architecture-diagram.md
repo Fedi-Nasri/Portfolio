@@ -24,7 +24,7 @@ flowchart LR
   end
 
   subgraph API[Express 4 + tRPC backend]
-    Trpc[/api/trpc\nrequest transport]
+    Trpc[tRPC request transport]
     Routers[server/routers.ts\ninput validation + procedures]
     Portfolio[server/portfolio.ts\ndraft lifecycle]
     Storage[server/storage.ts\nasset helper]
@@ -183,7 +183,7 @@ flowchart TD
   Draft --> Save[Save or Publish creates a new JSON snapshot]
 
   Save --> Public[Public or editor preview reads URL]
-  Public --> Proxy[/manus-storage proxy if required]
+  Public --> Proxy[Asset URL proxy when required]
   Proxy --> Store
   Store --> Viewer[Image element or PDF viewer]
 
@@ -227,7 +227,7 @@ Exporting does not automatically save or publish the current draft. An editor mu
 ```mermaid
 flowchart LR
   Vite[Vite build] --> Static[dist/public on Vercel]
-  Serverless[api/[...path].ts] --> Express[createPortfolioApp()]
+  Serverless[Vercel API adapter] --> Express[Shared Express app factory]
   Express -. current database driver is MySQL/TiDB .-> CurrentDB[(MySQL-compatible SQL)]
   Express -. future provider adapter needed .-> Blob[(Vercel Blob)]
   Express -. future full PostgreSQL port required .-> Neon[(Neon PostgreSQL)]
