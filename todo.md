@@ -770,4 +770,18 @@
 - [x] Reduce the public and editable Home portrait scale and add a soft lower-edge transparency fade without changing Fedi’s source image.
 - [x] Add an accessible bold-text action to the direct editor for selected editable text while preserving existing rich-text rendering and draft persistence.
 - [x] Validate the role-selector, portrait fade, public/editor parity, mobile layout, editor keyboard behavior, TypeScript, tests, and production build.
-- [ ] Present the refined isolated prototype before any merge to `main` or separately approved Production release.
+- [x] Present the refined isolated prototype before any merge to `main` or separately approved Production release.
+
+## Home Specialty Presentation Research
+
+- [x] Research less card-heavy visual patterns for presenting four technical specialties beside a portrait-led Home hero.
+- [x] Compare the strongest patterns against editable labels, four existing focus visuals, drag-position controls, public/editor parity, mobile readability, and the pale-blue portfolio system.
+- [x] Recommend one direction and wait for approval before replacing the current isolated prototype’s role selector.
+
+## Featured Specialty Panel and Numbered Rail
+
+- [x] Replace the equal role tiles with one selected specialty visual panel and a compact numbered rail of all four editable specialty labels.
+- [x] Add click and keyboard selection with a concise visual transition, preserving uploaded focus visuals and default SVGs.
+- [x] Mirror the selected-panel and role-rail experience in `/edit` while retaining direct label edits, image upload/replacement, focus-card positioning controls, and reset behavior.
+- [x] Validate public/editor desktop and mobile interaction, keyboard access, reduced-motion behavior, TypeScript, tests, and production build.
+- [ ] Present the isolated featured-specialty prototype for review before any merge to `main` or separately approved Production release.

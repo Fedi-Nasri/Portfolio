@@ -94,7 +94,8 @@ describe("FullLivePreview", () => {
     expect(html).toContain("reference-hero live-reference-hero");
     expect(html).toContain("hero-copy-ref");
     expect(html).toContain("portrait-zone live-portrait-zone");
-    expect(html).toContain("hero-role-stack live-hero-role-stack");
+    expect(html).toContain("hero-role-stack role-featured-layout live-hero-role-stack");
+    expect(html).toContain("Select editable professional focus area");
     expect((html.match(/Replace SVG/g) ?? []).length).toBe(4);
     expect(html).toContain("Upload image");
   });

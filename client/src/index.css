@@ -564,3 +564,60 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (min-width:781px) {
   .live-reference-hero.hero-wide-layout .live-hero-role-stack.is-layout-editing .role-card { left:var(--focus-x) !important; top:var(--focus-y) !important; right:auto !important; bottom:auto !important; }
 }
+
+/* Featured specialty panel — one visual gets focus; the rail keeps all four expertise areas present without a card wall. */
+.hero-wide-layout .role-featured-layout { min-height:396px; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(132px,.7fr); align-items:stretch; gap:14px; padding:12px; border:1px solid rgba(213,226,247,.88); border-radius:26px; background:rgba(255,255,255,.48); box-shadow:inset 0 1px 0 rgba(255,255,255,.86); }
+.hero-wide-layout .role-featured-layout::before { inset:18px 23%; border:1px dashed rgba(96,142,218,.24); border-radius:48%; }
+.hero-wide-layout .role-featured-layout .role-card { display:none; }
+.hero-wide-layout .role-featured-layout .role-card.is-featured { position:relative; inset:auto !important; z-index:1; display:flex; flex-direction:column; justify-content:space-between; justify-self:stretch; width:100% !important; box-sizing:border-box; min-height:0; padding:18px; border-radius:19px; background:rgba(255,255,255,.92); box-shadow:0 14px 32px rgba(45,72,128,.12), inset 0 1px 0 rgba(255,255,255,.92); animation:featured-focus-in .24s cubic-bezier(.23,1,.32,1); }
+.hero-wide-layout .role-featured-layout .role-card.is-featured .role-art { width:100%; height:254px; display:grid; place-items:center; border-radius:15px; background:radial-gradient(circle at 50% 38%,#fff 0,#eff5ff 58%,#e4eefc 100%); }
+.hero-wide-layout .role-featured-layout .role-card.is-featured .role-art .role-custom-visual { object-fit:contain; padding:18px; }
+.hero-wide-layout .role-featured-layout .role-card.is-featured b { position:static; width:auto; min-height:0; margin-top:15px; padding:0; border:0; border-radius:0; color:#173760; background:transparent; box-shadow:none; font-size:17px; line-height:1.15; text-align:left; white-space:normal; overflow:visible; text-overflow:clip; }
+.focus-role-rail { position:relative; z-index:2; display:grid; grid-template-columns:1fr; align-content:center; gap:7px; }
+.focus-role-rail button { width:100%; min-height:62px; display:grid; grid-template-columns:30px minmax(0,1fr); align-items:center; gap:9px; padding:10px 9px; border:1px solid transparent; border-radius:12px; color:#58708f; background:transparent; text-align:left; transition:transform .16s ease,border-color .16s ease,background .16s ease,color .16s ease; }
+.focus-role-rail button:hover { color:#245da9; background:rgba(255,255,255,.78); transform:translateX(2px); }
+.focus-role-rail button:focus-visible { outline:3px solid rgba(62,115,220,.28); outline-offset:2px; }
+.focus-role-rail button span { color:#8aa6cf; font:800 10px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; letter-spacing:.06em; }
+.focus-role-rail button b { color:inherit; font-size:12px; font-weight:800; line-height:1.22; }
+.focus-role-rail button.is-active { border-color:#bdd3f5; color:#1b5fb8; background:rgba(255,255,255,.9); box-shadow:0 9px 20px rgba(58,95,151,.09); }
+.focus-role-rail button.is-active span { color:#3f7de0; }
+.role-featured-layout .focus-asset-upload { top:11px; right:11px; }
+.role-featured-layout .focus-card-drag-handle { top:11px; left:11px; }
+@keyframes featured-focus-in { from { opacity:0; transform:translateY(8px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+.reference-portfolio.dim-mode .hero-wide-layout .role-featured-layout { border-color:rgba(102,145,206,.35); background:rgba(16,31,57,.28); }
+.reference-portfolio.dim-mode .focus-role-rail button { color:#b5c8e2; }
+.reference-portfolio.dim-mode .focus-role-rail button.is-active { color:#d9e8ff; border-color:#5d88c7; background:#203756; }
+.reference-portfolio.dim-mode .hero-wide-layout .role-featured-layout .role-card.is-featured b { color:#edf4ff; }
+@media (min-width:781px) { .live-reference-hero.hero-wide-layout .live-hero-role-stack.role-featured-layout.is-layout-editing .role-card.is-featured { left:auto !important; top:auto !important; right:auto !important; bottom:auto !important; } }
+@media (max-width:780px) {
+  .hero-wide-layout .role-featured-layout { min-height:0; grid-template-columns:1fr; gap:13px; padding:11px; }
+  .hero-wide-layout .role-featured-layout .role-card.is-featured { min-height:0; padding:14px; }
+  .hero-wide-layout .role-featured-layout .role-card.is-featured .role-art { height:218px; }
+  .hero-wide-layout .role-featured-layout .role-card.is-featured b { margin-top:12px; font-size:16px; }
+  .focus-role-rail { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+  .focus-role-rail button { min-height:54px; grid-template-columns:24px minmax(0,1fr); gap:6px; padding:8px; }
+  .focus-role-rail button b { font-size:10px; }
+}
+
+/* A visual lens with a text-first rail keeps the capability chooser present without becoming another set of boxes. */
+.hero-wide-layout .role-featured-layout { grid-template-columns:152px minmax(0,1fr); min-height:300px; align-items:center; gap:16px; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
+.hero-wide-layout .role-featured-layout::before { inset:4px 10px 4px 0; border-radius:50%; }
+.hero-wide-layout .role-featured-layout .role-card.is-featured { width:152px !important; height:auto; min-height:0; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
+.hero-wide-layout .role-featured-layout .role-card.is-featured .role-art { width:152px; height:152px; border:1px solid rgba(194,214,244,.9); border-radius:50%; background:radial-gradient(circle at 45% 34%,#fff 0,#edf4ff 57%,#dbe9ff 100%); box-shadow:0 16px 30px rgba(47,83,140,.13),inset 0 1px 0 rgba(255,255,255,.96); }
+.hero-wide-layout .role-featured-layout .role-card.is-featured .role-art .role-custom-visual { padding:27px; }
+.hero-wide-layout .role-featured-layout .role-card.is-featured b { margin-top:13px; padding-left:3px; color:#2a5fa9; font-size:14px; letter-spacing:-.025em; text-align:center; }
+.hero-wide-layout .role-featured-layout .focus-role-rail { gap:2px; padding:4px 0; }
+.hero-wide-layout .role-featured-layout .focus-role-rail button { min-height:52px; padding:8px 3px 8px 10px; border:0; border-bottom:1px solid rgba(210,223,242,.76); border-radius:0; background:transparent; box-shadow:none; }
+.hero-wide-layout .role-featured-layout .focus-role-rail button:last-child { border-bottom:0; }
+.hero-wide-layout .role-featured-layout .focus-role-rail button:hover { transform:translateX(4px); background:transparent; }
+.hero-wide-layout .role-featured-layout .focus-role-rail button.is-active { border-color:#9abdf0; border-left:3px solid #447fe0; background:linear-gradient(90deg,rgba(232,241,255,.9),transparent); box-shadow:none; }
+.hero-wide-layout .role-featured-layout .focus-role-rail button b { font-size:11px; }
+@media (max-width:780px) {
+  .hero-wide-layout .role-featured-layout { grid-template-columns:1fr; justify-items:center; min-height:0; gap:15px; padding:3px 0; }
+  .hero-wide-layout .role-featured-layout .role-card.is-featured { width:170px !important; }
+  .hero-wide-layout .role-featured-layout .role-card.is-featured .role-art { width:170px; height:170px; }
+  .hero-wide-layout .role-featured-layout .focus-role-rail { width:100%; grid-template-columns:1fr 1fr; gap:0 14px; }
+  .hero-wide-layout .role-featured-layout .focus-role-rail button { min-height:48px; }
+  .hero-wide-layout .role-featured-layout .focus-role-rail button:nth-child(3), .hero-wide-layout .role-featured-layout .focus-role-rail button:nth-child(4) { border-bottom:0; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-wide-layout .role-featured-layout .role-card.is-featured { animation:none; } }
