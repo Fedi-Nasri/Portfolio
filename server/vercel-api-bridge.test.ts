@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import vercelApi from "../api/[...path].js";
+import vercelApi from "./vercel-api-handler";
 
 let server: ReturnType<typeof createServer>;
 let baseUrl = "";
@@ -41,8 +41,16 @@ describe("Vercel API bridge", () => {
     };
 
     expect(config.buildCommand).toBe("pnpm exec vite build");
-    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].js" });
+    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].cjs" });
     expect(config.routes?.[1]).toEqual({ handle: "filesystem" });
     expect(config.routes?.at(-1)).toEqual({ src: "/(.*)", dest: "/index.html" });
+  });
+
+  it("uses a CommonJS Vercel bundle so Express dependencies can load in Node", async () => {
+    const bundlePath = path.resolve(import.meta.dirname, "..", "api", "[...path].cjs");
+    const bundle = await readFile(bundlePath, "utf8");
+
+    expect(bundle).toContain("module.exports");
+    expect(bundle).not.toContain('Dynamic require of "');
   });
 });

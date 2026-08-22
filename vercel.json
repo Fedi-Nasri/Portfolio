@@ -4,7 +4,7 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": "dist/public",
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/[...path].js" },
+    { "src": "/api/(.*)", "dest": "/api/[...path].cjs" },
     { "handle": "filesystem" },
     { "src": "/manus-storage/(.*)", "dest": "/api/manus-storage/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
