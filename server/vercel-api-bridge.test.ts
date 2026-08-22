@@ -41,16 +41,19 @@ describe("Vercel API bridge", () => {
     };
 
     expect(config.buildCommand).toBe("pnpm exec vite build");
-    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].cjs" });
+    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].js" });
     expect(config.routes?.[1]).toEqual({ handle: "filesystem" });
     expect(config.routes?.at(-1)).toEqual({ src: "/(.*)", dest: "/index.html" });
   });
 
   it("uses a CommonJS Vercel bundle so Express dependencies can load in Node", async () => {
-    const bundlePath = path.resolve(import.meta.dirname, "..", "api", "[...path].cjs");
+    const bundlePath = path.resolve(import.meta.dirname, "..", "api", "[...path].js");
+    const packagePath = path.resolve(import.meta.dirname, "..", "api", "package.json");
     const bundle = await readFile(bundlePath, "utf8");
+    const packageMetadata = JSON.parse(await readFile(packagePath, "utf8")) as { type?: string };
 
     expect(bundle).toContain("module.exports");
     expect(bundle).not.toContain('Dynamic require of "');
+    expect(packageMetadata.type).toBe("commonjs");
   });
 });
