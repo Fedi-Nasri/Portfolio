@@ -22,3 +22,16 @@
 ## Post-checkpoint Preview redeployment
 
 After the verification and documentation checkpoint was pushed as commit `91c8713` to `deployment_versel`, Vercel created a new **Ready** Preview at `https://portfolio-7ymbsxgog-fedi-s-projects2.vercel.app`. Its `GET /api/trpc/auth.me` response was the expected tRPC JSON payload (`{"result":{"data":{"json":null}}}`), and `/edit` loaded the full workspace with `Main portfolio` still marked **Public** and private `Draft 2` still present at version 3. No production action was taken.
+
+## Historical media inventory and safe migration boundary
+
+The seeded portfolio model still contains seven legacy `/manus-storage/` references. Four project visuals and the Coursera certificate PDF/preview have matching source files in `/home/ubuntu/webdev-static-assets/`; the original portrait file is not available there, although two recently uploaded portrait JPEG objects are visible in the Vercel Blob store. The project files are PNG-encoded 2304×1536 images despite their `.jpg` filenames, so a correct migration should use `image/png` metadata or rename copies before upload.
+
+| Legacy reference group | Count | Local source status | Safe next action |
+|---|---:|---|---|
+| Hero portrait | 1 | Original source not present; Blob contains two recent portrait JPEGs | Select the intended portrait in a **private** draft before replacing any saved reference. |
+| Project visuals | 4 | All source files present; each is 3.6–3.9 MB and within the 5 MB upload limit | Upload through the editor/server API into a private draft, preserving accurate PNG MIME metadata. |
+| Certificate PDF | 1 | Source present; 348 kB and within the 12 MB PDF upload limit | Upload through a private draft certificate control, then verify the viewer URL. |
+| Certificate preview | 1 | Source present; 812 kB PNG | Re-upload only if the public layout still needs a separate preview asset. |
+
+> Do not bulk-update `Main portfolio`, the default TypeScript seed, or the Production deployment as part of this inventory. A migration should first create a named private draft, upload one category at a time through the deployed server endpoint so PostgreSQL metadata is written, save an immutable version, and inspect the rendered Preview before any public-selection decision.
