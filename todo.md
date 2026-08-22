@@ -675,6 +675,11 @@
 - [ ] Bundle the Vercel serverless API bridge with its shared Express dependencies so Preview `/api/trpc` editor requests do not crash at runtime.
 - [ ] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
 - [ ] Restore Preview rendering for portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs.
+- [ ] Keep all deployment remediation commits on `deployment_versel` and prevent further accidental Production deployment classification.
+- [ ] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
+- [ ] Replace historical Preview media references with an object-storage-compatible delivery path while preserving existing portfolio content URLs where feasible.
+- [x] Provision or connect a Vercel Blob store for `deployment_versel` and record only Blob object metadata in PostgreSQL.
+- [x] Add a migration, tRPC media API, and editor workflow for Vercel Blob image/PDF uploads without storing file bytes in database rows.
 
 ## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
 

@@ -1,13 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "version": 2,
-  "installCommand": "corepack enable && corepack prepare pnpm@10.4.1 --activate && pnpm install --frozen-lockfile",
-  "builds": [
-    { "src": "api/[...path].ts", "use": "@vercel/node" },
-    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/public" } }
-  ],
+  "buildCommand": "pnpm exec vite build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": "dist/public",
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/[...path].ts" },
+    { "src": "/api/(.*)", "dest": "/api/[...path].js" },
     { "handle": "filesystem" },
     { "src": "/manus-storage/(.*)", "dest": "/api/manus-storage/$1" },
     { "src": "/(.*)", "dest": "/index.html" }

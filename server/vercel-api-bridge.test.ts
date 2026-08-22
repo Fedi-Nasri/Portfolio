@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import vercelApi from "../api/[...path]";
+import vercelApi from "../api/[...path].js";
 
 let server: ReturnType<typeof createServer>;
 let baseUrl = "";
@@ -37,15 +37,11 @@ describe("Vercel API bridge", () => {
     const configPath = path.resolve(import.meta.dirname, "..", "vercel.json");
     const config = JSON.parse(await readFile(configPath, "utf8")) as {
       routes?: Array<{ handle?: string; src?: string; dest?: string }>;
-      builds?: Array<{ src: string; use: string }>;
-      installCommand?: string;
+      buildCommand?: string;
     };
 
-    expect(config.installCommand).toContain("pnpm@10.4.1");
-    expect(config.builds).toEqual(
-      expect.arrayContaining([{ src: "api/[...path].ts", use: "@vercel/node" }]),
-    );
-    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].ts" });
+    expect(config.buildCommand).toBe("pnpm exec vite build");
+    expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].js" });
     expect(config.routes?.[1]).toEqual({ handle: "filesystem" });
     expect(config.routes?.at(-1)).toEqual({ src: "/(.*)", dest: "/index.html" });
   });

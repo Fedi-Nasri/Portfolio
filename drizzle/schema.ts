@@ -58,5 +58,23 @@ export const portfolioDraftVersions = pgTable("portfolio_draft_versions", {
   createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
 });
 
+/**
+ * Metadata for files stored in Vercel Blob. File bytes never enter PostgreSQL;
+ * this table provides a durable inventory and the URL referenced by portfolio
+ * draft snapshots.
+ */
+export const portfolioMediaAssets = pgTable("portfolio_media_assets", {
+  id: integer("id").generatedAlwaysAsIdentity().primaryKey(),
+  storageProvider: varchar("storageProvider", { length: 40 }).notNull().default("vercel-blob"),
+  storageKey: text("storageKey").notNull().unique(),
+  url: text("url").notNull(),
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  contentType: varchar("contentType", { length: 120 }).notNull(),
+  category: varchar("category", { length: 40 }).notNull(),
+  sizeBytes: integer("sizeBytes").notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export type PortfolioDraft = typeof portfolioDrafts.$inferSelect;
 export type PortfolioDraftVersion = typeof portfolioDraftVersions.$inferSelect;
+export type PortfolioMediaAsset = typeof portfolioMediaAssets.$inferSelect;
