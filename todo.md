@@ -704,3 +704,9 @@
 - [x] Document the development workflow for new features, files, database tables, Blob assets, migrations, testing, checkpoints, and handoff from `main` to `deployment_versel`.
 - [x] Update the `docs/` index and `ai-context/` records so future agents understand the branch flow, service architecture, current safeguards, and documentation maintenance process.
 - [x] Validate the documentation structure and internal links, then checkpoint the completed documentation update.
+
+## Vercel Media Upload Reliability
+
+- [x] Prepare oversized editor image uploads in the browser before Base64 tRPC transport so Vercel request-size limits do not reject otherwise valid portfolio media.
+- [x] Preserve original image dimensions and avoid modifying images that already fit the safe upload budget.
+- [x] Add regression coverage for upload preparation and verify the remaining legacy media only in private Draft 2 before any public-selection decision.
