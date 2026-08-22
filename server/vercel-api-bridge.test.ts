@@ -38,8 +38,10 @@ describe("Vercel API bridge", () => {
     const config = JSON.parse(await readFile(configPath, "utf8")) as {
       routes?: Array<{ handle?: string; src?: string; dest?: string }>;
       builds?: Array<{ src: string; use: string }>;
+      installCommand?: string;
     };
 
+    expect(config.installCommand).toContain("pnpm@10.4.1");
     expect(config.builds).toEqual(
       expect.arrayContaining([{ src: "api/[...path].ts", use: "@vercel/node" }]),
     );
