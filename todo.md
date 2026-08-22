@@ -763,3 +763,11 @@
 - [x] Preserve Home editing, focus-card management, image replacement, and public/editor visual parity in the redesigned composition.
 - [x] Retain the motion prototype and validate desktop/mobile layout, reduced-motion behavior, editor controls, TypeScript, tests, and production build.
 - [x] Present the revised isolated prototype before merging to `main` or making any separate Production-release decision.
+
+## Isolated Home Role Selector and Editor Typography Refinement
+
+- [x] Replace the dense four-card Home specialty grid with a clearer, less crowded role-selector pattern while retaining all four editable specialties.
+- [x] Reduce the public and editable Home portrait scale and add a soft lower-edge transparency fade without changing Fedi’s source image.
+- [x] Add an accessible bold-text action to the direct editor for selected editable text while preserving existing rich-text rendering and draft persistence.
+- [x] Validate the role-selector, portrait fade, public/editor parity, mobile layout, editor keyboard behavior, TypeScript, tests, and production build.
+- [ ] Present the refined isolated prototype before any merge to `main` or separately approved Production release.

@@ -522,26 +522,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-wide-layout .hero-copy-ref h1 { font-size:clamp(54px,5.7vw,82px); letter-spacing:-.075em; }
 .hero-wide-layout .hero-blurb { max-width:390px; margin:27px 0 26px; }
 .hero-wide-layout .portrait-zone { min-height:500px; padding:0; overflow:visible; align-items:center; }
-.hero-wide-layout .portrait-glow { width:440px; height:440px; bottom:30px; }
-.hero-wide-layout .portrait-zone img { width:min(100%,430px); height:430px; transform:none; object-position:center 20%; }
-.hero-wide-layout .hero-role-stack { position:relative; display:block; min-height:500px; padding:0; align-self:center; }
-.hero-wide-layout .hero-role-stack::before { content:""; position:absolute; z-index:-1; inset:28px 3px 28px 15%; border-left:1px dashed rgba(110,154,222,.24); border-radius:50%; pointer-events:none; }
-.hero-wide-layout .hero-role-stack .role-card { position:absolute; right:auto !important; bottom:auto !important; left:auto !important; top:auto !important; width:150px; min-height:126px; padding:9px 9px 34px; border-radius:17px; overflow:visible; transform:none !important; }
-.hero-wide-layout .hero-role-stack .role-card:nth-child(1) { left:0 !important; top:46px !important; }
-.hero-wide-layout .hero-role-stack .role-card:nth-child(2) { right:0 !important; top:46px !important; }
-.hero-wide-layout .hero-role-stack .role-card:nth-child(3) { left:0 !important; top:250px !important; }
-.hero-wide-layout .hero-role-stack .role-card:nth-child(4) { right:0 !important; top:250px !important; }
-.hero-wide-layout .hero-role-stack .role-art { height:76px; border-radius:11px; }
-.hero-wide-layout .hero-role-stack .role-card b { left:9px; right:9px; bottom:-14px; min-height:28px; padding:7px 8px; font-size:10px; }
+.hero-wide-layout .portrait-glow { width:410px; height:410px; bottom:36px; }
+.hero-wide-layout .portrait-zone img { width:min(100%,398px); height:398px; transform:none; object-position:center 20%; -webkit-mask-image:linear-gradient(to bottom,#000 0 67%,rgba(0,0,0,.86) 78%,transparent 100%); mask-image:linear-gradient(to bottom,#000 0 67%,rgba(0,0,0,.86) 78%,transparent 100%); }
+.hero-wide-layout .hero-role-stack { position:relative; display:block; min-height:430px; padding:0; align-self:center; }
+.hero-wide-layout .hero-role-stack::before { content:""; position:absolute; z-index:-1; inset:24px 4px 22px 9%; border-left:1px dashed rgba(110,154,222,.24); border-radius:50%; pointer-events:none; }
+.hero-wide-layout .hero-role-stack .role-card { position:absolute; right:auto !important; bottom:auto !important; left:auto !important; top:auto !important; width:136px; min-height:108px; padding:8px 8px 30px; border-radius:15px; overflow:visible; transform:none !important; background:rgba(255,255,255,.78); box-shadow:0 11px 24px rgba(45,72,128,.1),0 2px 6px rgba(45,72,128,.05); }
+.hero-wide-layout .hero-role-stack .role-card:nth-child(1) { left:0 !important; top:48px !important; }
+.hero-wide-layout .hero-role-stack .role-card:nth-child(2) { right:0 !important; top:48px !important; }
+.hero-wide-layout .hero-role-stack .role-card:nth-child(3) { left:0 !important; top:216px !important; }
+.hero-wide-layout .hero-role-stack .role-card:nth-child(4) { right:0 !important; top:216px !important; }
+.hero-wide-layout .hero-role-stack .role-art { height:61px; border-radius:10px; }
+.hero-wide-layout .hero-role-stack .role-card b { left:8px; right:8px; bottom:7px; min-height:18px; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; color:#1d3962; font-size:9px; font-weight:800; }
 .hero-wide-layout .hero-role-stack .role-card:hover { transform:translateY(-3px) !important; }
 .hero-wide-layout .focus-layout-reset { right:0; bottom:-4px; }
 
 @media (max-width:1020px) and (min-width:781px) {
   .hero-wide-layout { grid-template-columns:minmax(235px,.78fr) minmax(285px,1fr) minmax(235px,.7fr); gap:24px; padding-inline:32px; }
-  .hero-wide-layout .portrait-zone img { width:350px; height:350px; }
-  .hero-wide-layout .portrait-glow { width:365px; height:365px; }
-  .hero-wide-layout .hero-role-stack .role-card { width:132px; min-height:116px; }
-  .hero-wide-layout .hero-role-stack .role-art { height:66px; }
+  .hero-wide-layout .portrait-zone img { width:330px; height:330px; }
+  .hero-wide-layout .portrait-glow { width:350px; height:350px; }
+  .hero-wide-layout .hero-role-stack .role-card { width:122px; min-height:103px; }
+  .hero-wide-layout .hero-role-stack .role-art { height:57px; }
 }
 
 @media (max-width:780px) {
@@ -552,7 +552,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-wide-layout .hero-blurb { margin:20px 0; }
   .hero-wide-layout .portrait-zone { min-height:350px; margin:0 auto; }
   .hero-wide-layout .portrait-glow { width:330px; height:330px; bottom:12px; }
-  .hero-wide-layout .portrait-zone img { width:305px; height:305px; }
+  .hero-wide-layout .portrait-zone img { width:286px; height:286px; }
   .hero-wide-layout .hero-role-stack { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px 12px; min-height:0; padding:8px 0 18px; }
   .hero-wide-layout .hero-role-stack::before { display:none; }
   .hero-wide-layout .hero-role-stack .role-card { position:relative; left:auto !important; top:auto !important; width:100%; min-height:144px; padding:10px 10px 34px; }

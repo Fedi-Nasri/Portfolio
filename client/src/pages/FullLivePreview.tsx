@@ -19,7 +19,7 @@ type Props = {
   activePath: string;
   onSection: (section: PreviewSection) => void;
   onChange: (path: ContentPath, value: unknown) => void;
-  onSelect: (path: ContentPath) => void;
+  onSelect: (path: ContentPath, start?: number, end?: number) => void;
   onAddTag: () => void;
   onAddStat: () => void;
   onRemoveAboutTag?: (tagIndex: number) => void;
@@ -71,9 +71,20 @@ type Props = {
   uploadingAsset: string | null;
 };
 
-export function EditableText({ value, path, section, activeSection, activePath, onSection, onChange, onSelect, className = "" }: { value: string; path: ContentPath; section: PreviewSection; activeSection: PreviewSection | null; activePath: string; onSection: (section: PreviewSection) => void; onChange: (path: ContentPath, value: string) => void; onSelect: (path: ContentPath) => void; className?: string }) {
+export function EditableText({ value, path, section, activeSection, activePath, onSection, onChange, onSelect, className = "" }: { value: string; path: ContentPath; section: PreviewSection; activeSection: PreviewSection | null; activePath: string; onSection: (section: PreviewSection) => void; onChange: (path: ContentPath, value: string) => void; onSelect: (path: ContentPath, start?: number, end?: number) => void; className?: string }) {
   const editable = activeSection === section;
   const selected = activePath === path.join(".");
+  const captureSelection = (element: HTMLSpanElement) => {
+    if (!editable || typeof window === "undefined") return;
+    const selection = window.getSelection();
+    if (!selection?.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    if (!element.contains(range.startContainer) || !element.contains(range.endContainer)) return;
+    const before = range.cloneRange();
+    before.selectNodeContents(element);
+    before.setEnd(range.startContainer, range.startOffset);
+    onSelect(path, before.toString().length, before.toString().length + range.toString().length);
+  };
   return <span
     className={`live-editable-text ${editable ? "is-editable" : ""} ${selected ? "is-selected" : ""} ${className}`}
     contentEditable={editable}
@@ -82,6 +93,8 @@ export function EditableText({ value, path, section, activeSection, activePath, 
     role={editable ? "textbox" : undefined}
     tabIndex={editable ? 0 : -1}
     onClick={() => { if (!editable) onSection(section); onSelect(path); }}
+    onMouseUp={(event) => captureSelection(event.currentTarget)}
+    onKeyUp={(event) => captureSelection(event.currentTarget)}
     onFocus={() => onSelect(path)}
     onBlur={(event) => onChange(path, event.currentTarget.innerText)}
   >{value}</span>;
