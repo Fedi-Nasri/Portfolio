@@ -2,7 +2,7 @@
  * Public portfolio view. All visible content is sourced from the latest published
  * portfolio document while the established visual system remains unchanged.
  */
-import React, { useState, type CSSProperties, type ReactNode } from "react";
+import React, { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   ArrowRight, Check, ChevronDown, ChevronUp, Copy, Github, Linkedin, Mail, MapPin,
   Menu, Moon, Phone, Sparkles, Sun, X,
@@ -11,6 +11,7 @@ import { DEFAULT_PORTFOLIO_CONTENT, DEFAULT_SECTION_ORDER, hydrateExperienceDeta
 import { trpc } from "@/lib/trpc";
 import { RichText } from "@/components/RichText";
 import { CustomSectionCanvas } from "@/components/CustomSectionCanvas";
+import { getPublicMotionConfig } from "@/lib/publicMotion";
 
 type Certification = PortfolioContent["certifications"][number];
 type WritingPost = PortfolioContent["writing"][number];
@@ -53,6 +54,48 @@ export default function Home() {
   const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
   const [activeArticle, setActiveArticle] = useState<WritingPost | null>(null);
   const [expandedExperienceIndex, setExpandedExperienceIndex] = useState<number | null>(null);
+  const portfolioRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const root = portfolioRef.current;
+    if (!root) return;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const config = getPublicMotionConfig(prefersReducedMotion);
+    const revealTargets = Array.from(root.querySelectorAll<HTMLElement>(config.revealSelector));
+
+    root.classList.add(config.rootClass);
+    revealTargets.forEach((target) => {
+      target.dataset.motionReveal = "pending";
+    });
+
+    if (!config.enabled) {
+      root.classList.add(config.reducedClass);
+      revealTargets.forEach((target) => {
+        target.dataset.revealed = "true";
+      });
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      revealTargets.forEach((target) => {
+        target.dataset.revealed = "true";
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target as HTMLElement;
+        target.dataset.revealed = "true";
+        observer.unobserve(target);
+      });
+    }, config.observerOptions);
+
+    revealTargets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, []);
 
   const copyEmail = async () => {
     try {
@@ -67,7 +110,7 @@ export default function Home() {
   const closeNav = () => setMobileNav(false);
 
   return (
-    <div className={`reference-portfolio${dimMode ? " dim-mode" : ""}`}>
+    <div ref={portfolioRef} className={`reference-portfolio public-motion${dimMode ? " dim-mode" : ""}`}>
       <style>{projectFrameCss}</style>
       <header className="ref-header">
         <a href={firstVisibleSection ? `#${firstVisibleSection}` : "#"} className="ref-brand" aria-label={`${hero.firstName} ${hero.lastName} portfolio`}><span className="brand-name">fedi</span><span className="brand-node" /></a>
