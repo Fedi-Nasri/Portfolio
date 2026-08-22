@@ -37,8 +37,12 @@ describe("Vercel API bridge", () => {
     const configPath = path.resolve(import.meta.dirname, "..", "vercel.json");
     const config = JSON.parse(await readFile(configPath, "utf8")) as {
       routes?: Array<{ handle?: string; src?: string; dest?: string }>;
+      builds?: Array<{ src: string; use: string }>;
     };
 
+    expect(config.builds).toEqual(
+      expect.arrayContaining([{ src: "api/[...path].ts", use: "@vercel/node" }]),
+    );
     expect(config.routes?.[0]).toEqual({ src: "/api/(.*)", dest: "/api/[...path].ts" });
     expect(config.routes?.[1]).toEqual({ handle: "filesystem" });
     expect(config.routes?.at(-1)).toEqual({ src: "/(.*)", dest: "/index.html" });

@@ -672,7 +672,9 @@
 - [ ] Reconcile the existing Vercel project’s connected Git source and build target with the checkpointed portfolio repository before requesting a Preview deployment.
 - [ ] Commit and push the checkpointed portfolio source to `Fedi-Nasri/Portfolio` on the approved `deployment_versel` branch without changing `main`.
 - [ ] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
-- [x] Add and validate the missing Vercel serverless API bridge so Preview `/api/trpc` editor requests reach the shared Express/tRPC application.
+- [ ] Bundle the Vercel serverless API bridge with its shared Express dependencies so Preview `/api/trpc` editor requests do not crash at runtime.
+- [ ] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
+- [ ] Restore Preview rendering for portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs.
 
 ## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
 
