@@ -117,8 +117,8 @@ describe("FullLivePreview", () => {
     const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
 
     expect(activeHtml).toContain("Drag DevOps card");
-    expect(activeHtml).toContain("left:45%");
-    expect(activeHtml).toContain("top:20%");
+    expect(activeHtml).toContain("--focus-x:45%");
+    expect(activeHtml).toContain("--focus-y:20%");
     expect(inactiveHtml).not.toContain("Drag DevOps card");
   });
 

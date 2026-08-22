@@ -747,3 +747,19 @@
 - [x] Synchronize the release, environment, and media operations documentation to GitHub `main` without creating a Production deployment.
 - [x] Correct the remaining Vercel handbook wording that incorrectly describes the Production release handoff as a Preview action.
 - [x] Synchronize the corrected Vercel Production wording to GitHub `main` without touching `deployment_versel`.
+
+## Isolated Public Motion Prototype
+
+- [x] Study the reference portfolio’s page-load and scroll-reveal motion and define an accessible public-view animation scope.
+- [x] Create a dedicated feature branch from stable `main`; do not modify or push to `deployment_versel` during the prototype.
+- [x] Implement the approved loading and scroll-reveal motion for the public portfolio while preserving direct-editor functionality.
+- [x] Verify desktop and mobile motion, `prefers-reduced-motion`, TypeScript, tests, build, and visual behavior before checkpointing.
+- [x] Present the isolated branch for review before any merge to `main` or explicitly approved Production release.
+
+## Isolated Home Composition Redesign
+
+- [x] Map the supplied wide three-column Home layout to Fedi’s existing portrait, role-card, contact, and editable-content model.
+- [x] Rebuild the public Home composition on the isolated feature branch to match the supplied hierarchy and spacing without replacing Fedi’s identity or content.
+- [x] Preserve Home editing, focus-card management, image replacement, and public/editor visual parity in the redesigned composition.
+- [x] Retain the motion prototype and validate desktop/mobile layout, reduced-motion behavior, editor controls, TypeScript, tests, and production build.
+- [ ] Present the revised isolated prototype before merging to `main` or making any separate Production-release decision.

@@ -41,4 +41,13 @@ describe("public contact section", () => {
     expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
     expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
   });
+
+  it("uses the wide three-column Home composition while preserving the seeded portrait and focus areas", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("reference-hero hero-wide-layout");
+    expect(html).toContain("Portrait of Fedi NASRI.");
+    expect(html).toContain("Cloud &amp; Network Engineer");
+    expect(html).toContain("Security &amp; Networking");
+  });
 });
