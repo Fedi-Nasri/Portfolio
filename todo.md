@@ -674,6 +674,7 @@
 - [ ] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
 - [ ] Bundle the Vercel serverless API bridge as CommonJS with its shared Express dependencies so Preview `/api/trpc` editor requests do not crash at runtime.
 - [ ] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
+- [x] Restore local `/edit` persistence when the sandbox lacks a usable PostgreSQL `DATABASE_URL`, without weakening deployed PostgreSQL requirements.
 - [ ] Restore Preview rendering for portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs.
 - [ ] Keep all deployment remediation commits on `deployment_versel` and prevent further accidental Production deployment classification.
 - [ ] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
