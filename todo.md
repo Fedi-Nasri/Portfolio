@@ -716,3 +716,9 @@
 - [x] Document the Vercel API bridge problem, the role of `api/[...path].js`, the CommonJS packaging choice, and the tRPC routes it enables.
 - [x] Synchronize the Vercel deployment documentation suite and API-bridge explanation from `deployment_versel` into the stable `main` branch without changing application deployment settings.
 - [x] Validate documentation links and commit the documentation-only updates on both branches.
+
+## AI Context: API Bridge and Branch Documentation Sync
+
+- [x] Record the deployed API bridge purpose, prior routing/module failures, generated-artifact maintenance rule, and Preview verification evidence in `deployment_versel` AI context.
+- [x] Record the documentation synchronization to `main`, explicitly distinguishing copied documentation from the Vercel-only application implementation on `deployment_versel`.
+- [x] Synchronize the relevant AI-context records into `main`, validate cross-links, and commit the documentation-only updates on both branches.

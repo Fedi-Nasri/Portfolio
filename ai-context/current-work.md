@@ -3,9 +3,11 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-22 (GMT+2)  
-**Latest saved project checkpoint:** `3d8293c3` — stable-branch policy, Vercel handbook, development handoff guide, and AI-context refresh.
+**Latest saved project checkpoint:** `cfe8f9b7` — API bridge documentation and completed Vercel handbook synchronization record.
 **Current immediate task:** Continue the controlled historical media migration from a private Preview draft; one project image is verified in Blob and the remaining six legacy references require separate uploads.
 **Deployment status:** `deployment_versel` has a working **Preview** deployment. `main` is now the documented stable development branch. Production was not promoted or reconfigured in this verification cycle.
+
+**API bridge documentation boundary:** `main` now mirrors the Vercel handbook and AI-context guidance so work can be planned safely there. The Vercel route configuration, generated CommonJS `api/[...path].js` function, Blob service integration, and Preview runtime behavior remain on `deployment_versel` until a deliberate release handoff occurs.
 
 ## Active priorities
 

@@ -8,8 +8,8 @@ This record is the mandatory source for any agent or developer deciding where to
 
 | Branch | Role | Current operating rule |
 |---|---|---|
-| `main` | Stable development source of truth | New portfolio features, application behavior, migrations, tests, documentation, and AI-context changes begin here after a task is logged in `todo.md`. |
-| `deployment_versel` | Vercel-connected deployment candidate | Holds the tested candidate deployed by Vercel as Preview. Keep Vercel packaging/configuration aligned and never force-push or use it for unreviewed experimentation. |
+| `main` | Stable development source of truth | New portfolio features, application behavior, migrations, tests, documentation, and AI-context changes begin here after a task is logged in `todo.md`. It may mirror Vercel guidance, but a mirror is not a deployed implementation. |
+| `deployment_versel` | Vercel-connected deployment candidate | Holds the tested candidate deployed by Vercel as Preview, including Vercel routing, the generated API bridge, and service-specific artifacts. Keep packaging/configuration aligned and never force-push or use it for unreviewed experimentation. |
 | Production deployment | User-facing release target | Remains a separately approved activity. Changing Vercel Production branch tracking, promoting a Preview, or assigning a Production domain requires a direct user request. |
 
 ## Mandatory agent flow
@@ -48,6 +48,7 @@ Run `pnpm check`, `pnpm test`, and `pnpm build` before checkpointing substantive
 |---|---|---|
 | Preview branch | `deployment_versel` produces Vercel Preview deployments. | Preserve this behavior unless the user requests a configuration change. |
 | API route | `vercel.json` routes `/api/*` to generated CommonJS `api/[...path].js`. | Regenerate the artifact after server/API source changes. |
+| Documentation mirror | `main` carries Vercel and API-bridge documentation for stable development planning. | Do not infer that `main` itself is the branch Vercel executes; implementation and Preview evidence remain on `deployment_versel`. |
 | Database | Application code uses provider-neutral PostgreSQL; Neon is the current Vercel-connected host. | Never disclose `DATABASE_URL`; do not couple code to Neon-only APIs. |
 | New media | Vercel Blob stores bytes; `portfolio_media_assets` stores metadata. | Do not store bytes in PostgreSQL. |
 | Legacy media | Seven seeded `/manus-storage` references still need separate migration. | Do not claim historic media is Blob-migrated or modify Main for smoke tests. |
@@ -58,8 +59,9 @@ Run `pnpm check`, `pnpm test`, and `pnpm build` before checkpointing substantive
 1. Read this file and `current-work.md`.
 2. Read [`../docs/development-branch-workflow.md`](../docs/development-branch-workflow.md).
 3. Read the [Vercel Deployment Handbook](../docs/vercel-deployment/README.md), especially its release runbook and service guide.
-4. Read `database-and-data.md`, `issues.md`, and `preview-verification-evidence.md` if the task changes persistence or media.
-5. Add exact work items to `todo.md`, then implement on `main`.
+4. Read [`vercel-api-bridge.md`](./vercel-api-bridge.md) before changing API routes, serverless code, or generated function artifacts.
+5. Read `database-and-data.md`, `issues.md`, and `preview-verification-evidence.md` if the task changes persistence or media.
+6. Add exact work items to `todo.md`, then implement on `main`.
 
 ## Documentation maintenance rule
 

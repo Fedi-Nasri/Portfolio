@@ -21,6 +21,7 @@ This record holds decisions that a future agent must preserve unless the user ex
 | D-015 | Create and maintain `ai-context/` for future agent handoff. | Active | User requested project memory covering current work, history, design, architecture, and database details. |
 | D-016 | Use provider-neutral PostgreSQL technology for the application database. | Active | The user explicitly requested PostgreSQL as the application technology, not a Neon-specific implementation. Use standard Drizzle PostgreSQL and `pg` interfaces; Neon is the current host and may be replaced by any compatible PostgreSQL provider without changing the data model. |
 | D-017 | Treat `main` as stable development and `deployment_versel` as the Vercel-connected deployment branch. | Active | Build and validate feature work on `main`; move deliberate checkpointed candidates to `deployment_versel` for Preview verification. This does not authorize Production promotion, Production-branch changes, or domain changes. |
+| D-018 | Mirror Vercel and API-bridge documentation in `main` while keeping deployed implementation on `deployment_versel`. | Active | Stable development needs the same operational knowledge, but copied documentation must not be mistaken for Vercel routing, generated API artifacts, or a Preview deployment. The `deployment_versel` branch remains the Vercel-connected implementation branch. |
 
 ## Decision rule
 

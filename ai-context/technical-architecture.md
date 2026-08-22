@@ -145,7 +145,7 @@ flowchart TD
 | Draft persistence | `server/portfolio.ts` | Enforces seed, save, restore, rename/delete, public selection, and public content loading. |
 | API definitions | `server/routers.ts` | Keep input validation and client/server contract typed. |
 | Database connection | `server/db.ts`, `drizzle/schema.ts`, `drizzle.config.ts` | Keep dialect, schema, migrations, and driver aligned. |
-| Local / serverless app | `server/_core/index.ts`, `server/_core/app.ts`, `server/vercel-api-handler.ts`, generated `api/[...path].js`, `vercel.json` | Reuse `createPortfolioApp()` and regenerate the CommonJS artifact after server/API changes. |
+| Local / serverless app | `server/_core/index.ts`, `server/_core/app.ts`, `server/vercel-api-handler.ts`, generated `api/[...path].js`, `vercel.json` | These Vercel-specific implementation files run from `deployment_versel`; `main` mirrors their documentation only. Reuse `createPortfolioApp()` and regenerate the CommonJS artifact after server/API changes. |
 | Storage | `server/assets.ts`, `server/_core/storageProxy.ts`, `portfolio_media_assets` | New editor uploads use Vercel Blob plus PostgreSQL metadata; the proxy is only a legacy compatibility path. |
 | Custom canvas | `client/src/components/CustomSectionCanvas.tsx` | Preserve group behavior, snap grid, alignment guides, preset persistence, and mobile fallback. |
 | Project image controls | `client/src/components/ProjectImageControlPanel.tsx` | Keep crop zoom/focal point/ratio/frame preferences persistent and safe. |
@@ -199,4 +199,4 @@ flowchart TD
 
 Local development uses the Express app from `server/_core/index.ts`. Vercel uses the generated CommonJS `api/[...path].js` artifact built from `server/vercel-api-handler.ts`, which imports the shared `createPortfolioApp()` factory. The Vercel configuration routes `/api/*` to that function before filesystem and SPA fallbacks, preserves the legacy Manus-storage route, and sends other client routes such as `/edit` to `index.html`.
 
-The `deployment_versel` branch has verified Preview API, PostgreSQL draft, and new Blob upload behavior. It is not automatically production-ready: `/edit` is intentionally unauthenticated, historic Manus-storage references need a separate migration, and Production remains an explicit user-approved action. Read `branch-and-release-workflow.md` before any Vercel work.
+The `deployment_versel` branch has verified Preview API, PostgreSQL draft, and new Blob upload behavior. The documentation and AI-context records are mirrored to `main` for stable development planning, but the Vercel function, routing, and runtime evidence remain deployment-branch facts. It is not automatically production-ready: `/edit` is intentionally unauthenticated, historic Manus-storage references need a separate migration, and Production remains an explicit user-approved action. Read `vercel-api-bridge.md` and `branch-and-release-workflow.md` before any Vercel work.
