@@ -713,6 +713,6 @@
 
 ## Vercel API Bridge Documentation and Main Sync
 
-- [ ] Document the Vercel API bridge problem, the role of `api/[...path].js`, the CommonJS packaging choice, and the tRPC routes it enables.
-- [ ] Synchronize the Vercel deployment documentation suite and API-bridge explanation from `deployment_versel` into the stable `main` branch without changing application deployment settings.
-- [ ] Validate documentation links and commit the documentation-only updates on both branches.
+- [x] Document the Vercel API bridge problem, the role of `api/[...path].js`, the CommonJS packaging choice, and the tRPC routes it enables.
+- [x] Synchronize the Vercel deployment documentation suite and API-bridge explanation from `deployment_versel` into the stable `main` branch without changing application deployment settings.
+- [x] Validate documentation links and commit the documentation-only updates on both branches.
