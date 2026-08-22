@@ -667,17 +667,17 @@
 - [x] Audit MySQL-specific drivers, schema types, raw queries, migration configuration, and persistence tests for PostgreSQL conversion.
 - [x] Convert Drizzle schema, database client, and migration configuration to standard PostgreSQL-compatible implementations, without coupling application code to Neon.
 - [x] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
-- [ ] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
-- [ ] Create a Vercel Preview deployment and exercise PostgreSQL persistence with a disposable draft while preserving the Main public draft and production boundary.
-- [ ] Reconcile the existing Vercel project’s connected Git source and build target with the checkpointed portfolio repository before requesting a Preview deployment.
-- [ ] Commit and push the checkpointed portfolio source to `Fedi-Nasri/Portfolio` on the approved `deployment_versel` branch without changing `main`.
-- [ ] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
-- [ ] Expose the CommonJS Vercel API bridge through a Vercel-recognized `.js` function so Preview `/api/trpc` does not fall through to the SPA.
-- [ ] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
+- [x] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
+- [x] Create a Vercel Preview deployment and exercise PostgreSQL persistence with a disposable draft while preserving the Main public draft and production boundary.
+- [x] Reconcile the existing Vercel project’s connected Git source and build target with the checkpointed portfolio repository before requesting a Preview deployment.
+- [x] Commit and push the checkpointed portfolio source to `Fedi-Nasri/Portfolio` on the approved `deployment_versel` branch without changing `main`.
+- [x] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
+- [x] Expose the CommonJS Vercel API bridge through a Vercel-recognized `.js` function so Preview `/api/trpc` does not fall through to the SPA.
+- [x] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
 - [x] Restore local `/edit` persistence when the sandbox lacks a usable PostgreSQL `DATABASE_URL`, without weakening deployed PostgreSQL requirements.
 - [ ] Restore Preview rendering for portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs.
 - [ ] Keep all deployment remediation commits on `deployment_versel` and prevent further accidental Production deployment classification.
-- [ ] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
+- [x] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
 - [ ] Replace historical Preview media references with an object-storage-compatible delivery path while preserving existing portfolio content URLs where feasible.
 - [x] Provision or connect a Vercel Blob store for `deployment_versel` and record only Blob object metadata in PostgreSQL.
 - [x] Add a migration, tRPC media API, and editor workflow for Vercel Blob image/PDF uploads without storing file bytes in database rows.

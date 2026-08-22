@@ -3,17 +3,17 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-22 (GMT+2)  
-**Latest saved project checkpoint:** `327f3425` — provider-neutral PostgreSQL source conversion; this follow-up schema application is awaiting its own checkpoint.  
-**Current immediate task:** Reconcile the verified PostgreSQL schema application in documentation, run the regression suite, and checkpoint the work.  
-**Deployment status:** The initial database schema is applied and verified. Preview/production deployment and Vercel Blob work remain incomplete and require separate approval.
+**Latest saved project checkpoint:** `54ef9eb3` — Vercel-recognized CommonJS API artifact and `/api` routing repair.  
+**Current immediate task:** Preserve the successful Preview verification evidence, run the final regression suite, and checkpoint the documentation/status update.  
+**Deployment status:** `deployment_versel` has a working **Preview** deployment. Production was not promoted or reconfigured in this verification cycle.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | Active | Reconcile the existing Vercel project’s connected source before requesting a Preview deployment. | The current live deployment serves server source instead of the portfolio and does not match the checkpointed local repository. |
-| 2 | Pending after source reconciliation | Exercise disposable-draft PostgreSQL persistence in a Vercel Preview deployment. | Verify public/editor routes, draft workflows, and public reads before any production deployment. |
-| 3 | Pending | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate a preview. |
+| 1 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Inventory seeded URLs, then copy or re-upload available legacy images/PDFs without claiming existing references already work on Preview. |
+| 2 | Active | Maintain the direct editor’s deployment risk boundary. | Do not promote this Preview deployment or alter production settings without an explicit user instruction; `/edit` is intentionally unauthenticated. |
+| 3 | Pending | Maintain a release-ready validation baseline. | Re-run API-artifact build, TypeScript, Vitest, and production build after any server/API change before a checkpoint. |
 
 ## PostgreSQL hosting state
 
@@ -21,10 +21,12 @@ The user requested a provider-neutral PostgreSQL implementation and connected a 
 
 | Confirmed | Still required |
 |---|---|
-| PostgreSQL is the project database technology. | Verify real draft save/restore/publish behavior only in an approved Vercel Preview deployment. |
+| PostgreSQL is the project database technology. | Keep application code provider-neutral and do not disclose the connection value. |
 | Neon is the currently connected Vercel PostgreSQL host. | Keep application code provider-neutral and do not disclose the connection value. |
 | `DATABASE_URL` exists in Vercel Preview and Production. | Keep the runtime code provider-neutral and do not disclose the value. |
-| PostgreSQL migration SQL was generated, reviewed, applied, and table-verified on the connected host. | Connect Blob, implement its adapter, and run upload smoke tests before production uploads. |
+| PostgreSQL migration SQL and the additive `portfolio_media_assets` table were applied and table-verified on the connected host. | Migrate historical media references before treating all seeded public media as portable. |
+| A disposable Preview draft was created, saved with a note, restored as a new version, reloaded, and kept private. | Leave Main selected as the public draft unless the user explicitly requests a change. |
+| Vercel runtime logs show successful deployed tRPC save/create/restore/publish requests, and Blob contains new portrait/PDF-category objects. | Do not treat legacy `/manus-storage` URLs as Blob-migrated. |
 
 ## Validation baseline
 
@@ -32,10 +34,10 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 | Command / check | Last known result | Notes |
 |---|---|---|
-| `pnpm check` | Passed | TypeScript compiled with no errors after the PostgreSQL conversion. |
-| `pnpm test` | Passed: 10 files, 71 tests | Uses an in-memory PostgreSQL compatibility setup for draft persistence workflows. |
+| `pnpm check` | Passed | TypeScript compiled with no errors after Vercel API packaging and the local PostgreSQL fallback repair. |
+| `pnpm test` | Passed: 12 files, 76 tests | Includes PostgreSQL persistence, Blob validation, API bridge, and development-only pg-mem fallback coverage. |
 | `pnpm build` | Passed | Vite output and server bundle built successfully; bundle-size warning is informational. |
-| Dev server | Running at port 3000 | Public and editor routes were previously available in the managed preview. |
+| Preview API and editor | Passed | `GET /api/trpc/auth.me` returned a tRPC JSON response; `/edit` loaded the full direct workspace. |
 
 ## Working rules for the next agent
 
@@ -46,10 +48,8 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 5. Run TypeScript, Vitest, and build validation before checkpointing substantive code changes.
 6. Update this ledger, `decisions.md`, `issues.md`, and `change-log.md` as the work changes state.
 
-## Existing TODO status
+## Preview deployment verification (2026-08-22)
 
-The PostgreSQL conversion and initial schema application are recorded in `todo.md`. The current Vercel production deployment was inspected only and serves server source rather than the portfolio, indicating a source/build-target mismatch that must be reconciled before Preview-backed persistence testing. The Blob adapter and deployment verification remain unchecked.
+The completed source is on GitHub branch `deployment_versel`; Vercel deploys it as a Preview without changing `main` or intentionally promoting Production. The working Preview is `https://portfolio-j6678emwj-fedi-s-projects2.vercel.app`. Commit `54ef9eb` packages the Express/tRPC entry as `api/[...path].js` with an API-local CommonJS declaration, preventing the earlier SPA fallback and ESM dynamic-require failures.
 
-## Preview deployment investigation (2026-08-22)
-
-The completed source was pushed to GitHub branch `deployment_versel`, which Vercel correctly deploys as Preview without touching `main` or production. The public Preview UI renders, but its historical `/manus-storage` media is unavailable. The editor is stalled because its tRPC calls initially matched the SPA fallback; after an explicit API route was added, Vercel reached the function but failed to resolve `/var/task/server/_core/app`. A follow-up `@vercel/node` builder configuration also failed at install because Vercel chose pnpm 9 and reported `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` for the repository’s patched-dependency configuration. Preserve this evidence and finish API packaging before using the editor or testing PostgreSQL writes.
+On this Preview, `GET /api/trpc/auth.me` returned the expected tRPC JSON payload and `/edit` loaded the full workspace. A disposable `Draft 2` was created, saved as version 2 with the note `Vercel Preview PostgreSQL persistence verification`, reloaded, and then observed at version 3 after restore-as-new-version. Main remained marked Public and was not deliberately selected, deleted, or published during the verification. The Vercel Blob dashboard confirms the public `portfolio-blob` store is connected to Preview and Production and contains concrete `portfolio-editor/portrait/` JPEG objects. See `preview-verification-evidence.md` for the source observations and limitations.

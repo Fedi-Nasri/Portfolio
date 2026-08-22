@@ -2,7 +2,7 @@
 
 This guide explains how to deploy **the full Fedi Nasri portfolio application** to Vercel, including the public site, the direct `/edit` workspace, draft history, image uploads, certificate PDFs, and static ZIP export.
 
-> **Current status:** Vercel work is **paused by user request**. This document is a preparation and learning guide. Do not treat it as permission to deploy, change cloud services, accept terms, or add production secrets. Resume those actions only after a clear new request.
+> **Current status:** The approved `deployment_versel` branch has a working **Preview** deployment. Its direct editor, PostgreSQL draft persistence, and new Blob uploads have been verified. Production has not been promoted or reconfigured in this verification cycle; do not treat this guide as permission to change production settings or services without a clear new user request.
 
 ## Quick access links and exact project settings
 
@@ -14,10 +14,10 @@ This guide explains how to deploy **the full Fedi Nasri portfolio application** 
 | Existing production domain | `https://portfolio-theta-jet-90.vercel.app` | Treat this as the intended domain only; do not regard the editor as production-ready until database and storage compatibility work is complete. |
 | Root directory | Project root (`.`) | The directory containing `package.json`, `vercel.json`, `api/`, and `server/`. |
 | Install command | `pnpm install --frozen-lockfile` | Already defined by `vercel.json`; locks dependency versions for consistent builds. |
-| Build command | `pnpm exec vite build` | Already defined by `vercel.json`; builds the React public application. |
+| Build command | `pnpm exec vite build` | Defined by `vercel.json`; builds the React public application. |
 | Output directory | `dist/public` | Already defined by `vercel.json`; Vercel serves the built single-page application from here. |
 
-> Do **not** remove the existing `vercel.json` rewrites. They are what keep `/edit` working after a page refresh and currently route `/manus-storage/*` requests through the API proxy.
+> Do **not** remove the existing `vercel.json` rewrites. They keep `/edit` working after a page refresh, route `/api/*` to the bundled serverless function, and retain the temporary legacy `/manus-storage/*` compatibility rewrite.
 
 ## 1. What Vercel is doing for this project
 
@@ -44,17 +44,16 @@ The following table explains the role of each service in plain language.
 
 ## 2. Understand the current project before deploying
 
-The repository already includes a Vercel-oriented structure. It is not yet sufficient for a full editor deployment until the database and file-storage compatibility work is completed.
+The repository includes a Vercel-oriented structure that is verified on the current Preview. Production remains a separate, explicit decision because the direct `/edit` route is unauthenticated and historical media has not yet been migrated.
 
 | Project item | Current value / file | Why it matters |
 |---|---|---|
 | Existing Vercel project | `portfolio` | Reuse this project if it remains the intended Vercel destination. |
 | Public frontend build | `dist/public` | This is the folder Vercel serves for the React single-page application. |
-| API entry point | `api/[...path].ts` | Sends `/api/*` requests to the shared Express application. |
-| Shared server factory | `server/_core/app.ts` | Prevents Vercel API behavior from drifting away from local development. |
+| API source and artifact | `server/vercel-api-handler.ts` and generated `api/[...path].js` | The generated CommonJS artifact is the Vercel-recognized function that serves `/api/*`; rebuild it after server/API changes. |
 | Routing configuration | `vercel.json` | Keeps `/edit` working after refresh and rewrites current storage proxy requests. |
 | Draft data schema | `drizzle/schema.ts` | Defines the tables needed by the editor and version history. |
-| Current storage implementation | `server/storage.ts`, `server/_core/storageProxy.ts` | Uses Forge/S3-style behavior today; a Vercel Blob adapter still needs to be written. |
+| Current storage implementation | `server/assets.ts`, `@vercel/blob`, and `portfolio_media_assets` | New editor uploads store object bytes in Blob and metadata in PostgreSQL. The legacy proxy remains only for unresolved historical `/manus-storage` references. |
 
 > **PostgreSQL compatibility:** the application uses provider-neutral PostgreSQL packages and Drizzle’s PostgreSQL schema dialect. Neon is the connected Vercel host, but the code does not require Neon-specific APIs. Use any compatible PostgreSQL `DATABASE_URL`.
 
@@ -67,7 +66,7 @@ Before starting any deployment, make sure these requirements are satisfied.
 | Access to the Vercel project | You can open the `portfolio` project and edit its Storage and Environment Variables settings. | Without access, you cannot attach services or configure the application. |
 | Clean local build | `pnpm check`, `pnpm test`, and `pnpm build` pass. | Vercel builds the same code. A local failure normally becomes a deployment failure. |
 | Compatible SQL configuration | A PostgreSQL-compatible `DATABASE_URL` is connected for the target Vercel environments. | The editor’s draft history depends on the PostgreSQL driver, schema, and host agreeing. |
-| Storage implementation decision | Keep current Forge storage temporarily, or complete the Vercel Blob adapter first. | The current upload code does not automatically become Blob-compatible just because a Blob store exists. |
+| Storage implementation decision | Keep the deployed Blob handler for new uploads and separately plan historical-media migration. | The Blob adapter is deployed, but existing `/manus-storage` URLs do not become Blob URLs automatically. |
 | Environment-variable plan | You know which values belong to Production, Preview, and Development. | Vercel scopes variables by environment; a change affects new deployments, not old ones.[2] |
 | Deployment access-control decision | You understand that `/edit` currently has no authentication. | A public deployment could allow anyone who reaches `/edit` to change portfolio content. |
 
@@ -75,7 +74,7 @@ Before starting any deployment, make sure these requirements are satisfied.
 
 The repository has completed its database port to **provider-neutral PostgreSQL**. Its Drizzle schema uses `pg-core`, runtime persistence uses `pg` through `drizzle-orm/node-postgres`, and the regression suite uses in-memory PostgreSQL support. The source has no Neon-specific database dependency.
 
-The currently connected Vercel host is a Neon PostgreSQL database. Its initial additive schema was applied and verified on 2026-08-22: `users`, `portfolio_content_versions`, `portfolio_drafts`, and `portfolio_draft_versions` are present. The two enum types required by the application were created at the same time. Do not copy or disclose `DATABASE_URL`.
+The currently connected Vercel host is a Neon PostgreSQL database. Its initial additive schema and the later `portfolio_media_assets` metadata table were applied and verified on 2026-08-22. The editor then completed a disposable Preview draft workflow, including a save with a descriptive version note and restore-as-new-version. Do not copy or disclose `DATABASE_URL`.
 
 > A database is not only a URL. The application code, ORM dialect, driver, migrations, and tests must all agree on the same database type. That agreement is now PostgreSQL; a different PostgreSQL provider can be substituted later without changing application database code.
 
@@ -108,10 +107,10 @@ For this public portfolio, images and certificate PDFs are normally intended to 
 |---|---|
 | Create a Blob store close to the intended users/functions. | A nearby region reduces upload latency; the region cannot later be changed.[3] |
 | Connect the Blob store to the `portfolio` project. | Vercel then provides the project configuration the Blob SDK needs. |
-| Add `@vercel/blob` to the codebase and implement a server-side adapter. | Creating a store alone does not reroute the current Forge/S3 upload code. |
+| Keep the `@vercel/blob` server-side adapter deployed. | New uploads now call the deployed server handler, which uses a random-suffix object key and saves metadata after Blob writes. |
 | Keep upload calls server-mediated. | The browser should not receive privileged write credentials. |
 | Use unique filenames or random suffixes. | Immutable asset URLs avoid stale cached media after updates.[3] |
-| Preserve old asset URLs or copy historical assets. | Existing drafts may still refer to `/manus-storage/*` URLs. |
+| Preserve old asset URLs or copy historical assets. | Existing drafts still refer to `/manus-storage/*` URLs and must be migrated separately. |
 
 Vercel-connected Blob projects commonly use automatic short-lived OIDC credentials such as `VERCEL_OIDC_TOKEN` and `BLOB_STORE_ID`; the SDK can read them automatically. `BLOB_READ_WRITE_TOKEN` is primarily needed when code runs outside Vercel or for particular browser-upload token flows.[3]
 
@@ -165,16 +164,16 @@ The CLI first links the local directory to the Vercel project and then creates t
 
 ## 9. Test the live deployment
 
-Run these checks in a Preview deployment first and repeat the critical ones in Production.
+Run these checks in a Preview deployment first. Repeat critical checks in Production only after the user explicitly authorizes a production change.
 
 | Test | What should happen | If it fails, start here |
 |---|---|---|
-| Open `/` | The selected public draft renders with hero image, projects, certificates, and contact links. | Build output, public draft selection, asset URL access. |
-| Reload `/edit` | The direct editor route returns the SPA rather than 404. | `vercel.json` SPA fallback. |
-| Save a version | A new draft-version entry appears without overwriting earlier history. | `DATABASE_URL`, migrations, `server/portfolio.ts`, tRPC logs. |
+| Open `/` | The selected public draft renders. New Blob-backed media can render directly; historical `/manus-storage` media may still require migration. | Build output, public draft selection, asset URL access. |
+| Reload `/edit` | The direct editor route returns the SPA and the API request reaches the CommonJS function. | `vercel.json` API and SPA rewrites, `api/[...path].js`. |
+| Save a version | A new draft-version entry appears without overwriting earlier history. | `DATABASE_URL`, migrations, `server/portfolio.ts`, tRPC logs. The Preview workflow has verified this on a private draft. |
 | Publish a draft | The public page changes to the selected draft. | Public flag transaction and query refresh. |
 | Restore a version | A new version is created from an older snapshot. | Version service logic and database writes. |
-| Upload portrait/project/certificate PDF | URL is stored, file remains visible after refresh, and certificate viewer can open it. | Blob adapter, server upload procedure, storage access mode. |
+| Upload portrait/project/certificate PDF | The server returns a public Blob URL, the metadata record is written in PostgreSQL, and the file remains visible after refresh. | Blob adapter, server upload procedure, storage access mode. The Preview store already contains new portrait and certificate-PDF category objects. |
 | Download ZIP export | Archive contains public-style page and available local certificate PDF assets. | Export utilities and network access to stored PDFs. |
 | Inspect logs | No unexplained function/database/storage errors appear. | Vercel deployment and runtime logs.[1] |
 
