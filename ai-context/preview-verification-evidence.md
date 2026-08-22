@@ -35,3 +35,17 @@ The seeded portfolio model still contains seven legacy `/manus-storage/` referen
 | Certificate preview | 1 | Source present; 812 kB PNG | Re-upload only if the public layout still needs a separate preview asset. |
 
 > Do not bulk-update `Main portfolio`, the default TypeScript seed, or the Production deployment as part of this inventory. A migration should first create a named private draft, upload one category at a time through the deployed server endpoint so PostgreSQL metadata is written, save an immutable version, and inspect the rendered Preview before any public-selection decision.
+
+## 2026-08-22 — project-image migration upload constraint
+
+- The documentation checkpoint `3d8293c` produced Preview `https://portfolio-56o6c3vyb-fedi-s-projects2.vercel.app`, where the public portfolio and direct `/edit` editor both loaded.
+- In private `Draft 2`, the first original project image (`fedi-project-autonomous-boat.jpg`, actually PNG, 3,782,879 bytes) was selected through the deployed editor. The browser upload control accepted the file, then the UI reported `Unexpected token 'R', "Request En"... is not valid JSON`. Vercel runtime logs did not show an `assets.upload` function request, which is consistent with an upstream request-size rejection before the function parses tRPC JSON; it is not evidence of a Blob or PostgreSQL write failure.
+- The editor’s Base64 JSON upload path inflates a file before it reaches the function, so the original 3.7–4.0 MB PNG-encoded project files are not safe candidates for this Preview function transport.
+- To preserve all image edges without a creative edit or crop, JPEG derivatives were made outside the repository with the same 2304×1536 dimensions: `fedi-project-autonomous-boat-vercel.jpg` (236,262 bytes), `fedi-eap-tls-reliable-vercel.jpg` (204,449 bytes), `fedi-cicd-reliable-vercel.jpg` (194,695 bytes), and `fedi-secure-network-reliable-vercel.jpg` (169,841 bytes). The next private-draft retry should use these JPEG files, then save a new immutable version only after a Blob URL is returned.
+
+## 2026-08-22 — successful private project-media migration proof
+
+- The compact `fedi-project-autonomous-boat-vercel.jpg` derivative was uploaded through the first project control in private `Draft 2`. The editor reported `Project image uploaded to this draft` and showed unsaved changes.
+- The note `Migrated Autonomous Robot Boat project image to Vercel Blob using upload-safe JPEG` was saved. The editor reported `Draft saved as version 4`; private Draft 2 now shows **v4 · 4 versions**, while `Main portfolio` remains **v3 · 3 versions · Public**.
+- Vercel logs independently show `POST 200 /api/trpc/assets.upload` at 18:46:37.70 and `POST 200 /api/trpc/portfolio.saveDraft` at 18:49:09.34 on `portfolio-56o6c3vyb-fedi-s-projects2.vercel.app`.
+- This confirms the deployed Blob-and-PostgreSQL media path for a private project image. The other three project images, certificate PDF/preview, and portrait reference remain intentionally unmodified pending a controlled follow-up; no public draft selection or Production action occurred.

@@ -675,7 +675,7 @@
 - [x] Expose the CommonJS Vercel API bridge through a Vercel-recognized `.js` function so Preview `/api/trpc` does not fall through to the SPA.
 - [x] Fix the Vercel Preview `/edit` loading state by making deployed tRPC requests reach the serverless application.
 - [x] Restore local `/edit` persistence when the sandbox lacks a usable PostgreSQL `DATABASE_URL`, without weakening deployed PostgreSQL requirements.
-- [ ] Restore Preview rendering for portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs.
+- [ ] Restore Preview rendering for the remaining legacy portrait, project, logo, and certificate media currently referenced through historical `/manus-storage` URLs. One private-draft project-image migration is verified; Main remains unchanged.
 - [ ] Keep all deployment remediation commits on `deployment_versel` and prevent further accidental Production deployment classification.
 - [x] Add a PostgreSQL media metadata library for uploaded images and PDFs, with object storage holding the file bytes and the database holding file records.
 - [ ] Replace historical Preview media references with an object-storage-compatible delivery path while preserving existing portfolio content URLs where feasible.

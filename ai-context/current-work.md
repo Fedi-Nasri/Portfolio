@@ -3,8 +3,8 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-22 (GMT+2)  
-**Latest saved project checkpoint:** `73882869` — historical-media inventory and private-draft migration plan.
-**Current immediate task:** Preserve the completed branch-workflow and Vercel documentation baseline; the next product task is the separate historical media migration plan.
+**Latest saved project checkpoint:** `3d8293c3` — stable-branch policy, Vercel handbook, development handoff guide, and AI-context refresh.
+**Current immediate task:** Continue the controlled historical media migration from a private Preview draft; one project image is verified in Blob and the remaining six legacy references require separate uploads.
 **Deployment status:** `deployment_versel` has a working **Preview** deployment. `main` is now the documented stable development branch. Production was not promoted or reconfigured in this verification cycle.
 
 ## Active priorities
@@ -12,7 +12,7 @@
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
 | 1 | Complete | Documented stable `main` development and Vercel-connected `deployment_versel` workflow. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
-| 2 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Inventory seeded URLs, then copy or re-upload available legacy images/PDFs without claiming existing references already work on Preview. |
+| 2 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Project 1 is verified in private Draft 2 version 4. Upload the remaining three project images, certificate PDF/preview, and an approved portrait one at a time; do not change Main’s public selection. |
 | 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not promote this Preview deployment or alter production settings without an explicit user instruction; `/edit` is intentionally unauthenticated. |
 
 ## PostgreSQL hosting state
@@ -27,6 +27,7 @@ The user requested a provider-neutral PostgreSQL implementation and connected a 
 | PostgreSQL migration SQL and the additive `portfolio_media_assets` table were applied and table-verified on the connected host. | Migrate historical media references before treating all seeded public media as portable. |
 | A disposable Preview draft was created, saved with a note, restored as a new version, reloaded, and kept private. | Leave Main selected as the public draft unless the user explicitly requests a change. |
 | Vercel runtime logs show successful deployed tRPC save/create/restore/publish requests, and Blob contains new portrait/PDF-category objects. | Do not treat legacy `/manus-storage` URLs as Blob-migrated. |
+| Private Draft 2 version 4 contains a Blob-backed replacement for the Autonomous Robot Boat project image; `assets.upload` and `portfolio.saveDraft` each returned HTTP 200 in Vercel logs. | Keep all remaining migrated references private until an explicit public-selection decision. |
 
 ## Validation baseline
 
@@ -53,4 +54,6 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 The completed source is on GitHub branch `deployment_versel`; Vercel deploys it as a Preview without changing `main` or intentionally promoting Production. The current ready Preview is `https://portfolio-7ymbsxgog-fedi-s-projects2.vercel.app` from commit `91c8713`; the earlier API-packaging change in `54ef9eb` packages the Express/tRPC entry as `api/[...path].js` with an API-local CommonJS declaration, preventing the earlier SPA fallback and ESM dynamic-require failures.
 
-On this Preview, `GET /api/trpc/auth.me` returned the expected tRPC JSON payload and `/edit` loaded the full workspace. A disposable `Draft 2` was created, saved as version 2 with the note `Vercel Preview PostgreSQL persistence verification`, reloaded, and then observed at version 3 after restore-as-new-version. Main remained marked Public and was not deliberately selected, deleted, or published during the verification. The Vercel Blob dashboard confirms the public `portfolio-blob` store is connected to Preview and Production and contains concrete `portfolio-editor/portrait/` JPEG objects. See `preview-verification-evidence.md` for the source observations and limitations.
+On this Preview, `GET /api/trpc/auth.me` returned the expected tRPC JSON payload and `/edit` loaded the full workspace. A disposable `Draft 2` was created, saved as version 2 with the note `Vercel Preview PostgreSQL persistence verification`, reloaded, and then observed at version 3 after restore-as-new-version. Main remained marked Public and was not deliberately selected, deleted, or published during the verification. The Vercel Blob dashboard confirms the public `portfolio-blob` store is connected to Preview and Production and contains concrete `portfolio-editor/portrait/` JPEG objects.
+
+The current documentation Preview is `https://portfolio-56o6c3vyb-fedi-s-projects2.vercel.app` from `3d8293c`. In its private Draft 2, a 3.78 MB PNG-encoded project source exceeded the JSON upload transport after Base64 expansion before reaching the function. The same 2304×1536 image was converted without cropping to a 236 kB JPEG derivative, uploaded successfully, and saved as Draft 2 version 4 with a clear migration note. Vercel logged HTTP 200 for both `assets.upload` and `portfolio.saveDraft`. See `preview-verification-evidence.md` for the source observations and remaining six legacy references.
