@@ -1,15 +1,15 @@
 # Stable Development Workflow: `main` to `deployment_versel`
 
-This guide is the day-to-day development contract for the portfolio. It separates building a feature from deploying it, so a Vercel troubleshooting change does not accidentally become a Production release and an unfinished feature does not become the deployment baseline.
+This guide is the day-to-day development contract for the portfolio. It separates building a feature from Production release work, so unfinished work does not become the deployed baseline.
 
-> **Working policy:** `main` is the **stable development branch**. Build portfolio features there. `deployment_versel` is the **Vercel-connected deployment branch**. It receives reviewed, validated release candidates from `main` and produces Preview deployments. Do not use this policy to change Vercel Production settings; that remains an explicit user decision.
+> **Working policy:** `main` is the **stable development branch**. Build portfolio features there. `deployment_versel` is the Vercel-connected **Production Branch**, set by explicit user approval on 2026-08-22. A push to it creates a Production Deployment, so move a reviewed, validated release only after explicit release approval.
 
 ## Branch responsibilities
 
 | Branch | Purpose | Allowed work | Do not do |
 |---|---|---|---|
 | `main` | Stable development source of truth | Build features, fix bugs, update contracts, tests, documentation, and AI context. | Treat it as a request to publish a Production deployment. |
-| `deployment_versel` | Vercel deployment candidate | Carry checkpointed, reviewed changes that need Preview verification; hold Vercel-specific packaging/configuration when required. | Make experimental changes without validation, force-push, or change Production settings automatically. |
+| `deployment_versel` | Vercel Production Branch | Carry an explicitly approved, checkpointed production release and the necessary Vercel packaging/configuration. | Make experimental changes, force-push, or move code without release approval. |
 
 ## Every new feature: the required sequence
 
@@ -19,13 +19,14 @@ This guide is the day-to-day development contract for the portfolio. It separate
 4. **Test locally.** Run the checks required by the impact matrix below. Fix failures before handoff.
 5. **Maintain documentation.** Update relevant `docs/` and `ai-context/` files in the same work item; record decisions and risks rather than leaving hidden assumptions.
 6. **Checkpoint the stable work.** Ensure `todo.md` is accurate before creating a checkpoint.
-7. **Create a deployment candidate.** Deliberately move only the desired checkpointed changes to `deployment_versel`.
-8. **Verify Vercel Preview.** Inspect the generated Preview; test routes, server behavior, PostgreSQL changes, and uploads relevant to the feature.
-9. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md`. A Ready Preview is not a Production approval.
+7. **Obtain release approval.** Because `deployment_versel` is Vercel’s Production Branch, get explicit user approval before moving code there.
+8. **Create the production release.** Deliberately move only the approved checkpointed changes to `deployment_versel`.
+9. **Verify Vercel Production.** Inspect the generated Production deployment; test routes, server behavior, PostgreSQL changes, and uploads relevant to the feature.
+10. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md` with the Production release evidence.
 
 ## Change-impact matrix
 
-| If you change… | Also examine… | Minimum local validation | Preview validation |
+| If you change… | Also examine… | Minimum local validation | Production-release validation |
 |---|---|---|---|
 | Public copy, layout, or styles | `Home.tsx`, `FullLivePreview.tsx`, responsive behavior | `pnpm check`, relevant tests, `pnpm build` | Verify `/` and `/edit` visual parity. |
 | Portfolio data field | `shared/portfolio.ts`, default data, editor, renderer, export, persistence | TypeScript, test coverage, export test | Save/reload a private draft and review output. |
@@ -68,10 +69,11 @@ This guide is the day-to-day development contract for the portfolio. It separate
 - [ ] Schema changes have reviewed migrations and no secret values were committed.
 - [ ] Documentation and AI context reflect the new behavior and risks.
 - [ ] The exact change set is reviewed before moving it to `deployment_versel`.
-- [ ] Preview verification plan is written, including safe disposable data if persistence is affected.
+- [ ] Explicit user approval for the Production release is recorded.
+- [ ] Production verification plan is written, including safe disposable data if persistence is affected.
 
 ## What must never be automatic
 
-The following actions require an explicit user instruction: changing the Vercel Production branch, promoting a Preview to Production, purchasing or assigning a domain, changing Production environment variables, running destructive database operations, deleting Blob objects, or selecting/publishing a different public portfolio draft.
+The following actions require an explicit user instruction: pushing a new release to `deployment_versel`, changing the Vercel Production branch, purchasing or assigning a domain, changing Production environment variables, running destructive database operations, deleting Blob objects, or selecting/publishing a different public portfolio draft.
 
 For Vercel-specific release work, continue with the [Vercel Deployment Handbook](./vercel-deployment/README.md).

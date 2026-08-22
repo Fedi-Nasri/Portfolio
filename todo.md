@@ -722,3 +722,8 @@
 - [x] Record the deployed API bridge purpose, prior routing/module failures, generated-artifact maintenance rule, and Preview verification evidence in `deployment_versel` AI context.
 - [x] Record the documentation synchronization to `main`, explicitly distinguishing copied documentation from the Vercel-only application implementation on `deployment_versel`.
 - [x] Synchronize the relevant AI-context records into `main`, validate cross-links, and commit the documentation-only updates on both branches.
+
+## Approved Vercel Production Branch Policy
+
+- [x] Set the Vercel project Production Branch to `deployment_versel` after the user’s explicit confirmation, without promoting an existing deployment.
+- [ ] Verify the saved Vercel setting and update the branch workflow, Vercel handbook, and AI context to state that future Production deployments originate from `deployment_versel`.

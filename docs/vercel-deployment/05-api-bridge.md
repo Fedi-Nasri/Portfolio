@@ -62,7 +62,7 @@ When a change touches server API source, tRPC routers, database helpers, or Verc
 2. Regenerate the deployed function with `pnpm build:vercel-api`.
 3. Run `pnpm check`, `pnpm test`, and `pnpm build`.
 4. Confirm `api/[...path].js` and `api/package.json` are included in the checkpoint.
-5. Move the checkpointed candidate to `deployment_versel`, then verify a Vercel **Preview** response such as `GET /api/trpc/auth.me` and `/edit`.
+5. Obtain explicit release approval before moving the checkpointed candidate to `deployment_versel`, because it is Vercel’s Production Branch. Verify `GET /api/trpc/auth.me` and `/edit` on the resulting deployment.
 
 > Do not delete the generated API file because it looks large. It is large because it bundles the server dependencies Vercel needs at runtime. Do not change it manually; its source-of-truth is the server code and the `build:vercel-api` script.
 

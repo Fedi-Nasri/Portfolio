@@ -17,11 +17,11 @@ Use this runbook after a feature is complete on `main`. It is deliberately writt
 
 1. **Create a checkpoint on `main`.** This makes the stable development state recoverable.
 2. **Review the exact commit range.** Compare `main` with `deployment_versel`; move only the intended tested commits.
-3. **Update `deployment_versel`.** Use the approved repository workflow. Do not rewrite remote history, force-push, or touch the Production branch configuration.
-4. **Wait for the Vercel Preview build.** Check the deployment record, build output, and preview URL.
-5. **Run Preview verification.** Test the routes and data behavior affected by the change.
-6. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md`; include known limitations rather than calling untested work complete.
-7. **Decide separately about Production.** A Ready Preview is a release candidate—not a request or authorization to promote.
+3. **Obtain explicit Production approval.** Vercel now treats `deployment_versel` as the Production Branch; moving code there is a Production-affecting action.
+4. **Update `deployment_versel`.** Use the approved repository workflow. Do not rewrite remote history or force-push.
+5. **Wait for the Vercel Production build.** Check the deployment record, build output, and Production URL.
+6. **Run release verification.** Test the routes and data behavior affected by the change.
+7. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md`; include known limitations rather than calling untested work complete.
 
 ## Feature-specific handoff matrix
 

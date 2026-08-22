@@ -2,7 +2,7 @@
 
 This folder is the operational reference for deploying and maintaining Fedi Nasri’s portfolio on Vercel. It covers the public portfolio, the direct `/edit` workspace, the tRPC API, PostgreSQL draft history, Vercel Blob media, and the generated static export. It does **not** grant permission to promote a deployment, change a domain, expose a secret, or alter Vercel settings; those actions still need the user’s explicit instruction.
 
-> **Branch policy:** `main` is the stable development branch. `deployment_versel` is the Vercel-connected deployment branch. A change should be built, reviewed, and validated on `main` first, then moved to `deployment_versel` as a deliberate release candidate. The current Vercel connection produces Preview deployments from `deployment_versel`; do not assume this authorizes Production promotion or a Production-branch setting change.
+> **Branch policy:** `main` is the stable development branch. `deployment_versel` is the Vercel-connected branch and, by explicit user-approved Vercel configuration on 2026-08-22, the **Production Branch**. Build, review, and validate a change on `main` first. Do not push it to `deployment_versel` until it is ready for Production, because a push to that branch now creates a Production Deployment.
 
 ## Start here
 
@@ -19,7 +19,7 @@ This folder is the operational reference for deploying and maintaining Fedi Nasr
 | Concern | Current project fact | Source of truth |
 |---|---|---|
 | Vercel project | `portfolio` in FediNasri’s projects | [Project overview](https://vercel.com/fedi-s-projects2/portfolio) |
-| Deployments | `deployment_versel` creates Vercel **Preview** deployments | [Deployments](https://vercel.com/fedi-s-projects2/portfolio/deployments) |
+| Deployments | `deployment_versel` is the configured Vercel **Production Branch**; its new commits create Production Deployments | [Production environment settings](https://vercel.com/fedi-s-projects2/portfolio/settings/environments/production) |
 | Current Vercel configuration | Static Vite output plus a Vercel-recognized API function | [`vercel.json`](../../vercel.json) |
 | API function | Generated CommonJS artifact; rebuild after server/API source changes | [`api/[...path].js`](../../api/[...path].js), [`server/vercel-api-handler.ts`](../../server/vercel-api-handler.ts) |
 | Draft database | Provider-neutral PostgreSQL; Neon is the currently connected host | [Storage](https://vercel.com/fedi-s-projects2/portfolio/stores), [`drizzle/schema.ts`](../../drizzle/schema.ts) |
@@ -32,13 +32,14 @@ This folder is the operational reference for deploying and maintaining Fedi Nasr
 
 ```mermaid
 flowchart LR
-  Main[main stable development] --> Candidate[deployment_versel release candidate]
-  Candidate --> Preview[Vercel Preview URL]
-  Preview --> SPA[React SPA from dist public]
-  Preview --> API[CommonJS API function]
+  Main[main stable development] --> Review[tests and review]
+  Review --> Candidate[deployment_versel production branch]
+  Candidate --> Production[Vercel Production Deployment]
+  Production --> SPA[React SPA from dist public]
+  Production --> API[CommonJS API function]
   API --> DB[(PostgreSQL drafts and media metadata)]
   API --> Blob[(Vercel Blob media bytes)]
-  Production[Production domain] -. explicit user approval only .-> Promote[Promotion or production branch change]
+  Approval[explicit approval before push] -. required .-> Candidate
 ```
 
 The API route must be evaluated before the SPA fallback. `vercel.json` sends `/api/*` to `api/[...path].js`, serves files, preserves the legacy `/manus-storage/*` compatibility route, and finally maps client-side routes such as `/edit` to `index.html`.
