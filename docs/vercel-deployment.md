@@ -4,6 +4,21 @@ This guide explains how to deploy **the full Fedi Nasri portfolio application** 
 
 > **Current status:** Vercel work is **paused by user request**. This document is a preparation and learning guide. Do not treat it as permission to deploy, change cloud services, accept terms, or add production secrets. Resume those actions only after a clear new request.
 
+## Quick access links and exact project settings
+
+| Item | URL or value | Use it for |
+|---|---|---|
+| Existing Vercel project | `https://vercel.com/fedi-s-projects2/portfolio` | Open the project overview, deployments, logs, and domains. |
+| Storage | `https://vercel.com/fedi-s-projects2/portfolio/stores` | Create/connect Blob and inspect any connected database integration. |
+| Environment variables | `https://vercel.com/fedi-s-projects2/portfolio/settings/environment-variables` | Add server-side secrets and scope each one to Preview or Production. |
+| Existing production domain | `https://portfolio-theta-jet-90.vercel.app` | Treat this as the intended domain only; do not regard the editor as production-ready until database and storage compatibility work is complete. |
+| Root directory | Project root (`.`) | The directory containing `package.json`, `vercel.json`, `api/`, and `server/`. |
+| Install command | `pnpm install --frozen-lockfile` | Already defined by `vercel.json`; locks dependency versions for consistent builds. |
+| Build command | `pnpm exec vite build` | Already defined by `vercel.json`; builds the React public application. |
+| Output directory | `dist/public` | Already defined by `vercel.json`; Vercel serves the built single-page application from here. |
+
+> Do **not** remove the existing `vercel.json` rewrites. They are what keep `/edit` working after a page refresh and currently route `/manus-storage/*` requests through the API proxy.
+
 ## 1. What Vercel is doing for this project
 
 Vercel hosts two parts of this application. The first is the **frontend**: the React pages that visitors see at `/` and editors use at `/edit`. The second is the **backend**: server code that handles the tRPC API, reads and saves draft versions, and receives uploads. Vercel calls the backend code a **Function**. Functions run only when a request arrives, so there is no server process for you to manage continuously.[1]

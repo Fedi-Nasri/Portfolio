@@ -633,3 +633,17 @@
 - [x] Audit the Security & Networking network illustration for clipping, visual-centre alignment, and consistency with the other Home focus-card artwork.
 - [x] Correct the network illustration’s framing in public and editor hero cards without changing the shared card shell, caption treatment, or saved position behavior.
 - [x] Verify light/dark desktop and responsive focus-card presentation, run relevant checks, and save a checkpoint.
+
+## UI and UX Improvement Review — Vercel Paused
+
+- [x] Review the current portfolio and direct editor to identify the highest-value visual, usability, accessibility, and content-flow improvements without resuming Vercel work.
+- [x] Present prioritized UI/UX recommendations and wait for the user to choose before implementation.
+
+## Visual Form, Background, and Color Direction Review
+
+- [x] Review the portfolio’s section shapes, background layers, color rhythm, and decorative geometry without changing the site.
+- [x] Present coherent visual-form and background/color directions for the user to select before implementation.
+
+## Free-Tier Vercel Deployment Walkthrough
+
+- [x] Review and present the project-specific Vercel deployment URL, free-tier services, environment variables, database/storage compatibility requirements, and step-by-step verification guidance without initiating deployment.
