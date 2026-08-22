@@ -7,7 +7,7 @@ The repository contains a Vercel serverless adapter, but a production deployment
 1. A **PostgreSQL database** for named drafts and immutable history.
 2. An object-storage implementation for images, logos, and certificate PDFs.
 
-The source uses **Drizzle PostgreSQL (`pg-core`) and `pg`**. Use a standard PostgreSQL `DATABASE_URL`; Neon is the currently connected Vercel hosting option, not a source-code requirement.
+The source uses **Drizzle PostgreSQL (`pg-core`) and `pg`**. Use a standard PostgreSQL `DATABASE_URL`; Neon is the currently connected Vercel hosting option, not a source-code requirement. The initial additive schema was applied and table-verified on that connected host on 2026-08-22.
 
 > For the smallest production-risk path, provision a Vercel-connected or external **PostgreSQL** database. Neon is suitable, but any standards-compatible PostgreSQL provider can be used.
 
@@ -65,7 +65,7 @@ If Neon or another PostgreSQL service is available, use it as the host and keep 
 
 ### 2. Apply database migrations
 
-Once `DATABASE_URL` points to the intended PostgreSQL database, apply the project schema before deploying editor traffic.
+Once `DATABASE_URL` points to a new intended PostgreSQL database, apply the project schema before deploying editor traffic. The currently connected Vercel host has already received the reviewed initial schema.
 
 ```bash
 pnpm drizzle-kit generate

@@ -78,10 +78,10 @@ The Vercel user flow chose **Neon Serverless Postgres** as the currently connect
 | `drizzle-orm/pg-core` | Keep schema features within standard PostgreSQL capabilities. |
 | `drizzle-orm/node-postgres` and `pg` | Use the standard node-postgres driver rather than a provider SDK. |
 | `dialect: "postgresql"` | Keep Drizzle migrations in `drizzle/postgres`. |
-| PostgreSQL migration history | Review provider-neutral DDL before applying it. |
+| PostgreSQL migration history | The initial reviewed DDL is applied and verified on the connected host; review future provider-neutral DDL before applying it. |
 | PostgreSQL URL semantics | Use a secure `DATABASE_URL` supplied by the selected host. |
 
-Before applying schema changes, review the generated PostgreSQL SQL, validate regression tests, and use the configured provider only after explicit migration approval.
+The initial additive schema was applied and verified on the currently connected host on 2026-08-22. Before applying any **future** schema changes, review the generated PostgreSQL SQL, validate regression tests, and use the configured provider only after explicit migration approval.
 
 ## Storage data rule
 

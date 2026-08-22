@@ -66,41 +66,27 @@ Before starting any deployment, make sure these requirements are satisfied.
 |---|---|---|
 | Access to the Vercel project | You can open the `portfolio` project and edit its Storage and Environment Variables settings. | Without access, you cannot attach services or configure the application. |
 | Clean local build | `pnpm check`, `pnpm test`, and `pnpm build` pass. | Vercel builds the same code. A local failure normally becomes a deployment failure. |
-| Compatible SQL decision | A MySQL-compatible service is available **or** a PostgreSQL port has been designed and completed. | The editor’s draft history depends on a working SQL driver and schema dialect. |
+| Compatible SQL configuration | A PostgreSQL-compatible `DATABASE_URL` is connected for the target Vercel environments. | The editor’s draft history depends on the PostgreSQL driver, schema, and host agreeing. |
 | Storage implementation decision | Keep current Forge storage temporarily, or complete the Vercel Blob adapter first. | The current upload code does not automatically become Blob-compatible just because a Blob store exists. |
 | Environment-variable plan | You know which values belong to Production, Preview, and Development. | Vercel scopes variables by environment; a change affects new deployments, not old ones.[2] |
 | Deployment access-control decision | You understand that `/edit` currently has no authentication. | A public deployment could allow anyone who reaches `/edit` to change portfolio content. |
 
-## 4. Choose the database correctly
+## 4. PostgreSQL database status
 
-### Recommended path: MySQL-compatible database
+The repository has completed its database port to **provider-neutral PostgreSQL**. Its Drizzle schema uses `pg-core`, runtime persistence uses `pg` through `drizzle-orm/node-postgres`, and the regression suite uses in-memory PostgreSQL support. The source has no Neon-specific database dependency.
 
-The lowest-risk route is to connect a **MySQL-compatible** database because the current app is already built for MySQL/TiDB. Once connected, its secure connection string becomes `DATABASE_URL`. This avoids a large code conversion.
+The currently connected Vercel host is a Neon PostgreSQL database. Its initial additive schema was applied and verified on 2026-08-22: `users`, `portfolio_content_versions`, `portfolio_drafts`, and `portfolio_draft_versions` are present. The two enum types required by the application were created at the same time. Do not copy or disclose `DATABASE_URL`.
 
-### Alternative path: Neon PostgreSQL
-
-Neon is a valid Vercel-connected relational service, but it is **not a drop-in configuration change** for this repository. Choose this path only after creating a separate implementation task for the port.
-
-| Current MySQL code | PostgreSQL port needed before Neon can be used |
-|---|---|
-| `drizzle-orm/mysql-core` schema imports | Convert table and column definitions to PostgreSQL equivalents. |
-| `drizzle-orm/mysql2` and `mysql2` | Install and configure a supported PostgreSQL/Neon driver and Drizzle adapter. |
-| `dialect: "mysql"` in Drizzle configuration | Change to PostgreSQL configuration and regenerate safe migrations. |
-| MySQL migration history | Generate and review new PostgreSQL DDL for the new database. |
-| MySQL integration tests | Run persistence, preview, and production smoke tests against PostgreSQL. |
-
-> A database is not only a URL. The application code, ORM dialect, driver, migrations, and tests must all agree on the same database type.
+> A database is not only a URL. The application code, ORM dialect, driver, migrations, and tests must all agree on the same database type. That agreement is now PostgreSQL; a different PostgreSQL provider can be substituted later without changing application database code.
 
 ## 5. Create the database and apply the schema
 
-When Vercel work is explicitly resumed and the compatible provider is selected, use this sequence:
+When Vercel preview work is explicitly approved, use this sequence:
 
-1. Open **Vercel → Project → Storage** and create or connect the selected SQL service.
-2. Connect it to the `portfolio` Vercel project for the required environments.
-3. Confirm Vercel adds or exposes the provider’s connection string securely.
-4. Set that value as server-only `DATABASE_URL` for Preview and Production, after confirming the database type matches the application code.
-5. Run the Drizzle migration workflow against that database.
-6. Open `/edit` in a Preview deployment first and confirm that the draft library, saving, history, publishing, and restoration work.
+1. Confirm the connected PostgreSQL host and its server-only `DATABASE_URL` remain scoped to the intended Preview and Production environments.
+2. Confirm the verified initial schema remains present; future schema changes must be generated, reviewed, and applied as separate additive migrations.
+3. Deploy a **Preview** build only after the user approves deployment activity.
+4. Open `/edit` in that Preview deployment and confirm that the draft library, saving, history, publishing, restoration, and public-content reads work against PostgreSQL.
 
 The current migration commands are:
 
@@ -110,7 +96,7 @@ pnpm drizzle-kit generate
 pnpm drizzle-kit migrate
 ```
 
-The essential editor tables are `portfolio_drafts` and `portfolio_draft_versions`. The first creates named workspaces; the second stores immutable JSON snapshots. Do not point a production editor at an empty database without applying the schema first.
+The essential editor tables are `portfolio_drafts` and `portfolio_draft_versions`. The first creates named workspaces; the second stores immutable JSON snapshots. The connected host already contains the initial schema; do not point a different production database at the editor without applying the equivalent reviewed schema first.
 
 ## 6. Set up file storage for images and certificate PDFs
 
@@ -218,7 +204,7 @@ Code, database data, and files are different types of state. A Vercel rollback c
 
 ## Next reading
 
-Read [`production-deployment.md`](./production-deployment.md) for the implementation-level deployment runbook, including the MySQL-to-PostgreSQL port matrix. Read [`../ai-context/technical-architecture.md`](../ai-context/technical-architecture.md) for the full project relationship diagram and [`../ai-context/issues.md`](../ai-context/issues.md) for active deployment risks.
+Read [`production-deployment.md`](./production-deployment.md) for the implementation-level deployment runbook and PostgreSQL/Blob requirements. Read [`../ai-context/technical-architecture.md`](../ai-context/technical-architecture.md) for the full project relationship diagram and [`../ai-context/issues.md`](../ai-context/issues.md) for active deployment risks.
 
 ## References
 

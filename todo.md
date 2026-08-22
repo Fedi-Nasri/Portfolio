@@ -666,14 +666,14 @@
 
 - [x] Audit MySQL-specific drivers, schema types, raw queries, migration configuration, and persistence tests for PostgreSQL conversion.
 - [x] Convert Drizzle schema, database client, and migration configuration to standard PostgreSQL-compatible implementations, without coupling application code to Neon.
-- [ ] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
+- [x] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
 - [ ] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
 
 ## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
 
 - [x] Preserve the direct `/edit` data model and public portfolio behavior while converting the database implementation to PostgreSQL.
 - [x] Replace MySQL/TiDB-specific Drizzle imports, driver configuration, schema types, and upsert behavior with PostgreSQL equivalents.
-- [ ] Generate, inspect, and safely apply the PostgreSQL schema to the configured provider only after regression validation and migration review.
+- [x] Generate, inspect, and safely apply the PostgreSQL schema to the configured provider only after regression validation and migration review.
 - [x] Validate all existing draft, version-history, public-selection, upload-reference, export, and direct-editor persistence tests after the port.
 
 - [x] Update developer, deployment, and AI-context documentation to describe PostgreSQL as the general technology and Neon only as the currently connected hosting option.
