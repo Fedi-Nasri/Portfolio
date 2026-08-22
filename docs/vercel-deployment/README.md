@@ -1,0 +1,63 @@
+# Vercel Deployment Handbook
+
+This folder is the operational reference for deploying and maintaining Fedi Nasri’s portfolio on Vercel. It covers the public portfolio, the direct `/edit` workspace, the tRPC API, PostgreSQL draft history, Vercel Blob media, and the generated static export. It does **not** grant permission to promote a deployment, change a domain, expose a secret, or alter Vercel settings; those actions still need the user’s explicit instruction.
+
+> **Branch policy:** `main` is the stable development branch. `deployment_versel` is the Vercel-connected deployment branch. A change should be built, reviewed, and validated on `main` first, then moved to `deployment_versel` as a deliberate release candidate. The current Vercel connection produces Preview deployments from `deployment_versel`; do not assume this authorizes Production promotion or a Production-branch setting change.
+
+## Start here
+
+| Reader | Read next | Outcome |
+|---|---|---|
+| First-time Vercel user | [Beginner guide](./01-beginner-guide.md) | Understand Local, Preview, and Production without changing anything. |
+| Developer or AI agent preparing a release | [Release runbook](./02-release-runbook.md) | Move an already-tested change from `main` to a verified Preview safely. |
+| Person changing Vercel services | [Services and change guide](./03-services-and-change-guide.md) | Choose and change PostgreSQL, Blob, domains, and other Vercel services. |
+| Person handling configuration | [Environment and access guide](./04-environment-and-access.md) | Manage variable names and scope without revealing values. |
+| Person debugging the editor backend | [API bridge guide](./05-api-bridge.md) | Understand why the catch-all serverless function exists and how to maintain it safely. |
+
+## Portfolio-specific Vercel map
+
+| Concern | Current project fact | Source of truth |
+|---|---|---|
+| Vercel project | `portfolio` in FediNasri’s projects | [Project overview](https://vercel.com/fedi-s-projects2/portfolio) |
+| Deployments | `deployment_versel` creates Vercel **Preview** deployments | [Deployments](https://vercel.com/fedi-s-projects2/portfolio/deployments) |
+| Current Vercel configuration | Static Vite output plus a Vercel-recognized API function | [`vercel.json` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/vercel.json) |
+| API function | Generated CommonJS artifact; rebuild after server/API source changes | [`api/[...path].js` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/api/%5B...path%5D.js), [`server/vercel-api-handler.ts` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/server/vercel-api-handler.ts) |
+| Draft database | Provider-neutral PostgreSQL; Neon is the currently connected host | [Storage](https://vercel.com/fedi-s-projects2/portfolio/stores), [`drizzle/schema.ts` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/drizzle/schema.ts) |
+| Media bytes | Public `portfolio-blob` Vercel Blob store for new editor uploads | [Storage](https://vercel.com/fedi-s-projects2/portfolio/stores) |
+| Media metadata | PostgreSQL `portfolio_media_assets` table; no media bytes in SQL | [`drizzle/schema.ts` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/drizzle/schema.ts), [`server/assets.ts` on deployment_versel](https://github.com/Fedi-Nasri/Portfolio/blob/deployment_versel/server/assets.ts) |
+| Environment variables | Vercel Project Settings; values must never be committed or copied to documentation | [Environment Variables](https://vercel.com/fedi-s-projects2/portfolio/settings/environment-variables) |
+| Domains | Project assignment and DNS configuration | [Domains](https://vercel.com/fedi-s-projects2/portfolio/settings/domains) |
+
+## What the deployment contains
+
+```mermaid
+flowchart LR
+  Main[main stable development] --> Candidate[deployment_versel release candidate]
+  Candidate --> Preview[Vercel Preview URL]
+  Preview --> SPA[React SPA from dist public]
+  Preview --> API[CommonJS API function]
+  API --> DB[(PostgreSQL drafts and media metadata)]
+  API --> Blob[(Vercel Blob media bytes)]
+  Production[Production domain] -. explicit user approval only .-> Promote[Promotion or production branch change]
+```
+
+The API route must be evaluated before the SPA fallback. `vercel.json` sends `/api/*` to `api/[...path].js`, serves files, preserves the legacy `/manus-storage/*` compatibility route, and finally maps client-side routes such as `/edit` to `index.html`.
+
+## Non-negotiable safeguards
+
+| Safeguard | Why it matters |
+|---|---|
+| Never commit `.env`, database URLs, Blob tokens, or Vercel tokens. | Vercel configuration must remain secret-backed and environment-scoped. |
+| Rebuild `api/[...path].js` after any server/API change. | The deployed Vercel function is generated from server source and is not automatically regenerated by the Vite build. |
+| Test draft behavior with a private disposable draft. | `Main portfolio` is the selected public draft and must remain intact unless the user explicitly requests a public change. |
+| Store files in Blob and metadata in PostgreSQL. | File bytes in SQL increase database size and weaken media handling. |
+| Treat `/edit` as security-sensitive. | It is intentionally unauthenticated; production access decisions require special care. |
+| Treat historical `/manus-storage` URLs separately. | New Blob uploads work, but legacy media is not automatically migrated. |
+
+## References
+
+[1]: https://vercel.com/docs/deployments/environments "Vercel environments"
+[2]: https://vercel.com/docs/environment-variables "Vercel environment variables"
+[3]: https://vercel.com/docs/storage "Vercel Storage overview"
+[4]: https://vercel.com/docs/vercel-blob "Vercel Blob documentation"
+[5]: https://vercel.com/docs/domains/working-with-domains "Working with domains on Vercel"
