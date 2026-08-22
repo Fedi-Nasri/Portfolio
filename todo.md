@@ -745,3 +745,5 @@
 - [x] Document the local-versus-Vercel lifecycle for images, PDFs, and SVGs, including development asset preparation, Blob upload, PostgreSQL metadata, draft use, release, and historical-media boundaries.
 - [x] Cross-link the new operations guides, validate all instructions against the existing configuration, and checkpoint the documentation-only update.
 - [x] Synchronize the release, environment, and media operations documentation to GitHub `main` without creating a Production deployment.
+- [x] Correct the remaining Vercel handbook wording that incorrectly describes the Production release handoff as a Preview action.
+- [x] Synchronize the corrected Vercel Production wording to GitHub `main` without touching `deployment_versel`.

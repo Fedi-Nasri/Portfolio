@@ -9,7 +9,7 @@
 
 **Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
 
-**Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow and complete operations documentation through commit `97f77aa` (`docs: add release and media operations guide`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
+**Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow, complete operations documentation, and corrected Production-release wording through commit `1c94473` (`docs: clarify production release handoff`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
 
 **Operations documentation:** `docs/release-and-media-operations.md` now provides the exact approved `main` → `deployment_versel` release sequence, first-run Compose instructions, a complete safe environment reference at `docs/environment.example`, and the local-to-Vercel lifecycle for images, PDFs, and SVGs. Docker is intentionally not installed in this managed sandbox, so the Compose file was statically formatted/validated; developers must run the documented `docker compose` commands on a Docker-enabled machine.
 
