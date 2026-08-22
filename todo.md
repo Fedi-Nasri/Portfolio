@@ -561,3 +561,8 @@
 - [x] Download certificate PDFs into a local assets folder inside the static ZIP export.
 - [x] Rewrite exported certificate viewer paths to use their packaged local PDF files.
 - [x] Verify local certificate PDFs, offline viewer behavior, ZIP structure, tests, and production build before checkpointing.
+
+## Approved Vercel Production Branch Policy
+
+- [x] Set the Vercel project Production Branch to `deployment_versel` after the user’s explicit confirmation, without promoting an existing deployment.
+- [x] Verify the saved Vercel setting and update the branch workflow, Vercel handbook, and AI context to state that future Production deployments originate from `deployment_versel`.

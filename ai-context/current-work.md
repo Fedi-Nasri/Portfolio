@@ -5,7 +5,9 @@
 **Last context refresh:** 2026-08-22 (GMT+2)  
 **Latest saved project checkpoint:** `cfe8f9b7` — API bridge documentation and completed Vercel handbook synchronization record.
 **Current immediate task:** Continue the controlled historical media migration from a private Preview draft; one project image is verified in Blob and the remaining six legacy references require separate uploads.
-**Deployment status:** `deployment_versel` has a working **Preview** deployment. `main` is now the documented stable development branch. Production was not promoted or reconfigured in this verification cycle.
+**Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
+
+**Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
 
 **API bridge documentation boundary:** `main` now mirrors the Vercel handbook and AI-context guidance so work can be planned safely there. The Vercel route configuration, generated CommonJS `api/[...path].js` function, Blob service integration, and Preview runtime behavior remain on `deployment_versel` until a deliberate release handoff occurs.
 
@@ -15,7 +17,7 @@
 |---:|---|---|---|
 | 1 | Complete | Documented stable `main` development and Vercel-connected `deployment_versel` workflow. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
 | 2 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Project 1 is verified in private Draft 2 version 4. Upload the remaining three project images, certificate PDF/preview, and an approved portrait one at a time; do not change Main’s public selection. |
-| 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not promote this Preview deployment or alter production settings without an explicit user instruction; `/edit` is intentionally unauthenticated. |
+| 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not push unreviewed work to `deployment_versel`; it now creates Production Deployments, and `/edit` is intentionally unauthenticated. |
 
 ## PostgreSQL hosting state
 
@@ -50,7 +52,7 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 4. Test data behavior with a disposable draft, not the public Main portfolio, unless the user explicitly asks to alter public content.
 5. Run TypeScript, Vitest, and build validation before checkpointing substantive code changes.
 6. Update this ledger, `decisions.md`, `issues.md`, and `change-log.md` as the work changes state.
-7. Build application changes on stable `main`; move only checkpointed, validated release candidates to `deployment_versel`, then verify Vercel Preview before any separate Production decision.
+7. Build application changes on stable `main`; move only checkpointed, validated, explicitly approved releases to `deployment_versel`, then verify the resulting Production Deployment.
 
 ## Preview deployment verification (2026-08-22)
 
