@@ -736,3 +736,12 @@
 - [x] Validate the Compose configuration structure and the existing TypeScript, test, and production-build checks before checkpointing.
 - [x] Keep this implementation local-only: do not change Vercel settings, production data, domains, secrets, or push to `deployment_versel`.
 - [x] Synchronize the local-only Compose workflow and documentation to GitHub `main` without creating a Production deployment.
+
+## Release, Environment, and Media Operations Guide
+
+- [x] Document the exact approved release sequence from `main` to `deployment_versel`, including comparison, validation, approval, push, and Production verification.
+- [x] Document first-time local Docker Compose startup, migration, stop, reset, and troubleshooting steps.
+- [x] Add a safe complete environment reference that explains every local and Vercel environment-variable name, source, scope, and handling rule without committing real credentials.
+- [x] Document the local-versus-Vercel lifecycle for images, PDFs, and SVGs, including development asset preparation, Blob upload, PostgreSQL metadata, draft use, release, and historical-media boundaries.
+- [x] Cross-link the new operations guides, validate all instructions against the existing configuration, and checkpoint the documentation-only update.
+- [x] Synchronize the release, environment, and media operations documentation to GitHub `main` without creating a Production deployment.
