@@ -18,3 +18,7 @@
 - A direct unauthenticated shell request to the Preview `assets.upload` endpoint returned `401`; this does not invalidate the browser-session upload path and must not be interpreted as a Blob failure.
 - The generic project SQL console is attached to the legacy sandbox MySQL database, not the connected Vercel PostgreSQL host. Its failed metadata-table count query is therefore not evidence about the Preview deployment or Neon-hosted PostgreSQL.
 - Direct browser-session upload, Blob URL rendering, and metadata-row confirmation remain the next evidence to collect.
+
+## Post-checkpoint Preview redeployment
+
+After the verification and documentation checkpoint was pushed as commit `91c8713` to `deployment_versel`, Vercel created a new **Ready** Preview at `https://portfolio-7ymbsxgog-fedi-s-projects2.vercel.app`. Its `GET /api/trpc/auth.me` response was the expected tRPC JSON payload (`{"result":{"data":{"json":null}}}`), and `/edit` loaded the full workspace with `Main portfolio` still marked **Public** and private `Draft 2` still present at version 3. No production action was taken.
