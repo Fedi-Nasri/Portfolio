@@ -1,5 +1,7 @@
 # Vercel Deployment for Beginners
 
+> **Current operational documentation:** Use the [Vercel Deployment Handbook](./vercel-deployment/README.md) first. It defines the current `main` to `deployment_versel` workflow, validated API/Blob architecture, and service-change procedures. This single-file guide remains as supporting background and may describe earlier deployment states.
+
 This guide explains how to deploy **the full Fedi Nasri portfolio application** to Vercel, including the public site, the direct `/edit` workspace, draft history, image uploads, certificate PDFs, and static ZIP export.
 
 > **Current status:** The approved `deployment_versel` branch has a working **Preview** deployment. Its direct editor, PostgreSQL draft persistence, and new Blob uploads have been verified. Production has not been promoted or reconfigured in this verification cycle; do not treat this guide as permission to change production settings or services without a clear new user request.

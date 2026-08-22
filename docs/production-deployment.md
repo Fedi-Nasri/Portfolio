@@ -1,5 +1,7 @@
 # Production Deployment Guide
 
+> **Current operational documentation:** Start with the [Vercel Deployment Handbook](./vercel-deployment/README.md). It is the authoritative guide for the current branch policy, Vercel API artifact, PostgreSQL/Blob setup, domains, variables, Preview verification, and explicit Production boundary. This document is retained as historical implementation background.
+
 ## Current deployment status and compatibility
 
 The repository contains a Vercel serverless adapter, but a production deployment of the **full editor** requires two managed services that are not optional for normal use:

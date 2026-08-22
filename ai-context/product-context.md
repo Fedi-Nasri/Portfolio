@@ -59,7 +59,7 @@ The portfolio is not a generic landing page. It is a content-managed technical p
 
 The portfolio currently uses a **direct-access editor** rather than an admin-authenticated editor. This is a deliberate user preference but a real production risk. Do not introduce OAuth prompts, role checks, or authentication wrappers without explicit approval. Equally, do not represent the current editor as secure.
 
-The user paused Vercel work. Do not deploy, alter production environment variables, accept third-party terms, or continue database/storage setup unless the user explicitly resumes deployment work.
+Vercel Preview work is active through the `deployment_versel` branch, while `main` is the stable development branch. Do not promote to Production, alter Production environment variables, accept third-party terms, purchase/assign a domain, or change the Vercel Production branch unless the user explicitly requests that exact action. Read `branch-and-release-workflow.md` and `docs/vercel-deployment/README.md` before deployment-related work.
 
 ## Public identity data
 

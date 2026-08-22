@@ -690,3 +690,17 @@
 - [x] Validate all existing draft, version-history, public-selection, upload-reference, export, and direct-editor persistence tests after the port.
 
 - [x] Update developer, deployment, and AI-context documentation to describe PostgreSQL as the general technology and Neon only as the currently connected hosting option.
+
+## Branch Comparison: Development Baseline and `deployment_versel`
+
+- [x] Identify the prior development baseline and compare it with `deployment_versel` without modifying either branch.
+- [x] Summarize the resulting deployment, database, media, API, and documentation differences in plain language.
+
+## Stable Development and Vercel Deployment Documentation
+
+- [x] Define `main` as the stable development branch and `deployment_versel` as the Vercel-connected deployment branch, including ownership and safety boundaries.
+- [x] Create a `docs/vercel-deployment/` documentation suite with a beginner guide, detailed deployment runbook, Vercel services guide, project URLs, and environment-variable responsibilities.
+- [x] Document safe procedures for Vercel changes, including PostgreSQL database changes, Vercel Blob media, custom domains, environment variables, deployment verification, and rollback.
+- [x] Document the development workflow for new features, files, database tables, Blob assets, migrations, testing, checkpoints, and handoff from `main` to `deployment_versel`.
+- [x] Update the `docs/` index and `ai-context/` records so future agents understand the branch flow, service architecture, current safeguards, and documentation maintenance process.
+- [x] Validate the documentation structure and internal links, then checkpoint the completed documentation update.

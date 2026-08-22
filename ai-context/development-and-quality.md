@@ -6,8 +6,8 @@
 |---|---|
 | Node.js | Node 22.x compatible environment. |
 | Package manager | pnpm 10.x. |
-| Database | Provider-neutral PostgreSQL; requires a PostgreSQL `DATABASE_URL` to persist drafts/migrate. |
-| Storage | Managed Forge/S3-style development storage. |
+| Database | Provider-neutral PostgreSQL; requires a PostgreSQL `DATABASE_URL` to persist drafts/migrate outside the development-only fallback. |
+| Storage | Vercel Blob for new uploads, PostgreSQL metadata, and a legacy Manus-storage compatibility path for unresolved historic references. |
 | Dev command | `pnpm dev` runs the Express/Vite development entry. |
 
 Never commit `.env` files or credentials. Environment configuration is managed through secure project/hosting settings. Only document variable names and purposes.
@@ -24,10 +24,11 @@ Never commit `.env` files or credentials. Environment configuration is managed t
 | Generate migration | `pnpm drizzle-kit generate` | Review generated SQL before applying. |
 | Apply migrations | `pnpm drizzle-kit migrate` | Requires correct database URL. |
 | Generate + apply | `pnpm db:push` | Use only after schema/migration review. |
+| Generate Vercel API artifact | `pnpm build:vercel-api` | Required after server/API changes before moving a candidate to `deployment_versel`. |
 
 ## Current quality baseline
 
-At checkpoint `93795ce2`, TypeScript passed, the Vitest suite passed with **10 test files / 71 tests**, and the production build completed. The current build emits a chunk-size warning for a JavaScript asset above Vite’s default 500 kB threshold; this is a performance follow-up, not a build failure.
+The latest full validation passed TypeScript, **12 Vitest files / 76 tests**, and the production build. It includes PostgreSQL persistence, Blob validation, Vercel API bridge, and development-only PostgreSQL fallback coverage. The build emits a chunk-size warning for a JavaScript asset above Vite’s default 500 kB threshold; this is a performance follow-up, not a build failure.
 
 ## Tests and their meaning
 
@@ -43,7 +44,7 @@ At checkpoint `93795ce2`, TypeScript passed, the Vitest suite passed with **10 t
 
 ## Required implementation sequence
 
-1. Read `ai-context/` and the relevant source files.
+1. Read `ai-context/`, including `branch-and-release-workflow.md`, and the relevant source files.
 2. Add task-specific unchecked items to `todo.md` before editing.
 3. Change the shared contract before consumers when adding a content field.
 4. Keep public rendering, editor preview, editor controls, persistence, export, and tests in sync.
@@ -51,6 +52,7 @@ At checkpoint `93795ce2`, TypeScript passed, the Vitest suite passed with **10 t
 6. Run checks appropriate to the change; default to `pnpm check && pnpm test && pnpm build`.
 7. Mark completed items in `todo.md`.
 8. Update `ai-context/` records and then save a checkpoint.
+9. Build stable work on `main`; move only a checkpointed, validated candidate to `deployment_versel`, then verify Vercel Preview before any distinct Production decision.
 
 ## Debugging order
 
@@ -59,9 +61,9 @@ At checkpoint `93795ce2`, TypeScript passed, the Vitest suite passed with **10 t
 | `/edit` fails to load | `DATABASE_URL`, migration state, `server/portfolio.ts` errors, tRPC router input. |
 | Editor change does not persist | Browser unsaved state, save mutation, draft key, version history, DB write. |
 | Public site shows unexpected content | Find draft marked public, inspect newest version, invalidate/query refresh. |
-| Upload fails | Browser file/Base64, upload category, tRPC input, storage provider variables, storage proxy path. |
+| Upload fails | Browser file/Base64, upload category, tRPC input, Blob token/service availability, metadata insert, and legacy storage path. |
 | Public/editor mismatch | Compare `Home.tsx`, `FullLivePreview.tsx`, and shared CSS; avoid editor-only visual drift. |
-| Vercel route 404 | Confirm SPA fallback in `vercel.json`, route registration, and serverless `/api/*` adapter. |
+| Vercel route 404 or API returns HTML | Confirm API-first route order in `vercel.json`, regenerate `api/[...path].js`, and verify the CommonJS API directory metadata. |
 | Build/server runtime error | Inspect `.manus-logs/` via terminal tools; use relevant tests and production logs once deployed. |
 
 ## Checkpoint protocol

@@ -18,8 +18,9 @@ This folder is the **mandatory operating context** for any AI agent, developer, 
 | 8 | [`feature-request-workflow-example.md`](./feature-request-workflow-example.md) | Follow a worked end-to-end example before implementing a cross-layer feature. |
 | 9 | [`capability-map.md`](./capability-map.md) | Select design, frontend, data, storage, quality, and continuity capabilities for a request. |
 | 10 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |
-| 11 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
-| 12 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
+| 11 | [`branch-and-release-workflow.md`](./branch-and-release-workflow.md) | Distinguish stable `main` work from the Vercel-connected `deployment_versel` handoff and Preview verification flow. |
+| 12 | [`decisions.md`](./decisions.md) and [`issues.md`](./issues.md) | Respect intentional decisions, active risks, and deferred work. |
+| 13 | [`change-log.md`](./change-log.md) | Understand the implementation history and avoid reintroducing repaired issues. |
 
 ## What this folder is and is not
 
@@ -37,6 +38,7 @@ Every future agent must keep this context current in the same change set as a fe
 | Product/architecture decision | Add a dated record to `decisions.md`, including alternatives and consequences. |
 | Discovery of a risk/blocker | Add or update an entry in `issues.md`; distinguish confirmed facts from hypotheses. |
 | Schema, API, storage, or deployment change | Update `technical-architecture.md` and `database-and-data.md` as applicable. |
+| Branch workflow, Vercel service, domain, or environment responsibility change | Update `branch-and-release-workflow.md` and the relevant `docs/vercel-deployment/` guide. |
 | Visual or interaction change | Update `design-system.md` when it alters reusable rules or public/editor parity. |
 | Checkpoint-worthy completed work | Add an entry to `change-log.md`, then update `current-work.md` and `todo.md`. |
 | Validation run | Record the commands and result in `current-work.md` when they establish a new baseline. |

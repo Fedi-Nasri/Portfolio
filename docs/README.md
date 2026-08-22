@@ -14,8 +14,10 @@ The documentation is intentionally written for three audiences. Editors can use 
 | [Component structure and workflow](./components.md) | Developers and AI agents | Locate a feature, decide where a change belongs, or trace an editor interaction. |
 | [UI/UX design system](./ui-design-system.md) | Designers, developers, and AI agents | Extend the visual language without breaking its palette, rhythm, responsiveness, or accessibility. |
 | [Development environment](./development.md) | Developers | Install dependencies, connect a database, run checks, build, test, and debug locally. |
-| [Production deployment](./production-deployment.md) | Developers and deployers | Configure Vercel, understand environment variables, choose compatible managed services, migrate data, and verify production. |
-| [Vercel deployment for beginners](./vercel-deployment.md) | First-time deployers, editors, and AI agents | Learn the required Vercel services, compatibility choices, variables, safe deployment sequence, verification, and recovery in plain language. |
+| [Stable development and branch workflow](./development-branch-workflow.md) | Developers and AI agents | Build features safely on `main`, assess cross-layer impact, and prepare a deliberate Vercel release candidate. |
+| [Legacy production deployment overview](./production-deployment.md) | Developers and deployers | Read historical implementation context; use the current Vercel handbook for operational actions. |
+| [Legacy Vercel deployment overview](./vercel-deployment.md) | First-time deployers, editors, and AI agents | Read supporting background; use the current Vercel handbook for the branch workflow and service procedures. |
+| [Vercel Deployment Handbook](./vercel-deployment/README.md) | First-time deployers, developers, and AI agents | Follow the current branch policy, detailed Preview runbook, service-change guide, domain steps, and variable safety rules. |
 | [Automated testing and CI plan](./testing-and-ci-plan.md) | Developers and AI agents | Implement the staged GitHub Actions, testing, visual-regression, documentation-check, and branch-protection plan. |
 | [Editor workflow](./editor-workflow.md) | Portfolio editors, developers, and AI agents | Work safely with drafts, history, public selection, custom canvas sections, uploads, and exports. |
 
@@ -34,7 +36,7 @@ Documentation explains the intended structure, but the application source remain
 | Public portfolio rendering | [`client/src/pages/Home.tsx`](../client/src/pages/Home.tsx) |
 | Visual tokens and responsive styling | [`client/src/index.css`](../client/src/index.css) |
 | Static HTML and ZIP export | [`client/src/lib/portfolioExport.ts`](../client/src/lib/portfolioExport.ts) and [`client/src/lib/staticPublicExport.ts`](../client/src/lib/staticPublicExport.ts) |
-| Vercel routing | [`vercel.json`](../vercel.json) and [`api/[...path].ts`](../api/[...path].ts) |
+| Vercel routing | [`vercel.json`](../vercel.json), generated [`api/[...path].js`](../api/[...path].js), and [`server/vercel-api-handler.ts`](../server/vercel-api-handler.ts) |
 
 ## Working principles
 
@@ -56,8 +58,8 @@ React SPA → tRPC client → Express /api/trpc → portfolio service → Postgr
 
 Vercel deployment
   ├─ static SPA output in dist/public
-  ├─ serverless API entry at api/[...path].ts
-  └─ rewrites for SPA routes and stored-asset proxy paths
+  ├─ generated CommonJS API entry at api/[...path].js
+  └─ API-first, filesystem, legacy-storage, then SPA fallback routes
 ```
 
 For the recommended order of work, read [Architecture](./architecture.md) first, then [Component structure and workflow](./components.md), and finally the relevant operational guide.

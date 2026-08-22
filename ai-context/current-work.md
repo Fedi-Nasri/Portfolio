@@ -3,17 +3,17 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-22 (GMT+2)  
-**Latest saved project checkpoint:** `54ef9eb3` — Vercel-recognized CommonJS API artifact and `/api` routing repair.  
-**Current immediate task:** Preserve the successful Preview verification evidence, run the final regression suite, and checkpoint the documentation/status update.  
-**Deployment status:** `deployment_versel` has a working **Preview** deployment. Production was not promoted or reconfigured in this verification cycle.
+**Latest saved project checkpoint:** `73882869` — historical-media inventory and private-draft migration plan.
+**Current immediate task:** Preserve the completed branch-workflow and Vercel documentation baseline; the next product task is the separate historical media migration plan.
+**Deployment status:** `deployment_versel` has a working **Preview** deployment. `main` is now the documented stable development branch. Production was not promoted or reconfigured in this verification cycle.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Inventory seeded URLs, then copy or re-upload available legacy images/PDFs without claiming existing references already work on Preview. |
-| 2 | Active | Maintain the direct editor’s deployment risk boundary. | Do not promote this Preview deployment or alter production settings without an explicit user instruction; `/edit` is intentionally unauthenticated. |
-| 3 | Pending | Maintain a release-ready validation baseline. | Re-run API-artifact build, TypeScript, Vitest, and production build after any server/API change before a checkpoint. |
+| 1 | Complete | Documented stable `main` development and Vercel-connected `deployment_versel` workflow. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
+| 2 | Active | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Inventory seeded URLs, then copy or re-upload available legacy images/PDFs without claiming existing references already work on Preview. |
+| 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not promote this Preview deployment or alter production settings without an explicit user instruction; `/edit` is intentionally unauthenticated. |
 
 ## PostgreSQL hosting state
 
@@ -47,6 +47,7 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 4. Test data behavior with a disposable draft, not the public Main portfolio, unless the user explicitly asks to alter public content.
 5. Run TypeScript, Vitest, and build validation before checkpointing substantive code changes.
 6. Update this ledger, `decisions.md`, `issues.md`, and `change-log.md` as the work changes state.
+7. Build application changes on stable `main`; move only checkpointed, validated release candidates to `deployment_versel`, then verify Vercel Preview before any separate Production decision.
 
 ## Preview deployment verification (2026-08-22)
 

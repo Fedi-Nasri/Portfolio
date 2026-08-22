@@ -127,7 +127,7 @@ flowchart TD
 | API | Express 4, tRPC 11, Zod | Procedures are mounted at `/api/trpc`. |
 | Domain layer | TypeScript portfolio service | Protect data invariants and keep editor lifecycle logic server-side. |
 | Database | Drizzle ORM with `pg` and `pg-core` | Use standard PostgreSQL APIs; Neon is a configured host, not a source-code dependency. |
-| File storage | Forge/S3-style presigned API plus storage proxy | Store URLs in JSON content, never binary assets in relational tables. |
+| File storage | Vercel Blob for new uploads plus a legacy Manus-storage compatibility proxy | Store URLs in JSON content, Blob bytes outside PostgreSQL, and asset metadata in `portfolio_media_assets`. |
 | Export | JSZip plus static render utilities | HTML/ZIP outputs must track public display behavior. |
 | Build | Vite and esbuild | Run `pnpm build`; Vite produces `dist/public`. |
 | Tests | Vitest | Treat existing editor/export regressions as required safety net. |
@@ -145,8 +145,8 @@ flowchart TD
 | Draft persistence | `server/portfolio.ts` | Enforces seed, save, restore, rename/delete, public selection, and public content loading. |
 | API definitions | `server/routers.ts` | Keep input validation and client/server contract typed. |
 | Database connection | `server/db.ts`, `drizzle/schema.ts`, `drizzle.config.ts` | Keep dialect, schema, migrations, and driver aligned. |
-| Local / serverless app | `server/_core/index.ts`, `server/_core/app.ts`, `api/[...path].ts`, `vercel.json` | Reuse `createPortfolioApp()` so local and Vercel routing do not diverge. |
-| Storage | `server/storage.ts`, `server/_core/storageProxy.ts` | Current Forge/S3 behavior; isolate provider changes here. |
+| Local / serverless app | `server/_core/index.ts`, `server/_core/app.ts`, `server/vercel-api-handler.ts`, generated `api/[...path].js`, `vercel.json` | Reuse `createPortfolioApp()` and regenerate the CommonJS artifact after server/API changes. |
+| Storage | `server/assets.ts`, `server/_core/storageProxy.ts`, `portfolio_media_assets` | New editor uploads use Vercel Blob plus PostgreSQL metadata; the proxy is only a legacy compatibility path. |
 | Custom canvas | `client/src/components/CustomSectionCanvas.tsx` | Preserve group behavior, snap grid, alignment guides, preset persistence, and mobile fallback. |
 | Project image controls | `client/src/components/ProjectImageControlPanel.tsx` | Keep crop zoom/focal point/ratio/frame preferences persistent and safe. |
 | Static export | `client/src/lib/portfolioExport.ts`, `client/src/lib/staticPublicExport.ts` | Update when public content fields or interactions change. |
@@ -173,8 +173,8 @@ flowchart TD
 
 1. The editor reads a chosen file as Base64.
 2. `assets.upload` receives a category, file name, MIME type, and payload.
-3. Server storage returns a URL.
-4. The URL is written to local draft state.
+3. The server validates the file, writes bytes to Vercel Blob, and inserts a PostgreSQL metadata record.
+4. The returned URL is written to local draft state.
 5. Save or Publish stores that reference within a `contentJson` snapshot.
 
 ### Export flow
@@ -197,6 +197,6 @@ flowchart TD
 
 ## Serverless adapter facts
 
-Local development uses the Express app from `server/_core/index.ts`. Vercel uses `api/[...path].ts`, which imports the shared `createPortfolioApp()` factory. The Vercel configuration directs Vite output to `dist/public`, rewrites legacy storage paths through `/api/manus-storage/*`, and routes other paths to `index.html` so the SPA can resolve `/edit`.
+Local development uses the Express app from `server/_core/index.ts`. Vercel uses the generated CommonJS `api/[...path].js` artifact built from `server/vercel-api-handler.ts`, which imports the shared `createPortfolioApp()` factory. The Vercel configuration routes `/api/*` to that function before filesystem and SPA fallbacks, preserves the legacy Manus-storage route, and sends other client routes such as `/edit` to `index.html`.
 
-The current Vercel path is not production-complete for the editor because its database code and storage code still depend on managed-development assumptions. See `database-and-data.md` and `issues.md` before touching deployment.
+The `deployment_versel` branch has verified Preview API, PostgreSQL draft, and new Blob upload behavior. It is not automatically production-ready: `/edit` is intentionally unauthenticated, historic Manus-storage references need a separate migration, and Production remains an explicit user-approved action. Read `branch-and-release-workflow.md` before any Vercel work.
