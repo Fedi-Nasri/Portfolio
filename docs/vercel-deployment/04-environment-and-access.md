@@ -12,6 +12,8 @@ Environment variables configure the build and server function without putting cr
 | `BUILT_IN_FORGE_API_URL` / `BUILT_IN_FORGE_API_KEY` | Server, only while legacy compatibility needs them | Supports remaining legacy Manus-storage compatibility behavior. | Treat as secret; remove only after the historical-media migration is complete. |
 | `VITE_*` values | Build/client when used | Public build configuration such as analytics/application identifiers. | Anything prefixed `VITE_` can become visible in browser code; never put secrets here. |
 
+The complete variable-name template, local-versus-Vercel scope matrix, and source for each value are in [Environment reference](../environment.example) and [Release and Media Operations](../release-and-media-operations.md#3-environment-variables-local-compose-versus-vercel).
+
 ## Scope each variable correctly
 
 | Scope | Use in this portfolio | Rule |

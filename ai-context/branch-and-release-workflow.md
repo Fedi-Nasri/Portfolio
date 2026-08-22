@@ -19,6 +19,8 @@ Agents and developers must treat this as one codebase with a one-way release pat
 
 The local Compose workflow is documented in [`../docs/local-docker-development.md`](../docs/local-docker-development.md). It provides an isolated PostgreSQL database for persistent `/edit` testing but must never contain Vercel, Neon, Blob, or Production credentials.
 
+For exact release commands, first-run Compose steps, full variable ownership, and the local-to-Vercel image/PDF/SVG lifecycle, read [`../docs/release-and-media-operations.md`](../docs/release-and-media-operations.md) before planning a handoff.
+
 ## Mandatory agent flow
 
 ```mermaid

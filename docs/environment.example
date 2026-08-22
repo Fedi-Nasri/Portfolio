@@ -1,0 +1,60 @@
+# Portfolio Application Environment Reference
+#
+# This is an explanatory template only. It is intentionally stored under docs/
+# so tools do not automatically load it as a runtime environment file.
+#
+# Copy only the values that apply to your LOCAL development setup into an
+# ignored .env.local file. Do not place Vercel, Neon, Blob, GitHub, or other
+# production credentials in a local file unless a feature has been explicitly
+# designed and approved for that integration.
+
+# -----------------------------------------------------------------------------
+# Local Docker Compose inputs — required only when using docker-compose.yml.
+# Source: choose local-only values. Defaults are shown in .env.local.example.
+# -----------------------------------------------------------------------------
+LOCAL_POSTGRES_DB=portfolio_dev
+LOCAL_POSTGRES_USER=portfolio
+LOCAL_POSTGRES_PASSWORD=change-this-local-password
+LOCAL_POSTGRES_PORT=5432
+APP_PORT=3000
+
+# -----------------------------------------------------------------------------
+# Direct local Node development — only for `pnpm dev` outside Docker Compose.
+# Source: your local PostgreSQL database, never the Vercel connection string.
+# Compose constructs this URL internally; do not add it to .env.local for the
+# default Compose path.
+# -----------------------------------------------------------------------------
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=postgresql://portfolio:change-this-local-password@localhost:5432/portfolio_dev
+
+# -----------------------------------------------------------------------------
+# Vercel server-only values — set in Vercel Project Settings, never in Git.
+# Leave blank locally unless an explicitly approved local integration needs it.
+# -----------------------------------------------------------------------------
+BLOB_READ_WRITE_TOKEN=
+JWT_SECRET=
+BUILT_IN_FORGE_API_URL=
+BUILT_IN_FORGE_API_KEY=
+
+# -----------------------------------------------------------------------------
+# Client-visible build configuration — VITE_* values can be exposed in browser
+# bundles. Use only non-secret identifiers/endpoints supplied by the relevant
+# service. The current direct /edit workflow does not require OAuth values.
+# -----------------------------------------------------------------------------
+VITE_APP_ID=
+VITE_OAUTH_PORTAL_URL=
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+VITE_FRONTEND_FORGE_API_URL=
+VITE_FRONTEND_FORGE_API_KEY=
+VITE_APP_TITLE=Fedi Nasri Portfolio
+VITE_APP_LOGO=
+
+# -----------------------------------------------------------------------------
+# Optional project identity/OAuth configuration. Obtain only from the configured
+# identity provider if an enabled feature uses it; do not invent or commit IDs.
+# -----------------------------------------------------------------------------
+OAUTH_SERVER_URL=
+OWNER_OPEN_ID=
+OWNER_NAME=

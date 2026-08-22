@@ -25,6 +25,8 @@ The currently deployed branch can contain historical Vercel-specific implementat
 
 For a local PostgreSQL development environment, use [Local Docker Compose development](./local-docker-development.md). Compose is local-only and does not alter the release path above.
 
+For the exact commands to compare branches, create an approved release merge, verify Production, manage environment variables, and handle images/PDFs/SVGs, read [Release and Media Operations](./release-and-media-operations.md).
+
 ## Every new feature: the required sequence
 
 1. **Understand the request.** Read `ai-context/README.md`, `current-work.md`, and the specialist record for the affected area. Add a specific unchecked task to `todo.md`.

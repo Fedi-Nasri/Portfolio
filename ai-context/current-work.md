@@ -11,6 +11,8 @@
 
 **Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow at commit `7e58b4c` (`docs: add local compose development workflow`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
 
+**Operations documentation:** `docs/release-and-media-operations.md` now provides the exact approved `main` → `deployment_versel` release sequence, first-run Compose instructions, a complete safe environment reference at `docs/environment.example`, and the local-to-Vercel lifecycle for images, PDFs, and SVGs. Docker is intentionally not installed in this managed sandbox, so the Compose file was statically formatted/validated; developers must run the documented `docker compose` commands on a Docker-enabled machine.
+
 **API bridge documentation boundary:** `main` now mirrors the Vercel handbook and AI-context guidance so work can be planned safely there. The Vercel route configuration, generated CommonJS `api/[...path].js` function, Blob service integration, and Preview runtime behavior remain on `deployment_versel` until a deliberate release handoff occurs.
 
 ## Active priorities

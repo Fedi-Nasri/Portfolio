@@ -69,4 +69,4 @@ Do not run the local `migrate` service against a remote connection string, and d
 | Editor content looks empty | This is expected on the first local database run. The app seeds its local draft records independently of Vercel’s data. |
 | You need deployed data or Blob files | Stop and reassess. Local Compose is intentionally isolated; do not point it at Production services. |
 
-For non-container development, continue to use the existing [Development Environment Guide](./development.md). For release actions, read the [Stable Development Workflow](./development-branch-workflow.md) and obtain explicit approval before any push to `deployment_versel`.
+For non-container development, continue to use the existing [Development Environment Guide](./development.md). For an exact first-time startup, environment-variable ownership, media workflow, and release sequence, read [Release and Media Operations](./release-and-media-operations.md). Obtain explicit approval before any push to `deployment_versel`.
