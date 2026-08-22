@@ -106,7 +106,7 @@ Database and storage tests need more care than UI/unit tests. Never point CI at 
 
 | Area | Recommended CI approach | What to avoid |
 |---|---|---|
-| Draft database | Start with existing isolated-draft tests. Add a disposable MySQL service container only when migration/schema integration coverage is needed. | Running migrations against production or a shared manual database. |
+| Draft database | Use the in-memory PostgreSQL compatibility setup for unit/regression tests. Add a disposable PostgreSQL service container when migration/schema integration coverage is needed. | Running migrations against production or a shared manual database. |
 | File storage | Use deterministic mocked storage helpers for ordinary unit tests. Add a dedicated non-production storage smoke test only after a test provider/store exists. | Reusing live certificate files or secrets in pull-request CI. |
 | tRPC procedures | Exercise router/service behavior with controlled test context and test draft keys. | Depending on browser login or a mutable public draft. |
 | Export | Test generated ZIP file names, structure, local PDF paths, and static rendering output. | Treating a download button screenshot as sufficient verification. |

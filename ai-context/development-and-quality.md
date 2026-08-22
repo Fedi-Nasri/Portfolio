@@ -6,7 +6,7 @@
 |---|---|
 | Node.js | Node 22.x compatible environment. |
 | Package manager | pnpm 10.x. |
-| Database | MySQL/TiDB for the current source; requires `DATABASE_URL` to persist drafts/migrate. |
+| Database | Provider-neutral PostgreSQL; requires a PostgreSQL `DATABASE_URL` to persist drafts/migrate. |
 | Storage | Managed Forge/S3-style development storage. |
 | Dev command | `pnpm dev` runs the Express/Vite development entry. |
 

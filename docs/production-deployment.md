@@ -4,12 +4,12 @@
 
 The repository contains a Vercel serverless adapter, but a production deployment of the **full editor** requires two managed services that are not optional for normal use:
 
-1. A **MySQL-compatible SQL database** for named drafts and immutable history.
+1. A **PostgreSQL database** for named drafts and immutable history.
 2. An object-storage implementation for images, logos, and certificate PDFs.
 
-The existing source is written for **Drizzle MySQL (`mysql-core`) and `mysql2`**. Therefore, a plain PostgreSQL/Neon connection must not be placed into `DATABASE_URL` without a deliberate database-porting task. A PostgreSQL database can be used only after the Drizzle dialect, driver, schema imports/types, migration strategy, and potentially SQL assumptions are migrated to PostgreSQL.
+The source uses **Drizzle PostgreSQL (`pg-core`) and `pg`**. Use a standard PostgreSQL `DATABASE_URL`; Neon is the currently connected Vercel hosting option, not a source-code requirement.
 
-> For the smallest production-risk path, provision a Vercel-connected **MySQL-compatible** database. If the selected Vercel marketplace option is Neon/PostgreSQL, treat it as an architecture change, not a configuration-only change.
+> For the smallest production-risk path, provision a Vercel-connected or external **PostgreSQL** database. Neon is suitable, but any standards-compatible PostgreSQL provider can be used.
 
 The current upload implementation uses Forge/S3-style storage and a `/manus-storage` proxy. Vercel Blob is the intended Vercel-native replacement, but it still needs a provider adapter before production uploads can work without Forge.
 
@@ -34,7 +34,7 @@ Set production secrets in the Vercel project environment configuration. Do not p
 
 | Variable | Scope | Current role | Production requirement |
 |---|---|---|---|
-| `DATABASE_URL` | Server only | MySQL/TiDB connection used by Drizzle and draft persistence. | **Required.** Must be a MySQL-compatible URL until the application is ported to PostgreSQL. |
+| `DATABASE_URL` | Server only | PostgreSQL connection used by Drizzle and draft persistence. | **Required.** Must be a PostgreSQL-compatible URL. |
 | `JWT_SECRET` | Server only | Template session-cookie signing secret. | Supply a strong random value if OAuth/session routes remain mounted; direct `/edit` does not use it as access control. |
 | `VITE_APP_ID` | Client-exposed build variable | Manus OAuth application identifier from the template. | Needed only if OAuth client behavior remains enabled. Vite embeds `VITE_*` values into client bundles. |
 | `OAUTH_SERVER_URL` | Server/client configuration | Base URL used by Manus OAuth integration. | Required only when OAuth routes/login are actively used. |
@@ -51,21 +51,21 @@ Set production secrets in the Vercel project environment configuration. Do not p
 
 ### 1. Confirm the database strategy
 
-Connect a Vercel-managed database that is compatible with the current MySQL implementation. Record its connection string in `DATABASE_URL` for Development, Preview, and Production as appropriate.
+Connect a PostgreSQL database and record its connection string in `DATABASE_URL` for Development, Preview, and Production as appropriate.
 
-If only a PostgreSQL service such as Neon is available, stop before setting `DATABASE_URL`. Create a separate database-porting work item that changes:
+If Neon or another PostgreSQL service is available, use it as the host and keep the following implementation rules intact:
 
 | Porting area | Current implementation | PostgreSQL port needed |
 |---|---|---|
-| Drizzle schema imports | `drizzle-orm/mysql-core` | PostgreSQL table/column imports and equivalents. |
-| Driver | `drizzle-orm/mysql2`, `mysql2` | A supported PostgreSQL driver and Drizzle adapter. |
-| Drizzle config | `dialect: "mysql"` | `dialect: "postgresql"` plus appropriate credentials. |
-| Generated migrations | MySQL DDL | New PostgreSQL-safe migration history. |
-| Runtime validation | MySQL URL | PostgreSQL connection and preview/production smoke tests. |
+| Drizzle schema imports | `drizzle-orm/pg-core` | Keep standard PostgreSQL table/column imports. |
+| Driver | `drizzle-orm/node-postgres`, `pg` | Keep the provider-neutral PostgreSQL driver and adapter. |
+| Drizzle config | `dialect: "postgresql"` | Retain provider-neutral PostgreSQL credentials. |
+| Generated migrations | PostgreSQL DDL | Review provider-neutral PostgreSQL migration history. |
+| Runtime validation | PostgreSQL URL | Run preview/production smoke tests. |
 
 ### 2. Apply database migrations
 
-Once `DATABASE_URL` points to the intended MySQL-compatible database, apply the project schema before deploying editor traffic.
+Once `DATABASE_URL` points to the intended PostgreSQL database, apply the project schema before deploying editor traffic.
 
 ```bash
 pnpm drizzle-kit generate

@@ -13,7 +13,7 @@ This folder is the **mandatory operating context** for any AI agent, developer, 
 | 3 | [`architecture-diagram.md`](./architecture-diagram.md) | Trace the standalone frontend, backend, database, asset/PDF, export, and deployment-boundary diagrams. |
 | 4 | [`product-context.md`](./product-context.md) | Understand what is being built, for whom, and the non-negotiable product/design decisions. |
 | 5 | [`technical-architecture.md`](./technical-architecture.md) | Locate source ownership, API/data flows, and the existing concise architecture reference. |
-| 6 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, migrations, stored URLs, and the MySQL-to-PostgreSQL deployment risk. |
+| 6 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, PostgreSQL migrations, stored URLs, and provider portability. |
 | 7 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
 | 8 | [`feature-request-workflow-example.md`](./feature-request-workflow-example.md) | Follow a worked end-to-end example before implementing a cross-layer feature. |
 | 9 | [`capability-map.md`](./capability-map.md) | Select design, frontend, data, storage, quality, and continuity capabilities for a request. |
@@ -48,7 +48,7 @@ Write durable facts, not speculative narratives. Use exact file paths, known rou
 | Use | Avoid |
 |---|---|
 | “`/edit` is intentionally unauthenticated; write procedures are public.” | “The editor is probably public.” |
-| “Vercel Neon setup is paused; do not assume a database was created.” | “Vercel database is ready.” |
+| “PostgreSQL is the application technology; Neon is one connected host.” | “The application is Neon-specific.” |
 | “A restore writes a new immutable version.” | “Restore reverts history.” |
 | “Update both public and live preview render paths.” | “Fix the page.” |
 

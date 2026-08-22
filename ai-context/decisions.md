@@ -17,8 +17,9 @@ This record holds decisions that a future agent must preserve unless the user ex
 | D-011 | Canvas uses freeform desktop layout with responsive stacked mobile fallback. | Active | Precision editing is useful on desktop, but mobile content must remain readable. |
 | D-012 | Projects use alternating compact media rows with dominant text content. | Active | User requested left/right reference pattern and consistent media footprint. |
 | D-013 | Static ZIP export is faithful to public behavior and includes local certificate PDFs. | Active | User explicitly requested offline-ready public-style export rather than minimal HTML only. |
-| D-014 | Vercel deployment should use Vercel-connected services when resumed. | Paused | User requested Vercel services, then paused deployment. Database/provider compatibility remains unresolved. |
+| D-014 | Vercel deployment should use Vercel-connected services when resumed. | Active, incomplete | A Vercel-connected Neon PostgreSQL host is now configured, but Blob storage, migration application, and production verification remain incomplete. |
 | D-015 | Create and maintain `ai-context/` for future agent handoff. | Active | User requested project memory covering current work, history, design, architecture, and database details. |
+| D-016 | Use provider-neutral PostgreSQL technology for the application database. | Active | The user explicitly requested PostgreSQL as the application technology, not a Neon-specific implementation. Use standard Drizzle PostgreSQL and `pg` interfaces; Neon is the current host and may be replaced by any compatible PostgreSQL provider without changing the data model. |
 
 ## Decision rule
 

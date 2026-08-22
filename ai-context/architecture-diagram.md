@@ -2,7 +2,7 @@
 
 This document is the standalone architecture reference for the portfolio. It explains how the public site, `/edit` workspace, API, database, asset/PDF storage, exports, and paused deployment boundary work together.
 
-> **Current deployment boundary:** local/managed development works with MySQL/TiDB plus Forge/S3-style storage. Vercel work is paused. Do not assume Neon PostgreSQL or Vercel Blob has been configured, migrated, or tested.
+> **Current deployment boundary:** the application uses provider-neutral PostgreSQL plus Forge/S3-style storage. Neon is the currently connected Vercel PostgreSQL host; Vercel Blob storage remains unconfigured and untested.
 
 ## 1. Runtime architecture
 
@@ -31,7 +31,7 @@ flowchart LR
     Proxy[storageProxy.ts\n`/manus-storage/*`]
   end
 
-  subgraph Database[MySQL/TiDB today]
+  subgraph Database[PostgreSQL]
     Drafts[(portfolio_drafts)]
     Versions[(portfolio_draft_versions)]
     Legacy[(portfolio_content_versions\nlegacy fallback)]
@@ -228,9 +228,9 @@ Exporting does not automatically save or publish the current draft. An editor mu
 flowchart LR
   Vite[Vite build] --> Static[dist/public on Vercel]
   Serverless[Vercel API adapter] --> Express[Shared Express app factory]
-  Express -. current database driver is MySQL/TiDB .-> CurrentDB[(MySQL-compatible SQL)]
+  Express -. standard PostgreSQL driver .-> CurrentDB[(PostgreSQL)]
   Express -. future provider adapter needed .-> Blob[(Vercel Blob)]
-  Express -. future full PostgreSQL port required .-> Neon[(Neon PostgreSQL)]
+  Express -. current connected hosting option .-> Neon[(Neon PostgreSQL)]
 ```
 
 The `vercel.json` file already defines the static output, SPA fallback, and current `/manus-storage/*` rewrite. It does **not** make the database or uploads production-ready by itself. Vercel work remains paused.

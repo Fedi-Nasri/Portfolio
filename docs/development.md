@@ -8,8 +8,8 @@ Use a current Node.js 22 environment and pnpm. The project is configured as an E
 |---|---|---|
 | Node.js | 22.x | Matches the project’s current toolchain. |
 | pnpm | 10.x | Lockfile and package-manager metadata are pnpm-based. |
-| MySQL-compatible database | MySQL or TiDB connection | The current Drizzle schema uses `mysql-core` and `mysql2`. |
-| `DATABASE_URL` | MySQL/TiDB connection URL | Required for Drizzle commands and database-backed editor persistence. |
+| PostgreSQL database | PostgreSQL-compatible connection | The Drizzle schema uses `pg-core` and `pg`. |
+| `DATABASE_URL` | PostgreSQL connection URL | Required for Drizzle commands and database-backed editor persistence. |
 | Storage provider | Managed Forge/S3 in current development setup | Required for upload endpoints and asset retrieval. |
 
 ## Installation
@@ -25,19 +25,19 @@ Do not commit a real `.env` file or secret values. Environment variables should 
 
 ## Environment setup
 
-At minimum, set a MySQL/TiDB-compatible `DATABASE_URL` before running migrations or validating the persistent `/edit` workspace.
+At minimum, set a PostgreSQL-compatible `DATABASE_URL` before running migrations or validating the persistent `/edit` workspace.
 
 ```bash
-export DATABASE_URL='mysql://USER:PASSWORD@HOST:3306/DATABASE?ssl={"rejectUnauthorized":true}'
+export DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require'
 ```
 
-Connection-string details vary by provider. The important implementation constraint is compatibility with the project’s **MySQL dialect**, not simply the existence of a SQL connection string.
+Connection-string details vary by provider. The implementation requires a valid **PostgreSQL** URL, not merely any SQL connection string.
 
 For the complete variable reference and production responsibilities, read [Production deployment](./production-deployment.md#environment-variables).
 
 ## Database workflow
 
-The Drizzle configuration uses `drizzle/schema.ts`, writes migration output under `drizzle/`, and expects a MySQL connection. `drizzle.config.ts` throws early when `DATABASE_URL` is absent.
+The Drizzle configuration uses `drizzle/schema.ts`, writes PostgreSQL migration output under `drizzle/postgres/`, and expects a PostgreSQL connection. `drizzle.config.ts` throws early when `DATABASE_URL` is absent.
 
 | Task | Command | Notes |
 |---|---|---|

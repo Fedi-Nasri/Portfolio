@@ -21,6 +21,7 @@ This is a concise continuation history. The complete checkpoint ledger is availa
 | Checkpoint `b7252cb3` | Validated and saved the comprehensive architecture, workflow, capability, and CI planning extension. | Use this as the current documentation/AI-context baseline; Vercel work remains paused. |
 | Current visual repair | Corrected dark-mode focus-card labels, surfaces, boundaries, connector hierarchy, and orbit prominence; re-centred the Security & Networking network illustration with responsive geometry. | Preserve focus-card public/editor parity and keep each artwork fully within its visual window across themes and breakpoints. |
 | Checkpoint `3e35d774` | Validated and saved the dark-mode focus-card contrast/hierarchy repair and the Security & Networking artwork framing correction. | This is the current visual baseline for Home focus cards; retain high-contrast captions and the mobile network-art geometry. |
+| PostgreSQL conversion (pending checkpoint) | Replaced MySQL/TiDB Drizzle schema/driver/configuration with provider-neutral PostgreSQL using `pg-core`, `pg`, and new PostgreSQL migrations. Added an in-memory PostgreSQL compatibility setup so all 71 regressions exercise PostgreSQL persistence behavior. | Treat Neon as a connected host only; retain standard PostgreSQL code paths, reviewed migration SQL, and direct-editor behavior. Live migration application and Vercel Blob work remain pending. |
 
 ## How to add a new entry
 

@@ -56,7 +56,7 @@ The repository already includes a Vercel-oriented structure. It is not yet suffi
 | Draft data schema | `drizzle/schema.ts` | Defines the tables needed by the editor and version history. |
 | Current storage implementation | `server/storage.ts`, `server/_core/storageProxy.ts` | Uses Forge/S3-style behavior today; a Vercel Blob adapter still needs to be written. |
 
-> **Important compatibility warning:** the current database code uses **MySQL/TiDB** packages and Drizzle’s MySQL schema dialect. A Neon database is PostgreSQL. Do not simply paste a Neon PostgreSQL URL into `DATABASE_URL`; the code needs a planned database-porting change first.
+> **PostgreSQL compatibility:** the application uses provider-neutral PostgreSQL packages and Drizzle’s PostgreSQL schema dialect. Neon is the connected Vercel host, but the code does not require Neon-specific APIs. Use any compatible PostgreSQL `DATABASE_URL`.
 
 ## 3. Requirements checklist
 

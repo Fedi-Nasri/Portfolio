@@ -651,3 +651,29 @@
 ## Mermaid Architecture Diagram Rendering Repair
 
 - [x] Replace unsafe Mermaid route labels in architecture documentation with renderer-safe text and validate all related diagrams.
+
+## Vercel-Neon Database Compatibility Decision
+
+- [x] Confirm whether to port the current MySQL/TiDB application to PostgreSQL for Neon or instead use a MySQL-compatible database before connecting the Vercel project.
+
+## Neon PostgreSQL Connection and Compatibility
+
+- [x] Confirm the Neon database `neon-citrine-mountain` was created on the Free plan; do not copy database secrets from the provider interface.
+- [x] Connect the Neon database to the `portfolio` Vercel project with the final `DATABASE_URL` variable name and confirm the integration-created variable without revealing its value.
+- [x] Port the application’s MySQL/TiDB database layer, Drizzle dialect, migrations, and persistence tests to PostgreSQL before configuring the direct editor to use Neon.
+
+## Provider-Neutral PostgreSQL Database Port
+
+- [x] Audit MySQL-specific drivers, schema types, raw queries, migration configuration, and persistence tests for PostgreSQL conversion.
+- [x] Convert Drizzle schema, database client, and migration configuration to standard PostgreSQL-compatible implementations, without coupling application code to Neon.
+- [ ] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
+- [ ] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
+
+## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
+
+- [x] Preserve the direct `/edit` data model and public portfolio behavior while converting the database implementation to PostgreSQL.
+- [x] Replace MySQL/TiDB-specific Drizzle imports, driver configuration, schema types, and upsert behavior with PostgreSQL equivalents.
+- [ ] Generate, inspect, and safely apply the PostgreSQL schema to the configured provider only after regression validation and migration review.
+- [x] Validate all existing draft, version-history, public-selection, upload-reference, export, and direct-editor persistence tests after the port.
+
+- [x] Update developer, deployment, and AI-context documentation to describe PostgreSQL as the general technology and Neon only as the currently connected hosting option.

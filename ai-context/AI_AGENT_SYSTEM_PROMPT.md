@@ -27,8 +27,8 @@ Project identity and constraints:
 - The shared `PortfolioContent` contract in `shared/portfolio.ts` is the cross-layer source for public rendering, editor state, persistence, and exports.
 - Draft history is immutable: saving creates a new version; restoring an old version creates another new version; publishing selects one public draft without deleting other drafts.
 - Store asset URLs in content, never file bytes in database columns.
-- Vercel work is paused. Do not resume deployment, change Vercel/Neon/Blob configuration, accept third-party terms, or deploy unless the user explicitly asks to resume it.
-- Current code is MySQL/TiDB Drizzle code. A Neon PostgreSQL URL is not compatible until a full, planned database port is implemented.
+- PostgreSQL migration work is active. Do not deploy or change Vercel Blob configuration unless the user explicitly requests that work.
+- Current code uses provider-neutral PostgreSQL Drizzle code. Neon is the connected Vercel hosting option, but the application must remain compatible with standards-compliant PostgreSQL providers.
 
 For every new feature or bug:
 1. Confirm the user’s goal, constraints, and success criteria when they are unclear.

@@ -50,7 +50,7 @@ flowchart LR
   subgraph VercelPaused[Vercel target — deployment work paused]
     Static[dist/public static SPA]
     Function[Vercel API adapter]
-    Neon[(Planned Neon PostgreSQL\nrequires code port)]
+    Neon[(Connected Neon PostgreSQL\nhosting option)]
     Blob[(Planned Vercel Blob\nrequires storage adapter)]
   end
 
@@ -80,7 +80,7 @@ flowchart LR
   Export -->|download accessible certificate PDFs| ZipPDF
   Static -. future host .-> Client
   Function -. future API host .-> Server
-  Neon -. future database after PostgreSQL port .-> PortfolioService
+  Neon -. current PostgreSQL host .-> PortfolioService
   Blob -. future asset provider after adapter .-> StorageService
 ```
 
@@ -96,7 +96,7 @@ flowchart LR
 | Asset service → object storage | Images, logos, previews, and certificate PDFs are uploaded separately and their URLs are embedded in content JSON. | No binary asset data belongs in database tables. |
 | Storage proxy → browser | Current `/manus-storage/*` URLs are rewritten/proxied so stored URLs can be rendered. | A Vercel Blob migration must preserve historical asset access or migrate URLs deliberately. |
 | Export → ZIP files | Export consumes the current editor draft, builds static public files, and packages accessible certificate PDFs locally. | Export does not automatically save a database version. |
-| Vercel target | Vite static build and serverless adapter are present, but database/storage are not production-compatible yet. | Vercel is paused; Neon means PostgreSQL port, Blob means storage adapter. |
+| Vercel target | Vite static build and serverless adapter are present, but storage is not production-compatible yet. | PostgreSQL is provider-neutral; Neon is the connected host, while Blob still needs an adapter. |
 
 ```mermaid
 flowchart TD
@@ -108,7 +108,7 @@ flowchart TD
   TRPCClient --> API[tRPC endpoint on Express]
   API --> Router[server/routers.ts]
   Router --> Domain[server/portfolio.ts]
-  Domain --> DB[(Drizzle + MySQL/TiDB today)]
+  Domain --> DB[(Drizzle + PostgreSQL)]
   Router --> Assets[server/storage.ts]
   Assets --> ObjectStorage[Forge/S3-style storage today]
   ObjectStorage --> AssetProxy[Asset URL proxy]
@@ -126,7 +126,7 @@ flowchart TD
 | Data client | tRPC 11, TanStack React Query, SuperJSON | Use typed `trpc.*` hooks; do not add ad-hoc Axios/fetch clients for internal API procedures. |
 | API | Express 4, tRPC 11, Zod | Procedures are mounted at `/api/trpc`. |
 | Domain layer | TypeScript portfolio service | Protect data invariants and keep editor lifecycle logic server-side. |
-| Database | Drizzle ORM with `mysql2` and `mysql-core` | Current implementation expects MySQL/TiDB; Neon/PostgreSQL requires a real port. |
+| Database | Drizzle ORM with `pg` and `pg-core` | Use standard PostgreSQL APIs; Neon is a configured host, not a source-code dependency. |
 | File storage | Forge/S3-style presigned API plus storage proxy | Store URLs in JSON content, never binary assets in relational tables. |
 | Export | JSZip plus static render utilities | HTML/ZIP outputs must track public display behavior. |
 | Build | Vite and esbuild | Run `pnpm build`; Vite produces `dist/public`. |

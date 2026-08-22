@@ -51,7 +51,7 @@ Browser
   ├─ /        → public portfolio, selected public draft
   └─ /edit    → direct-access editor, live preview, draft library
 
-React SPA → tRPC client → Express /api/trpc → portfolio service → MySQL/TiDB
+React SPA → tRPC client → Express /api/trpc → portfolio service → PostgreSQL
                                            └→ storage service → object storage
 
 Vercel deployment

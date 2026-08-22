@@ -2,32 +2,29 @@
 
 ## Snapshot
 
-**Last context refresh:** 2026-08-20 (GMT+2)  
-**Latest saved project checkpoint:** `3e35d774` — dark-mode Home focus-card contrast/hierarchy repair and Security & Networking artwork framing correction.  
-**Current immediate task:** Wait for a new user request. Vercel work remains paused.  
-**Deployment status:** **Paused by user.** Do not resume Vercel or Neon actions without a new explicit request.
+**Last context refresh:** 2026-08-22 (GMT+2)  
+**Latest saved project checkpoint:** `ccc0c9de` — renderer-safe Mermaid architecture diagrams.  
+**Current immediate task:** Finish the provider-neutral PostgreSQL conversion by applying reviewed migrations to the connected host and verifying live draft persistence.  
+**Deployment status:** Database migration work is active by user request. Deployment and Vercel Blob work are still not complete.
 
 ## Active priorities
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | Paused | Vercel deployment for the full editor application. | Wait for user to explicitly resume deployment. First verify whether Neon was actually created; do not assume it was. |
-| 2 | Pending after deployment resumes | Port current MySQL/TiDB Drizzle layer to PostgreSQL if Neon is selected. | Perform a deliberate schema/driver/migration port; do not paste a PostgreSQL URL into MySQL code. |
-| 3 | Pending after database decision | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |
+| 1 | Active | Apply the reviewed provider-neutral PostgreSQL migration to the configured database and validate live draft persistence. | Use the configured host without exposing `DATABASE_URL`; do not apply to the legacy managed MySQL database. |
+| 2 | Pending after database migration | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate production. |
+| 3 | Pending after storage work | Deploy and smoke-test the full editor application. | Verify public/editor routes, draft workflows, assets, and exports in a preview before production. |
 
-## Paused Vercel / Neon state
+## PostgreSQL hosting state
 
-The user requested Vercel deployment, confirmed use of a Vercel-connected SQL database, and accepted Vercel/Neon terms. In the Vercel Storage UI, the intended configuration was: **Neon PostgreSQL**, Frankfurt (`fra1`) region, Free plan, and built-in Neon Auth disabled. A resource name of `portfolio-editor-db` was entered during the wizard.
+The user requested a provider-neutral PostgreSQL implementation and connected a Vercel-hosted **Neon PostgreSQL** database. The database appears as `neon-citrine-mountain` on the Free plan, and Vercel created a sensitive `DATABASE_URL` environment variable for Preview and Production. Do not expose or copy that value into project files.
 
-The user then explicitly said to “forget about Vercel for now.” The creation wizard was handed back to the user, and this context cannot verify whether the final **Create** action completed. Treat the database as **unconfirmed** until Vercel Storage visibly lists it and a connection string/environment variable can be verified.
-
-| Do not assume | Required confirmation |
+| Confirmed | Still required |
 |---|---|
-| Neon resource exists. | Verify it appears in Vercel Storage. |
-| `DATABASE_URL` is configured. | Verify Vercel environment variables without disclosing the value. |
-| Migrations were applied. | Inspect migration state against the connected database. |
-| The application can use Neon already. | Complete the MySQL-to-PostgreSQL port and test it. |
-| Blob storage exists or uploads are production-ready. | Connect Blob, implement adapter, and run upload smoke tests. |
+| PostgreSQL is the project database technology. | Apply the generated PostgreSQL migration to the configured host. |
+| Neon is the currently connected Vercel PostgreSQL host. | Verify real draft save/restore/publish behavior after migration. |
+| `DATABASE_URL` exists in Vercel Preview and Production. | Keep the runtime code provider-neutral and do not disclose the value. |
+| PostgreSQL migration SQL is generated and reviewed. | Connect Blob, implement its adapter, and run upload smoke tests before production uploads. |
 
 ## Validation baseline
 
@@ -35,8 +32,8 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 | Command / check | Last known result | Notes |
 |---|---|---|
-| `pnpm check` | Passed | TypeScript compiled with no errors after the focus-card repairs. |
-| `pnpm test` | Passed: 10 files, 71 tests | Includes editor, data, canvas, project image, export, public page, and assets coverage. |
+| `pnpm check` | Passed | TypeScript compiled with no errors after the PostgreSQL conversion. |
+| `pnpm test` | Passed: 10 files, 71 tests | Uses an in-memory PostgreSQL compatibility setup for draft persistence workflows. |
 | `pnpm build` | Passed | Vite output and server bundle built successfully; bundle-size warning is informational. |
 | Dev server | Running at port 3000 | Public and editor routes were previously available in the managed preview. |
 
@@ -51,4 +48,4 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 ## Existing TODO status
 
-The documentation and AI-context checklists are recorded in `todo.md`. The Vercel deployment checklist remains unchecked and paused. The current beginner-focused Vercel guide is documentation only; it does not resume deployment activity.
+The PostgreSQL conversion, generated migration, provider-neutral documentation, and regression validation are recorded in `todo.md`. The live migration, Blob adapter, and deployment verification remain unchecked.

@@ -5,9 +5,9 @@ This file separates confirmed facts from unresolved risks. Do not mark an issue 
 | ID | Status | Severity | Confirmed issue / risk | Next action |
 |---|---|---|---|---|
 | I-001 | Active | High | `/edit` and portfolio write procedures are intentionally unauthenticated. Anyone who can access a public deployment editor can modify portfolio content. | Keep direct access only by user choice. If security is requested, protect server write procedures as well as the UI route. |
-| I-002 | Paused | High | A Vercel-connected Neon PostgreSQL database was selected in the UI, but the project source uses MySQL/TiDB-specific Drizzle code. | On deployment resumption, verify resource existence, then plan/execute a full PostgreSQL port or choose a MySQL-compatible provider. |
+| I-002 | Active | High | The source is now provider-neutral PostgreSQL, but the PostgreSQL migration still needs safe application and live persistence verification. | Review generated SQL, apply it only to the configured PostgreSQL provider, and complete draft-workflow smoke tests. |
 | I-003 | Paused | High | Vercel Blob is not integrated; current upload/storage behavior expects Forge/S3 proxy variables. | Implement storage interface + Vercel Blob adapter before production editor uploads. |
-| I-004 | Active | Medium | Vercel/Neon creation status is unconfirmed after user paused browser work. | Verify Storage list and environment binding before any migration/deploy work. |
+| I-004 | Resolved | Medium | The Vercel-connected Neon database was created and `DATABASE_URL` was added without exposing its value. | Keep secrets out of source control and use Neon only as a host, not an application dependency. |
 | I-005 | Active | Medium | Existing historical asset URLs use `/manus-storage/...`; a storage-provider move can break public media or static exports. | Define compatibility/migration strategy before removing Forge proxy paths. |
 | I-006 | Active | Medium | The production build has a Vite chunk-size warning for a JavaScript chunk over 500 kB. | Evaluate code-splitting only when performance improvement is requested; do not refactor blindly. |
 | I-007 | Active | Low | `todo.md` contains legacy historical checklist headings and Vercel items remain open. | Preserve history; update items accurately. Do not delete old checklist records. |

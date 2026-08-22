@@ -19,7 +19,7 @@ The active editor persistence model stores full JSON snapshots of `PortfolioCont
 | `portfolio_draft_versions` | `id`, `draftId`, `versionNumber`, `contentJson`, `note`, `createdBy`, `createdAt` |
 | `portfolio_content_versions` | `id`, `status`, `contentJson`, `createdBy`, `updatedBy`, `createdAt`, `updatedAt`, `publishedAt` |
 
-The schema is in [`drizzle/schema.ts`](../drizzle/schema.ts). The database uses camel-case model properties mapped to explicit table/column names by Drizzle’s MySQL schema definitions.
+The schema is in [`drizzle/schema.ts`](../drizzle/schema.ts). The database uses camel-case model properties mapped to explicit table/column names by Drizzle’s PostgreSQL schema definitions.
 
 ## Draft lifecycle and invariants
 
@@ -65,23 +65,23 @@ Do not write test data into the user’s main public draft. The existing tests c
 | Run `pnpm check`, `pnpm test`, and relevant persistence tests. | Detects type/API/history regressions. |
 | Update `ai-context/` and `docs/` if data behavior changes. | Keeps future agents from using stale assumptions. |
 
-`drizzle.config.ts` currently uses `dialect: "mysql"` and fails fast if `DATABASE_URL` is missing. The project command `pnpm db:push` runs generate plus migrate, but it must be used only after migration review.
+`drizzle.config.ts` uses `dialect: "postgresql"` and fails fast if `DATABASE_URL` is missing. The project command `pnpm db:push` runs generate plus migrate, but it must be used only after migration review.
 
-## Neon/PostgreSQL warning
+## PostgreSQL provider guidance
 
-The Vercel user flow chose **Neon Serverless Postgres** as the intended connected database because the Vercel marketplace did not expose a suitable MySQL service in the observed UI. The source code is still MySQL/TiDB-specific.
+The Vercel user flow chose **Neon Serverless Postgres** as the currently connected database. The application source uses standard PostgreSQL packages and must not depend on Neon-specific APIs.
 
-> Do **not** set a Neon PostgreSQL URL as `DATABASE_URL` in the current code and expect it to work. A valid PostgreSQL port must change the Drizzle dialect, table imports/types, runtime driver, dependency set, migrations, and database test validation together.
+> Use a secure PostgreSQL `DATABASE_URL` from the selected provider. Neon is supported as the current Vercel connection, but any standards-compatible PostgreSQL provider can be used without changing the domain model.
 
-| Current MySQL implementation | Required PostgreSQL port work |
+| PostgreSQL implementation | Provider-neutral rule |
 |---|---|
-| `drizzle-orm/mysql-core` | Use PostgreSQL schema builders and equivalent column definitions. |
-| `drizzle-orm/mysql2` / `mysql2` | Use a supported PostgreSQL/Neon driver and Drizzle adapter. |
-| `dialect: "mysql"` | Set PostgreSQL dialect/configuration. |
-| Existing MySQL migrations | Generate/review new PostgreSQL-compatible DDL. |
-| MySQL URL semantics | Use a secure PostgreSQL `DATABASE_URL` supplied by the connected service. |
+| `drizzle-orm/pg-core` | Keep schema features within standard PostgreSQL capabilities. |
+| `drizzle-orm/node-postgres` and `pg` | Use the standard node-postgres driver rather than a provider SDK. |
+| `dialect: "postgresql"` | Keep Drizzle migrations in `drizzle/postgres`. |
+| PostgreSQL migration history | Review provider-neutral DDL before applying it. |
+| PostgreSQL URL semantics | Use a secure `DATABASE_URL` supplied by the selected host. |
 
-Do not start this port unless deployment work is explicitly resumed. Add specific todo items and a migration plan first.
+Before applying schema changes, review the generated PostgreSQL SQL, validate regression tests, and use the configured provider only after explicit migration approval.
 
 ## Storage data rule
 

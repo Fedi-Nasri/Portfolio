@@ -15,7 +15,7 @@ flowchart LR
   TRPC -->|/api/trpc| API[Express application]
   API --> Router[tRPC routers]
   Router --> Portfolio[Portfolio persistence service]
-  Portfolio --> DB[(MySQL / TiDB)]
+  Portfolio --> DB[(PostgreSQL)]
   Router --> Upload[Asset upload service]
   Upload --> Storage[Object storage]
   Storage --> Proxy[Asset URL proxy]
@@ -34,7 +34,7 @@ flowchart LR
 | Client data boundary | tRPC React Query client, SuperJSON | Loads content and invokes typed mutations without handwritten REST clients. | `client/src/lib/trpc.ts`, `client/src/main.tsx` |
 | API | Express 4, tRPC 11, Zod | Mounts typed public/editor procedures beneath `/api/trpc`. | `server/_core/app.ts`, `server/routers.ts` |
 | Domain service | TypeScript | Validates, seeds, versions, restores, publishes, and selects portfolio drafts. | `server/portfolio.ts` |
-| Persistence | Drizzle ORM, `mysql2`, MySQL/TiDB | Stores draft metadata and immutable JSON snapshots. | `drizzle/schema.ts`, `server/db.ts` |
+| Persistence | Drizzle ORM, `pg`, PostgreSQL | Stores draft metadata and immutable JSON snapshots. | `drizzle/schema.ts`, `server/db.ts` |
 | Assets | Forge/S3-style storage and an asset proxy | Stores images, logos, previews, and PDFs outside relational tables. | `server/storage.ts`, `server/_core/storageProxy.ts` |
 | Static export | JSZip and browser download APIs | Produces an HTML export or a faithful offline ZIP with local assets. | `client/src/lib/portfolioExport.ts`, `staticPublicExport.ts` |
 | Hosting adapter | Vite static build plus Vercel serverless function | Serves SPA routes and API routes in Vercel. | `api/[...path].ts`, `vercel.json` |
