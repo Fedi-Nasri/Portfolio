@@ -11,6 +11,7 @@ This file separates confirmed facts from unresolved risks. Do not mark an issue 
 | I-005 | Active | Medium | Existing historical asset URLs use `/manus-storage/...`; a storage-provider move can break public media or static exports. | Define compatibility/migration strategy before removing Forge proxy paths. |
 | I-006 | Active | Medium | The production build has a Vite chunk-size warning for a JavaScript chunk over 500 kB. | Evaluate code-splitting only when performance improvement is requested; do not refactor blindly. |
 | I-007 | Active | Low | `todo.md` contains legacy historical checklist headings and Vercel items remain open. | Preserve history; update items accurately. Do not delete old checklist records. |
+| I-008 | Active | High | The inspected Vercel project’s existing production URL returns bundled `server/index.ts` content instead of the portfolio UI. Its browser-visible project identifier also differs from the previously recorded target identifier, so the local checkpointed repository cannot yet be confirmed as that deployment’s source. | Reconcile the Vercel project, connected Git repository, root directory, build command, and output directory before requesting a Preview deployment. Do not write editor data to this production deployment. |
 
 ## Known non-issues
 

@@ -11,9 +11,9 @@
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | Active | Finalize records and regression validation for the applied provider-neutral PostgreSQL migration. | Preserve the secret boundary; create a checkpoint after checks pass. |
-| 2 | Pending | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate a preview. |
-| 3 | Pending user approval | Deploy and smoke-test the full editor application in Vercel Preview. | Verify public/editor routes, draft workflows, assets, and exports before any production deployment. |
+| 1 | Active | Reconcile the existing Vercel project’s connected source before requesting a Preview deployment. | The current live deployment serves server source instead of the portfolio and does not match the checkpointed local repository. |
+| 2 | Pending after source reconciliation | Exercise disposable-draft PostgreSQL persistence in a Vercel Preview deployment. | Verify public/editor routes, draft workflows, and public reads before any production deployment. |
+| 3 | Pending | Replace Forge/S3 storage dependence with Vercel Blob for standalone Vercel uploads. | Add a server-side storage provider adapter, migrate/test asset reads/writes, then validate a preview. |
 
 ## PostgreSQL hosting state
 
@@ -48,4 +48,4 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 ## Existing TODO status
 
-The PostgreSQL conversion and initial schema application are recorded in `todo.md`. Preview-backed live draft persistence, the Blob adapter, and deployment verification remain unchecked.
+The PostgreSQL conversion and initial schema application are recorded in `todo.md`. The current Vercel production deployment was inspected only and serves server source rather than the portfolio, indicating a source/build-target mismatch that must be reconciled before Preview-backed persistence testing. The Blob adapter and deployment verification remain unchecked.

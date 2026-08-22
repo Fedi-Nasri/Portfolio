@@ -668,6 +668,10 @@
 - [x] Convert Drizzle schema, database client, and migration configuration to standard PostgreSQL-compatible implementations, without coupling application code to Neon.
 - [x] Generate and review provider-neutral PostgreSQL migration SQL, apply it to the currently connected PostgreSQL database, and verify schema presence.
 - [ ] Verify editor draft save, restore, publish, and public content read flows against PostgreSQL before any production deployment.
+- [ ] Create a Vercel Preview deployment and exercise PostgreSQL persistence with a disposable draft while preserving the Main public draft and production boundary.
+- [ ] Reconcile the existing Vercel project’s connected Git source and build target with the checkpointed portfolio repository before requesting a Preview deployment.
+- [ ] Commit and push the checkpointed portfolio source to `Fedi-Nasri/Portfolio` on the approved `deployment_versel` branch without changing `main`.
+- [ ] Configure Vercel to build `deployment_versel` as a Preview-only deployment and verify the portfolio UI before writing any disposable editor data.
 
 ## Approved Provider-Neutral MySQL/TiDB to PostgreSQL Conversion
 
