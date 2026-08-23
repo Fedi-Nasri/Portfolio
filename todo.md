@@ -898,3 +898,10 @@
 - [x] Maintain adaptive no-media layouts, image-backed alternating layouts, optional project actions, and public/editor parity.
 - [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Selected Work Corner Dot Accent
+
+- [x] Add a subtle low-contrast circular corner accent to the Selected Work background, inspired by the supplied reference.
+- [x] Preserve readability, image/no-media project layouts, and public/editor parity at desktop and mobile sizes.
+- [x] Validate the corner accent, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
