@@ -17,9 +17,9 @@ describe("role-focused Toolbox hydration", () => {
 
     expect(hydrated.skills).toHaveLength(5);
     expect(hydrated.skills.map((group) => group.role)).toEqual(["Cloud Engineering", "DevOps Engineering", "DevSecOps", "Network Operations", "Site Reliability"]);
-    expect(hydrated.skills[1]).toMatchObject({ heading: "Delivery & orchestration", entries: expect.arrayContaining(["CI/CD Pipelines", "Docker", "Kubernetes"]) });
-    expect(hydrated.skills[2]).toMatchObject({ heading: "Secure delivery", entries: expect.arrayContaining(["Trivy", "SonarQube"]) });
-    expect(hydrated.skills[4]).toMatchObject({ heading: "Observability & resilience", entries: expect.arrayContaining(["Grafana", "Prometheus", "Loki"]) });
+    expect(hydrated.skills[1]).toMatchObject({ heading: "Delivery & orchestration", entries: expect.arrayContaining(["Kubernetes", "Argo CD", "Jenkins"]) });
+    expect(hydrated.skills[2]).toMatchObject({ heading: "Secure delivery", entries: expect.arrayContaining(["HTTPS/TLS", "HashiCorp Vault", "OWASP ZAP"]) });
+    expect(hydrated.skills[4]).toMatchObject({ heading: "Observability & resilience", entries: expect.arrayContaining(["OpenTelemetry", "RabbitMQ", "Alertmanager"]) });
     expect(legacy.skills).toHaveLength(6);
     expect(legacy.skills[0]?.role).toBeUndefined();
   });

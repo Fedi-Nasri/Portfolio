@@ -77,6 +77,9 @@ describe("public contact section", () => {
     expect(html).toContain("Grafana");
     expect(html).toContain("Prometheus");
     expect(html).toContain("Loki");
+    expect(html).toContain("HashiCorp Vault");
+    expect(html).toContain("OpenTelemetry");
+    expect(html).toContain("Argo CD");
     expect(html).toContain("toolbox-role-icon");
     expect(html).not.toContain("tool-brand-mark");
     expect(html).not.toContain("tool-brand-fallback");

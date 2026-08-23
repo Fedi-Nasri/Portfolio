@@ -973,3 +973,13 @@
 - [x] Remove the no-longer-needed brand-icon dependency and related rendering/tests without affecting role icon rendering.
 - [x] Validate text-only tool chips, public/editor parity, TypeScript, tests, production build, and responsive layouts on the isolated branch.
 - [x] Checkpoint the corrected isolated feature and present it for review before any merge or Production release; checkpoint `69ae97cc` created on 2026-08-23.
+
+## Curated Professional DevOps and DevSecOps Toolbox Expansion
+
+- [x] Add AWS, Terraform, Ansible, and Helm to the editable Cloud Engineering and platform automation coverage.
+- [x] Add Git, GitHub Actions, Argo CD, and Jenkins to the editable delivery and GitOps coverage.
+- [x] Add Snyk, OWASP ZAP, HashiCorp Vault, and Dependabot to the editable DevSecOps coverage.
+- [x] Add Alertmanager, OpenTelemetry, Nginx, PostgreSQL, Redis, and RabbitMQ to the editable reliability, networking, and service-operation coverage.
+- [x] Retain Docker, Kubernetes, CI/CD Pipelines, Trivy, SonarQube, Grafana, Prometheus, and Loki without introducing tool-brand logos.
+- [x] Validate the curated public/editor Toolbox content, responsive text-only chips, TypeScript, tests, production build, and visual layouts on the isolated branch.
+- [x] Checkpoint the expanded isolated feature and present it for review before any merge or Production release; checkpoint `8ddc8d55` created on 2026-08-23.
