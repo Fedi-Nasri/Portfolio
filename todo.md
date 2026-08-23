@@ -747,3 +747,177 @@
 - [x] Synchronize the release, environment, and media operations documentation to GitHub `main` without creating a Production deployment.
 - [x] Correct the remaining Vercel handbook wording that incorrectly describes the Production release handoff as a Preview action.
 - [x] Synchronize the corrected Vercel Production wording to GitHub `main` without touching `deployment_versel`.
+
+## Isolated Public Motion Prototype
+
+- [x] Study the reference portfolio’s page-load and scroll-reveal motion and define an accessible public-view animation scope.
+- [x] Create a dedicated feature branch from stable `main`; do not modify or push to `deployment_versel` during the prototype.
+- [x] Implement the approved loading and scroll-reveal motion for the public portfolio while preserving direct-editor functionality.
+- [x] Verify desktop and mobile motion, `prefers-reduced-motion`, TypeScript, tests, build, and visual behavior before checkpointing.
+- [x] Present the isolated branch for review before any merge to `main` or explicitly approved Production release.
+
+## Isolated Home Composition Redesign
+
+- [x] Map the supplied wide three-column Home layout to Fedi’s existing portrait, role-card, contact, and editable-content model.
+- [x] Rebuild the public Home composition on the isolated feature branch to match the supplied hierarchy and spacing without replacing Fedi’s identity or content.
+- [x] Preserve Home editing, focus-card management, image replacement, and public/editor visual parity in the redesigned composition.
+- [x] Retain the motion prototype and validate desktop/mobile layout, reduced-motion behavior, editor controls, TypeScript, tests, and production build.
+- [x] Present the revised isolated prototype before merging to `main` or making any separate Production-release decision.
+
+## Isolated Home Role Selector and Editor Typography Refinement
+
+- [x] Replace the dense four-card Home specialty grid with a clearer, less crowded role-selector pattern while retaining all four editable specialties.
+- [x] Reduce the public and editable Home portrait scale and add a soft lower-edge transparency fade without changing Fedi’s source image.
+- [x] Add an accessible bold-text action to the direct editor for selected editable text while preserving existing rich-text rendering and draft persistence.
+- [x] Validate the role-selector, portrait fade, public/editor parity, mobile layout, editor keyboard behavior, TypeScript, tests, and production build.
+- [x] Present the refined isolated prototype before any merge to `main` or separately approved Production release.
+
+## Home Specialty Presentation Research
+
+- [x] Research less card-heavy visual patterns for presenting four technical specialties beside a portrait-led Home hero.
+- [x] Compare the strongest patterns against editable labels, four existing focus visuals, drag-position controls, public/editor parity, mobile readability, and the pale-blue portfolio system.
+- [x] Recommend one direction and wait for approval before replacing the current isolated prototype’s role selector.
+
+## Featured Specialty Panel and Numbered Rail
+
+- [x] Replace the equal role tiles with one selected specialty visual panel and a compact numbered rail of all four editable specialty labels.
+- [x] Add click and keyboard selection with a concise visual transition, preserving uploaded focus visuals and default SVGs.
+- [x] Mirror the selected-panel and role-rail experience in `/edit` while retaining direct label edits, image upload/replacement, focus-card positioning controls, and reset behavior.
+- [x] Validate public/editor desktop and mobile interaction, keyboard access, reduced-motion behavior, TypeScript, tests, and production build.
+- [x] Present the isolated featured-specialty prototype for review before any merge to `main` or separately approved Production release.
+
+## Floating Specialty Labels and Hero Theme
+
+- [x] Replace the featured visual panel and numbered rail with four editable rounded floating specialty labels; do not display SVGs or uploaded focus images in this Home composition.
+- [x] Arrange the labels as a balanced orbit around the portrait area while retaining saved label text and direct editor in-place editing.
+- [x] Add a subtle pale-blue technical background theme with low-contrast orbital, grid, and glow details that preserve the portfolio’s readability.
+- [x] Validate public/editor desktop and mobile layout, reduced-motion treatment, keyboard editing, TypeScript, tests, and production build.
+- [x] Present the revised isolated floating-label prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Floating Label Motion and Four-Discipline Theme Refinement
+
+- [x] Remove numeric prefixes from the four floating specialty labels while preserving editable role names.
+- [x] Add low-amplitude, slow, staggered floating motion that respects reduced-motion preferences.
+- [x] Add a subtle non-image background motif for Cloud, DevOps, DevSecOps, and Security & Networking that fits the pale-blue technical design system.
+- [x] Validate public/editor desktop and mobile balance, animation restraint, reduced-motion behavior, TypeScript, tests, and production build.
+- [x] Present the refined isolated motion-and-theme prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Portrait-and-Label Backdrop and Motion Clarity Refinement
+
+- [x] Refine the technical background specifically beneath and around the portrait and floating specialty labels rather than only the broad hero canvas.
+- [x] Increase the specialty-label visual size while retaining balanced desktop and mobile placement.
+- [x] Make the DevOps, DevSecOps, and Security & Networking labels stay crisp and clearly readable during their subtle motion.
+- [x] Validate public/editor desktop and mobile balance, reduced-motion behavior, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Editorial About Section Organization
+
+- [x] Reorganize the public About section into a large title above a left copy column and right 2×2 statistics grid, following the supplied layout reference.
+- [x] Place the existing editable topic tags beneath the primary About copy while retaining all current add/delete controls in `/edit`.
+- [x] Mirror the reorganized public layout in the `/edit` live preview without changing saved About data.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## About Statistics Card Design and First-Scroll Reveal
+
+- [x] Restyle the four About statistic cards with the supplied rounded-card, strong-number, concise-label visual direction.
+- [x] Add a one-time staggered first-scroll reveal for the public About statistic cards that progresses incrementally through the grid.
+- [x] Preserve editor legibility and direct statistic controls without applying public route-load motion to `/edit`.
+- [x] Respect `prefers-reduced-motion` by revealing the complete grid without animation.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## About Statistic Theme, Controls, and Reveal Repair
+
+- [x] Apply the supplied soft pale-blue gradient treatment and large blue statistic value styling to all four About cards.
+- [x] Make the existing About statistic add action visually explicit with a + control and retain a direct per-card delete action in `/edit`.
+- [x] Diagnose and repair the missing one-time incremental reveal on the public About statistics grid.
+- [x] Preserve immediate complete-grid visibility for reduced-motion users and motion-free `/edit` behavior.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Non-Numeric About Experience Summary Redesign
+
+- [x] Explore a non-numeric experience-summary approach; superseded after the user requested that numeric indicators be retained.
+- [x] Preserve editable About data and direct add/delete controls during the experiment; the retained direction uses the original numeric values.
+- [x] Preserve the public first-scroll reveal and reduced-motion safety during the direction change.
+- [x] Validate the experiment before the user feedback redirected this work to the numeric treatment.
+- [x] Record the user’s rejection of the non-numeric direction; no non-numeric presentation is retained.
+
+## Refined Numeric About Indicator Design
+
+- [x] Remove the rejected non-numeric summary experiment and restore the editable numeric About indicator values.
+- [x] Redesign the numeric indicator cards with stronger hierarchy and a more intentional technical visual treatment.
+- [x] Preserve explicit editor add/delete controls, public first-scroll reveal, and reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Plain-Number About Indicators
+
+- [x] Remove leading zeros from all editable About indicator defaults while preserving the refined numeric-card presentation.
+- [x] Validate public/editor rendering, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Adaptive Project Media and Optional Project Links
+
+- [x] Make public and editable project rows use the full content width when no project image is present, while retaining the alternating media layout when an image exists.
+- [x] Add editable optional GitHub and live-project URLs to the project content model and new-project template.
+- [x] Render accessible project action buttons only when their associated GitHub or live-project URL is non-empty and valid.
+- [x] Preserve existing image upload, crop, zoom, focal-point, and media-frame controls when project media exists.
+- [x] Validate public/editor desktop and mobile layouts, conditional links, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## No-Media Project Metadata and Link Rendering Repair
+
+- [x] Move the no-media project Tech stack and Delivery groups into a distinct right-side desktop column with larger, clearer typography.
+- [x] Preserve a readable stacked mobile layout and retain the image-backed alternating project presentation.
+- [x] Inspect the user-added test project link and repair public GitHub/live-project actions so valid links render reliably.
+- [x] Validate public/editor layouts, conditional links, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## No-Media Project Metadata Typography Refinement
+
+- [x] Increase and unify the font scale of no-media project Tech stack and Delivery labels and tag items.
+- [x] Preserve the metadata column’s desktop hierarchy and its mobile stacked fallback.
+- [x] Validate public/editor typography, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Global Project Metadata and About Technology Indicator Refinement
+
+- [x] Increase Tech stack and Delivery labels and item typography across both image-backed and no-media Selected Work rows.
+- [x] Replace the About “3 Languages spoken” statistic with “20+ Technologies in toolbox.”
+- [x] Refine the technology indicator plus sign so it matches the blue technical card system.
+- [x] Preserve public/editor parity, responsive layout, direct About controls, and existing reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Selected Work Background and Theme Redesign
+
+- [x] Redesign the Selected Work section background with a cohesive pale-blue technical theme that separates it from adjacent sections.
+- [x] Refine project-card surfaces, borders, color hierarchy, and decorative details while preserving readable case-study content.
+- [x] Maintain adaptive no-media layouts, image-backed alternating layouts, optional project actions, and public/editor parity.
+- [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Selected Work Corner Dot Accent
+
+- [x] Add a subtle low-contrast circular corner accent to the Selected Work background, inspired by the supplied reference.
+- [x] Preserve readability, image/no-media project layouts, and public/editor parity at desktop and mobile sizes.
+- [x] Validate the corner accent, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Experience Background and Timeline Theme Redesign
+
+- [x] Redesign the Experience section background with a cohesive pale-blue technical theme that complements Selected Work without duplicating it.
+- [x] Refine the timeline spine, entry surfaces, company/date hierarchy, tags, and disclosure details for clearer scanning.
+- [x] Preserve public/editor parity, expand/collapse behavior, detail-bullet editing, logo fallback, and reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile presentation, interactions, TypeScript, tests, and production build before checkpointing.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Design-System Documentation, AI Navigation, and Main Merge
+
+- [x] Document how developers can efficiently scan the project’s pages, components, CSS cascade, Tailwind configuration, design tokens, public/editor parity, and tests.
+- [x] Add an AI-context guide for agent onboarding, design-change routing, safe CSS inspection, component ownership, validation, documentation maintenance, and branch boundaries.
+- [x] Validate documentation paths, internal links, and the reviewed isolated prototype before integrating it into `main`.
+- [ ] Merge the approved `feature/public-motion-prototype` branch into GitHub `main` without touching `deployment_versel` or Vercel Production.
+- [ ] Request a separate explicit immediate approval before any later `deployment_versel` push that would trigger Production.

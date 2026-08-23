@@ -2,14 +2,16 @@
 
 ## Snapshot
 
-**Last context refresh:** 2026-08-22 (GMT+2)  
-**Latest saved project checkpoint:** Review the Management UI for the current checkpoint. The latest work added an optional local-only Compose workflow and did not change Production behavior.
-**Current immediate task:** The user has paused the controlled historical-media migration. The remaining six legacy references stay untouched in private Draft 2 until the user explicitly resumes that work.
+**Last context refresh:** 2026-08-23 (GMT+2)
+**Latest saved project checkpoint:** `d6caf36e` — the user-directed rollback returned the Experience background to the previously reviewed lighter timeline treatment. The feature branch remains isolated until the current documentation checkpoint and approved `main` integration are complete.
+**Current immediate task:** Create and validate CSS/design navigation guides in `docs/design-code-navigation.md` and `ai-context/design-navigation-and-css-scan.md`, then merge the user-approved prototype into GitHub `main`. The historical-media migration remains paused; its legacy references stay untouched in private Draft 2 until the user explicitly resumes it.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
 **Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
 
 **Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow, complete operations documentation, and corrected Production-release wording through commit `1c94473` (`docs: clarify production release handoff`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
+
+**Motion and Home-composition prototype branch:** `feature/public-motion-prototype` contains the public-only motion language, the floating-specialty Home composition, editorial About layout, refined technology indicator, adaptive Selected Work behavior, and the lighter Experience timeline treatment. All work has passed TypeScript, 84 Vitest tests, and a production build. On 2026-08-23 the user approved integrating this reviewed work into `main`, along with the new developer and AI navigation documentation. This approval does **not** authorize a `deployment_versel` push or Vercel Production release; a separate immediate confirmation remains mandatory.
 
 **Operations documentation:** `docs/release-and-media-operations.md` now provides the exact approved `main` → `deployment_versel` release sequence, first-run Compose instructions, a complete safe environment reference at `docs/environment.example`, and the local-to-Vercel lifecycle for images, PDFs, and SVGs. Docker is intentionally not installed in this managed sandbox, so the Compose file was statically formatted/validated; developers must run the documented `docker compose` commands on a Docker-enabled machine.
 

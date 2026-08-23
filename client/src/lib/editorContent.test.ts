@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT } from "@shared/portfolio";
-import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCanvasCopyFromSection, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, duplicateListItem, getHiddenPortfolioSections, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, isPortfolioSectionHidden, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail, togglePortfolioSectionVisibility } from "./editorContent";
+import { addPortfolioSection, addProjectCaseStudyBlock, appendAboutStat, appendAboutTag, appendCanvasCopyFromSection, appendCertificate, appendCustomPortfolioSection, appendExperienceDetail, appendExperienceTag, appendProjectDelivery, appendProjectTech, appendSkillTool, appendSkillToolbox, appendWritingArticle, createProjectTemplate, duplicateListItem, getHiddenPortfolioSections, getPortfolioSectionOrder, insertExperienceTemplate, insertProjectTemplate, isPortfolioSectionHidden, moveListItem, movePortfolioSection, removeAboutStat, removeAboutTag, removeCertificate, removeExperienceDetail, removeExperienceTag, removeListItem, removePortfolioSection, removeProject, removeProjectCaseStudyBlock, removeProjectDelivery, removeProjectTech, removeSkillTool, removeSkillToolbox, removeWritingArticle, reorderExperienceDetail, togglePortfolioSectionVisibility } from "./editorContent";
 
 describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
@@ -106,6 +106,7 @@ describe("Selected Work project management", () => {
 
     expect(above.projects).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.projects.length + 1);
     expect(above.projects[0]).toMatchObject({ title: "New infrastructure project", state: "Draft template", tech: ["New technology"], delivery: ["Project outcome"] });
+    expect(createProjectTemplate()).toMatchObject({ image: "", githubUrl: "", liveUrl: "" });
     expect(below.projects[1]?.title).toBe("New infrastructure project");
     expect(DEFAULT_PORTFOLIO_CONTENT.projects).toHaveLength(4);
   });
