@@ -48,6 +48,10 @@
   gap: 6px;
 }
 
+.ref-project:has(.project-detail-disclosure[open]) .project-compact-meta {
+  display: none;
+}
+
 @media (min-width: 681px) {
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-content {
     display: grid;

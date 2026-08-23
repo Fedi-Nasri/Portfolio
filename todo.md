@@ -1026,3 +1026,11 @@
 - [x] Mirror the right-side compact metadata placement in `/edit` while retaining direct tech and delivery management controls.
 - [x] Add focused coverage and validate TypeScript, tests, production build, and desktop/mobile public-editor project states.
 - [x] Checkpoint the isolated right-side metadata refinement and present it for review before any merge or Production release; checkpoint `13bd33e5` created on 2026-08-23.
+
+## Selected Work Expanded Compact-Metadata Visibility
+
+- [x] Hide the compact right-side Tech stack and Delivery panel when its project detail disclosure is expanded.
+- [x] Preserve the compact panel in the collapsed desktop and mobile summary states.
+- [x] Preserve the existing expanded Tech stack and Delivery metadata, with no duplicate compact panel in public or `/edit` views.
+- [x] Add focused coverage and validate collapsed/expanded public-editor behavior, TypeScript, tests, production build, and responsive layout.
+- [x] Checkpoint the isolated metadata-visibility refinement and present it for review before any merge or Production release; checkpoint `25c527cd` created on 2026-08-23.
