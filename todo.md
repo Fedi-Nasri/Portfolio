@@ -857,3 +857,12 @@
 - [x] Remove leading zeros from all editable About indicator defaults while preserving the refined numeric-card presentation.
 - [x] Validate public/editor rendering, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Adaptive Project Media and Optional Project Links
+
+- [x] Make public and editable project rows use the full content width when no project image is present, while retaining the alternating media layout when an image exists.
+- [x] Add editable optional GitHub and live-project URLs to the project content model and new-project template.
+- [x] Render accessible project action buttons only when their associated GitHub or live-project URL is non-empty and valid.
+- [x] Preserve existing image upload, crop, zoom, focal-point, and media-frame controls when project media exists.
+- [x] Validate public/editor desktop and mobile layouts, conditional links, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

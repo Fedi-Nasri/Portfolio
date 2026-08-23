@@ -274,7 +274,7 @@ describe("FullLivePreview", () => {
 
     expect(inactive).not.toContain("Add project");
     expect(active).toContain("Add project");
-    expect(active).toContain("Upload image");
+    expect(active).toContain("Replace image");
     expect(active).toContain("Add tech");
     expect(active).toContain("Add delivery");
     expect(active).toContain("Remove block");
