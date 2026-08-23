@@ -3,11 +3,13 @@ import { createDefaultFocusPositions, DEFAULT_SECTION_ORDER, PORTFOLIO_SECTION_I
 import type { ContentPath } from "@/lib/editorContent";
 import { CustomSectionCanvas } from "@/components/CustomSectionCanvas";
 import { ToolboxRoleIcon } from "@/components/ToolboxIcons";
+import { CapabilityIcon } from "@/components/CapabilityIcons";
 import { ArrowDown, ArrowRight, ArrowUp, Check, ChevronDown, ChevronUp, Copy, Crosshair, Eye, EyeOff, Github, GripVertical, ImageUp, Linkedin, Mail, Menu, Moon, Pencil, Phone, RotateCcw, Sparkles, Sun, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import "./full-live-preview.css";
 import "./toolbox.css";
 import "./project-disclosure.css";
+import "./capability-map.css";
 
 export type PreviewSection = "home" | "about" | "experience" | "skills" | "certifications" | "capabilities" | "projects" | "writing" | "contact" | "footer" | "custom";
 
@@ -216,7 +218,7 @@ export default function FullLivePreview({ content, activeSection, activePath, on
     </SectionFrame>
 
     <SectionFrame id="capabilities" label="Capabilities" activeSection={activeSection} onSection={onSection} {...sectionFrameProps}>
-      <div className="live-heading"><p>{edit(content.capabilities.eyebrow, ["capabilities", "eyebrow"], "capabilities")}</p><h2>{edit(content.capabilities.title, ["capabilities", "title"], "capabilities")}</h2><span>{edit(content.capabilities.description, ["capabilities", "description"], "capabilities")}</span></div><div className="live-service-grid">{content.capabilities.services.map((service, index) => <article key={`${service.name}-${index}`}><b>0{index + 1}</b><h3>{edit(service.name, ["capabilities", "services", index, "name"], "capabilities")}</h3><p>{edit(service.description, ["capabilities", "services", index, "description"], "capabilities")}</p></article>)}</div>
+      <div className="full-stack-ref capability-map live-capability-map"><div className="full-stack-top"><p>{edit(content.capabilities.eyebrow, ["capabilities", "eyebrow"], "capabilities")}</p><h2>{edit(content.capabilities.title, ["capabilities", "title"], "capabilities")}</h2><span>{edit(content.capabilities.description, ["capabilities", "description"], "capabilities")}</span></div><div className="service-grid capability-map-grid">{content.capabilities.services.map((service, index) => <article className="capability-card" key={`${service.name}-${index}`}><b>{String(index + 1).padStart(2, "0")}</b><span className="capability-card-icon"><CapabilityIcon index={index} /></span><div className="capability-card-copy"><h3>{edit(service.name, ["capabilities", "services", index, "name"], "capabilities")}</h3><p>{edit(service.description, ["capabilities", "services", index, "description"], "capabilities")}</p></div></article>)}</div></div>
     </SectionFrame>
 
     <SectionFrame id="projects" label="Selected Work" activeSection={activeSection} onSection={onSection} {...sectionFrameProps}>

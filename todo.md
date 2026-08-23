@@ -1071,3 +1071,12 @@
 - [x] Preserve public/editor parity, expanded-case-study presentation, desktop metadata placement, and mobile stacking.
 - [x] Add regression coverage for metadata containment and validate TypeScript, 16 test files / 88 tests, production build, and varied-card desktop/mobile screenshots.
 - [x] Checkpoint the corrected isolated card layout and present it for review before any merge or Production release; checkpoint `09e366e3` created on 2026-08-23.
+
+## Cloud & Infrastructure Capability Map UI Refinement
+
+- [x] Audit the current capability-map header, six-card grid, visual hierarchy, and responsive behavior.
+- [x] Improve category scanning with restrained infrastructure-representative icons and more distinct capability cards.
+- [x] Tighten the header-to-grid relationship, readable content density, contrast, and interaction feedback without changing the six editable capability topics.
+- [x] Preserve public and `/edit` capability-map parity, direct text editing, dark mode, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated capability-map UI refinement and present it for review before any merge or Production release; checkpoint `0cd286df` created on 2026-08-23.

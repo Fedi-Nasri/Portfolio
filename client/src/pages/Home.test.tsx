@@ -49,6 +49,7 @@ describe("public contact section", () => {
     expect(html).toContain("project-summary");
     expect(html).toContain("project-compact-meta");
     expect(html).toContain("A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.");
+    expect((html.match(/capability-card-icon/g) ?? []).length).toBe(6);
   });
 
   it("uses the wide three-column Home composition while preserving the seeded portrait and focus areas", () => {
