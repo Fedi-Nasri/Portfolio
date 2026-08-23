@@ -150,7 +150,7 @@ export default function Home() {
           </div>
 
           <div className="hero-floating-labels" aria-label="Professional focus areas">
-            {hero.focusAreas.map((area, index) => <span className={`floating-specialty floating-specialty-${index + 1}`} key={`${area}-${index}`}><i>0{index + 1}</i><b>{area}</b></span>)}
+            {hero.focusAreas.map((area, index) => <span className={`floating-specialty floating-specialty-${index + 1}`} key={`${area}-${index}`}><b>{area}</b></span>)}
           </div>
 
           <div className="hero-role-stack role-featured-layout" aria-label="Professional focus areas">

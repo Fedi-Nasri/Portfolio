@@ -784,7 +784,7 @@
 - [x] Add click and keyboard selection with a concise visual transition, preserving uploaded focus visuals and default SVGs.
 - [x] Mirror the selected-panel and role-rail experience in `/edit` while retaining direct label edits, image upload/replacement, focus-card positioning controls, and reset behavior.
 - [x] Validate public/editor desktop and mobile interaction, keyboard access, reduced-motion behavior, TypeScript, tests, and production build.
-- [ ] Present the isolated featured-specialty prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the isolated featured-specialty prototype for review before any merge to `main` or separately approved Production release.
 
 ## Floating Specialty Labels and Hero Theme
 
@@ -793,3 +793,11 @@
 - [x] Add a subtle pale-blue technical background theme with low-contrast orbital, grid, and glow details that preserve the portfolio’s readability.
 - [x] Validate public/editor desktop and mobile layout, reduced-motion treatment, keyboard editing, TypeScript, tests, and production build.
 - [ ] Present the revised isolated floating-label prototype for review before any merge to `main` or separately approved Production release.
+
+## Floating Label Motion and Four-Discipline Theme Refinement
+
+- [x] Remove numeric prefixes from the four floating specialty labels while preserving editable role names.
+- [x] Add low-amplitude, slow, staggered floating motion that respects reduced-motion preferences.
+- [x] Add a subtle non-image background motif for Cloud, DevOps, DevSecOps, and Security & Networking that fits the pale-blue technical design system.
+- [x] Validate public/editor desktop and mobile balance, animation restraint, reduced-motion behavior, TypeScript, tests, and production build.
+- [ ] Present the refined isolated motion-and-theme prototype for review before any merge to `main` or separately approved Production release.
