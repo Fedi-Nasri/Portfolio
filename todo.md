@@ -956,3 +956,12 @@
 - [x] Add Grafana, Prometheus, and Loki to the editable observability coverage.
 - [x] Update focused coverage and validate public/editor rendering, responsive design, TypeScript, tests, and production build on the isolated feature branch.
 - [x] Checkpoint the expanded feature and present it for review before any merge or Production release; checkpoint `dfa786e5` created on 2026-08-23.
+
+## Toolbox Role Icons and Tool Brand Marks
+
+- [x] Replace the numeric Toolbox card markers with accessible icons that represent each engineering role.
+- [x] Add recognisable visual marks next to supported named tools while preserving the tool names as visible text.
+- [x] Use a deliberate fallback treatment for tools that have no suitable brand mark, without implying an official logo.
+- [x] Preserve direct Toolbox editing, add/delete controls, public/editor parity, responsive spacing, and reduced-motion safety.
+- [x] Validate desktop/mobile public and editor layouts, icon accessibility, TypeScript, tests, and production build on the isolated branch.
+- [x] Checkpoint the iconography update and present it for review before any merge or Production release; checkpoint `5982c806` created on 2026-08-23.

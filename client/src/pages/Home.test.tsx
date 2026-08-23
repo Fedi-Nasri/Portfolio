@@ -77,6 +77,9 @@ describe("public contact section", () => {
     expect(html).toContain("Grafana");
     expect(html).toContain("Prometheus");
     expect(html).toContain("Loki");
+    expect(html).toContain("toolbox-role-icon");
+    expect(html).toContain("tool-brand-mark");
+    expect(html).toContain("tool-brand-fallback");
   });
 
   it("expands a no-media project row and normalizes a bare valid project domain into a public action", () => {

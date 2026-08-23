@@ -76,7 +76,7 @@
 
 .toolbox-role-card header { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 22px; }
 
-.toolbox-card-index {
+.toolbox-role-icon {
   display: grid;
   flex: 0 0 auto;
   place-items: center;
@@ -86,10 +86,11 @@
   border-radius: 10px;
   color: #3473cb;
   background: #eaf3ff;
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: .08em;
 }
+
+.toolbox-role-icon[data-role="devsecops"] { color: #19795b; background: #e7f7ef; border-color: #b8e3cd; }
+.toolbox-role-icon[data-role="network operations"] { color: #8a62bf; background: #f3edff; border-color: #d8c9f6; }
+.toolbox-role-icon[data-role="site reliability"] { color: #b36d1f; background: #fff4e5; border-color: #f0d5ad; }
 
 .toolbox-role-card header > div { min-width: 0; }
 
@@ -115,7 +116,7 @@
 .toolbox-role-card .ref-tags,
 .toolbox-role-card .live-tags { gap: 7px; }
 
-.toolbox-role-card .ref-tags span,
+.toolbox-role-card .ref-tags > .toolbox-tool-chip,
 .toolbox-role-card .live-tags > * {
   border: 1px solid #d8e7f8;
   border-radius: 999px;
@@ -124,7 +125,11 @@
   box-shadow: none;
 }
 
-.toolbox-role-card .ref-tags span { padding: 7px 9px; font-size: 10px; font-weight: 720; }
+.toolbox-tool-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; font-size: 10px; font-weight: 720; }
+.tool-brand-mark,
+.tool-brand-fallback { display: inline-grid; flex: 0 0 auto; place-items: center; width: 13px; height: 13px; color: var(--tool-brand, #6a86a6); }
+.tool-brand-mark svg { display: block; width: 12px; height: 12px; fill: currentColor; }
+.tool-brand-fallback { color: #7b96b6; }
 
 .reference-portfolio.dim-mode .role-toolbox-section {
   background: radial-gradient(circle at 88% 11%, rgba(91, 144, 237, .16), transparent 24rem), linear-gradient(128deg, #0d1b30 0%, #102641 58%, #0b1b31 100%);
@@ -135,7 +140,7 @@
 
 .reference-portfolio.dim-mode .toolbox-role-card { border-color: #2b4c78; background: linear-gradient(145deg, rgba(22, 46, 78, .95), rgba(17, 38, 66, .9)); box-shadow: 0 14px 35px rgba(0, 0, 0, .22); }
 .reference-portfolio.dim-mode .toolbox-role-card h3 { color: #eff6ff; }
-.reference-portfolio.dim-mode .toolbox-role-card .ref-tags span,
+.reference-portfolio.dim-mode .toolbox-role-card .ref-tags > .toolbox-tool-chip,
 .reference-portfolio.dim-mode .toolbox-role-card .live-tags > * { border-color: #315a8b; color: #c8daf4; background: rgba(28, 58, 96, .75); }
 
 .live-public-canvas .toolbox-field-header { max-width: none; padding: 0; }
@@ -145,7 +150,7 @@
 .live-public-canvas .toolbox-role-card { min-height: 0; }
 .live-public-canvas .toolbox-role-card .live-editable-text { display: inline; }
 .live-public-canvas .toolbox-role-card .skills-tool-list { display: flex; flex-wrap: wrap; gap: 7px; }
-.live-public-canvas .toolbox-role-card .skills-tool-control { display: inline-flex; align-items: center; }
+.live-public-canvas .toolbox-role-card .skills-tool-control { display: inline-flex; align-items: center; gap: 6px; }
 .live-public-canvas .toolbox-role-card .skills-tool-control .live-editable-text { padding: 7px 9px; color: inherit; font-size: 10px; font-weight: 720; }
 
 @media (max-width: 900px) {
