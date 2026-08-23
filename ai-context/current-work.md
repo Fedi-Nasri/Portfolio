@@ -3,7 +3,7 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-23 (GMT+2)
-**Latest saved project checkpoint:** `52a85a75` — added the subtle Selected Work corner dot accent. A later uncheckpointed refinement redesigns Experience with a technical field and stronger timeline surfaces.
+**Latest saved project checkpoint:** `fbb447fd` — redesigned Experience with a pale-blue technical field and stronger timeline surfaces. The isolated GitHub branch is synchronized at commit `6e62422` (`style: refine experience timeline theme`) and awaits review.
 **Current immediate task:** The user has paused the controlled historical-media migration. The remaining six legacy references stay untouched in private Draft 2 until the user explicitly resumes that work.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
