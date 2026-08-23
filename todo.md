@@ -1089,3 +1089,10 @@
 - [x] Preserve editable public and `/edit` content parity, role-representative icons, dark mode, and reduced-motion behavior.
 - [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
 - [x] Checkpoint the isolated lifecycle-positioning refinement and present it for review before any merge or Production release; checkpoint `66e056da` created on 2026-08-23.
+
+## Cloud & Infrastructure Approved Headline
+
+- [x] Replace the lifecycle capability title with the user-approved “From infrastructure foundations to reliable delivery.” wording.
+- [x] Preserve migration-safe hydration so this update applies only to the exact untouched prior lifecycle capability copy.
+- [x] Validate the new title in public and `/edit` renderers with TypeScript, focused tests, and production build.
+- [x] Checkpoint the isolated approved-headline update and present it before any merge or Production release; checkpoint `24ff590b` created on 2026-08-23.

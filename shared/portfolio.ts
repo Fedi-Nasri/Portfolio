@@ -53,7 +53,8 @@ const ROLE_FOCUSED_TOOLBOX = [
 const LEGACY_TOOLBOX_HEADINGS = ["Systems & OS", "Containers & CI/CD", "Networking", "Cloud & Data", "Programming", "Frameworks & AI"];
 
 const LEGACY_CAPABILITIES = { eyebrow: "Cloud & Infrastructure", title: "One engineer,\nevery critical layer.", description: "Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.", services: [{ name: "Linux Systems", description: "Debian and Ubuntu administration, Bash scripting, monitoring, and inter-service communication." }, { name: "Cloud & DevOps", description: "Docker, Compose, CI/CD, cloud VMs, service dependencies, and health checks." }, { name: "Network Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and enterprise access control." }, { name: "Databases", description: "PostgreSQL, MySQL, MongoDB, Firebase Firestore, and live telemetry data." }, { name: "Full-Stack", description: "React, Flask, Symfony, API services, dashboards, and dependable data flows." }, { name: "Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines." }] } satisfies PortfolioContent["capabilities"];
-const LIFECYCLE_CAPABILITIES = { eyebrow: "Deployment Lifecycle", title: "Engineering every stage\nfrom foundation to delivery.", description: "I connect Linux and networking foundations with cloud infrastructure, DevOps delivery, application services, data systems, and hands-on AI — building deployments that are secure, observable, and ready to evolve.", services: [{ name: "Linux Foundations", description: "Debian and Ubuntu administration, Bash automation, services, monitoring, and dependable system communication." }, { name: "Cloud & DevOps Delivery", description: "Cloud VMs, Docker, Compose, CI/CD, health checks, and repeatable delivery workflows." }, { name: "Networking & Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and secure enterprise access control." }, { name: "Data & Service Reliability", description: "PostgreSQL, MySQL, Firebase, telemetry flows, observability, and dependable service data." }, { name: "Development Services", description: "React, Flask, Symfony, APIs, dashboards, and practical full-stack integration work." }, { name: "Hands-on Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision services." }] } satisfies PortfolioContent["capabilities"];
+const PRIOR_LIFECYCLE_CAPABILITY_TITLE = "Engineering every stage\nfrom foundation to delivery.";
+const LIFECYCLE_CAPABILITIES = { eyebrow: "Deployment Lifecycle", title: "From infrastructure foundations\nto reliable delivery.", description: "I connect Linux and networking foundations with cloud infrastructure, DevOps delivery, application services, data systems, and hands-on AI — building deployments that are secure, observable, and ready to evolve.", services: [{ name: "Linux Foundations", description: "Debian and Ubuntu administration, Bash automation, services, monitoring, and dependable system communication." }, { name: "Cloud & DevOps Delivery", description: "Cloud VMs, Docker, Compose, CI/CD, health checks, and repeatable delivery workflows." }, { name: "Networking & Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and secure enterprise access control." }, { name: "Data & Service Reliability", description: "PostgreSQL, MySQL, Firebase, telemetry flows, observability, and dependable service data." }, { name: "Development Services", description: "React, Flask, Symfony, APIs, dashboards, and practical full-stack integration work." }, { name: "Hands-on Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision services." }] } satisfies PortfolioContent["capabilities"];
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -105,11 +106,17 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
 export function hydrateExperienceDetails(content: PortfolioContent): PortfolioContent {
   const shouldReplaceLegacyToolbox = content.skills.length === LEGACY_TOOLBOX_HEADINGS.length
     && content.skills.every((skill, index) => skill.heading === LEGACY_TOOLBOX_HEADINGS[index]);
+  const hasExactLifecycleServices = content.capabilities.services.length === LIFECYCLE_CAPABILITIES.services.length
+    && content.capabilities.services.every((service, index) => service.name === LIFECYCLE_CAPABILITIES.services[index]?.name && service.description === LIFECYCLE_CAPABILITIES.services[index]?.description);
   const shouldReplaceLegacyCapabilities = content.capabilities.eyebrow === LEGACY_CAPABILITIES.eyebrow
     && content.capabilities.title === LEGACY_CAPABILITIES.title
     && content.capabilities.description === LEGACY_CAPABILITIES.description
     && content.capabilities.services.length === LEGACY_CAPABILITIES.services.length
     && content.capabilities.services.every((service, index) => service.name === LEGACY_CAPABILITIES.services[index]?.name && service.description === LEGACY_CAPABILITIES.services[index]?.description);
+  const shouldReplacePriorLifecycleCapabilities = content.capabilities.eyebrow === LIFECYCLE_CAPABILITIES.eyebrow
+    && content.capabilities.title === PRIOR_LIFECYCLE_CAPABILITY_TITLE
+    && content.capabilities.description === LIFECYCLE_CAPABILITIES.description
+    && hasExactLifecycleServices;
 
   return {
     ...content,
@@ -124,7 +131,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
     }),
     projects: content.projects.map((project) => ({ ...project, summary: project.summary ?? project.body.split(/(?<=[.!?])\s/)[0] ?? project.body })),
-    capabilities: shouldReplaceLegacyCapabilities ? { ...LIFECYCLE_CAPABILITIES, services: LIFECYCLE_CAPABILITIES.services.map((service) => ({ ...service })) } : { ...content.capabilities, services: content.capabilities.services.map((service) => ({ ...service })) },
+    capabilities: shouldReplaceLegacyCapabilities || shouldReplacePriorLifecycleCapabilities ? { ...LIFECYCLE_CAPABILITIES, services: LIFECYCLE_CAPABILITIES.services.map((service) => ({ ...service })) } : { ...content.capabilities, services: content.capabilities.services.map((service) => ({ ...service })) },
     skills: shouldReplaceLegacyToolbox
       ? ROLE_FOCUSED_TOOLBOX.map((group) => ({ ...group, entries: [...group.entries] }))
       : content.skills.map((skill) => ({ ...skill, role: skill.role ?? "Custom engineering focus" })),

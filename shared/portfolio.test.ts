@@ -42,8 +42,18 @@ describe("role-focused Toolbox hydration", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     legacy.capabilities = { eyebrow: "Cloud & Infrastructure", title: "One engineer,\nevery critical layer.", description: "Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.", services: [{ name: "Linux Systems", description: "Debian and Ubuntu administration, Bash scripting, monitoring, and inter-service communication." }, { name: "Cloud & DevOps", description: "Docker, Compose, CI/CD, cloud VMs, service dependencies, and health checks." }, { name: "Network Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and enterprise access control." }, { name: "Databases", description: "PostgreSQL, MySQL, MongoDB, Firebase Firestore, and live telemetry data." }, { name: "Full-Stack", description: "React, Flask, Symfony, API services, dashboards, and dependable data flows." }, { name: "Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines." }] };
     const hydrated = hydrateExperienceDetails(legacy);
-    expect(hydrated.capabilities.title).toBe("Engineering every stage\nfrom foundation to delivery.");
+    expect(hydrated.capabilities.title).toBe("From infrastructure foundations\nto reliable delivery.");
     expect(hydrated.capabilities.services.map((service) => service.name)).toEqual(["Linux Foundations", "Cloud & DevOps Delivery", "Networking & Security", "Data & Service Reliability", "Development Services", "Hands-on Applied AI"]);
     expect(legacy.capabilities.title).toBe("One engineer,\nevery critical layer.");
+  });
+
+  it("upgrades the exact prior lifecycle title without changing a custom capability title", () => {
+    const prior = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    prior.capabilities.title = "Engineering every stage\nfrom foundation to delivery.";
+    const custom = structuredClone(prior);
+    custom.capabilities.title = "My custom engineering story";
+
+    expect(hydrateExperienceDetails(prior).capabilities.title).toBe("From infrastructure foundations\nto reliable delivery.");
+    expect(hydrateExperienceDetails(custom).capabilities.title).toBe("My custom engineering story");
   });
 });
