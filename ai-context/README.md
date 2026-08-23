@@ -15,6 +15,7 @@ This folder is the **mandatory operating context** for any AI agent, developer, 
 | 5 | [`technical-architecture.md`](./technical-architecture.md) | Locate source ownership, API/data flows, and the existing concise architecture reference. |
 | 6 | [`database-and-data.md`](./database-and-data.md) | Safely work with drafts, immutable snapshots, PostgreSQL migrations, stored URLs, and provider portability. |
 | 7 | [`design-system.md`](./design-system.md) | Preserve public/editor visual parity, design tokens, responsive rules, interaction patterns, and accessibility. |
+| 7a | [`design-navigation-and-css-scan.md`](./design-navigation-and-css-scan.md) | Efficiently trace section JSX, CSS cascade, Tailwind usage, responsive overrides, and public/editor visual ownership. |
 | 8 | [`feature-request-workflow-example.md`](./feature-request-workflow-example.md) | Follow a worked end-to-end example before implementing a cross-layer feature. |
 | 9 | [`capability-map.md`](./capability-map.md) | Select design, frontend, data, storage, quality, and continuity capabilities for a request. |
 | 10 | [`development-and-quality.md`](./development-and-quality.md) | Run the right local commands, tests, checks, screenshots, and checkpoint procedure. |

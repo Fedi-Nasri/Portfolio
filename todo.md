@@ -792,7 +792,7 @@
 - [x] Arrange the labels as a balanced orbit around the portrait area while retaining saved label text and direct editor in-place editing.
 - [x] Add a subtle pale-blue technical background theme with low-contrast orbital, grid, and glow details that preserve the portfolio’s readability.
 - [x] Validate public/editor desktop and mobile layout, reduced-motion treatment, keyboard editing, TypeScript, tests, and production build.
-- [ ] Present the revised isolated floating-label prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated floating-label prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Floating Label Motion and Four-Discipline Theme Refinement
 
@@ -800,7 +800,7 @@
 - [x] Add low-amplitude, slow, staggered floating motion that respects reduced-motion preferences.
 - [x] Add a subtle non-image background motif for Cloud, DevOps, DevSecOps, and Security & Networking that fits the pale-blue technical design system.
 - [x] Validate public/editor desktop and mobile balance, animation restraint, reduced-motion behavior, TypeScript, tests, and production build.
-- [ ] Present the refined isolated motion-and-theme prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the refined isolated motion-and-theme prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Portrait-and-Label Backdrop and Motion Clarity Refinement
 
@@ -808,7 +808,7 @@
 - [x] Increase the specialty-label visual size while retaining balanced desktop and mobile placement.
 - [x] Make the DevOps, DevSecOps, and Security & Networking labels stay crisp and clearly readable during their subtle motion.
 - [x] Validate public/editor desktop and mobile balance, reduced-motion behavior, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Editorial About Section Organization
 
@@ -816,7 +816,7 @@
 - [x] Place the existing editable topic tags beneath the primary About copy while retaining all current add/delete controls in `/edit`.
 - [x] Mirror the reorganized public layout in the `/edit` live preview without changing saved About data.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## About Statistics Card Design and First-Scroll Reveal
 
@@ -825,7 +825,7 @@
 - [x] Preserve editor legibility and direct statistic controls without applying public route-load motion to `/edit`.
 - [x] Respect `prefers-reduced-motion` by revealing the complete grid without animation.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## About Statistic Theme, Controls, and Reveal Repair
 
@@ -834,7 +834,7 @@
 - [x] Diagnose and repair the missing one-time incremental reveal on the public About statistics grid.
 - [x] Preserve immediate complete-grid visibility for reduced-motion users and motion-free `/edit` behavior.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Non-Numeric About Experience Summary Redesign
 
@@ -850,13 +850,13 @@
 - [x] Redesign the numeric indicator cards with stronger hierarchy and a more intentional technical visual treatment.
 - [x] Preserve explicit editor add/delete controls, public first-scroll reveal, and reduced-motion behavior.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Plain-Number About Indicators
 
 - [x] Remove leading zeros from all editable About indicator defaults while preserving the refined numeric-card presentation.
 - [x] Validate public/editor rendering, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Adaptive Project Media and Optional Project Links
 
@@ -865,7 +865,7 @@
 - [x] Render accessible project action buttons only when their associated GitHub or live-project URL is non-empty and valid.
 - [x] Preserve existing image upload, crop, zoom, focal-point, and media-frame controls when project media exists.
 - [x] Validate public/editor desktop and mobile layouts, conditional links, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## No-Media Project Metadata and Link Rendering Repair
 
@@ -873,14 +873,14 @@
 - [x] Preserve a readable stacked mobile layout and retain the image-backed alternating project presentation.
 - [x] Inspect the user-added test project link and repair public GitHub/live-project actions so valid links render reliably.
 - [x] Validate public/editor layouts, conditional links, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## No-Media Project Metadata Typography Refinement
 
 - [x] Increase and unify the font scale of no-media project Tech stack and Delivery labels and tag items.
 - [x] Preserve the metadata column’s desktop hierarchy and its mobile stacked fallback.
 - [x] Validate public/editor typography, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Global Project Metadata and About Technology Indicator Refinement
 
@@ -889,7 +889,7 @@
 - [x] Refine the technology indicator plus sign so it matches the blue technical card system.
 - [x] Preserve public/editor parity, responsive layout, direct About controls, and existing reduced-motion behavior.
 - [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Selected Work Background and Theme Redesign
 
@@ -897,14 +897,14 @@
 - [x] Refine project-card surfaces, borders, color hierarchy, and decorative details while preserving readable case-study content.
 - [x] Maintain adaptive no-media layouts, image-backed alternating layouts, optional project actions, and public/editor parity.
 - [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Selected Work Corner Dot Accent
 
 - [x] Add a subtle low-contrast circular corner accent to the Selected Work background, inspired by the supplied reference.
 - [x] Preserve readability, image/no-media project layouts, and public/editor parity at desktop and mobile sizes.
 - [x] Validate the corner accent, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
 
 ## Experience Background and Timeline Theme Redesign
 
@@ -912,4 +912,12 @@
 - [x] Refine the timeline spine, entry surfaces, company/date hierarchy, tags, and disclosure details for clearer scanning.
 - [x] Preserve public/editor parity, expand/collapse behavior, detail-bullet editing, logo fallback, and reduced-motion behavior.
 - [x] Validate public/editor desktop and mobile presentation, interactions, TypeScript, tests, and production build before checkpointing.
-- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+- [x] Present the revised isolated prototype for review; the user approved integration into `main` on 2026-08-23, while Production remains a separate decision.
+
+## Design-System Documentation, AI Navigation, and Main Merge
+
+- [x] Document how developers can efficiently scan the project’s pages, components, CSS cascade, Tailwind configuration, design tokens, public/editor parity, and tests.
+- [x] Add an AI-context guide for agent onboarding, design-change routing, safe CSS inspection, component ownership, validation, documentation maintenance, and branch boundaries.
+- [x] Validate documentation paths, internal links, and the reviewed isolated prototype before integrating it into `main`.
+- [ ] Merge the approved `feature/public-motion-prototype` branch into GitHub `main` without touching `deployment_versel` or Vercel Production.
+- [ ] Request a separate explicit immediate approval before any later `deployment_versel` push that would trigger Production.
