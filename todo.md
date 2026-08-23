@@ -866,3 +866,11 @@
 - [x] Preserve existing image upload, crop, zoom, focal-point, and media-frame controls when project media exists.
 - [x] Validate public/editor desktop and mobile layouts, conditional links, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## No-Media Project Metadata and Link Rendering Repair
+
+- [x] Move the no-media project Tech stack and Delivery groups into a distinct right-side desktop column with larger, clearer typography.
+- [x] Preserve a readable stacked mobile layout and retain the image-backed alternating project presentation.
+- [x] Inspect the user-added test project link and repair public GitHub/live-project actions so valid links render reliably.
+- [x] Validate public/editor layouts, conditional links, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

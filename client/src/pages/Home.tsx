@@ -24,7 +24,14 @@ function toPlainAboutIndicator(value: string) {
 
 function safeProjectUrl(value?: string) {
   const normalized = value?.trim() ?? "";
-  return /^https?:\/\/[^\s]+$/i.test(normalized) ? normalized : null;
+  if (!normalized) return null;
+  const candidate = /^https?:\/\//i.test(normalized) ? normalized : `https://${normalized}`;
+  try {
+    const parsed = new URL(candidate);
+    return /^https?:$/.test(parsed.protocol) && parsed.hostname.includes(".") ? parsed.href : null;
+  } catch {
+    return null;
+  }
 }
 
 function ProviderMark({ cert }: { cert: Certification }) {
