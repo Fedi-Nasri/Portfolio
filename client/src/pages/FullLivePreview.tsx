@@ -4,7 +4,7 @@ import type { ContentPath } from "@/lib/editorContent";
 import { CustomSectionCanvas } from "@/components/CustomSectionCanvas";
 import { ToolboxRoleIcon } from "@/components/ToolboxIcons";
 import { ArrowDown, ArrowRight, ArrowUp, Check, ChevronDown, ChevronUp, Copy, Crosshair, Eye, EyeOff, Github, GripVertical, ImageUp, Linkedin, Mail, Menu, Moon, Pencil, Phone, RotateCcw, Sparkles, Sun, Trash2, X } from "lucide-react";
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import "./full-live-preview.css";
 import "./toolbox.css";
 import "./project-disclosure.css";
@@ -146,6 +146,9 @@ export default function FullLivePreview({ content, activeSection, activePath, on
   const [activeCustomSectionId, setActiveCustomSectionId] = useState<string | null>(null);
   const [activeFeaturedFocusIndex, setActiveFeaturedFocusIndex] = useState(0);
   const focusStackRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (focalPointProjectIndex !== null && !content.projects[focalPointProjectIndex]?.image.trim()) setFocalPointProjectIndex(null);
+  }, [content.projects, focalPointProjectIndex]);
   const sectionOrder = content.sectionOrder ?? DEFAULT_SECTION_ORDER;
   const hiddenSections = content.hiddenSections ?? [];
   const missingBuiltInSections = PORTFOLIO_SECTION_IDS.filter((sectionId) => !sectionOrder.includes(sectionId));

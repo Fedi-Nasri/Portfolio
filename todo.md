@@ -1044,3 +1044,12 @@
 - [x] Preserve text-only chips, existing role cards, direct `/edit` management controls, and public/editor parity.
 - [x] Add focused coverage and validate hover/focus behavior, TypeScript, tests, production build, and desktop/mobile public-editor layouts.
 - [x] Checkpoint the isolated Toolbox interaction and infrastructure-coverage update before any merge or Production release; checkpoint `cfadca3f` created on 2026-08-23.
+
+## Selected Work Project Image Panel Controls
+
+- [x] Audit selected-project image-panel rendering and identify why Add/Replace and Remove image actions are not discoverable beside the crop controls.
+- [x] Add a visible image upload/replace control to the right-side Project image panel for the selected project.
+- [x] Add a visible conditional Remove image action to that same panel, resetting crop state and disabling image-specific controls when no image exists.
+- [x] Preserve selected-project switching, upload progress, crop controls, direct editing, accessibility, and responsive editor layout.
+- [x] Add focused regression coverage and validate TypeScript, 87 tests, production build, and the right-side editor image panel.
+- [x] Checkpoint the repaired isolated image-management workflow and present it for review before any merge or Production release; checkpoint `5b22d2d7` created on 2026-08-23.
