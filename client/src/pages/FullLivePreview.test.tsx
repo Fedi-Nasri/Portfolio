@@ -79,6 +79,10 @@ describe("FullLivePreview", () => {
 
     expect(html).toContain("project-editor-card");
     expect(html).toContain("project-layout-reversed");
+    expect(html).toContain("project-detail-disclosure");
+    expect(html).toContain("View detailed project");
+    expect(html).toContain("Remove image");
+    expect(html).toContain("Brief project description");
   });
 
   it("uses a saved focal point to crop a project image and exposes the positioning control", () => {

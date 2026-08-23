@@ -168,6 +168,7 @@ export function createProjectTemplate(): PortfolioContent["projects"][number] {
     state: "Draft template",
     title: "New infrastructure project",
     byline: "Organisation or personal project · YEAR",
+    summary: "Add a concise description that explains this project at a glance.",
     problem: "Describe the operational or technical problem this work addressed.",
     body: "Explain what you designed, built, configured, or delivered.",
     realization: "Summarise the outcome, impact, and the system that now works reliably.",

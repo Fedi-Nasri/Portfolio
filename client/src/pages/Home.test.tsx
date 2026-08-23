@@ -43,6 +43,11 @@ describe("public contact section", () => {
 
     expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
     expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect((html.match(/project-detail-disclosure/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(html).toContain("View detailed project");
+    expect(html).not.toContain("project-detail-disclosure\" open");
+    expect(html).toContain("project-summary");
+    expect(html).toContain("A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.");
   });
 
   it("uses the wide three-column Home composition while preserving the seeded portrait and focus areas", () => {

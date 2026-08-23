@@ -1,0 +1,75 @@
+.project-detail-disclosure {
+  margin-top: 18px;
+  border-top: 1px solid #dbe7f6;
+}
+
+.ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-thumb {
+  display: none;
+}
+
+.project-summary {
+  max-width: 62ch;
+  margin: 12px 0 0;
+  color: #405a7c;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.project-detail-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: max-content;
+  min-height: 38px;
+  margin-top: 12px;
+  padding: 0 11px;
+  border: 1px solid #c8daf3;
+  border-radius: 999px;
+  color: #315e9f;
+  background: #f8fbff;
+  box-shadow: 0 4px 12px rgba(43, 86, 146, 0.06);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.project-detail-disclosure > summary::-webkit-details-marker { display: none; }
+.project-detail-disclosure > summary svg { transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1); }
+.project-detail-disclosure[open] > summary { border-color: #8eb4ec; color: #244f91; background: #eef6ff; }
+.project-detail-disclosure[open] > summary svg { transform: rotate(180deg); }
+.project-detail-disclosure > summary:focus-visible { outline: 3px solid rgba(76, 132, 221, 0.28); outline-offset: 3px; }
+.project-details-inner { padding-top: 1px; }
+.project-detail-disclosure .project-meta { margin-top: 23px; }
+.project-detail-disclosure .project-actions { margin-top: 19px; }
+
+.project-image-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 30px;
+  margin-top: 7px;
+  padding: 5px 8px;
+  border: 1px solid #efc9ce;
+  border-radius: 7px;
+  color: #9e4551;
+  background: #fff7f8;
+  font: 800 10px/1 "Inter", sans-serif;
+  cursor: pointer;
+}
+
+.project-image-remove:hover { color: #fff; border-color: #cb5b68; background: #cb5b68; }
+.project-image-remove:active { transform: scale(0.97); }
+
+@media (max-width: 640px) {
+  .project-detail-disclosure > summary { width: 100%; justify-content: space-between; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-detail-disclosure > summary svg { transition: none; }
+}

@@ -983,3 +983,22 @@
 - [x] Retain Docker, Kubernetes, CI/CD Pipelines, Trivy, SonarQube, Grafana, Prometheus, and Loki without introducing tool-brand logos.
 - [x] Validate the curated public/editor Toolbox content, responsive text-only chips, TypeScript, tests, production build, and visual layouts on the isolated branch.
 - [x] Checkpoint the expanded isolated feature and present it for review before any merge or Production release; checkpoint `8ddc8d55` created on 2026-08-23.
+
+## Selected Work Image Management and Detail Disclosure
+
+- [x] Audit current public and editor project image controls, project image state, detail rendering, and existing test coverage.
+- [x] Add direct per-project image upload and image removal actions in the active `/edit` Selected Work view.
+- [x] Preserve existing crop, focal point, zoom, aspect-ratio, and frame controls when a project image is present; reset safely when it is removed.
+- [x] Add an accessible per-project collapse/expand control that shows a compact project summary when collapsed and the original detailed project view when expanded.
+- [x] Preserve image/no-image responsive project layouts, optional project links, public/editor parity, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, tests, production build, and desktop/mobile public/editor interaction.
+- [x] Checkpoint the isolated Selected Work enhancement and present it for review before any merge or Production release; checkpoint `64b24215` created on 2026-08-23.
+
+## Selected Work Compact Summary and Expanded Media Refinement
+
+- [x] Add an editable brief project description field that is visible in each collapsed project summary.
+- [x] Keep project images hidden in the collapsed public and editor project summary state.
+- [x] Render project images, original case-study blocks, Tech stack, Delivery, and optional links only after the project detail disclosure is expanded.
+- [x] Preserve direct image upload/replacement/removal and crop controls in the active `/edit` detail state.
+- [x] Add migration-safe defaults for existing projects, focused regression coverage, and desktop/mobile public-editor validation.
+- [x] Checkpoint the refined isolated project disclosure and present it for review before any merge or Production release; checkpoint `6e7de7eb` created on 2026-08-23.

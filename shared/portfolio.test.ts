@@ -23,4 +23,16 @@ describe("role-focused Toolbox hydration", () => {
     expect(legacy.skills).toHaveLength(6);
     expect(legacy.skills[0]?.role).toBeUndefined();
   });
+
+  it("adds a concise summary for legacy projects without overwriting an existing project summary", () => {
+    const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.projects[0]!.summary = undefined;
+    legacy.projects[1]!.summary = "Saved concise summary.";
+
+    const hydrated = hydrateExperienceDetails(legacy);
+
+    expect(hydrated.projects[0]!.summary).toBe("Architected a live monitoring web application, a Python navigation backend, and a YOLOv11 waste-detection pipeline deployed on embedded Linux.");
+    expect(hydrated.projects[1]!.summary).toBe("Saved concise summary.");
+    expect(legacy.projects[0]!.summary).toBeUndefined();
+  });
 });
