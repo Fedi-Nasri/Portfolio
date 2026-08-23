@@ -37,4 +37,13 @@ describe("role-focused Toolbox hydration", () => {
     expect(hydrated.projects[1]!.summary).toBe("Saved concise summary.");
     expect(legacy.projects[0]!.summary).toBeUndefined();
   });
+
+  it("upgrades only the untouched capability-map messaging to the lifecycle positioning", () => {
+    const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.capabilities = { eyebrow: "Cloud & Infrastructure", title: "One engineer,\nevery critical layer.", description: "Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.", services: [{ name: "Linux Systems", description: "Debian and Ubuntu administration, Bash scripting, monitoring, and inter-service communication." }, { name: "Cloud & DevOps", description: "Docker, Compose, CI/CD, cloud VMs, service dependencies, and health checks." }, { name: "Network Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and enterprise access control." }, { name: "Databases", description: "PostgreSQL, MySQL, MongoDB, Firebase Firestore, and live telemetry data." }, { name: "Full-Stack", description: "React, Flask, Symfony, API services, dashboards, and dependable data flows." }, { name: "Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines." }] };
+    const hydrated = hydrateExperienceDetails(legacy);
+    expect(hydrated.capabilities.title).toBe("Engineering every stage\nfrom foundation to delivery.");
+    expect(hydrated.capabilities.services.map((service) => service.name)).toEqual(["Linux Foundations", "Cloud & DevOps Delivery", "Networking & Security", "Data & Service Reliability", "Development Services", "Hands-on Applied AI"]);
+    expect(legacy.capabilities.title).toBe("One engineer,\nevery critical layer.");
+  });
 });

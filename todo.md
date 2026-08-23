@@ -1080,3 +1080,12 @@
 - [x] Preserve public and `/edit` capability-map parity, direct text editing, dark mode, and reduced-motion behavior.
 - [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
 - [x] Checkpoint the isolated capability-map UI refinement and present it for review before any merge or Production release; checkpoint `0cd286df` created on 2026-08-23.
+
+## Cloud & Infrastructure Lifecycle Positioning and Contrast Refinement
+
+- [x] Audit the current capability-map blue contrast, title, description, and six capability labels against the user’s end-to-end engineering positioning.
+- [x] Soften the blue field, grid texture, card contrast, and hover treatment while retaining clear hierarchy and accessibility.
+- [x] Reposition the content around the deployment lifecycle: Linux and networking foundations, cloud infrastructure, DevOps delivery, development services, data systems, and applied AI.
+- [x] Preserve editable public and `/edit` content parity, role-representative icons, dark mode, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated lifecycle-positioning refinement and present it for review before any merge or Production release; checkpoint `66e056da` created on 2026-08-23.
