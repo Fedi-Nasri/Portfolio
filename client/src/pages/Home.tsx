@@ -18,6 +18,10 @@ type WritingPost = PortfolioContent["writing"][number];
 
 const PROVIDER_LABELS: Record<string, string> = { aws: "aws", azure: "Microsoft Azure", cisco: "CISCO", cloudflare: "Cloudflare", comptia: "CompTIA", coursera: "coursera", docker: "docker", fortinet: "FORTINET", github: "GitHub", gitlab: "GitLab", "google-cloud": "Google Cloud", hashicorp: "HashiCorp", ibm: "IBM", isc2: "ISC2", jenkins: "Jenkins", kodekloud: "KodeKloud", kubernetes: "Kubernetes", "linux-foundation": "Linux Foundation", oracle: "ORACLE", redhat: "Red Hat", terraform: "Terraform" };
 
+function toPlainAboutIndicator(value: string) {
+  return /^\d+$/.test(value.trim()) ? String(Number(value)) : value;
+}
+
 function ProviderMark({ cert }: { cert: Certification }) {
   if (cert.providerLogo) return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? cert.provider}><img src={cert.providerLogo} alt={`${cert.providerLabel ?? cert.provider} provider logo`} /></div>;
   if (cert.provider === "microsoft") return <div className="cert-provider-mark microsoft-mark" aria-label="Microsoft"><span className="microsoft-squares"><i /><i /><i /><i /></span><b>Microsoft</b></div>;
@@ -187,7 +191,7 @@ export default function Home() {
 
         <section id="about" className="ref-section ref-about" style={sectionStyle("about")}>
           <SectionTitle eyebrow={content.about.eyebrow}><Multiline value={content.about.title} /></SectionTitle>
-          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats" data-stat-reveal>{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div></div>
+          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats" data-stat-reveal>{content.about.stats.map((stat) => <div className="about-numeric-indicator" key={`${stat.value}-${stat.label}`}><i aria-hidden="true" /><span><RichText value={toPlainAboutIndicator(stat.value)} /></span><b><RichText value={stat.label} /></b></div>)}</div></div>
         </section>
 
         <section id="experience" className="ref-section ref-experience" style={sectionStyle("experience")}>

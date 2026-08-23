@@ -835,3 +835,25 @@
 - [x] Preserve immediate complete-grid visibility for reduced-motion users and motion-free `/edit` behavior.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Non-Numeric About Experience Summary Redesign
+
+- [x] Explore a non-numeric experience-summary approach; superseded after the user requested that numeric indicators be retained.
+- [x] Preserve editable About data and direct add/delete controls during the experiment; the retained direction uses the original numeric values.
+- [x] Preserve the public first-scroll reveal and reduced-motion safety during the direction change.
+- [x] Validate the experiment before the user feedback redirected this work to the numeric treatment.
+- [x] Record the user’s rejection of the non-numeric direction; no non-numeric presentation is retained.
+
+## Refined Numeric About Indicator Design
+
+- [x] Remove the rejected non-numeric summary experiment and restore the editable numeric About indicator values.
+- [x] Redesign the numeric indicator cards with stronger hierarchy and a more intentional technical visual treatment.
+- [x] Preserve explicit editor add/delete controls, public first-scroll reveal, and reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Plain-Number About Indicators
+
+- [x] Remove leading zeros from all editable About indicator defaults while preserving the refined numeric-card presentation.
+- [x] Validate public/editor rendering, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

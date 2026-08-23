@@ -56,6 +56,7 @@ describe("public contact section", () => {
 
     expect(html).toContain("about-editorial-layout");
     expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
-    expect((html.match(/<div><b>/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    expect((html.match(/about-numeric-indicator/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    expect(html).toContain(">2<");
   });
 });

@@ -163,6 +163,7 @@ describe("FullLivePreview", () => {
     expect(html).toContain("about-ref-grid");
     expect(html).toContain("hashtag-cloud about-tag-list");
     expect(html).toContain("ref-stats");
+    expect(html).toContain("about-numeric-indicator");
     expect(html).toContain("about-stat-add");
     expect(html).toContain("− Delete");
     expect(html).toContain("Add statistic");
