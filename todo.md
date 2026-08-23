@@ -1034,3 +1034,13 @@
 - [x] Preserve the existing expanded Tech stack and Delivery metadata, with no duplicate compact panel in public or `/edit` views.
 - [x] Add focused coverage and validate collapsed/expanded public-editor behavior, TypeScript, tests, production build, and responsive layout.
 - [x] Checkpoint the isolated metadata-visibility refinement and present it for review before any merge or Production release; checkpoint `25c527cd` created on 2026-08-23.
+
+## Toolbox Skill Hover and Infrastructure Coverage
+
+- [x] Add a restrained hover and keyboard-focus treatment to Toolbox skill chips that preserves readable contrast and reduced-motion safety.
+- [x] Add PostgreSQL, MySQL, Redis, and Firebase to the editable data-platform/service-operation coverage.
+- [x] Add Wireshark and 802.1X Authentication to the editable network analysis and access-control coverage.
+- [x] Add Firewalls to security/network infrastructure coverage and OVH to cloud/hosting coverage.
+- [x] Preserve text-only chips, existing role cards, direct `/edit` management controls, and public/editor parity.
+- [x] Add focused coverage and validate hover/focus behavior, TypeScript, tests, production build, and desktop/mobile public-editor layouts.
+- [x] Checkpoint the isolated Toolbox interaction and infrastructure-coverage update before any merge or Production release; checkpoint `cfadca3f` created on 2026-08-23.

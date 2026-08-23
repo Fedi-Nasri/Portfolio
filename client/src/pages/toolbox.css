@@ -127,6 +127,34 @@
 
 .toolbox-tool-chip { display: inline-flex; align-items: center; padding: 7px 9px; font-size: 10px; font-weight: 720; }
 
+.toolbox-tool-chip,
+.skills-tool-control {
+  transition: transform .16s cubic-bezier(.23, 1, .32, 1), border-color .16s ease, color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+
+@media (hover: hover) {
+  .toolbox-role-card .ref-tags > .toolbox-tool-chip:hover,
+  .toolbox-role-card .live-tags > .skills-tool-control:hover {
+    transform: translateY(-2px);
+    border-color: #8eb5e9;
+    color: #285fba;
+    background: #eef6ff;
+    box-shadow: 0 7px 14px rgba(48, 101, 173, .13);
+  }
+}
+
+.toolbox-role-card .live-tags > .skills-tool-control:focus-within {
+  outline: 2px solid #5e91df;
+  outline-offset: 2px;
+  border-color: #8eb5e9;
+  background: #eef6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbox-tool-chip,
+  .skills-tool-control { transition: none; }
+}
+
 .reference-portfolio.dim-mode .role-toolbox-section {
   background: radial-gradient(circle at 88% 11%, rgba(91, 144, 237, .16), transparent 24rem), linear-gradient(128deg, #0d1b30 0%, #102641 58%, #0b1b31 100%);
 }
@@ -138,6 +166,16 @@
 .reference-portfolio.dim-mode .toolbox-role-card h3 { color: #eff6ff; }
 .reference-portfolio.dim-mode .toolbox-role-card .ref-tags > .toolbox-tool-chip,
 .reference-portfolio.dim-mode .toolbox-role-card .live-tags > * { border-color: #315a8b; color: #c8daf4; background: rgba(28, 58, 96, .75); }
+
+@media (hover: hover) {
+  .reference-portfolio.dim-mode .toolbox-role-card .ref-tags > .toolbox-tool-chip:hover,
+  .reference-portfolio.dim-mode .toolbox-role-card .live-tags > .skills-tool-control:hover {
+    border-color: #6e9fe4;
+    color: #f0f7ff;
+    background: rgba(41, 87, 143, .9);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, .24);
+  }
+}
 
 .live-public-canvas .toolbox-field-header { max-width: none; padding: 0; }
 .live-public-canvas .toolbox-field-header .live-editable-text { min-width: 0; }

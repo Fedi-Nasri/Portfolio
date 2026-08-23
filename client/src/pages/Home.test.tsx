@@ -86,6 +86,12 @@ describe("public contact section", () => {
     expect(html).toContain("HashiCorp Vault");
     expect(html).toContain("OpenTelemetry");
     expect(html).toContain("Argo CD");
+    expect(html).toContain("OVHcloud");
+    expect(html).toContain("Wireshark");
+    expect(html).toContain("802.1X Authentication");
+    expect(html).toContain("Firewalls");
+    expect(html).toContain("MySQL");
+    expect(html).toContain("Firebase");
     expect(html).toContain("toolbox-role-icon");
     expect(html).not.toContain("tool-brand-mark");
     expect(html).not.toContain("tool-brand-fallback");

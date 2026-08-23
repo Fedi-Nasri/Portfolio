@@ -43,11 +43,11 @@ export type PortfolioSectionId = (typeof PORTFOLIO_SECTION_IDS)[number];
 export const DEFAULT_SECTION_ORDER: PortfolioSectionId[] = ["home", "about", "experience", "skills", "certifications", "capabilities", "projects", "writing", "contact"];
 
 const ROLE_FOCUSED_TOOLBOX = [
-  { role: "Cloud Engineering", heading: "Cloud infrastructure", entries: ["AWS", "Microsoft Azure", "Cloud VMs", "IAM", "VPC Networking", "Terraform", "Ansible", "Helm"] },
+  { role: "Cloud Engineering", heading: "Cloud infrastructure", entries: ["AWS", "Microsoft Azure", "OVHcloud", "Cloud VMs", "IAM", "VPC Networking", "Terraform", "Ansible", "Helm"] },
   { role: "DevOps Engineering", heading: "Delivery & orchestration", entries: ["Linux", "Bash Scripting", "Git", "GitHub Actions", "CI/CD Pipelines", "Jenkins", "Docker", "Docker Compose", "Kubernetes", "Helm", "Argo CD"] },
   { role: "DevSecOps", heading: "Secure delivery", entries: ["HTTPS/TLS", "PKI", "Secrets Management", "HashiCorp Vault", "Trivy", "SonarQube", "Snyk", "OWASP ZAP", "Dependabot", "Dependency Checks", "SBOMs"] },
-  { role: "Network Operations", heading: "Network foundations", entries: ["TCP/IP", "DNS", "Nginx", "VLANs", "NAT", "VPN", "Tailscale"] },
-  { role: "Site Reliability", heading: "Observability & resilience", entries: ["Grafana", "Prometheus", "Loki", "Alertmanager", "OpenTelemetry", "PostgreSQL", "Redis", "RabbitMQ", "Health Checks", "Metrics", "Logging", "Alerting", "Incident Runbooks"] },
+  { role: "Network Operations", heading: "Network foundations", entries: ["TCP/IP", "DNS", "Nginx", "Wireshark", "802.1X Authentication", "Firewalls", "VLANs", "NAT", "VPN", "Tailscale"] },
+  { role: "Site Reliability", heading: "Observability & resilience", entries: ["Grafana", "Prometheus", "Loki", "Alertmanager", "OpenTelemetry", "PostgreSQL", "MySQL", "Redis", "Firebase", "RabbitMQ", "Health Checks", "Metrics", "Logging", "Alerting", "Incident Runbooks"] },
 ] satisfies PortfolioContent["skills"];
 
 const LEGACY_TOOLBOX_HEADINGS = ["Systems & OS", "Containers & CI/CD", "Networking", "Cloud & Data", "Programming", "Frameworks & AI"];
