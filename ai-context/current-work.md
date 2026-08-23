@@ -3,15 +3,15 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-23 (GMT+2)
-**Latest saved project checkpoint:** `d6caf36e` — the user-directed rollback returned the Experience background to the previously reviewed lighter timeline treatment. The feature branch remains isolated until the current documentation checkpoint and approved `main` integration are complete.
-**Current immediate task:** Create and validate CSS/design navigation guides in `docs/design-code-navigation.md` and `ai-context/design-navigation-and-css-scan.md`, then merge the user-approved prototype into GitHub `main`. The historical-media migration remains paused; its legacy references stay untouched in private Draft 2 until the user explicitly resumes it.
+**Latest saved project checkpoint:** `4d8c5b9d` — validated the design-navigation documentation, checklist, and AI continuity updates. The retained application code remains the lighter Experience timeline treatment from `d6caf36e`.
+**Current immediate task:** The user-approved feature and documentation merge is now complete on GitHub `main` at merge commit `ce7df13`. The historical-media migration remains paused; its legacy references stay untouched in private Draft 2 until the user explicitly resumes it. Any release to `deployment_versel` still requires a new, immediate, explicit user approval.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
 **Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
 
-**Latest stable-branch synchronization:** GitHub `main` now includes the local-only Compose workflow, complete operations documentation, and corrected Production-release wording through commit `1c94473` (`docs: clarify production release handoff`). This does not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
+**Latest stable-branch synchronization:** GitHub `main` now includes the approved public-motion prototype, lighter Experience technical theme, full Home/About/Selected Work refinement set, and the new design-navigation documentation through merge commit `ce7df13` (`merge: integrate approved public motion prototype`). The documentation commit on the feature branch is `c369166`. This did not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
 
-**Motion and Home-composition prototype branch:** `feature/public-motion-prototype` contains the public-only motion language, the floating-specialty Home composition, editorial About layout, refined technology indicator, adaptive Selected Work behavior, and the lighter Experience timeline treatment. All work has passed TypeScript, 84 Vitest tests, and a production build. On 2026-08-23 the user approved integrating this reviewed work into `main`, along with the new developer and AI navigation documentation. This approval does **not** authorize a `deployment_versel` push or Vercel Production release; a separate immediate confirmation remains mandatory.
+**Motion and Home-composition prototype branch:** `feature/public-motion-prototype` contains the public-only motion language, the floating-specialty Home composition, editorial About layout, refined technology indicator, adaptive Selected Work behavior, and the lighter Experience timeline treatment. All work passed TypeScript, 84 Vitest tests, and a production build before the merge. On 2026-08-23 the user approved and the project merged this work, along with the new developer and AI navigation documentation, into `main` at `ce7df13`. This approval did **not** authorize a `deployment_versel` push or Vercel Production release; a separate immediate confirmation remains mandatory.
 
 **Operations documentation:** `docs/release-and-media-operations.md` now provides the exact approved `main` → `deployment_versel` release sequence, first-run Compose instructions, a complete safe environment reference at `docs/environment.example`, and the local-to-Vercel lifecycle for images, PDFs, and SVGs. Docker is intentionally not installed in this managed sandbox, so the Compose file was statically formatted/validated; developers must run the documented `docker compose` commands on a Docker-enabled machine.
 
@@ -21,7 +21,7 @@
 
 | Priority | Status | Work item | Next safe action |
 |---:|---|---|---|
-| 1 | Complete | Documented stable `main` development and Vercel-connected `deployment_versel` workflow. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
+| 1 | Complete | Merged the validated public-motion/design prototype and design-navigation documentation into stable `main` at `ce7df13`. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
 | 2 | Paused by user | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Project 1 is verified in private Draft 2 version 4. Do not modify Draft 2 or Main until the user explicitly asks to resume. |
 | 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not push unreviewed work to `deployment_versel`; it now creates Production Deployments, and `/edit` is intentionally unauthenticated. |
 | 4 | Complete | Provide an optional local Docker Compose environment. | Compose uses isolated local PostgreSQL from `main`; it contains no Vercel, Neon, Blob, or Production credentials, and does not replace Vercel Production. |
@@ -46,8 +46,8 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 
 | Command / check | Last known result | Notes |
 |---|---|---|
-| `pnpm check` | Passed | TypeScript compiled with no errors after Vercel API packaging and the local PostgreSQL fallback repair. |
-| `pnpm test` | Passed: 13 files, 78 tests | Includes PostgreSQL persistence, Blob validation, API bridge, media upload preparation, and development-only pg-mem fallback coverage. |
+| `pnpm check` | Passed | TypeScript compiled with no errors before the main merge. |
+| `pnpm test` | Passed: 15 files, 84 tests | Includes PostgreSQL persistence, Blob validation, API bridge, media upload preparation, public motion, text formatting, and development-only pg-mem fallback coverage. |
 | `pnpm build` | Passed | Vite output and server bundle built successfully; bundle-size warning is informational. |
 | Preview API and editor | Passed | `GET /api/trpc/auth.me` returned a tRPC JSON response; `/edit` loaded the full direct workspace. |
 

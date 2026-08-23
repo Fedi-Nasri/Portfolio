@@ -919,5 +919,5 @@
 - [x] Document how developers can efficiently scan the project’s pages, components, CSS cascade, Tailwind configuration, design tokens, public/editor parity, and tests.
 - [x] Add an AI-context guide for agent onboarding, design-change routing, safe CSS inspection, component ownership, validation, documentation maintenance, and branch boundaries.
 - [x] Validate documentation paths, internal links, and the reviewed isolated prototype before integrating it into `main`.
-- [ ] Merge the approved `feature/public-motion-prototype` branch into GitHub `main` without touching `deployment_versel` or Vercel Production.
+- [x] Merge the approved `feature/public-motion-prototype` branch into GitHub `main` without touching `deployment_versel` or Vercel Production; verified merge commit `ce7df13` on 2026-08-23.
 - [ ] Request a separate explicit immediate approval before any later `deployment_versel` push that would trigger Production.
