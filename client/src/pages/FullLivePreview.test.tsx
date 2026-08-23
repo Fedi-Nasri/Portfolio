@@ -30,7 +30,7 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Cloud infrastructure");
     expect(html).toContain("Add toolbox");
     expect(html).toContain("toolbox-role-icon");
-    expect(html).toContain("tool-brand-mark");
+    expect(html).not.toContain("tool-brand-mark");
   });
 
   it("renders section ordering controls and an editable custom-section template", () => {

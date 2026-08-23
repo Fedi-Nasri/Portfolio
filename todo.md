@@ -965,3 +965,11 @@
 - [x] Preserve direct Toolbox editing, add/delete controls, public/editor parity, responsive spacing, and reduced-motion safety.
 - [x] Validate desktop/mobile public and editor layouts, icon accessibility, TypeScript, tests, and production build on the isolated branch.
 - [x] Checkpoint the iconography update and present it for review before any merge or Production release; checkpoint `5982c806` created on 2026-08-23.
+
+## Toolbox Tool-Brand Mark Removal
+
+- [x] Remove all individual tool-brand marks and neutral tool-mark fallbacks from public and `/edit` Toolbox chips.
+- [x] Retain the role-representative Toolbox card icons, visible tool names, direct editing, and add/delete controls.
+- [x] Remove the no-longer-needed brand-icon dependency and related rendering/tests without affecting role icon rendering.
+- [x] Validate text-only tool chips, public/editor parity, TypeScript, tests, production build, and responsive layouts on the isolated branch.
+- [x] Checkpoint the corrected isolated feature and present it for review before any merge or Production release; checkpoint `69ae97cc` created on 2026-08-23.

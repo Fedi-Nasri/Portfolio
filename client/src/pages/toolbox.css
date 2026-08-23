@@ -125,11 +125,7 @@
   box-shadow: none;
 }
 
-.toolbox-tool-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; font-size: 10px; font-weight: 720; }
-.tool-brand-mark,
-.tool-brand-fallback { display: inline-grid; flex: 0 0 auto; place-items: center; width: 13px; height: 13px; color: var(--tool-brand, #6a86a6); }
-.tool-brand-mark svg { display: block; width: 12px; height: 12px; fill: currentColor; }
-.tool-brand-fallback { color: #7b96b6; }
+.toolbox-tool-chip { display: inline-flex; align-items: center; padding: 7px 9px; font-size: 10px; font-weight: 720; }
 
 .reference-portfolio.dim-mode .role-toolbox-section {
   background: radial-gradient(circle at 88% 11%, rgba(91, 144, 237, .16), transparent 24rem), linear-gradient(128deg, #0d1b30 0%, #102641 58%, #0b1b31 100%);
@@ -150,7 +146,7 @@
 .live-public-canvas .toolbox-role-card { min-height: 0; }
 .live-public-canvas .toolbox-role-card .live-editable-text { display: inline; }
 .live-public-canvas .toolbox-role-card .skills-tool-list { display: flex; flex-wrap: wrap; gap: 7px; }
-.live-public-canvas .toolbox-role-card .skills-tool-control { display: inline-flex; align-items: center; gap: 6px; }
+.live-public-canvas .toolbox-role-card .skills-tool-control { display: inline-flex; align-items: center; }
 .live-public-canvas .toolbox-role-card .skills-tool-control .live-editable-text { padding: 7px 9px; color: inherit; font-size: 10px; font-weight: 720; }
 
 @media (max-width: 900px) {
