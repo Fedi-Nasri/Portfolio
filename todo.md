@@ -874,3 +874,10 @@
 - [x] Inspect the user-added test project link and repair public GitHub/live-project actions so valid links render reliably.
 - [x] Validate public/editor layouts, conditional links, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## No-Media Project Metadata Typography Refinement
+
+- [x] Increase and unify the font scale of no-media project Tech stack and Delivery labels and tag items.
+- [x] Preserve the metadata column’s desktop hierarchy and its mobile stacked fallback.
+- [x] Validate public/editor typography, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
