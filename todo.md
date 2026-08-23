@@ -801,3 +801,11 @@
 - [x] Add a subtle non-image background motif for Cloud, DevOps, DevSecOps, and Security & Networking that fits the pale-blue technical design system.
 - [x] Validate public/editor desktop and mobile balance, animation restraint, reduced-motion behavior, TypeScript, tests, and production build.
 - [ ] Present the refined isolated motion-and-theme prototype for review before any merge to `main` or separately approved Production release.
+
+## Portrait-and-Label Backdrop and Motion Clarity Refinement
+
+- [x] Refine the technical background specifically beneath and around the portrait and floating specialty labels rather than only the broad hero canvas.
+- [x] Increase the specialty-label visual size while retaining balanced desktop and mobile placement.
+- [x] Make the DevOps, DevSecOps, and Security & Networking labels stay crisp and clearly readable during their subtle motion.
+- [x] Validate public/editor desktop and mobile balance, reduced-motion behavior, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
