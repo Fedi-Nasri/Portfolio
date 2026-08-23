@@ -809,3 +809,11 @@
 - [x] Make the DevOps, DevSecOps, and Security & Networking labels stay crisp and clearly readable during their subtle motion.
 - [x] Validate public/editor desktop and mobile balance, reduced-motion behavior, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Editorial About Section Organization
+
+- [x] Reorganize the public About section into a large title above a left copy column and right 2×2 statistics grid, following the supplied layout reference.
+- [x] Place the existing editable topic tags beneath the primary About copy while retaining all current add/delete controls in `/edit`.
+- [x] Mirror the reorganized public layout in the `/edit` live preview without changing saved About data.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

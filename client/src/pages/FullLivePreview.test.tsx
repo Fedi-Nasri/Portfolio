@@ -159,6 +159,7 @@ describe("FullLivePreview", () => {
   it("uses the public About composition while preserving its active management controls", () => {
     const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onRemoveAboutTag={() => {}} onRemoveAboutStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
     expect(html).toContain("ref-section ref-about live-reference-about");
+    expect(html).toContain("about-editorial-layout");
     expect(html).toContain("about-ref-grid");
     expect(html).toContain("hashtag-cloud about-tag-list");
     expect(html).toContain("ref-stats");

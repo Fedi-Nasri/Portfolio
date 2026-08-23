@@ -164,8 +164,7 @@ export default function Home() {
 
         <section id="about" className="ref-section ref-about" style={sectionStyle("about")}>
           <SectionTitle eyebrow={content.about.eyebrow}><Multiline value={content.about.title} /></SectionTitle>
-          <div className="about-ref-grid"><div><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p></div><div><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div>
-          <div className="ref-stats">{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div>
+          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats">{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div></div>
         </section>
 
         <section id="experience" className="ref-section ref-experience" style={sectionStyle("experience")}>
