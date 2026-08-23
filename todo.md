@@ -890,3 +890,11 @@
 - [x] Preserve public/editor parity, responsive layout, direct About controls, and existing reduced-motion behavior.
 - [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Selected Work Background and Theme Redesign
+
+- [x] Redesign the Selected Work section background with a cohesive pale-blue technical theme that separates it from adjacent sections.
+- [x] Refine project-card surfaces, borders, color hierarchy, and decorative details while preserving readable case-study content.
+- [x] Maintain adaptive no-media layouts, image-backed alternating layouts, optional project actions, and public/editor parity.
+- [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
