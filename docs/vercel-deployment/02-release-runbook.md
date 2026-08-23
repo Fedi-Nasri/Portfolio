@@ -1,61 +1,52 @@
-# Detailed Release Runbook: `main` to `deployment_versel`
+# Detailed Release Runbook: `master` to Vercel Production
 
-Use this runbook after a feature is complete on `main`. It is deliberately written as a controlled handoff rather than an automatic merge-to-Production procedure.
+Use this runbook after a feature is complete on the current `master` baseline. `master` is Vercel’s Production Branch, so the final remote push is a deliberate live-release action, not an automatic step.
 
 ## Preconditions
 
-| Requirement | Confirm before branch handoff |
+| Requirement | Confirm before Production push |
 |---|---|
-| Source is on `main` | The change is reviewed and represents the stable development baseline. |
-| Checklist is current | New work is added to `todo.md`; completed items are marked accurately. |
-| Documentation is current | `docs/` and `ai-context/` explain changed contracts, risks, or deployment effects. |
+| Source is based on `master` | Local source is current with `origin/master`; any feature branch was created from and reconciled into `master`. |
+| Checklist is current | New work is in `todo.md`; completed and deliberately paused items are accurate. |
+| Documentation is current | `docs/` and `ai-context/` describe changed contracts, risks, and deployment effects. |
 | Local validation passes | `pnpm check`, `pnpm test`, and `pnpm build` pass. |
-| API artifact is current | Run `pnpm build:vercel-api` if anything under `server/`, `server/routers.ts`, API routing, or related server dependencies changed. |
-| Database migration is ready | Drizzle schema and reviewed additive migration agree before changing a real PostgreSQL host. |
+| API artifact is current | Run `pnpm build:vercel-api` when server/API code, dependencies, or routing changed. |
+| Database migration is ready | Drizzle schema and a reviewed additive migration agree before a real PostgreSQL host is changed. |
+| User approval is recorded | The user has approved this specific `master` Production push. |
 
-## Standard handoff sequence
+## Standard release sequence
 
-1. **Create a checkpoint on `main`.** This makes the stable development state recoverable.
-2. **Review the exact commit range.** Compare `main` with `deployment_versel`; move only the intended tested commits.
-3. **Obtain explicit Production approval.** Vercel now treats `deployment_versel` as the Production Branch; moving code there is a Production-affecting action.
-4. **Update `deployment_versel`.** Use the approved repository workflow. Do not rewrite remote history or force-push.
-5. **Wait for the Vercel Production build.** Check the deployment record, build output, and Production URL.
-6. **Run release verification.** Test the routes and data behavior affected by the change.
-7. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md`; include known limitations rather than calling untested work complete.
+1. **Synchronize master.** Run `git switch master` and `git pull --ff-only origin master` before final validation.
+2. **Review the exact change set.** Use `git status --short`, `git log --oneline origin/master..HEAD`, and `git diff --stat origin/master...HEAD`.
+3. **Validate.** Run the required local checks; test private draft behavior when persistence or uploads change.
+4. **Create a checkpoint.** Record the validated candidate and confirm the checklist is accurate.
+5. **Obtain explicit Production approval.** A push to `master` creates a Production deployment.
+6. **Push normally.** Run `git push origin master`; never force-push or rewrite branch history.
+7. **Wait for Ready.** Review the Vercel Production deployment, build output, active commit, and Production URL.
+8. **Smoke-test affected routes.** At minimum, test `/`, `/edit`, and `/api/trpc/auth.me` when server/API behavior is in scope.
+9. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md` with commit, URL, checks, and known limitations.
 
-For the exact safe Git commands, including the mandatory branch comparison and release merge after approval, use [Release and Media Operations](../release-and-media-operations.md#1-exact-release-procedure-main-to-deployment_versel). That guide also covers first-time local Compose setup and the separate content/media path.
+`deployment_versel` is not part of ordinary releases. Preserve it as a historical rollback reference unless the user directs a separate rollback or archival operation.
 
-## Feature-specific handoff matrix
+## Feature-specific validation matrix
 
-| Change type | Required code work | Required validation before `deployment_versel` | Preview smoke test |
-|---|---|---|---|
-| Text or visual change | Public and editor preview parity; tests if behavior changes | `pnpm check`, relevant Vitest, `pnpm build` | `/` and `/edit` render as intended at desktop and mobile widths. |
-| New editor field | Shared `PortfolioContent`, editor controls, public renderer, export, persistence, tests | TypeScript, Vitest, export behavior | Save private draft, reload, verify public preview parity. |
-| New API/server behavior | Router/service changes plus `pnpm build:vercel-api` | All standard checks plus API-bridge test | `/api/trpc` returns JSON; affected procedure works on Preview. |
-| New PostgreSQL table/column | Schema, generated migration, migration review, query/service, test | Schema review, DB migration verification, tests | Test with a private draft; never perform destructive production data tests. |
-| New image/PDF capability | Blob handler, metadata path, editor UI, test | Asset validation tests, build, API artifact | Upload a safe test file privately; verify URL and render/download behavior. |
-| Route or build configuration | `vercel.json`, function artifact, regression test | `pnpm build:vercel-api`, all checks | Reload `/edit`; call `/api/trpc/auth.me`; inspect Vercel logs. |
-
-## Vercel-specific checks
-
-| Check | Project-specific expectation |
-|---|---|
-| Build command | `pnpm exec vite build` produces `dist/public`. |
-| API bundle | `api/[...path].js` was regenerated from `server/vercel-api-handler.ts` when server behavior changed. |
-| API route precedence | `/api/*` resolves before the SPA catch-all in `vercel.json`. |
-| PostgreSQL | Preview has a valid server-only `DATABASE_URL`; never copy its value to source or chat. |
-| Blob | `BLOB_READ_WRITE_TOKEN` is server-only; new Blob bytes correspond to PostgreSQL metadata records. |
-| Editor risk | `/edit` is intentionally unauthenticated. Do not promote broadly without accepting or mitigating that risk. |
+| Change type | Required validation before master push | Production smoke test |
+|---|---|---|
+| Text or visual change | `pnpm check`, relevant Vitest, `pnpm build` | `/` and `/edit` at desktop and mobile widths. |
+| New editor field | Shared type, editor, public renderer, export, persistence, tests | Save/reload a private draft and review public/editor parity. |
+| New API/server behavior | `pnpm build:vercel-api`, full checks, API-bridge test | `/api/trpc/auth.me` returns JSON and the affected procedure works. |
+| New PostgreSQL table/column | Schema, reviewed migration, query/service, tests | Test with a private draft; do not run destructive Production data experiments. |
+| New image/PDF behavior | Blob handler, metadata path, editor UI, tests | Upload a safe private test asset and verify URL plus presentation. |
+| Route or build configuration | `vercel.json`, API artifact, regression coverage | Reload `/edit`, test tRPC JSON, inspect Vercel logs. |
 
 ## Safe recovery choices
 
 | Situation | Safe response |
 |---|---|
-| Preview build fails | Read build logs, fix the branch, validate locally, then submit another candidate. |
-| API returns the SPA or 500 | Check `vercel.json`, regenerate the API bundle, inspect runtime logs, and verify `api/package.json` keeps the bundle CommonJS. |
-| Draft data is incorrect | Use immutable draft history and restore as a new version; do not overwrite or delete Main blindly. |
-| Migration is wrong | Stop rollout, do not improvise destructive SQL, inspect dependencies, and use provider recovery options if needed. |
-| Blob upload is wrong | Preserve the object key/URL evidence, inspect the metadata record and server logs, then test a new private draft. |
+| Production build fails | Fix the master source locally, revalidate, checkpoint, request new approval, and push a new normal commit. |
+| API returns SPA HTML or 500 | Check `vercel.json`, regenerate the API bundle, inspect runtime logs, and verify `api/package.json` keeps the bundle CommonJS. |
+| Draft data is incorrect | Use immutable draft history and restore as a new version; never overwrite or delete Main blindly. |
+| Rollback is needed | Pause new pushes and use Vercel deployment history or the preserved `deployment_versel` release only with fresh explicit user direction. |
 
 ## References
 

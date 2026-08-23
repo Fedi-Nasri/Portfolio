@@ -1,95 +1,60 @@
-# Stable Development Workflow: `main` to `deployment_versel`
+# Master-First Development and Release Workflow
 
-This guide is the day-to-day development contract for the portfolio. It separates building a feature from Production release work, so unfinished work does not become the deployed baseline.
+This guide is the day-to-day operating contract for the portfolio. It defines one active branch—`master`—that contains the complete local-development and Vercel-ready application runtime.
 
-> **Working policy:** `main` is the **stable development branch**. Build portfolio features there. `deployment_versel` is the Vercel-connected **Production Branch**, set by explicit user approval on 2026-08-22. A push to it creates a Production Deployment, so move a reviewed, validated release only after explicit release approval.
+> **Working policy, approved 2026-08-24:** `master` is the active development and Vercel **Production Branch**. Vercel deploys each approved push to `master` as Production. `deployment_versel` is retained unchanged as the historical Production release and rollback reference; it is not an active release target.
 
 ## Branch responsibilities
 
-| Branch | Purpose | Allowed work | Do not do |
+| Branch or environment | Purpose | Allowed work | Do not do |
 |---|---|---|---|
-| `main` | Stable development source of truth | Build features, fix bugs, update contracts, tests, documentation, and AI context. | Treat it as a request to publish a Production deployment. |
-| `deployment_versel` | Vercel Production Branch | Carry an explicitly approved, checkpointed production release and the necessary Vercel packaging/configuration. | Make experimental changes, force-push, or move code without release approval. |
+| `master` | Canonical source, local-development baseline, and Vercel Production Branch | Build, test, document, checkpoint, and—after explicit approval—push reviewed releases. | Push unreviewed or failing work; force-push; treat a local commit as automatically published. |
+| Short-lived `feature/*` branch (optional) | Isolated review space created **from current `master`** | Prototype or review a discrete feature, then validate it against the current master baseline. | Base it on stale `main` or `deployment_versel`; use it as a second source of truth. |
+| `deployment_versel` | Historical release and rollback reference (`e448599`) | Preserve its evidence; use it only when the user explicitly requests a rollback strategy. | Delete, force-push, or continue ordinary feature/release work there. |
+| Vercel Production | Live user-facing portfolio | Serves the latest Ready deployment created from approved `master` work. | Change branch tracking, domains, variables, or public draft selection without explicit user approval. |
 
-## One working branch, one release branch
+## One active branch rule
 
-This is **one project**, not two independent projects. Make each ordinary feature change once on `main`; do not copy or recreate the same change directly on `deployment_versel`. Treat `deployment_versel` as read-only between approved releases.
+This is one project, not two copies to synchronize. Start every future task from `master`; create a short-lived feature branch from `master` only when isolated review is useful. The tested, reviewed result must return to `master` before it can be released.
 
-When a feature is ready, compare the reviewed `main` commit with `deployment_versel`, create a deliberate release candidate from the intended `main` changes, and request explicit approval immediately before the push. The release must move in one direction only:
+Because Vercel tracks `master` as Production, **pushing to `master` is a live release action**. Complete local validation and obtain explicit user approval immediately before the push. A local commit, a saved Manus checkpoint, or a Preview deployment is not itself a Production release.
 
 ```text
-main (develop, test, document, checkpoint) → deployment_versel (approved release only) → Vercel Production
+master (local development, validation, documentation) → explicit approval → push master → Vercel Production
+                         ↑
+                  optional feature/* from master
 ```
 
-The currently deployed branch can contain historical Vercel-specific implementation differences. Do not try to manually keep two working copies synchronized. Resolve that divergence only through a reviewed, explicitly approved release handoff; afterward, bring durable documentation and appropriate source changes back to `main` so it remains the development source of truth.
+## Every new feature: required sequence
 
-For a local PostgreSQL development environment, use [Local Docker Compose development](./local-docker-development.md). Compose is local-only and does not alter the release path above.
-
-For the exact commands to compare branches, create an approved release merge, verify Production, manage environment variables, and handle images/PDFs/SVGs, read [Release and Media Operations](./release-and-media-operations.md).
-
-## Every new feature: the required sequence
-
-1. **Understand the request.** Read `ai-context/README.md`, `current-work.md`, and the specialist record for the affected area. Add a specific unchecked task to `todo.md`.
-2. **Map the impact.** Decide whether the change affects public rendering, `/edit`, shared content types, database schema, tRPC routes, Blob storage, static export, or Vercel packaging.
-3. **Implement on `main`.** Keep the public portfolio and `FullLivePreview.tsx` aligned when a section is editable.
-4. **Test locally.** Run the checks required by the impact matrix below. Fix failures before handoff.
-5. **Maintain documentation.** Update relevant `docs/` and `ai-context/` files in the same work item; record decisions and risks rather than leaving hidden assumptions.
-6. **Checkpoint the stable work.** Ensure `todo.md` is accurate before creating a checkpoint.
-7. **Obtain release approval.** Because `deployment_versel` is Vercel’s Production Branch, get explicit user approval before moving code there.
-8. **Create the production release.** Deliberately move only the approved checkpointed changes to `deployment_versel`.
-9. **Verify Vercel Production.** Inspect the generated Production deployment; test routes, server behavior, PostgreSQL changes, and uploads relevant to the feature.
-10. **Record evidence.** Update `ai-context/current-work.md`, `issues.md`, and `change-log.md` with the Production release evidence.
+1. **Start from master.** Run `git switch master` and `git pull --ff-only origin master`; do not begin on `main` or `deployment_versel`.
+2. **Understand the request.** Read `ai-context/README.md`, `current-work.md`, and the relevant specialist files. Add concrete unchecked work to `todo.md` before implementation.
+3. **Map the impact.** Identify public rendering, `/edit`, shared content, database, tRPC/API, Blob storage, static export, Docker, and Vercel implications.
+4. **Implement and document.** Keep `Home.tsx` and `FullLivePreview.tsx` aligned for editable public sections; update `docs/` and `ai-context/` with durable behavior and risks.
+5. **Validate locally.** Run `pnpm check`, `pnpm test`, and `pnpm build`; run `pnpm build:vercel-api` whenever server/API routing or server dependencies change.
+6. **Checkpoint reviewed work.** Confirm `todo.md` accurately distinguishes completed, active, and deliberately paused work.
+7. **Request release approval.** Explicit approval is required immediately before pushing to `master`, because that creates a Production deployment.
+8. **Push master safely.** Use a normal fast-forward-safe push. Never use `--force`, `git reset --hard`, or unrelated-history merges.
+9. **Verify Production.** Inspect Vercel’s Ready deployment and test `/`, `/edit`, and `/api/trpc/auth.me` when API behavior is relevant. Use a disposable private draft for persistence or upload tests.
+10. **Record evidence.** Update `ai-context/current-work.md`, `change-log.md`, and `issues.md` with the deployment URL, commit, relevant route checks, and known limits.
 
 ## Change-impact matrix
 
-| If you change… | Also examine… | Minimum local validation | Production-release validation |
+| If you change… | Also examine… | Minimum validation | Production verification |
 |---|---|---|---|
-| Public copy, layout, or styles | `Home.tsx`, `FullLivePreview.tsx`, responsive behavior | `pnpm check`, relevant tests, `pnpm build` | Verify `/` and `/edit` visual parity. |
-| Portfolio data field | `shared/portfolio.ts`, default data, editor, renderer, export, persistence | TypeScript, test coverage, export test | Save/reload a private draft and review output. |
-| New route or API procedure | `server/routers.ts`, API context, client query/mutation, errors | `pnpm check`, procedure/API test, `pnpm build:vercel-api` | Call the route and inspect Vercel logs. |
-| Server implementation | `server/`, `server/vercel-api-handler.ts`, generated API artifact | `pnpm build:vercel-api`, `pnpm check`, `pnpm test`, `pnpm build` | Confirm `/api/trpc/auth.me` returns JSON and the affected procedure works. |
-| Database schema | `drizzle/schema.ts`, generated migration, query helpers, tests, docs | Migration review, PostgreSQL tests, full checks | Validate only with a disposable Preview draft; no destructive data experiments. |
-| Image or PDF feature | `server/assets.ts`, editor upload controls, Blob metadata, export | Asset tests, full checks | Upload a safe file privately, save/reload, verify Blob URL and display/viewer. |
-| Vercel routing/build behavior | `vercel.json`, `api/package.json`, `api/[...path].js` | API artifact build plus full checks | Reload `/edit`, test API JSON, review build/runtime logs. |
+| Public copy, layout, or styles | `Home.tsx`, `FullLivePreview.tsx`, responsive behavior | `pnpm check`, relevant tests, `pnpm build` | Check `/` and `/edit` visual parity. |
+| Portfolio data field | `shared/portfolio.ts`, default data, editor, renderer, export, persistence | TypeScript and focused regression coverage | Save/reload a private draft. |
+| New route or API procedure | `server/routers.ts`, API context, client query/mutation, errors | `pnpm build:vercel-api`, TypeScript, procedure/API test, build | Verify tRPC JSON and affected flow. |
+| Database schema | `drizzle/schema.ts`, generated migration, query helpers, tests, docs | Migration review and PostgreSQL tests | Use only a disposable draft; never destructive Production experiments. |
+| Image or PDF feature | `server/assets.ts`, editor upload controls, Blob metadata, export | Asset tests and full checks | Upload a safe file privately; verify Blob URL, metadata, and rendering. |
+| Vercel routing/build behavior | `vercel.json`, `api/package.json`, `api/[...path].js` | API artifact build plus full checks | Reload `/edit`, test API JSON, inspect Vercel build/runtime logs. |
 
-## Adding a database table or column
+## Local Docker Compose
 
-1. Define it in `drizzle/schema.ts` using provider-neutral PostgreSQL types.
-2. Generate migration SQL with `pnpm drizzle-kit generate`.
-3. Read the SQL carefully; ensure it is additive, ordered safely, and has required indexes/foreign keys.
-4. Apply the reviewed migration to the intended PostgreSQL host through the approved database workflow.
-5. Add services, tRPC input/output validation, and Vitest coverage.
-6. Update `ai-context/database-and-data.md`, architecture records, and any editor/export behavior.
-7. Test with a disposable draft on Preview. Never use the selected public Main draft as the first migration test.
+Use [Local Docker Compose development](./local-docker-development.md) for an isolated local PostgreSQL environment. Compose is local-only, runs the source currently checked out from `master`, and never contains Vercel, Neon, Blob, or Production credentials.
 
-## Adding a file, folder, or Blob asset
+## Non-negotiable safeguards
 
-| What you need | Correct location/action |
-|---|---|
-| React page | `client/src/pages/`, then register its route in `client/src/App.tsx`. |
-| Reusable UI piece | `client/src/components/`; do not duplicate a public/editor shared pattern. |
-| Shared data type/default field | `shared/portfolio.ts`. |
-| Database definition/migration | `drizzle/schema.ts` and generated SQL under `drizzle/postgres/`. |
-| Server/service logic | `server/`, with a Vitest test beside the behavior. |
-| Small public configuration | `client/public/` only when it is a small configuration file. |
-| Source image/PDF | `/home/ubuntu/webdev-static-assets/`, outside the project repository. |
-| Visitor-facing media bytes | Vercel Blob through the server upload workflow; store metadata in `portfolio_media_assets`. |
-| Documentation | `docs/` for durable manuals; `ai-context/` for current state and agent continuation. |
+The following still require direct user instruction: publishing a new `master` commit, changing Vercel branch tracking, changing Production variables or domains, destructive database work, deleting Blob objects, or changing the selected public portfolio draft. Preserve `deployment_versel` until the user explicitly requests a different rollback/archival decision.
 
-## Handoff checklist before `deployment_versel`
-
-- [ ] The desired `main` commit is checkpointed and reviewed.
-- [ ] `todo.md` is accurate; no incomplete work is falsely marked complete.
-- [ ] `pnpm build:vercel-api` ran if server/API code changed.
-- [ ] `pnpm check`, `pnpm test`, and `pnpm build` pass.
-- [ ] Schema changes have reviewed migrations and no secret values were committed.
-- [ ] Documentation and AI context reflect the new behavior and risks.
-- [ ] The exact change set is reviewed before moving it to `deployment_versel`.
-- [ ] Explicit user approval for the Production release is recorded.
-- [ ] Production verification plan is written, including safe disposable data if persistence is affected.
-
-## What must never be automatic
-
-The following actions require an explicit user instruction: pushing a new release to `deployment_versel`, changing the Vercel Production branch, purchasing or assigning a domain, changing Production environment variables, running destructive database operations, deleting Blob objects, or selecting/publishing a different public portfolio draft.
-
-For Vercel-specific release work, continue with the [Vercel Deployment Handbook](./vercel-deployment/README.md).
+For concrete commands, environment handling, and the image/PDF/SVG lifecycle, read [Release and Media Operations](./release-and-media-operations.md) and the [Vercel Deployment Handbook](./vercel-deployment/README.md).
