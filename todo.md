@@ -1096,3 +1096,12 @@
 - [x] Preserve migration-safe hydration so this update applies only to the exact untouched prior lifecycle capability copy.
 - [x] Validate the new title in public and `/edit` renderers with TypeScript, focused tests, and production build.
 - [x] Checkpoint the isolated approved-headline update and present it before any merge or Production release; checkpoint `24ff590b` created on 2026-08-23.
+
+## Requested Production Release of Reviewed Isolated Features
+
+- [x] Inspect the current `deployment_versel` Production baseline and isolated feature-branch ancestry without changing either branch.
+- [x] Build a reconciliation release candidate from `origin/deployment_versel`, applying only the reviewed Toolbox, Selected Work, and Cloud & Infrastructure feature files.
+- [x] Audit the candidate to confirm Vercel routing, API bridge, server runtime, migrations, package configuration, environment handling, and `vercel.json` are preserved.
+- [x] Run TypeScript, Vitest, production build, and public/editor responsive release checks against the candidate.
+- [x] Present the audited candidate and obtain fresh final confirmation before pushing the protected `deployment_versel` branch.
+- [x] After final confirmation only, apply the release, confirm the Vercel Production deployment is serving, and smoke-test public `/`, direct `/edit`, and `/api/trpc/auth.me`.
