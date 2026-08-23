@@ -82,7 +82,7 @@ describe("Experience quick additions", () => {
     oneToolbox.skills = [oneToolbox.skills[0]!];
 
     expect(withToolbox.skills).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.skills.length + 1);
-    expect(withToolbox.skills.at(-1)).toEqual({ heading: "New toolbox", entries: ["New tool"] });
+    expect(withToolbox.skills.at(-1)).toEqual({ role: "Custom engineering focus", heading: "New toolbox", entries: ["New tool"] });
     expect(withoutTool.skills[0]!.entries).toEqual(DEFAULT_PORTFOLIO_CONTENT.skills[0]!.entries);
     expect(removeSkillToolbox(oneToolbox, 0).skills).toEqual(oneToolbox.skills);
   });

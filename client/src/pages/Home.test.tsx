@@ -63,6 +63,22 @@ describe("public contact section", () => {
     expect(html).toContain(">2<");
   });
 
+  it("renders the role-focused Cloud, DevOps, and DevSecOps Toolbox cards", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("role-toolbox-section");
+    expect(html).toContain("Cloud Engineering");
+    expect(html).toContain("DevOps Engineering");
+    expect(html).toContain("DevSecOps");
+    expect(html).toContain("CI/CD Pipelines");
+    expect(html).toContain("Kubernetes");
+    expect(html).toContain("Trivy");
+    expect(html).toContain("SonarQube");
+    expect(html).toContain("Grafana");
+    expect(html).toContain("Prometheus");
+    expect(html).toContain("Loki");
+  });
+
   it("expands a no-media project row and normalizes a bare valid project domain into a public action", () => {
     mockPublicContent = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     mockPublicContent.projects[1]!.image = "";

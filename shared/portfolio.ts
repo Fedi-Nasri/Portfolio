@@ -26,7 +26,7 @@ export type PortfolioContent = {
   experienceSection: { eyebrow: string; title: string; intro: string };
   experience: { date: string; role: string; company: string; companyLogo?: string; text: string; tags: string[]; details?: string[]; now?: boolean }[];
   skillsSection: { eyebrow: string; title: string };
-  skills: { heading: string; entries: string[] }[];
+  skills: { role?: string; heading: string; entries: string[] }[];
   credentialsSection: { eyebrow: string; title: string; intro: string };
   certifications: { name: string; provider: "aws" | "azure" | "cisco" | "cloudflare" | "comptia" | "coursera" | "custom" | "docker" | "fortinet" | "github" | "gitlab" | "google-cloud" | "hashicorp" | "ibm" | "isc2" | "jenkins" | "kodekloud" | "kubernetes" | "linux-foundation" | "microsoft" | "oracle" | "redhat" | "terraform"; providerLabel?: string; providerLogo?: string; issuer: string; issued: string; scope: string; pdf?: string; preview?: string; url?: string }[];
   capabilities: { eyebrow: string; title: string; description: string; services: { name: string; description: string }[] };
@@ -41,6 +41,16 @@ export type PortfolioContent = {
 export const PORTFOLIO_SECTION_IDS = ["home", "about", "experience", "skills", "certifications", "capabilities", "projects", "writing", "contact"] as const;
 export type PortfolioSectionId = (typeof PORTFOLIO_SECTION_IDS)[number];
 export const DEFAULT_SECTION_ORDER: PortfolioSectionId[] = ["home", "about", "experience", "skills", "certifications", "capabilities", "projects", "writing", "contact"];
+
+const ROLE_FOCUSED_TOOLBOX = [
+  { role: "Cloud Engineering", heading: "Cloud infrastructure", entries: ["AWS", "Microsoft Azure", "Cloud VMs", "IAM", "VPC Networking", "Terraform"] },
+  { role: "DevOps Engineering", heading: "Delivery & orchestration", entries: ["Linux", "Bash Scripting", "Git", "GitHub Actions", "CI/CD Pipelines", "Docker", "Docker Compose", "Kubernetes"] },
+  { role: "DevSecOps", heading: "Secure delivery", entries: ["HTTPS/TLS", "PKI", "Secrets Management", "Trivy", "SonarQube", "Dependency Checks", "SBOMs"] },
+  { role: "Network Operations", heading: "Network foundations", entries: ["TCP/IP", "DNS", "VLANs", "NAT", "VPN", "Tailscale"] },
+  { role: "Site Reliability", heading: "Observability & resilience", entries: ["Grafana", "Prometheus", "Loki", "Health Checks", "Metrics", "Logging", "Alerting", "Incident Runbooks"] },
+] satisfies PortfolioContent["skills"];
+
+const LEGACY_TOOLBOX_HEADINGS = ["Systems & OS", "Containers & CI/CD", "Networking", "Cloud & Data", "Programming", "Frameworks & AI"];
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -64,12 +74,8 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"], now: true },
     { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", details: ["Developed patient, doctor, and consultation management workflows for an internal healthcare application.", "Created interactive reporting dashboards that helped hospital administrators review operational information.", "Worked with Symfony 7, Twig, PostgreSQL, Docker, and Linux in a structured full-stack environment."], tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] }
   ],
-  skillsSection: { eyebrow: "Toolbox", title: "Skills, sorted by the systems\nthey help keep running." },
-  skills: [
-    { heading: "Systems & OS", entries: ["Linux", "Debian", "Ubuntu", "Bash Scripting", "Git", "GitHub"] }, { heading: "Containers & CI/CD", entries: ["Docker", "Docker Compose", "GitHub Actions", "Health Checks", "Cloud VMs"] },
-    { heading: "Networking", entries: ["TCP/IP", "DNS", "HTTPS/TLS", "VLANs", "NAT", "VPN", "Tailscale"] }, { heading: "Cloud & Data", entries: ["Firebase", "Microsoft Azure", "AWS", "PostgreSQL", "MySQL", "MongoDB", "Firestore"] },
-    { heading: "Programming", entries: ["Python", "Bash", "JavaScript", "Node.js", "Java", "PHP", "C"] }, { heading: "Frameworks & AI", entries: ["React", "Flask", "Symfony 7", "OpenCV", "TensorFlow", "YOLOv11"] }
-  ],
+  skillsSection: { eyebrow: "Role Toolbox", title: "A DevOps-ready toolkit\nfor cloud, security, and delivery." },
+  skills: ROLE_FOCUSED_TOOLBOX.map((group) => ({ ...group, entries: [...group.entries] })),
   credentialsSection: { eyebrow: "Credentials & Recognition", title: "Certifications that\nsupport the systems I build.", intro: "A focused record across network infrastructure, DevOps practices, cloud delivery, and AI fundamentals." },
   certifications: [
     { name: "CCNA 1", provider: "cisco", issuer: "Cisco Networking Academy", issued: "Jan 2026", scope: "Networking foundations" }, { name: "CCNA 2", provider: "cisco", issuer: "Cisco Networking Academy", issued: "May 2026", scope: "Switching, routing & wireless" },
@@ -94,6 +100,9 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
 };
 
 export function hydrateExperienceDetails(content: PortfolioContent): PortfolioContent {
+  const shouldReplaceLegacyToolbox = content.skills.length === LEGACY_TOOLBOX_HEADINGS.length
+    && content.skills.every((skill, index) => skill.heading === LEGACY_TOOLBOX_HEADINGS[index]);
+
   return {
     ...content,
     about: {
@@ -106,5 +115,8 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
     }),
+    skills: shouldReplaceLegacyToolbox
+      ? ROLE_FOCUSED_TOOLBOX.map((group) => ({ ...group, entries: [...group.entries] }))
+      : content.skills.map((skill) => ({ ...skill, role: skill.role ?? "Custom engineering focus" })),
   };
 }

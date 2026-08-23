@@ -22,6 +22,15 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Toggle navigation");
   });
 
+  it("keeps role labels, capability headings, and tool controls editable in the Toolbox preview", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="skills" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSkillToolbox={() => {}} onAddSkillTool={() => {}} onRemoveSkillTool={() => {}} onRemoveSkillToolbox={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("role-toolbox-grid");
+    expect(html).toContain("Cloud Engineering");
+    expect(html).toContain("Cloud infrastructure");
+    expect(html).toContain("Add toolbox");
+  });
+
   it("renders section ordering controls and an editable custom-section template", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.customSections = [{ id: "custom-1", eyebrow: "New section", title: "Custom focus", body: "Custom section copy" }];

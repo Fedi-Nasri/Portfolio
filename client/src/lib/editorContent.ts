@@ -127,7 +127,7 @@ export function reorderExperienceDetail(source: PortfolioContent, experienceInde
 }
 
 export function createSkillToolbox(): PortfolioContent["skills"][number] {
-  return { heading: "New toolbox", entries: ["New tool"] };
+  return { role: "Custom engineering focus", heading: "New toolbox", entries: ["New tool"] };
 }
 
 export function appendSkillToolbox(source: PortfolioContent): PortfolioContent {

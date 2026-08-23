@@ -3,11 +3,11 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-23 (GMT+2)
-**Latest saved project checkpoint:** `4d8c5b9d` — validated the design-navigation documentation, checklist, and AI continuity updates. The retained application code remains the lighter Experience timeline treatment from `d6caf36e`.
-**Current immediate task:** The user clarified that `deployment_versel` must remain the deployment baseline and receive only the approved UI and compatible shared-file changes. A non-Production candidate branch, `release/ui-sync-deployment`, was created from `deployment_versel` at `7ebeb84`; commit `bcc887b` contains the reviewed UI, motion, editor-parity, shared portfolio-model, focused test, and design-navigation updates. Vercel routing, API bridge, server runtime, migrations, environment handling, `vercel.json`, and package configuration were excluded and have no candidate diff. TypeScript, 84 Vitest tests, and the production build passed. Present this exact candidate for a fresh final Production approval before any protected-branch push. The historical-media migration remains paused; its legacy references stay untouched in private Draft 2 until the user explicitly resumes it.
+**Latest saved project checkpoint:** `8dd35227` — preserved the validated deployment-baseline reconciliation candidate and its protected-file audit immediately before the user approved the Production release. The retained application code includes the lighter Experience timeline treatment from `d6caf36e`.
+**Current immediate task:** The latest Production release is `deployment_versel` commit `70a4e3f`. The user requested a new isolated Toolbox feature branch from that baseline: `feature/toolbox-devops-cloud`. It replaces the general tool categories with editable, role-focused Cloud Engineering, DevOps Engineering, DevSecOps, Network Operations, and Site Reliability cards; adds a responsive technical field/card layout; migrates untouched legacy Toolbox data in memory; and preserves direct `/edit` role, heading, tool, add, and delete controls. The user’s requested platform coverage is included: Docker, Kubernetes, CI/CD Pipelines, Trivy, SonarQube, Grafana, Prometheus, and Loki. TypeScript, 86 Vitest tests, the production build, desktop public/editor inspection, and mobile public inspection passed. Production remains unchanged while this feature awaits review. The historical-media migration remains paused; its legacy references stay untouched in private Draft 2 until the user explicitly resumes it.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
-**Latest Production evidence:** The approved documentation-only commit `7ebeb84` from `deployment_versel` completed as a Vercel **Production** deployment (Ready, 21 seconds). No application code, portfolio content, database, Blob, domain, or secret change was included.
+**Latest Production evidence:** The user-approved deployment-baseline UI reconciliation was merged and pushed to `deployment_versel` at `70a4e3f` on 2026-08-23. Vercel marked deployment `AdTSvGJVZcuBkhfC8WRUgDyi2ZEM` **Ready**. The public portfolio, direct `/edit` workspace, and tRPC API bridge were smoke-tested successfully at `https://portfolio-fedi-s-projects2.vercel.app/`. No database schema, Blob object, domain, secret, routing, API bridge, server runtime, migration, or environment-handling change was included.
 
 **Latest stable-branch synchronization:** GitHub `main` now includes the approved public-motion prototype, lighter Experience technical theme, full Home/About/Selected Work refinement set, and the new design-navigation documentation through merge commit `ce7df13` (`merge: integrate approved public motion prototype`). The documentation commit on the feature branch is `c369166`. This did not create a Vercel Production deployment because Vercel Production tracks `deployment_versel`, not `main`.
 
@@ -23,7 +23,7 @@
 |---:|---|---|---|
 | 1 | Complete | Merged the validated public-motion/design prototype and design-navigation documentation into stable `main` at `ce7df13`. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
 | 2 | Paused by user | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Project 1 is verified in private Draft 2 version 4. Do not modify Draft 2 or Main until the user explicitly asks to resume. |
-| 3 | Active | Maintain the direct editor’s deployment risk boundary. | Do not push unreviewed work to `deployment_versel`; it now creates Production Deployments, and `/edit` is intentionally unauthenticated. |
+| 3 | Active | Review the isolated role-focused Toolbox redesign on `feature/toolbox-devops-cloud`. | Do not merge or push the Toolbox feature to `deployment_versel` until the user explicitly approves it; `/edit` remains intentionally unauthenticated. |
 | 4 | Complete | Provide an optional local Docker Compose environment. | Compose uses isolated local PostgreSQL from `main`; it contains no Vercel, Neon, Blob, or Production credentials, and does not replace Vercel Production. |
 
 ## PostgreSQL hosting state
@@ -47,7 +47,7 @@ The reported dark-mode screenshot revealed a contrast failure: focus-card labels
 | Command / check | Last known result | Notes |
 |---|---|---|
 | `pnpm check` | Passed | TypeScript compiled with no errors before the main merge. |
-| `pnpm test` | Passed: 15 files, 84 tests | Includes PostgreSQL persistence, Blob validation, API bridge, media upload preparation, public motion, text formatting, and development-only pg-mem fallback coverage. |
+| `pnpm test` | Passed: 15 files, 86 tests | Includes PostgreSQL persistence, Blob validation, API bridge, media upload preparation, public motion, Toolbox migration/editor parity, text formatting, and development-only pg-mem fallback coverage. |
 | `pnpm build` | Passed | Vite output and server bundle built successfully; bundle-size warning is informational. |
 | Preview API and editor | Passed | `GET /api/trpc/auth.me` returned a tRPC JSON response; `/edit` loaded the full direct workspace. |
 
