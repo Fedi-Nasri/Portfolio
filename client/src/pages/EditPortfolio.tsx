@@ -6,6 +6,7 @@ import FullLivePreview, { type PreviewSection } from "./FullLivePreview";
 import { PortfolioExportActions } from "@/components/PortfolioExportActions";
 import { ProjectImageControlPanel } from "@/components/ProjectImageControlPanel";
 import { prepareImageForInlineUpload } from "@/lib/mediaUpload";
+import { formatSelectedText, type TextFormatKind } from "@/lib/textFormatting";
 import { toast } from "sonner";
 import { Bold, Check, ChevronDown, FilePenLine, Filter, FolderPlus, History, Italic, LayoutTemplate, Loader2, Palette, Pencil, RotateCcw, Save, Search, Trash2, Type, Underline, Upload, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -118,7 +119,7 @@ function EditWorkspace() {
   const startVersionNoteEdit = (versionNumber: number, note: string | null) => { setEditingVersionNote(versionNumber); setVersionNoteText(note ?? ""); };
   const saveVersionNote = (versionNumber: number) => { if (!editorQuery.data) return; updateVersionNote.mutate({ draftKey: editorQuery.data.activeDraftKey, versionNumber, note: versionNoteText || undefined }); };
   const selectPath = (path: PathSegment[], start = 0, end = 0) => { setActivePath(pathKey(path)); setSelection(start !== end ? { path, start, end } : null); };
-  const applyFormat = (kind: "bold" | "italic" | "underline" | "small" | "lead" | "clear") => { if (!draft || !selection || selection.start === selection.end) { toast.message("Select text inside a field first."); return; } const current = readAtPath(draft, selection.path); if (typeof current !== "string") return; const selected = current.slice(selection.start, selection.end); const token = kind === "bold" ? `**${selected}**` : kind === "italic" ? `_${selected}_` : kind === "underline" ? `__${selected}__` : kind === "small" ? `[[size:small]]${selected}[[/size]]` : kind === "lead" ? `[[size:lead]]${selected}[[/size]]` : selected.replace(/\*\*|__|_|\[\[size:(small|lead)\]\]|\[\[\/size\]\]/g, ""); handleChange(selection.path, `${current.slice(0, selection.start)}${token}${current.slice(selection.end)}`); toast.success("Formatting applied to the draft"); };
+  const applyFormat = (kind: TextFormatKind) => { if (!draft || !selection || selection.start === selection.end) { toast.message("Select text inside a field first."); return; } const current = readAtPath(draft, selection.path); if (typeof current !== "string") return; handleChange(selection.path, formatSelectedText(current, selection.start, selection.end, kind)); setSelection(null); toast.success("Formatting applied to the draft"); };
 
   if (editorQuery.isLoading || !draft) return <div className="editor-state"><Loader2 className="animate-spin" size={22} /> Preparing your editor…</div>;
   if (editorQuery.error || !editorQuery.data) return <div className="editor-state"><h1>Editor unavailable</h1><p>Refresh the page to retry loading the portfolio content.</p><a href="/">Return to the portfolio</a></div>;

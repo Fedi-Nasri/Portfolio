@@ -1,12 +1,15 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
+import { DEFAULT_PORTFOLIO_CONTENT, type PortfolioContent } from "@shared/portfolio";
+
+let mockPublicContent: PortfolioContent | undefined;
 
 vi.mock("@/lib/trpc", () => ({
   trpc: {
     portfolio: {
       publicContent: {
-        useQuery: () => ({ data: undefined, isLoading: false, error: null }),
+        useQuery: () => ({ data: mockPublicContent, isLoading: false, error: null }),
       },
     },
   },
@@ -40,5 +43,36 @@ describe("public contact section", () => {
 
     expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
     expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("uses the wide three-column Home composition while preserving the seeded portrait and focus areas", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("reference-hero hero-wide-layout");
+    expect(html).toContain("Portrait of Fedi NASRI.");
+    expect(html).toContain("Cloud &amp; Network Engineer");
+    expect(html).toContain("Security &amp; Networking");
+  });
+
+  it("renders the editorial About statistic grid for the public first-scroll reveal", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("about-editorial-layout");
+    expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
+    expect((html.match(/about-numeric-indicator/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    expect(html).toContain(">2<");
+  });
+
+  it("expands a no-media project row and normalizes a bare valid project domain into a public action", () => {
+    mockPublicContent = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    mockPublicContent.projects[1]!.image = "";
+    mockPublicContent.projects[1]!.githubUrl = "googel.com";
+
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("project-without-media");
+    expect(html).toContain('href="https://googel.com/"');
+    expect(html).toContain("GitHub");
+    mockPublicContent = undefined;
   });
 });

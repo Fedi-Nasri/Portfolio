@@ -161,7 +161,9 @@ function projectBlocks(project: PortfolioContent["projects"][number]): ProjectCa
 
 export function createProjectTemplate(): PortfolioContent["projects"][number] {
   return {
-    image: "/manus-storage/fedi-project-autonomous-boat_69519cd9.jpg",
+    image: "",
+    githubUrl: "",
+    liveUrl: "",
     type: "Project category · platform",
     state: "Draft template",
     title: "New infrastructure project",

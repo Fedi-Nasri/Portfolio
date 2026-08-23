@@ -2,7 +2,7 @@
  * Public portfolio view. All visible content is sourced from the latest published
  * portfolio document while the established visual system remains unchanged.
  */
-import React, { useState, type CSSProperties, type ReactNode } from "react";
+import React, { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   ArrowRight, Check, ChevronDown, ChevronUp, Copy, Github, Linkedin, Mail, MapPin,
   Menu, Moon, Phone, Sparkles, Sun, X,
@@ -11,11 +11,28 @@ import { DEFAULT_PORTFOLIO_CONTENT, DEFAULT_SECTION_ORDER, hydrateExperienceDeta
 import { trpc } from "@/lib/trpc";
 import { RichText } from "@/components/RichText";
 import { CustomSectionCanvas } from "@/components/CustomSectionCanvas";
+import { getPublicMotionConfig } from "@/lib/publicMotion";
 
 type Certification = PortfolioContent["certifications"][number];
 type WritingPost = PortfolioContent["writing"][number];
 
 const PROVIDER_LABELS: Record<string, string> = { aws: "aws", azure: "Microsoft Azure", cisco: "CISCO", cloudflare: "Cloudflare", comptia: "CompTIA", coursera: "coursera", docker: "docker", fortinet: "FORTINET", github: "GitHub", gitlab: "GitLab", "google-cloud": "Google Cloud", hashicorp: "HashiCorp", ibm: "IBM", isc2: "ISC2", jenkins: "Jenkins", kodekloud: "KodeKloud", kubernetes: "Kubernetes", "linux-foundation": "Linux Foundation", oracle: "ORACLE", redhat: "Red Hat", terraform: "Terraform" };
+
+function toPlainAboutIndicator(value: string) {
+  return /^\d+$/.test(value.trim()) ? String(Number(value)) : value;
+}
+
+function safeProjectUrl(value?: string) {
+  const normalized = value?.trim() ?? "";
+  if (!normalized) return null;
+  const candidate = /^https?:\/\//i.test(normalized) ? normalized : `https://${normalized}`;
+  try {
+    const parsed = new URL(candidate);
+    return /^https?:$/.test(parsed.protocol) && parsed.hostname.includes(".") ? parsed.href : null;
+  } catch {
+    return null;
+  }
+}
 
 function ProviderMark({ cert }: { cert: Certification }) {
   if (cert.providerLogo) return <div className="cert-provider-mark custom-provider-mark" aria-label={cert.providerLabel ?? cert.provider}><img src={cert.providerLogo} alt={`${cert.providerLabel ?? cert.provider} provider logo`} /></div>;
@@ -50,9 +67,75 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
   const [dimMode, setDimMode] = useState(false);
+  const [activeFocusIndex, setActiveFocusIndex] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState<Certification | null>(null);
   const [activeArticle, setActiveArticle] = useState<WritingPost | null>(null);
   const [expandedExperienceIndex, setExpandedExperienceIndex] = useState<number | null>(null);
+  const portfolioRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const root = portfolioRef.current;
+    if (!root) return;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const config = getPublicMotionConfig(prefersReducedMotion);
+    const revealTargets = Array.from(root.querySelectorAll<HTMLElement>(config.revealSelector));
+    const statisticTargets = Array.from(root.querySelectorAll<HTMLElement>("[data-stat-reveal]"));
+
+    root.classList.add(config.rootClass);
+    revealTargets.forEach((target) => {
+      target.dataset.motionReveal = "pending";
+    });
+    statisticTargets.forEach((target) => {
+      target.dataset.statRevealed = "false";
+    });
+
+    if (!config.enabled) {
+      root.classList.add(config.reducedClass);
+      revealTargets.forEach((target) => {
+        target.dataset.revealed = "true";
+      });
+      statisticTargets.forEach((target) => {
+        target.dataset.statRevealed = "true";
+      });
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      revealTargets.forEach((target) => {
+        target.dataset.revealed = "true";
+      });
+      statisticTargets.forEach((target) => {
+        target.dataset.statRevealed = "true";
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target as HTMLElement;
+        target.dataset.revealed = "true";
+        observer.unobserve(target);
+      });
+    }, config.observerOptions);
+
+    revealTargets.forEach((target) => observer.observe(target));
+    const statisticObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target as HTMLElement;
+        target.dataset.statRevealed = "true";
+        statisticObserver.unobserve(target);
+      });
+    }, { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.42 });
+
+    statisticTargets.forEach((target) => statisticObserver.observe(target));
+    return () => {
+      observer.disconnect();
+      statisticObserver.disconnect();
+    };
+  }, []);
 
   const copyEmail = async () => {
     try {
@@ -67,7 +150,7 @@ export default function Home() {
   const closeNav = () => setMobileNav(false);
 
   return (
-    <div className={`reference-portfolio${dimMode ? " dim-mode" : ""}`}>
+    <div ref={portfolioRef} className={`reference-portfolio public-motion${dimMode ? " dim-mode" : ""}`}>
       <style>{projectFrameCss}</style>
       <header className="ref-header">
         <a href={firstVisibleSection ? `#${firstVisibleSection}` : "#"} className="ref-brand" aria-label={`${hero.firstName} ${hero.lastName} portfolio`}><span className="brand-name">fedi</span><span className="brand-node" /></a>
@@ -83,7 +166,7 @@ export default function Home() {
       {mobileNav && <nav className="ref-mobile-nav" aria-label="Mobile navigation">{hasSection("home") && <a onClick={closeNav} href="#home">{navigation.home}</a>}{hasSection("experience") && <a onClick={closeNav} href="#experience">{navigation.experience}</a>}{hasSection("skills") && <a onClick={closeNav} href="#skills">{navigation.skills}</a>}{hasSection("certifications") && <a onClick={closeNav} href="#certifications">{navigation.certifications}</a>}{hasSection("projects") && <a onClick={closeNav} href="#projects">{navigation.projects}</a>}{hasSection("writing") && <a onClick={closeNav} href="#writing">{navigation.writing}</a>}{hasSection("about") && <a onClick={closeNav} href="#about">{navigation.about}</a>}{hasSection("contact") && <a onClick={closeNav} className="ref-mobile-talk" href="#contact">{navigation.contact} <ArrowRight size={15} /></a>}</nav>}
 
       <main className="public-section-order">
-        <section id="home" className="reference-hero" style={sectionStyle("home")}>
+        <section id="home" className="reference-hero hero-wide-layout" style={sectionStyle("home")}>
           <div className="hero-copy-ref">
             <p className="hello-line"><Sparkles size={13} /> {hero.hello}</p>
             <h1><RichText value={hero.firstName} /><br /><strong><RichText value={hero.lastName} /></strong></h1>
@@ -105,18 +188,22 @@ export default function Home() {
             <img src={hero.portraitUrl} alt={`${hero.firstName} ${hero.lastName}`} />
           </div>
 
-          <div className="hero-role-stack" aria-label="Professional focus areas">
-            <div style={{ left: `${focusPositions[0]?.x ?? 4}%`, top: `${focusPositions[0]?.y ?? 6}%` }} className="role-card cloud-card"><div className="role-art cloud-art">{hero.focusVisuals?.[0] ? <img className="role-custom-visual" src={hero.focusVisuals[0]} alt="Cloud focus visual" /> : <><i /><span /><span /><span /></>}</div><b>{hero.focusAreas[0] ?? "Cloud"}</b></div>
-            <div style={{ left: `${focusPositions[1]?.x ?? 47}%`, top: `${focusPositions[1]?.y ?? 22}%` }} className="role-card browser-card"><div className="role-art infinity-art">{hero.focusVisuals?.[1] ? <img className="role-custom-visual" src={hero.focusVisuals[1]} alt="DevOps focus visual" /> : <svg className="devops-logo" viewBox="0 0 240 120" aria-hidden="true"><defs><linearGradient id="devopsBlueInfinity" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#1e74ff" /><stop offset="48%" stopColor="#4b8cff" /><stop offset="100%" stopColor="#1f5ce8" /></linearGradient></defs><path d="M29 60 C55 22 89 22 120 60 C151 98 185 98 211 60 C185 22 151 22 120 60 C89 98 55 98 29 60" fill="none" stroke="url(#devopsBlueInfinity)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" /></svg>}</div><b>{hero.focusAreas[1] ?? "DevOps"}</b></div>
-            <div style={{ left: `${focusPositions[2]?.x ?? 47}%`, top: `${focusPositions[2]?.y ?? 66}%` }} className="role-card design-card"><div className="role-art devsecops-art">{hero.focusVisuals?.[2] ? <img className="role-custom-visual" src={hero.focusVisuals[2]} alt="DevSecOps focus visual" /> : <svg className="devsecops-shield" viewBox="0 0 160 120" aria-hidden="true"><defs><linearGradient id="devsecopsBorder" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#68a7ff" /><stop offset="55%" stopColor="#2563eb" /><stop offset="100%" stopColor="#173fba" /></linearGradient><linearGradient id="devsecopsLoopLeft" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#8cc6ff" /><stop offset="100%" stopColor="#2563eb" /></linearGradient><linearGradient id="devsecopsLoopRight" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#173fba" /><stop offset="100%" stopColor="#6faaff" /></linearGradient></defs><path d="M80 10 C108 10 130 18 130 18 C130 64 111 94 80 110 C49 94 30 64 30 18 C30 18 52 10 80 10 Z" fill="#edf4ff" stroke="url(#devsecopsBorder)" strokeWidth="4" /><path d="M80 18 C102 18 122 25 122 25 C122 61 107 86 80 101 C53 86 38 61 38 25 C38 25 58 18 80 18 Z" fill="none" stroke="#bad5ff" strokeWidth="1.5" strokeDasharray="3 4" /><path d="M80 63 C69 48 48 48 48 63 C48 77 67 78 80 63" fill="none" stroke="url(#devsecopsLoopLeft)" strokeWidth="9" strokeLinecap="round" /><path d="M80 63 C91 48 112 48 112 63 C112 77 93 78 80 63" fill="none" stroke="url(#devsecopsLoopRight)" strokeWidth="9" strokeLinecap="round" /><circle cx="80" cy="63" r="12" fill="#fff" stroke="#4d83ee" strokeWidth="2" /><path d="M76 60 A4 4 0 0 1 84 60 L83 69 A3 3 0 1 1 77 69 Z" fill="#2563eb" /><circle cx="80" cy="10" r="3" fill="#89bbff" /><circle cx="130" cy="18" r="3" fill="#89bbff" /><circle cx="30" cy="18" r="3" fill="#89bbff" /></svg>}</div><b>{hero.focusAreas[2] ?? "DevSecOps"}</b></div>
-            <div style={{ left: `${focusPositions[3]?.x ?? 6}%`, top: `${focusPositions[3]?.y ?? 66}%` }} className="role-card network-card"><div className="role-art network-art">{hero.focusVisuals?.[3] ? <img className="role-custom-visual" src={hero.focusVisuals[3]} alt="Security and Networking focus visual" /> : <><i /><span /><span /><span /></>}</div><b>{hero.focusAreas[3] ?? "Security & Networking"}</b></div>
+          <div className="hero-floating-labels" aria-label="Professional focus areas">
+            {hero.focusAreas.map((area, index) => <span className={`floating-specialty floating-specialty-${index + 1}`} key={`${area}-${index}`}><b>{area}</b></span>)}
+          </div>
+
+          <div className="hero-role-stack role-featured-layout" aria-label="Professional focus areas">
+            <div style={{ "--focus-x": `${focusPositions[0]?.x ?? 4}%`, "--focus-y": `${focusPositions[0]?.y ?? 6}%` } as CSSProperties} className={`role-card cloud-card${activeFocusIndex === 0 ? " is-featured" : ""}`}><div className="role-art cloud-art">{hero.focusVisuals?.[0] ? <img className="role-custom-visual" src={hero.focusVisuals[0]} alt="Cloud focus visual" /> : <><i /><span /><span /><span /></>}</div><b>{hero.focusAreas[0] ?? "Cloud"}</b></div>
+            <div style={{ "--focus-x": `${focusPositions[1]?.x ?? 47}%`, "--focus-y": `${focusPositions[1]?.y ?? 22}%` } as CSSProperties} className={`role-card browser-card${activeFocusIndex === 1 ? " is-featured" : ""}`}><div className="role-art infinity-art">{hero.focusVisuals?.[1] ? <img className="role-custom-visual" src={hero.focusVisuals[1]} alt="DevOps focus visual" /> : <svg className="devops-logo" viewBox="0 0 240 120" aria-hidden="true"><defs><linearGradient id="devopsBlueInfinity" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#1e74ff" /><stop offset="48%" stopColor="#4b8cff" /><stop offset="100%" stopColor="#1f5ce8" /></linearGradient></defs><path d="M29 60 C55 22 89 22 120 60 C151 98 185 98 211 60 C185 22 151 22 120 60 C89 98 55 98 29 60" fill="none" stroke="url(#devopsBlueInfinity)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" /></svg>}</div><b>{hero.focusAreas[1] ?? "DevOps"}</b></div>
+            <div style={{ "--focus-x": `${focusPositions[2]?.x ?? 47}%`, "--focus-y": `${focusPositions[2]?.y ?? 66}%` } as CSSProperties} className={`role-card design-card${activeFocusIndex === 2 ? " is-featured" : ""}`}><div className="role-art devsecops-art">{hero.focusVisuals?.[2] ? <img className="role-custom-visual" src={hero.focusVisuals[2]} alt="DevSecOps focus visual" /> : <svg className="devsecops-shield" viewBox="0 0 160 120" aria-hidden="true"><defs><linearGradient id="devsecopsBorder" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#68a7ff" /><stop offset="55%" stopColor="#2563eb" /><stop offset="100%" stopColor="#173fba" /></linearGradient><linearGradient id="devsecopsLoopLeft" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#8cc6ff" /><stop offset="100%" stopColor="#2563eb" /></linearGradient><linearGradient id="devsecopsLoopRight" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#173fba" /><stop offset="100%" stopColor="#6faaff" /></linearGradient></defs><path d="M80 10 C108 10 130 18 130 18 C130 64 111 94 80 110 C49 94 30 64 30 18 C30 18 52 10 80 10 Z" fill="#edf4ff" stroke="url(#devsecopsBorder)" strokeWidth="4" /><path d="M80 18 C102 18 122 25 122 25 C122 61 107 86 80 101 C53 86 38 61 38 25 C38 25 58 18 80 18 Z" fill="none" stroke="#bad5ff" strokeWidth="1.5" strokeDasharray="3 4" /><path d="M80 63 C69 48 48 48 48 63 C48 77 67 78 80 63" fill="none" stroke="url(#devsecopsLoopLeft)" strokeWidth="9" strokeLinecap="round" /><path d="M80 63 C91 48 112 48 112 63 C112 77 93 78 80 63" fill="none" stroke="url(#devsecopsLoopRight)" strokeWidth="9" strokeLinecap="round" /><circle cx="80" cy="63" r="12" fill="#fff" stroke="#4d83ee" strokeWidth="2" /><path d="M76 60 A4 4 0 0 1 84 60 L83 69 A3 3 0 1 1 77 69 Z" fill="#2563eb" /><circle cx="80" cy="10" r="3" fill="#89bbff" /><circle cx="130" cy="18" r="3" fill="#89bbff" /><circle cx="30" cy="18" r="3" fill="#89bbff" /></svg>}</div><b>{hero.focusAreas[2] ?? "DevSecOps"}</b></div>
+            <div style={{ "--focus-x": `${focusPositions[3]?.x ?? 6}%`, "--focus-y": `${focusPositions[3]?.y ?? 66}%` } as CSSProperties} className={`role-card network-card${activeFocusIndex === 3 ? " is-featured" : ""}`}><div className="role-art network-art">{hero.focusVisuals?.[3] ? <img className="role-custom-visual" src={hero.focusVisuals[3]} alt="Security and Networking focus visual" /> : <><i /><span /><span /><span /></>}</div><b>{hero.focusAreas[3] ?? "Security & Networking"}</b></div>
+            <div className="focus-role-rail" role="tablist" aria-label="Select professional focus area">{hero.focusAreas.map((area, index) => <button type="button" role="tab" key={`${area}-${index}`} aria-selected={activeFocusIndex === index} className={activeFocusIndex === index ? "is-active" : ""} onClick={() => setActiveFocusIndex(index)}><span>0{index + 1}</span><b>{area}</b></button>)}</div>
           </div>
         </section>
 
         <section id="about" className="ref-section ref-about" style={sectionStyle("about")}>
           <SectionTitle eyebrow={content.about.eyebrow}><Multiline value={content.about.title} /></SectionTitle>
-          <div className="about-ref-grid"><div><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p></div><div><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div>
-          <div className="ref-stats">{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div>
+          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats" data-stat-reveal>{content.about.stats.map((stat) => { const isTechnologyStat = stat.label.toLowerCase().includes("technolog") && /^\d+$/.test(stat.value.trim()); return <div className={`about-numeric-indicator${isTechnologyStat ? " is-technology-stat" : ""}`} key={`${stat.value}-${stat.label}`}><i aria-hidden="true" /><span><RichText value={toPlainAboutIndicator(stat.value)} />{isTechnologyStat && <em aria-hidden="true">+</em>}</span><b><RichText value={stat.label} /></b></div>; })}</div></div>
         </section>
 
         <section id="experience" className="ref-section ref-experience" style={sectionStyle("experience")}>
@@ -130,7 +217,7 @@ export default function Home() {
 
         <section id="capabilities" className="full-stack-ref" style={sectionStyle("capabilities")}><div className="full-stack-top"><p><RichText value={content.capabilities.eyebrow} /></p><h2><Multiline value={content.capabilities.title} /></h2><span><RichText value={content.capabilities.description} /></span></div><div className="service-grid">{content.capabilities.services.map((service, index) => <article key={service.name}><span>0{index + 1}</span><h3><RichText value={service.name} /></h3><p><RichText value={service.description} /></p></article>)}</div></section>
 
-        <section id="projects" className="ref-section ref-projects" style={sectionStyle("projects")}><SectionTitle eyebrow={content.projectsSection.eyebrow}><Multiline value={content.projectsSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.projectsSection.intro} /></p><div className="ref-project-list">{content.projects.map((project, index) => { const visibleBlocks = project.caseStudyBlocks ?? ["problem", "body", "realization"]; const imageFocus = project.imageFocus ?? { x: 50, y: 50 }; const imageZoom = Math.max(1, project.imageZoom ?? 1); return <article className={`ref-project${index % 2 === 1 ? " project-layout-reversed" : ""}`} key={project.title}><div className="project-thumb"><img src={project.image} alt={`${project.title} technical illustration`} style={{ objectPosition: `${imageFocus.x}% ${imageFocus.y}%`, transform:`scale(${imageZoom})`, transformOrigin:`${imageFocus.x}% ${imageFocus.y}%` }} /><span>{String(index + 1).padStart(2, "0")}</span></div><div className="project-content"><div className="project-class"><span><RichText value={project.type} /></span><b><i /> <RichText value={project.state} /></b></div><h3><RichText value={project.title} /></h3><p className="project-byline"><RichText value={project.byline} /></p><div className="project-description">{visibleBlocks.includes("problem") && <div><strong><RichText value={content.projectsSection.problemLabel} /></strong><p><RichText value={project.problem} /></p></div>}{visibleBlocks.includes("body") && <div><strong><RichText value={content.projectsSection.descriptionLabel} /></strong><p><RichText value={project.body} /></p></div>}{visibleBlocks.includes("realization") && <div className="project-realization"><strong><RichText value={content.projectsSection.realizationLabel} /></strong><p><RichText value={project.realization} /></p></div>}</div><div className="project-meta"><div><strong><RichText value={content.projectsSection.techLabel} /></strong><TagList items={project.tech} /></div><div><strong><RichText value={content.projectsSection.deliveryLabel} /></strong><div className="delivery-row">{project.delivery.map((item) => <span key={item}><RichText value={item} /></span>)}</div></div></div></div></article>; })}</div></section>
+        <section id="projects" className="ref-section ref-projects" style={sectionStyle("projects")}><SectionTitle eyebrow={content.projectsSection.eyebrow}><Multiline value={content.projectsSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.projectsSection.intro} /></p><div className="ref-project-list">{content.projects.map((project, index) => { const visibleBlocks = project.caseStudyBlocks ?? ["problem", "body", "realization"]; const imageFocus = project.imageFocus ?? { x: 50, y: 50 }; const imageZoom = Math.max(1, project.imageZoom ?? 1); const hasProjectImage = Boolean(project.image.trim()); const githubUrl = safeProjectUrl(project.githubUrl); const liveUrl = safeProjectUrl(project.liveUrl); return <article className={`ref-project${index % 2 === 1 ? " project-layout-reversed" : ""}${hasProjectImage ? "" : " project-without-media"}`} key={project.title}>{hasProjectImage && <div className="project-thumb"><img src={project.image} alt={`${project.title} technical illustration`} style={{ objectPosition: `${imageFocus.x}% ${imageFocus.y}%`, transform:`scale(${imageZoom})`, transformOrigin:`${imageFocus.x}% ${imageFocus.y}%` }} /><span>{String(index + 1).padStart(2, "0")}</span></div>}<div className="project-content"><div className="project-class"><span><RichText value={project.type} /></span><b><i /> <RichText value={project.state} /></b></div><h3><RichText value={project.title} /></h3><p className="project-byline"><RichText value={project.byline} /></p><div className="project-description">{visibleBlocks.includes("problem") && <div><strong><RichText value={content.projectsSection.problemLabel} /></strong><p><RichText value={project.problem} /></p></div>}{visibleBlocks.includes("body") && <div><strong><RichText value={content.projectsSection.descriptionLabel} /></strong><p><RichText value={project.body} /></p></div>}{visibleBlocks.includes("realization") && <div className="project-realization"><strong><RichText value={content.projectsSection.realizationLabel} /></strong><p><RichText value={project.realization} /></p></div>}</div><div className="project-meta"><div><strong><RichText value={content.projectsSection.techLabel} /></strong><TagList items={project.tech} /></div><div><strong><RichText value={content.projectsSection.deliveryLabel} /></strong><div className="delivery-row">{project.delivery.map((item) => <span key={item}><RichText value={item} /></span>)}</div></div></div>{(githubUrl || liveUrl) && <div className="project-actions">{githubUrl && <a href={githubUrl} target="_blank" rel="noreferrer"><Github size={14} /> GitHub</a>}{liveUrl && <a href={liveUrl} target="_blank" rel="noreferrer">View project <ArrowRight size={14} /></a>}</div>}</div></article>; })}</div></section>
 
         <section id="writing" className="ref-section ref-writing" style={sectionStyle("writing")}><SectionTitle eyebrow={content.writingSection.eyebrow}><Multiline value={content.writingSection.title} /></SectionTitle><p className="section-intro"><RichText value={content.writingSection.intro} /></p><div className="writing-grid">{content.writing.map((post) => <article className={`writing-card${post.body.length === 0 ? " future-writing" : ""}`} key={post.title}><div className="writing-card-main"><span className="writing-site-name"><RichText value={post.siteName ?? post.category} /></span><h3><RichText value={post.title} /></h3><time className="writing-post-date"><RichText value={post.date} /></time></div><div className="writing-card-meta"><span className="writing-category"><RichText value={post.category} /></span><small><RichText value={post.readTime} /></small>{post.url ? <a className="writing-read" href={post.url} target="_blank" rel="noreferrer" aria-label={`Open ${post.title}`}><ArrowRight size={16} /></a> : post.body.length > 0 ? <button type="button" className="writing-read" aria-label={`Read ${post.title}`} onClick={() => setActiveArticle(post)}><ArrowRight size={16} /></button> : <span className="writing-link-slot"><RichText value={post.status} /></span>}</div></article>)}</div></section>
 
