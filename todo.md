@@ -1062,3 +1062,12 @@
 - [x] Mirror the compact collapsed-card spacing in public and `/edit` Selected Work views without weakening direct editor controls.
 - [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
 - [x] Checkpoint the isolated collapsed-card spacing repair and present it for review before any merge or Production release; checkpoint `26a9f653` created on 2026-08-23.
+
+## Selected Work Collapsed Metadata Containment Repair
+
+- [x] Audit the right-side metadata overflow introduced by the collapsed-card absolute-positioning shortcut.
+- [x] Replace the shortcut with a two-column summary structure that lets the metadata panel safely determine card height.
+- [x] Keep the left project identity, brief summary, and detail disclosure compact without overlap or large artificial gaps.
+- [x] Preserve public/editor parity, expanded-case-study presentation, desktop metadata placement, and mobile stacking.
+- [x] Add regression coverage for metadata containment and validate TypeScript, 16 test files / 88 tests, production build, and varied-card desktop/mobile screenshots.
+- [x] Checkpoint the corrected isolated card layout and present it for review before any merge or Production release; checkpoint `09e366e3` created on 2026-08-23.

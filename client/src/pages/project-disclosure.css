@@ -21,11 +21,12 @@
 
 .project-compact-meta {
   display: grid;
-  gap: 14px;
+  align-content: start;
+  gap: 9px;
   min-width: 0;
-  padding: 18px;
-  border: 1px solid #dce9f8;
-  border-radius: 16px;
+  padding: 13px 14px;
+  border: 1px solid #d7e6f7;
+  border-radius: 14px;
   background: #f8fbff;
 }
 
@@ -35,7 +36,7 @@
 
 .project-compact-meta strong {
   display: block;
-  margin-bottom: 9px;
+  margin-bottom: 6px;
   color: #204f9d;
   font-size: 11px;
   font-weight: 800;
@@ -45,7 +46,7 @@
 
 .project-compact-meta .tag-list,
 .project-compact-meta .delivery-row {
-  gap: 6px;
+  gap: 5px;
 }
 
 .ref-project:has(.project-detail-disclosure[open]) .project-compact-meta {
@@ -54,28 +55,28 @@
 
 @media (min-width: 681px) {
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-content {
-    display: block;
-    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.58fr);
+    column-gap: 28px;
+    align-items: start;
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-class,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) h3,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-byline,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-summary {
-    max-width: calc(100% - min(39%, 402px));
+    grid-column: 1;
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-compact-meta {
-    position: absolute;
-    top: 4px;
-    right: 2px;
-    width: min(35%, 390px);
-    min-width: 220px;
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: start;
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-detail-disclosure {
-    width: 100%;
-    margin-top: 16px;
+    grid-column: 1 / -1;
+    margin-top: 10px;
   }
 }
 
