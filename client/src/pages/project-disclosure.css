@@ -19,6 +19,66 @@
   line-height: 1.65;
 }
 
+.project-compact-meta {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #dce9f8;
+  border-radius: 16px;
+  background: #f8fbff;
+}
+
+.project-compact-meta > div {
+  min-width: 0;
+}
+
+.project-compact-meta strong {
+  display: block;
+  margin-bottom: 9px;
+  color: #204f9d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-compact-meta .tag-list,
+.project-compact-meta .delivery-row {
+  gap: 6px;
+}
+
+@media (min-width: 681px) {
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.62fr);
+    column-gap: 32px;
+    align-items: start;
+  }
+
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-class,
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) h3,
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-byline,
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-summary {
+    grid-column: 1;
+  }
+
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-compact-meta {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+
+  .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-detail-disclosure {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .project-compact-meta {
+    margin-top: 18px;
+  }
+}
+
 .project-detail-disclosure > summary {
   display: inline-flex;
   align-items: center;

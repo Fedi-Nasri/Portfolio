@@ -1017,3 +1017,12 @@
 - [x] Restore Tech stack and Delivery to the expanded detailed project view only, with collapsed cards limited to identity and brief description.
 - [x] Validate TypeScript, tests, production build, and desktop/mobile public-editor project disclosure states.
 - [x] Checkpoint the restored isolated project disclosure and present it for review before any merge or Production release; checkpoint `45ae6f82` created on 2026-08-23.
+
+## Selected Work Right-Side Compact Metadata Column
+
+- [x] Add a right-side compact Tech stack and Delivery metadata column to collapsed desktop project summaries.
+- [x] Keep the existing Tech stack and Delivery metadata unchanged in expanded project details.
+- [x] Preserve image hiding in collapsed cards, brief description readability, no-image layout, and mobile stacked metadata behavior.
+- [x] Mirror the right-side compact metadata placement in `/edit` while retaining direct tech and delivery management controls.
+- [x] Add focused coverage and validate TypeScript, tests, production build, and desktop/mobile public-editor project states.
+- [x] Checkpoint the isolated right-side metadata refinement and present it for review before any merge or Production release; checkpoint `13bd33e5` created on 2026-08-23.

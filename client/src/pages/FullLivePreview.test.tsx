@@ -83,6 +83,7 @@ describe("FullLivePreview", () => {
     expect(html).toContain("View detailed project");
     expect(html).toContain("Remove image");
     expect(html).toContain("Brief project description");
+    expect(html).toContain("project-compact-meta");
   });
 
   it("uses a saved focal point to crop a project image and exposes the positioning control", () => {

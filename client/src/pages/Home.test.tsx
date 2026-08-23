@@ -47,6 +47,7 @@ describe("public contact section", () => {
     expect(html).toContain("View detailed project");
     expect(html).not.toContain("project-detail-disclosure\" open");
     expect(html).toContain("project-summary");
+    expect(html).toContain("project-compact-meta");
     expect(html).toContain("A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.");
   });
 
