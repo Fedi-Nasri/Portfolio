@@ -3,7 +3,7 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-23 (GMT+2)
-**Latest saved project checkpoint:** `0345df12` — redesigned Selected Work with a pale-blue technical background and upgraded project-card surfaces. A later uncheckpointed refinement adds the requested small reference-inspired corner dot accent.
+**Latest saved project checkpoint:** `52a85a75` — added the subtle Selected Work corner dot accent. The isolated GitHub branch is synchronized at commit `61c89a7` (`style: add selected work corner accent`) and awaits review.
 **Current immediate task:** The user has paused the controlled historical-media migration. The remaining six legacy references stay untouched in private Draft 2 until the user explicitly resumes that work.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
