@@ -55,7 +55,7 @@ describe("public contact section", () => {
     const html = renderToStaticMarkup(<Home />);
 
     expect(html).toContain("about-editorial-layout");
-    expect(html).toContain("ref-stats");
+    expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
     expect((html.match(/<div><b>/g) ?? []).length).toBeGreaterThanOrEqual(4);
   });
 });

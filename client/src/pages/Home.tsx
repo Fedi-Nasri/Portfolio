@@ -64,10 +64,14 @@ export default function Home() {
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const config = getPublicMotionConfig(prefersReducedMotion);
     const revealTargets = Array.from(root.querySelectorAll<HTMLElement>(config.revealSelector));
+    const statisticTargets = Array.from(root.querySelectorAll<HTMLElement>("[data-stat-reveal]"));
 
     root.classList.add(config.rootClass);
     revealTargets.forEach((target) => {
       target.dataset.motionReveal = "pending";
+    });
+    statisticTargets.forEach((target) => {
+      target.dataset.statRevealed = "false";
     });
 
     if (!config.enabled) {
@@ -75,12 +79,18 @@ export default function Home() {
       revealTargets.forEach((target) => {
         target.dataset.revealed = "true";
       });
+      statisticTargets.forEach((target) => {
+        target.dataset.statRevealed = "true";
+      });
       return;
     }
 
     if (!("IntersectionObserver" in window)) {
       revealTargets.forEach((target) => {
         target.dataset.revealed = "true";
+      });
+      statisticTargets.forEach((target) => {
+        target.dataset.statRevealed = "true";
       });
       return;
     }
@@ -95,7 +105,20 @@ export default function Home() {
     }, config.observerOptions);
 
     revealTargets.forEach((target) => observer.observe(target));
-    return () => observer.disconnect();
+    const statisticObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target as HTMLElement;
+        target.dataset.statRevealed = "true";
+        statisticObserver.unobserve(target);
+      });
+    }, { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.42 });
+
+    statisticTargets.forEach((target) => statisticObserver.observe(target));
+    return () => {
+      observer.disconnect();
+      statisticObserver.disconnect();
+    };
   }, []);
 
   const copyEmail = async () => {
@@ -164,7 +187,7 @@ export default function Home() {
 
         <section id="about" className="ref-section ref-about" style={sectionStyle("about")}>
           <SectionTitle eyebrow={content.about.eyebrow}><Multiline value={content.about.title} /></SectionTitle>
-          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats">{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div></div>
+          <div className="about-editorial-layout"><div className="about-ref-grid"><div className="about-copy"><p><RichText value={content.about.paragraphs[0]} /></p><p><RichText value={content.about.paragraphs[1]} /></p><p><RichText value={content.about.paragraphs[2]} /></p><div className="hashtag-cloud">{content.about.tags.map((tag) => <span key={tag}><RichText value={tag} /></span>)}</div></div></div><div className="ref-stats" data-stat-reveal>{content.about.stats.map((stat) => <div key={`${stat.value}-${stat.label}`}><b><RichText value={stat.value} /></b><span><RichText value={stat.label} /></span></div>)}</div></div>
         </section>
 
         <section id="experience" className="ref-section ref-experience" style={sectionStyle("experience")}>

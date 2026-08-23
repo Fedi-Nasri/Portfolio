@@ -826,3 +826,12 @@
 - [x] Respect `prefers-reduced-motion` by revealing the complete grid without animation.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## About Statistic Theme, Controls, and Reveal Repair
+
+- [x] Apply the supplied soft pale-blue gradient treatment and large blue statistic value styling to all four About cards.
+- [x] Make the existing About statistic add action visually explicit with a + control and retain a direct per-card delete action in `/edit`.
+- [x] Diagnose and repair the missing one-time incremental reveal on the public About statistics grid.
+- [x] Preserve immediate complete-grid visibility for reduced-motion users and motion-free `/edit` behavior.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
