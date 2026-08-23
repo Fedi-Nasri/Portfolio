@@ -928,8 +928,8 @@
 - [x] Compare the validated main release candidate against `deployment_versel` and record the expected Production changes; the branch histories are unrelated and the raw diff would delete Vercel API/runtime and migration files, so no merge was attempted.
 - [x] Superseded: reconcile the unrelated `main` and `deployment_versel` histories through a direct merge; the user instead requested that the deployment branch remain the baseline and receive only the approved UI and compatible shared-file changes.
 - [x] Superseded: merge the authorized `main` release candidate into `deployment_versel`; a deployment-baseline UI reconciliation candidate will be prepared instead.
-- [ ] Verify the Vercel Production deployment reaches a Ready state and confirm the public route and `/edit` are reachable.
-- [ ] Record the released commit, Production verification evidence, and any remaining paused media work in AI continuity files.
+- [x] Verify the Vercel Production deployment reaches a Ready state and confirm the public route and `/edit` are reachable; deployment `AdTSvGJVZcuBkhfC8WRUgDyi2ZEM` for `70a4e3f` was Ready and both routes loaded successfully.
+- [x] Record the released commit, Production verification evidence, and any remaining paused media work in AI continuity files; the legacy historical-media migration remains paused.
 
 ## Deployment-Baseline UI Reconciliation
 
@@ -937,4 +937,162 @@
 - [x] Map the reviewed UI and compatible shared-file changes from `main` to their matching deployment-branch files, excluding protected deployment infrastructure; candidate scope is client UI, shared portfolio model, client-side formatting/motion helpers, focused tests, and documentation only.
 - [x] Apply the compatible Home, About, Selected Work, Experience, motion, shared-content-model, test, and documentation updates onto the reconciliation branch without deleting or replacing protected infrastructure; candidate commit `bcc887b` contains only 18 reviewed client/shared/documentation files.
 - [x] Run deployment-branch type checks, tests, and build/API packaging validation; inspect the release diff to confirm no protected file was removed or unexpectedly changed. TypeScript, 84 tests, and the production build passed; the regenerated API artifact was restored because server source was unchanged.
-- [ ] Present the validated reconciliation candidate and exact protected-file audit for a fresh final Production-release approval.
+- [x] Present the validated reconciliation candidate and exact protected-file audit for a fresh final Production-release approval; the user explicitly approved candidate `14c350a` for Production on 2026-08-23.
+
+## Isolated DevOps, DevSecOps, and Cloud Engineering Toolbox Redesign
+
+- [x] Create a new isolated feature branch from the released `deployment_versel` baseline without touching the Production branch; `feature/toolbox-devops-cloud` begins at release `70a4e3f`.
+- [x] Audit the public and editor Toolbox component, shared portfolio data, CSS cascade, responsive rules, and existing edit controls.
+- [x] Reorganize Toolbox content around practical DevOps, DevSecOps, and Cloud Engineering role capabilities, using only relevant tool groupings.
+- [x] Redesign the Toolbox visual hierarchy and responsive layout while retaining clear public/editor parity and direct in-place editing.
+- [x] Add or update focused regression coverage and run TypeScript, Vitest, production build, and public/editor visual checks.
+- [x] Checkpoint the isolated feature and present it for review before any future merge or Production release; checkpoint `d283806e` created on 2026-08-23.
+
+## Expanded Platform Tool Coverage for Toolbox
+
+- [x] Add Docker and Kubernetes to the editable container-orchestration coverage.
+- [x] Add explicit CI/CD pipeline tooling and practices to the editable DevOps delivery coverage.
+- [x] Add Trivy and SonarQube to the editable DevSecOps secure-delivery coverage.
+- [x] Add Grafana, Prometheus, and Loki to the editable observability coverage.
+- [x] Update focused coverage and validate public/editor rendering, responsive design, TypeScript, tests, and production build on the isolated feature branch.
+- [x] Checkpoint the expanded feature and present it for review before any merge or Production release; checkpoint `dfa786e5` created on 2026-08-23.
+
+## Toolbox Role Icons and Tool Brand Marks
+
+- [x] Replace the numeric Toolbox card markers with accessible icons that represent each engineering role.
+- [x] Add recognisable visual marks next to supported named tools while preserving the tool names as visible text.
+- [x] Use a deliberate fallback treatment for tools that have no suitable brand mark, without implying an official logo.
+- [x] Preserve direct Toolbox editing, add/delete controls, public/editor parity, responsive spacing, and reduced-motion safety.
+- [x] Validate desktop/mobile public and editor layouts, icon accessibility, TypeScript, tests, and production build on the isolated branch.
+- [x] Checkpoint the iconography update and present it for review before any merge or Production release; checkpoint `5982c806` created on 2026-08-23.
+
+## Toolbox Tool-Brand Mark Removal
+
+- [x] Remove all individual tool-brand marks and neutral tool-mark fallbacks from public and `/edit` Toolbox chips.
+- [x] Retain the role-representative Toolbox card icons, visible tool names, direct editing, and add/delete controls.
+- [x] Remove the no-longer-needed brand-icon dependency and related rendering/tests without affecting role icon rendering.
+- [x] Validate text-only tool chips, public/editor parity, TypeScript, tests, production build, and responsive layouts on the isolated branch.
+- [x] Checkpoint the corrected isolated feature and present it for review before any merge or Production release; checkpoint `69ae97cc` created on 2026-08-23.
+
+## Curated Professional DevOps and DevSecOps Toolbox Expansion
+
+- [x] Add AWS, Terraform, Ansible, and Helm to the editable Cloud Engineering and platform automation coverage.
+- [x] Add Git, GitHub Actions, Argo CD, and Jenkins to the editable delivery and GitOps coverage.
+- [x] Add Snyk, OWASP ZAP, HashiCorp Vault, and Dependabot to the editable DevSecOps coverage.
+- [x] Add Alertmanager, OpenTelemetry, Nginx, PostgreSQL, Redis, and RabbitMQ to the editable reliability, networking, and service-operation coverage.
+- [x] Retain Docker, Kubernetes, CI/CD Pipelines, Trivy, SonarQube, Grafana, Prometheus, and Loki without introducing tool-brand logos.
+- [x] Validate the curated public/editor Toolbox content, responsive text-only chips, TypeScript, tests, production build, and visual layouts on the isolated branch.
+- [x] Checkpoint the expanded isolated feature and present it for review before any merge or Production release; checkpoint `8ddc8d55` created on 2026-08-23.
+
+## Selected Work Image Management and Detail Disclosure
+
+- [x] Audit current public and editor project image controls, project image state, detail rendering, and existing test coverage.
+- [x] Add direct per-project image upload and image removal actions in the active `/edit` Selected Work view.
+- [x] Preserve existing crop, focal point, zoom, aspect-ratio, and frame controls when a project image is present; reset safely when it is removed.
+- [x] Add an accessible per-project collapse/expand control that shows a compact project summary when collapsed and the original detailed project view when expanded.
+- [x] Preserve image/no-image responsive project layouts, optional project links, public/editor parity, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, tests, production build, and desktop/mobile public/editor interaction.
+- [x] Checkpoint the isolated Selected Work enhancement and present it for review before any merge or Production release; checkpoint `64b24215` created on 2026-08-23.
+
+## Selected Work Compact Summary and Expanded Media Refinement
+
+- [x] Add an editable brief project description field that is visible in each collapsed project summary.
+- [x] Keep project images hidden in the collapsed public and editor project summary state.
+- [x] Render project images, original case-study blocks, Tech stack, Delivery, and optional links only after the project detail disclosure is expanded.
+- [x] Preserve direct image upload/replacement/removal and crop controls in the active `/edit` detail state.
+- [x] Add migration-safe defaults for existing projects, focused regression coverage, and desktop/mobile public-editor validation.
+- [x] Checkpoint the refined isolated project disclosure and present it for review before any merge or Production release; checkpoint `6e7de7eb` created on 2026-08-23.
+
+## Selected Work Compact Tech Stack and Delivery Metadata
+
+- [x] Superseded: keep the existing editable Tech stack and Delivery labels/items visible in collapsed public and editor project summaries; the user requested a return to the prior summary-only collapsed state.
+- [x] Superseded: avoid duplicating compact metadata in the expanded project view; the compact metadata feature is being removed entirely.
+- [x] Superseded: preserve compact metadata wrapping and direct editing controls; the prior detailed-only metadata presentation is being restored.
+- [x] Superseded: validate the compact metadata addition; the user requested it be undone before checkpointing.
+- [x] Superseded: checkpoint the compact metadata refinement; the user requested it be undone before any feature checkpoint was created.
+
+## Selected Work Compact Metadata Rollback
+
+- [x] Remove the latest compact Tech stack and Delivery metadata markup, styling, and regression assertions.
+- [x] Restore Tech stack and Delivery to the expanded detailed project view only, with collapsed cards limited to identity and brief description.
+- [x] Validate TypeScript, tests, production build, and desktop/mobile public-editor project disclosure states.
+- [x] Checkpoint the restored isolated project disclosure and present it for review before any merge or Production release; checkpoint `45ae6f82` created on 2026-08-23.
+
+## Selected Work Right-Side Compact Metadata Column
+
+- [x] Add a right-side compact Tech stack and Delivery metadata column to collapsed desktop project summaries.
+- [x] Keep the existing Tech stack and Delivery metadata unchanged in expanded project details.
+- [x] Preserve image hiding in collapsed cards, brief description readability, no-image layout, and mobile stacked metadata behavior.
+- [x] Mirror the right-side compact metadata placement in `/edit` while retaining direct tech and delivery management controls.
+- [x] Add focused coverage and validate TypeScript, tests, production build, and desktop/mobile public-editor project states.
+- [x] Checkpoint the isolated right-side metadata refinement and present it for review before any merge or Production release; checkpoint `13bd33e5` created on 2026-08-23.
+
+## Selected Work Expanded Compact-Metadata Visibility
+
+- [x] Hide the compact right-side Tech stack and Delivery panel when its project detail disclosure is expanded.
+- [x] Preserve the compact panel in the collapsed desktop and mobile summary states.
+- [x] Preserve the existing expanded Tech stack and Delivery metadata, with no duplicate compact panel in public or `/edit` views.
+- [x] Add focused coverage and validate collapsed/expanded public-editor behavior, TypeScript, tests, production build, and responsive layout.
+- [x] Checkpoint the isolated metadata-visibility refinement and present it for review before any merge or Production release; checkpoint `25c527cd` created on 2026-08-23.
+
+## Toolbox Skill Hover and Infrastructure Coverage
+
+- [x] Add a restrained hover and keyboard-focus treatment to Toolbox skill chips that preserves readable contrast and reduced-motion safety.
+- [x] Add PostgreSQL, MySQL, Redis, and Firebase to the editable data-platform/service-operation coverage.
+- [x] Add Wireshark and 802.1X Authentication to the editable network analysis and access-control coverage.
+- [x] Add Firewalls to security/network infrastructure coverage and OVH to cloud/hosting coverage.
+- [x] Preserve text-only chips, existing role cards, direct `/edit` management controls, and public/editor parity.
+- [x] Add focused coverage and validate hover/focus behavior, TypeScript, tests, production build, and desktop/mobile public-editor layouts.
+- [x] Checkpoint the isolated Toolbox interaction and infrastructure-coverage update before any merge or Production release; checkpoint `cfadca3f` created on 2026-08-23.
+
+## Selected Work Project Image Panel Controls
+
+- [x] Audit selected-project image-panel rendering and identify why Add/Replace and Remove image actions are not discoverable beside the crop controls.
+- [x] Add a visible image upload/replace control to the right-side Project image panel for the selected project.
+- [x] Add a visible conditional Remove image action to that same panel, resetting crop state and disabling image-specific controls when no image exists.
+- [x] Preserve selected-project switching, upload progress, crop controls, direct editing, accessibility, and responsive editor layout.
+- [x] Add focused regression coverage and validate TypeScript, 87 tests, production build, and the right-side editor image panel.
+- [x] Checkpoint the repaired isolated image-management workflow and present it for review before any merge or Production release; checkpoint `5b22d2d7` created on 2026-08-23.
+
+## Selected Work Collapsed Card Whitespace Repair
+
+- [x] Audit the collapsed project-card grid, minimum height, metadata alignment, and disclosure placement that create the reported empty space.
+- [x] Remove the excessive collapsed-card vertical space and place the disclosure directly after the summary content.
+- [x] Preserve the desktop right-side Tech stack and Delivery panel, the mobile stacked fallback, image hiding, and expanded-detail rendering.
+- [x] Mirror the compact collapsed-card spacing in public and `/edit` Selected Work views without weakening direct editor controls.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated collapsed-card spacing repair and present it for review before any merge or Production release; checkpoint `26a9f653` created on 2026-08-23.
+
+## Selected Work Collapsed Metadata Containment Repair
+
+- [x] Audit the right-side metadata overflow introduced by the collapsed-card absolute-positioning shortcut.
+- [x] Replace the shortcut with a two-column summary structure that lets the metadata panel safely determine card height.
+- [x] Keep the left project identity, brief summary, and detail disclosure compact without overlap or large artificial gaps.
+- [x] Preserve public/editor parity, expanded-case-study presentation, desktop metadata placement, and mobile stacking.
+- [x] Add regression coverage for metadata containment and validate TypeScript, 16 test files / 88 tests, production build, and varied-card desktop/mobile screenshots.
+- [x] Checkpoint the corrected isolated card layout and present it for review before any merge or Production release; checkpoint `09e366e3` created on 2026-08-23.
+
+## Cloud & Infrastructure Capability Map UI Refinement
+
+- [x] Audit the current capability-map header, six-card grid, visual hierarchy, and responsive behavior.
+- [x] Improve category scanning with restrained infrastructure-representative icons and more distinct capability cards.
+- [x] Tighten the header-to-grid relationship, readable content density, contrast, and interaction feedback without changing the six editable capability topics.
+- [x] Preserve public and `/edit` capability-map parity, direct text editing, dark mode, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated capability-map UI refinement and present it for review before any merge or Production release; checkpoint `0cd286df` created on 2026-08-23.
+
+## Cloud & Infrastructure Lifecycle Positioning and Contrast Refinement
+
+- [x] Audit the current capability-map blue contrast, title, description, and six capability labels against the user’s end-to-end engineering positioning.
+- [x] Soften the blue field, grid texture, card contrast, and hover treatment while retaining clear hierarchy and accessibility.
+- [x] Reposition the content around the deployment lifecycle: Linux and networking foundations, cloud infrastructure, DevOps delivery, development services, data systems, and applied AI.
+- [x] Preserve editable public and `/edit` content parity, role-representative icons, dark mode, and reduced-motion behavior.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated lifecycle-positioning refinement and present it for review before any merge or Production release; checkpoint `66e056da` created on 2026-08-23.
+
+## Cloud & Infrastructure Approved Headline
+
+- [x] Replace the lifecycle capability title with the user-approved “From infrastructure foundations to reliable delivery.” wording.
+- [x] Preserve migration-safe hydration so this update applies only to the exact untouched prior lifecycle capability copy.
+- [x] Validate the new title in public and `/edit` renderers with TypeScript, focused tests, and production build.
+- [x] Checkpoint the isolated approved-headline update and present it before any merge or Production release; checkpoint `24ff590b` created on 2026-08-23.

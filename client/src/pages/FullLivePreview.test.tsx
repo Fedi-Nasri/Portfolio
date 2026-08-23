@@ -22,6 +22,17 @@ describe("FullLivePreview", () => {
     expect(html).toContain("Toggle navigation");
   });
 
+  it("keeps role labels, capability headings, and tool controls editable in the Toolbox preview", () => {
+    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="skills" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSkillToolbox={() => {}} onAddSkillTool={() => {}} onRemoveSkillTool={() => {}} onRemoveSkillToolbox={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+
+    expect(html).toContain("role-toolbox-grid");
+    expect(html).toContain("Cloud Engineering");
+    expect(html).toContain("Cloud infrastructure");
+    expect(html).toContain("Add toolbox");
+    expect(html).toContain("toolbox-role-icon");
+    expect(html).not.toContain("tool-brand-mark");
+  });
+
   it("renders section ordering controls and an editable custom-section template", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.customSections = [{ id: "custom-1", eyebrow: "New section", title: "Custom focus", body: "Custom section copy" }];
@@ -68,6 +79,12 @@ describe("FullLivePreview", () => {
 
     expect(html).toContain("project-editor-card");
     expect(html).toContain("project-layout-reversed");
+    expect(html).toContain("project-detail-disclosure");
+    expect(html).toContain("View detailed project");
+    expect(html).toContain("Remove image");
+    expect(html).toContain("Brief project description");
+    expect(html).toContain("project-compact-meta");
+    expect((html.match(/capability-card-icon/g) ?? []).length).toBe(6);
   });
 
   it("uses a saved focal point to crop a project image and exposes the positioning control", () => {

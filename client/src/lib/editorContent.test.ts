@@ -82,7 +82,7 @@ describe("Experience quick additions", () => {
     oneToolbox.skills = [oneToolbox.skills[0]!];
 
     expect(withToolbox.skills).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.skills.length + 1);
-    expect(withToolbox.skills.at(-1)).toEqual({ heading: "New toolbox", entries: ["New tool"] });
+    expect(withToolbox.skills.at(-1)).toEqual({ role: "Custom engineering focus", heading: "New toolbox", entries: ["New tool"] });
     expect(withoutTool.skills[0]!.entries).toEqual(DEFAULT_PORTFOLIO_CONTENT.skills[0]!.entries);
     expect(removeSkillToolbox(oneToolbox, 0).skills).toEqual(oneToolbox.skills);
   });
@@ -106,7 +106,7 @@ describe("Selected Work project management", () => {
 
     expect(above.projects).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.projects.length + 1);
     expect(above.projects[0]).toMatchObject({ title: "New infrastructure project", state: "Draft template", tech: ["New technology"], delivery: ["Project outcome"] });
-    expect(createProjectTemplate()).toMatchObject({ image: "", githubUrl: "", liveUrl: "" });
+    expect(createProjectTemplate()).toMatchObject({ image: "", githubUrl: "", liveUrl: "", summary: "Add a concise description that explains this project at a glance." });
     expect(below.projects[1]?.title).toBe("New infrastructure project");
     expect(DEFAULT_PORTFOLIO_CONTENT.projects).toHaveLength(4);
   });
