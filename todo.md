@@ -1053,3 +1053,12 @@
 - [x] Preserve selected-project switching, upload progress, crop controls, direct editing, accessibility, and responsive editor layout.
 - [x] Add focused regression coverage and validate TypeScript, 87 tests, production build, and the right-side editor image panel.
 - [x] Checkpoint the repaired isolated image-management workflow and present it for review before any merge or Production release; checkpoint `5b22d2d7` created on 2026-08-23.
+
+## Selected Work Collapsed Card Whitespace Repair
+
+- [x] Audit the collapsed project-card grid, minimum height, metadata alignment, and disclosure placement that create the reported empty space.
+- [x] Remove the excessive collapsed-card vertical space and place the disclosure directly after the summary content.
+- [x] Preserve the desktop right-side Tech stack and Delivery panel, the mobile stacked fallback, image hiding, and expanded-detail rendering.
+- [x] Mirror the compact collapsed-card spacing in public and `/edit` Selected Work views without weakening direct editor controls.
+- [x] Add focused regression coverage and validate TypeScript, 16 test files / 88 tests, production build, and desktop/mobile screenshots.
+- [x] Checkpoint the isolated collapsed-card spacing repair and present it for review before any merge or Production release; checkpoint `26a9f653` created on 2026-08-23.

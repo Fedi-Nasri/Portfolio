@@ -54,26 +54,28 @@
 
 @media (min-width: 681px) {
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.62fr);
-    column-gap: 32px;
-    align-items: start;
+    display: block;
+    min-height: 0;
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-class,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) h3,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-byline,
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-summary {
-    grid-column: 1;
+    max-width: calc(100% - min(39%, 402px));
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-compact-meta {
-    grid-column: 2;
-    grid-row: 1 / span 4;
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    width: min(35%, 390px);
+    min-width: 220px;
   }
 
   .ref-project-list > .ref-project:has(.project-detail-disclosure:not([open])) .project-detail-disclosure {
-    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 16px;
   }
 }
 
