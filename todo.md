@@ -1002,3 +1002,18 @@
 - [x] Preserve direct image upload/replacement/removal and crop controls in the active `/edit` detail state.
 - [x] Add migration-safe defaults for existing projects, focused regression coverage, and desktop/mobile public-editor validation.
 - [x] Checkpoint the refined isolated project disclosure and present it for review before any merge or Production release; checkpoint `6e7de7eb` created on 2026-08-23.
+
+## Selected Work Compact Tech Stack and Delivery Metadata
+
+- [x] Superseded: keep the existing editable Tech stack and Delivery labels/items visible in collapsed public and editor project summaries; the user requested a return to the prior summary-only collapsed state.
+- [x] Superseded: avoid duplicating compact metadata in the expanded project view; the compact metadata feature is being removed entirely.
+- [x] Superseded: preserve compact metadata wrapping and direct editing controls; the prior detailed-only metadata presentation is being restored.
+- [x] Superseded: validate the compact metadata addition; the user requested it be undone before checkpointing.
+- [x] Superseded: checkpoint the compact metadata refinement; the user requested it be undone before any feature checkpoint was created.
+
+## Selected Work Compact Metadata Rollback
+
+- [x] Remove the latest compact Tech stack and Delivery metadata markup, styling, and regression assertions.
+- [x] Restore Tech stack and Delivery to the expanded detailed project view only, with collapsed cards limited to identity and brief description.
+- [x] Validate TypeScript, tests, production build, and desktop/mobile public-editor project disclosure states.
+- [x] Checkpoint the restored isolated project disclosure and present it for review before any merge or Production release; checkpoint `45ae6f82` created on 2026-08-23.
