@@ -3,7 +3,7 @@
 ## Snapshot
 
 **Last context refresh:** 2026-08-23 (GMT+2)
-**Latest saved project checkpoint:** `dd740e80` — added the no-media project metadata column and repaired project-link normalization. A later uncheckpointed visual refinement increases and unifies the Tech stack and Delivery typography and awaits review.
+**Latest saved project checkpoint:** `a72b3f54` — increased and unified no-media project metadata typography. The isolated GitHub branch is synchronized at commit `d7d5bbf` (`style: enlarge project metadata`) and awaits review.
 **Current immediate task:** The user has paused the controlled historical-media migration. The remaining six legacy references stay untouched in private Draft 2 until the user explicitly resumes that work.
 **Deployment status:** `main` is the stable development branch. By explicit user approval on 2026-08-22, Vercel Production now tracks `deployment_versel`. The setting was saved without redeploying an existing deployment; future pushes to `deployment_versel` create Production Deployments.
 
