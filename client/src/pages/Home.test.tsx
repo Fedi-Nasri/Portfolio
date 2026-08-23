@@ -50,4 +50,12 @@ describe("public contact section", () => {
     expect(html).toContain("Cloud &amp; Network Engineer");
     expect(html).toContain("Security &amp; Networking");
   });
+
+  it("renders the editorial About statistic grid for the public first-scroll reveal", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("about-editorial-layout");
+    expect(html).toContain("ref-stats");
+    expect((html.match(/<div><b>/g) ?? []).length).toBeGreaterThanOrEqual(4);
+  });
 });

@@ -817,3 +817,12 @@
 - [x] Mirror the reorganized public layout in the `/edit` live preview without changing saved About data.
 - [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## About Statistics Card Design and First-Scroll Reveal
+
+- [x] Restyle the four About statistic cards with the supplied rounded-card, strong-number, concise-label visual direction.
+- [x] Add a one-time staggered first-scroll reveal for the public About statistic cards that progresses incrementally through the grid.
+- [x] Preserve editor legibility and direct statistic controls without applying public route-load motion to `/edit`.
+- [x] Respect `prefers-reduced-motion` by revealing the complete grid without animation.
+- [x] Validate public/editor desktop and mobile layouts, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
