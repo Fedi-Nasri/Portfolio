@@ -22,4 +22,14 @@ describe("direct portfolio asset upload validation", () => {
     await expect(caller.assets.upload({ fileName: "notes.txt", contentType: "text/plain", base64: "aGVsbG8=", category: "provider-logo" })).rejects.toThrow("Use a JPG, PNG, WebP, GIF, or SVG image.");
     await expect(caller.assets.upload({ fileName: "notes.txt", contentType: "text/plain", base64: "aGVsbG8=", category: "company-logo" })).rejects.toThrow("Use a JPG, PNG, WebP, GIF, or SVG image.");
   });
+
+  it("requires Vercel Blob before accepting a valid media payload", async () => {
+    const caller = appRouter.createCaller(context);
+    const originalToken = process.env.BLOB_READ_WRITE_TOKEN;
+    delete process.env.BLOB_READ_WRITE_TOKEN;
+
+    await expect(caller.assets.upload({ fileName: "portrait.png", contentType: "image/png", base64: "aGVsbG8=", category: "portrait" })).rejects.toThrow("Vercel Blob is not configured");
+
+    if (originalToken) process.env.BLOB_READ_WRITE_TOKEN = originalToken;
+  });
 });

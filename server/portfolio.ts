@@ -60,8 +60,10 @@ async function ensurePortfolioDrafts(): Promise<void> {
   const existing = await db.select({ id: portfolioDrafts.id }).from(portfolioDrafts).limit(1);
   if (existing[0]) return;
   const legacy = await latestLegacyContent();
-  const created = await db.insert(portfolioDrafts).values({ draftKey: "main", name: "Main portfolio", isPublic: true, createdBy: DIRECT_EDITOR_ID, updatedBy: DIRECT_EDITOR_ID });
-  const draftId = Number(created[0].insertId);
+  await db.insert(portfolioDrafts).values({ draftKey: "main", name: "Main portfolio", isPublic: true, createdBy: DIRECT_EDITOR_ID, updatedBy: DIRECT_EDITOR_ID });
+  const seeded = await db.select({ id: portfolioDrafts.id }).from(portfolioDrafts).where(eq(portfolioDrafts.draftKey, "main")).limit(1);
+  const draftId = seeded[0]?.id;
+  if (draftId === undefined) throw new Error("The Main portfolio draft could not be created.");
   await db.insert(portfolioDraftVersions).values({ draftId, versionNumber: 1, contentJson: legacy.content, createdBy: DIRECT_EDITOR_ID });
 }
 
@@ -150,12 +152,12 @@ export async function createPortfolioDraft(name: string, sourceDraftKey?: string
   const source = await getEditorPortfolioContent(sourceDraftKey);
   const db = await getDb();
   if (!db) throw new Error("The database is unavailable.");
-  const created = await db.insert(portfolioDrafts).values({ draftKey: `draft-${randomUUID()}`, name: name.trim() || "Untitled draft", createdBy: DIRECT_EDITOR_ID, updatedBy: DIRECT_EDITOR_ID });
-  const draftId = Number(created[0].insertId);
-  const inserted = await db.select().from(portfolioDrafts).where(eq(portfolioDrafts.id, draftId)).limit(1);
+  const draftKey = `draft-${randomUUID()}`;
+  await db.insert(portfolioDrafts).values({ draftKey, name: name.trim() || "Untitled draft", createdBy: DIRECT_EDITOR_ID, updatedBy: DIRECT_EDITOR_ID });
+  const inserted = await db.select().from(portfolioDrafts).where(eq(portfolioDrafts.draftKey, draftKey)).limit(1);
   const draft = inserted[0];
   if (!draft) throw new Error("The new draft could not be created.");
-  await db.insert(portfolioDraftVersions).values({ draftId, versionNumber: 1, contentJson: source.content, createdBy: DIRECT_EDITOR_ID });
+  await db.insert(portfolioDraftVersions).values({ draftId: draft.id, versionNumber: 1, contentJson: source.content, createdBy: DIRECT_EDITOR_ID });
   return getEditorPortfolioContent(draft.draftKey);
 }
 

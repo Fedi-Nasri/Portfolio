@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm exec vite build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": "dist/public",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/[...path].js" },
+    { "handle": "filesystem" },
+    { "src": "/manus-storage/(.*)", "dest": "/api/manus-storage/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
