@@ -881,3 +881,12 @@
 - [x] Preserve the metadata column’s desktop hierarchy and its mobile stacked fallback.
 - [x] Validate public/editor typography, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Global Project Metadata and About Technology Indicator Refinement
+
+- [x] Increase Tech stack and Delivery labels and item typography across both image-backed and no-media Selected Work rows.
+- [x] Replace the About “3 Languages spoken” statistic with “20+ Technologies in toolbox.”
+- [x] Refine the technology indicator plus sign so it matches the blue technical card system.
+- [x] Preserve public/editor parity, responsive layout, direct About controls, and existing reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile presentation, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

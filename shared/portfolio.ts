@@ -57,7 +57,7 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     eyebrow: "About", title: "A systems-focused engineer\nconnecting every layer of the stack.",
     paragraphs: ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."],
     tags: ["#Cloud", "#Networking", "#Linux", "#DevOps", "#Docker", "#Cybersecurity", "#OpenToWork"],
-    stats: [{ value: "2", label: "Internships completed" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "3", label: "Languages spoken" }]
+    stats: [{ value: "2", label: "Internships completed" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
   },
   experienceSection: { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." },
   experience: [
@@ -96,6 +96,12 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
 export function hydrateExperienceDetails(content: PortfolioContent): PortfolioContent {
   return {
     ...content,
+    about: {
+      ...content.about,
+      stats: content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
+        ? { value: "20", label: "Technologies in toolbox" }
+        : stat),
+    },
     experience: content.experience.map((experience) => {
       const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
