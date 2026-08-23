@@ -905,3 +905,11 @@
 - [x] Preserve readability, image/no-media project layouts, and public/editor parity at desktop and mobile sizes.
 - [x] Validate the corner accent, TypeScript, tests, and production build before checkpointing.
 - [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.
+
+## Experience Background and Timeline Theme Redesign
+
+- [x] Redesign the Experience section background with a cohesive pale-blue technical theme that complements Selected Work without duplicating it.
+- [x] Refine the timeline spine, entry surfaces, company/date hierarchy, tags, and disclosure details for clearer scanning.
+- [x] Preserve public/editor parity, expand/collapse behavior, detail-bullet editing, logo fallback, and reduced-motion behavior.
+- [x] Validate public/editor desktop and mobile presentation, interactions, TypeScript, tests, and production build before checkpointing.
+- [ ] Present the revised isolated prototype for review before any merge to `main` or separately approved Production release.

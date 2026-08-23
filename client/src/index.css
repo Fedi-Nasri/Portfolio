@@ -684,3 +684,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes specialty-drift-two { 0%,100% { transform:translate3d(0,0,0); } 50% { transform:translate3d(0,2px,0); } }
 @keyframes specialty-drift-three { 0%,100% { transform:translate3d(0,0,0); } 50% { transform:translate3d(0,-2px,0); } }
 @keyframes specialty-drift-four { 0%,100% { transform:translate3d(0,0,0); } 50% { transform:translate3d(0,2px,0); } }
+
+/* Experience technical field — the timeline gets the same calm systems language as Selected Work. */
+.ref-experience .experience-details { gap:0; padding:0; border:1px solid transparent; border-left-width:1px; box-shadow:none; }.ref-experience .experience-details.is-expanded { gap:14px; border-color:#cee3fa; border-left:3px solid #4d86df; box-shadow:inset 0 1px 0 rgba(255,255,255,.75); }.ref-experience .experience-details.is-expanded .experience-details-inner { padding:17px 19px; }.dim-mode .ref-experience .experience-details { border-color:transparent; }.dim-mode .ref-experience .experience-details.is-expanded { border-color:#345f95; border-left-color:#72a7ff; }@media (max-width:780px) { .ref-experience .experience-details.is-expanded .experience-details-inner { padding:15px; } }
