@@ -43,6 +43,13 @@ describe("public contact section", () => {
 
     expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
     expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect((html.match(/project-detail-disclosure/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(html).toContain("View detailed project");
+    expect(html).not.toContain("project-detail-disclosure\" open");
+    expect(html).toContain("project-summary");
+    expect(html).toContain("project-compact-meta");
+    expect(html).toContain("A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.");
+    expect((html.match(/capability-card-icon/g) ?? []).length).toBe(6);
   });
 
   it("uses the wide three-column Home composition while preserving the seeded portrait and focus areas", () => {
@@ -61,6 +68,34 @@ describe("public contact section", () => {
     expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
     expect((html.match(/about-numeric-indicator/g) ?? []).length).toBeGreaterThanOrEqual(4);
     expect(html).toContain(">2<");
+  });
+
+  it("renders the role-focused Cloud, DevOps, and DevSecOps Toolbox cards", () => {
+    const html = renderToStaticMarkup(<Home />);
+
+    expect(html).toContain("role-toolbox-section");
+    expect(html).toContain("Cloud Engineering");
+    expect(html).toContain("DevOps Engineering");
+    expect(html).toContain("DevSecOps");
+    expect(html).toContain("CI/CD Pipelines");
+    expect(html).toContain("Kubernetes");
+    expect(html).toContain("Trivy");
+    expect(html).toContain("SonarQube");
+    expect(html).toContain("Grafana");
+    expect(html).toContain("Prometheus");
+    expect(html).toContain("Loki");
+    expect(html).toContain("HashiCorp Vault");
+    expect(html).toContain("OpenTelemetry");
+    expect(html).toContain("Argo CD");
+    expect(html).toContain("OVHcloud");
+    expect(html).toContain("Wireshark");
+    expect(html).toContain("802.1X Authentication");
+    expect(html).toContain("Firewalls");
+    expect(html).toContain("MySQL");
+    expect(html).toContain("Firebase");
+    expect(html).toContain("toolbox-role-icon");
+    expect(html).not.toContain("tool-brand-mark");
+    expect(html).not.toContain("tool-brand-fallback");
   });
 
   it("expands a no-media project row and normalizes a bare valid project domain into a public action", () => {

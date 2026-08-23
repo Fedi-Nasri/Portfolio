@@ -127,7 +127,7 @@ export function reorderExperienceDetail(source: PortfolioContent, experienceInde
 }
 
 export function createSkillToolbox(): PortfolioContent["skills"][number] {
-  return { heading: "New toolbox", entries: ["New tool"] };
+  return { role: "Custom engineering focus", heading: "New toolbox", entries: ["New tool"] };
 }
 
 export function appendSkillToolbox(source: PortfolioContent): PortfolioContent {
@@ -168,6 +168,7 @@ export function createProjectTemplate(): PortfolioContent["projects"][number] {
     state: "Draft template",
     title: "New infrastructure project",
     byline: "Organisation or personal project · YEAR",
+    summary: "Add a concise description that explains this project at a glance.",
     problem: "Describe the operational or technical problem this work addressed.",
     body: "Explain what you designed, built, configured, or delivered.",
     realization: "Summarise the outcome, impact, and the system that now works reliably.",
