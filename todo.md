@@ -1105,3 +1105,19 @@
 - [x] Run TypeScript, Vitest, production build, and public/editor responsive release checks against the candidate.
 - [x] Present the audited candidate and obtain fresh final confirmation before pushing the protected `deployment_versel` branch.
 - [x] After final confirmation only, apply the release, confirm the Vercel Production deployment is serving, and smoke-test public `/`, direct `/edit`, and `/api/trpc/auth.me`.
+
+## Requested Stable Main Reconciliation of Released Features
+
+- [x] Inspect `origin/main`, the released deployment candidate, and the isolated source branch without merging unrelated histories.
+- [x] Build a main-based reconciliation candidate with only the reviewed Toolbox, Selected Work, Cloud & Infrastructure, tests, and continuity files.
+- [x] Validate the candidate with TypeScript, Vitest, production build, and protected-file diff checks.
+- [x] Commit and push the audited reconciliation to `main` without changing `deployment_versel` or Vercel Production.
+- [x] Record the stable-main synchronization in the checklist and AI continuity history.
+
+## Approved Main Runtime Synchronization
+
+- [x] Obtain approval to include the missing main runtime and configuration support needed for a runnable stable-main reconciliation.
+- [x] Align the approved runtime, shared core, package, and application foundation from the released deployment baseline into the main-based candidate.
+- [x] Reapply the reviewed Toolbox, Selected Work, and Cloud & Infrastructure feature files over the synchronized main foundation.
+- [x] Validate and audit the expanded candidate without modifying `deployment_versel` or Vercel Production.
+- [x] Update `main` only and record the complete runtime-plus-feature synchronization.
