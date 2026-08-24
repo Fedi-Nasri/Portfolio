@@ -89,6 +89,22 @@ describe("role-focused Toolbox hydration", () => {
     expect(legacy.projects[0]!.summary).toBeUndefined();
   });
 
+  it("upgrades only the untouched About copy to the approved systems-and-delivery positioning", () => {
+    const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.about.title = "A systems-focused engineer\nconnecting every layer of the stack.";
+    legacy.about.paragraphs = ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."];
+    const custom = structuredClone(legacy);
+    custom.about.paragraphs[1] = "A custom saved About paragraph.";
+
+    const hydrated = hydrateExperienceDetails(legacy);
+    const customHydrated = hydrateExperienceDetails(custom);
+
+    expect(hydrated.about.title).toBe("Building secure, reliable systems\nfrom infrastructure to delivery.");
+    expect(hydrated.about.paragraphs[0]).toContain("focused on cloud, networking, Linux systems, and secure application delivery.");
+    expect(customHydrated.about.title).toBe("A systems-focused engineer\nconnecting every layer of the stack.");
+    expect(customHydrated.about.paragraphs[1]).toBe("A custom saved About paragraph.");
+  });
+
   it("upgrades only the untouched capability-map messaging to the lifecycle positioning", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     legacy.capabilities = { eyebrow: "Cloud & Infrastructure", title: "One engineer,\nevery critical layer.", description: "Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.", services: [{ name: "Linux Systems", description: "Debian and Ubuntu administration, Bash scripting, monitoring, and inter-service communication." }, { name: "Cloud & DevOps", description: "Docker, Compose, CI/CD, cloud VMs, service dependencies, and health checks." }, { name: "Network Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and enterprise access control." }, { name: "Databases", description: "PostgreSQL, MySQL, MongoDB, Firebase Firestore, and live telemetry data." }, { name: "Full-Stack", description: "React, Flask, Symfony, API services, dashboards, and dependable data flows." }, { name: "Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines." }] };
