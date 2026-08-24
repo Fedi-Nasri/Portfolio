@@ -193,10 +193,12 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       && content.experienceSection.eyebrow === GALYLIO_EXPERIENCE_SECTION.eyebrow
       && content.experienceSection.title === GALYLIO_EXPERIENCE_SECTION.title
       && content.experienceSection.intro === GALYLIO_EXPERIENCE_SECTION.intro);
-  const isLegacyInternshipStat = (stat: PortfolioContent["about"]["stats"][number]) => {
+  const matchesNumericStatValue = (stat: PortfolioContent["about"]["stats"][number], expected: number) => {
     const value = String(stat.value).trim();
-    return (value === "2" || value === "3") && stat.label.trim().toLowerCase() === "internships completed";
+    return /^\d+\+?$/.test(value) && Number.parseInt(value, 10) === expected;
   };
+  const isLegacyInternshipStat = (stat: PortfolioContent["about"]["stats"][number]) => (matchesNumericStatValue(stat, 2) || matchesNumericStatValue(stat, 3))
+    && stat.label.trim().toLowerCase() === "internships completed";
   const shouldUpgradeEngagementStat = (shouldAddFreelanceExperience || hasExactFreelanceExperience || hasCurrentFreelanceExperienceOrder)
     && content.about.stats.some(isLegacyInternshipStat);
   const matchesAboutCopy = (candidate: Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">) => content.about.eyebrow === candidate.eyebrow
@@ -205,11 +207,11 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
   const shouldUpgradeAboutCopy = matchesAboutCopy(LEGACY_ABOUT_COPY) || matchesAboutCopy(PRIOR_REVISED_ABOUT_COPY) || matchesAboutCopy(BOLDED_REFINED_ABOUT_COPY);
   const hasPriorAboutStats = content.about.stats.length === 4
     && (isLegacyInternshipStat(content.about.stats[0]!) || (String(content.about.stats[0]!.value).trim() === "4" && content.about.stats[0]!.label.trim().toLowerCase() === "professional engagements"))
-    && String(content.about.stats[1]!.value).trim() === "4"
+    && matchesNumericStatValue(content.about.stats[1]!, 4)
     && content.about.stats[1]!.label.trim().toLowerCase() === "infrastructure projects"
-    && String(content.about.stats[2]!.value).trim() === "5"
+    && matchesNumericStatValue(content.about.stats[2]!, 5)
     && content.about.stats[2]!.label.trim().toLowerCase() === "professional certifications"
-    && (String(content.about.stats[3]!.value).trim() === "20" || String(content.about.stats[3]!.value).trim() === "20+")
+    && matchesNumericStatValue(content.about.stats[3]!, 20)
     && content.about.stats[3]!.label.trim().toLowerCase() === "technologies in toolbox";
   const shouldUpgradeAboutStats = shouldUpgradeAboutCopy && hasPriorAboutStats;
   const normalizedAboutStats = content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
@@ -232,7 +234,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && project.state === expected.state
     && project.title === expected.title
     && project.byline === expected.byline
-    && (project.summary === undefined || project.summary === expected.summary)
+    && (project.summary === undefined || project.summary === expected.summary || project.summary === expected.body.split(/(?<=[.!?])\s/)[0])
     && project.problem === expected.problem
     && project.body === expected.body
     && project.realization === expected.realization

@@ -39,14 +39,20 @@ describe("role-focused Toolbox hydration", () => {
     legacy.projectsSection = { ...legacy.projectsSection, title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer." };
     const custom = structuredClone(legacy);
     custom.projects[0]!.summary = "A custom saved project summary.";
+    const generatedSummaryLegacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    generatedSummaryLegacy.projects = generatedSummaryLegacy.projects.slice(2).map((project) => ({ ...project, summary: project.body.split(/(?<=[.!?])\s/)[0] }));
+    generatedSummaryLegacy.projectsSection = { ...generatedSummaryLegacy.projectsSection, title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer." };
 
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
+    const generatedSummaryHydrated = hydrateExperienceDetails(generatedSummaryLegacy);
 
     expect(hydrated.projects).toHaveLength(6);
     expect(hydrated.projectsSection.title).toBe("Six systems,\nbuilt to run reliably.");
     expect(hydrated.projects[0]).toMatchObject({ title: "1111.tn DevSecOps Delivery", state: "Professional project", tech: expect.arrayContaining(["GitHub Actions", "Trivy", "OWASP ZAP", "Grafana"]) });
     expect(hydrated.projects[1]).toMatchObject({ title: "Cloud & Kubernetes Modernization", state: "Freelance engagement", tech: expect.arrayContaining(["Kubernetes", "Microsoft Azure"]) });
+    expect(generatedSummaryHydrated.projects).toHaveLength(6);
+    expect(generatedSummaryHydrated.projectsSection.title).toBe("Six systems,\nbuilt to run reliably.");
     expect(customHydrated.projects).toHaveLength(4);
     expect(customHydrated.projects[0]?.summary).toBe("A custom saved project summary.");
     expect(customHydrated.projectsSection.title).toBe("Four systems,\nbuilt to run reliably.");
@@ -95,17 +101,21 @@ describe("role-focused Toolbox hydration", () => {
     legacy.about.paragraphs = ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."];
     const custom = structuredClone(legacy);
     custom.about.paragraphs[1] = "A custom saved About paragraph.";
+    const zeroPaddedStats = structuredClone(legacy);
+    zeroPaddedStats.about.stats = [{ value: "02", label: "Internships completed" }, { value: "04", label: "Infrastructure projects" }, { value: "05", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }];
     const boldedRefinement = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     boldedRefinement.about.paragraphs = ["I am a Computer Engineering Master’s student specialised in **cloud, networking, Linux systems, and secure application delivery**.", "My work spans **the full operational lifecycle**: designing dependable network and server foundations, building **cloud-aware automation**, strengthening **CI/CD pipelines with security checks**, and making services observable through **monitoring and telemetry**.", "I combine hands-on experience in **DevSecOps, Kubernetes, Azure migration, application deployment, databases, and applied AI services**. Whether I am improving a production workflow, connecting real-time data, or securing an infrastructure layer, I focus on solutions that are **practical, maintainable, and ready to evolve**."];
 
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
+    const zeroPaddedStatsHydrated = hydrateExperienceDetails(zeroPaddedStats);
     const boldedRefinementHydrated = hydrateExperienceDetails(boldedRefinement);
 
     expect(hydrated.about.title).toBe("A passionate engineer,\nfrom secure infrastructure foundations to reliable cloud delivery.");
     expect(hydrated.about.paragraphs[0]).toBe("I am a Computer Engineering Master’s student specialised in cloud, networking, Linux systems, and secure application delivery.");
     expect(hydrated.about.paragraphs.join(" ")).not.toContain("**");
     expect(hydrated.about.stats).toEqual([{ value: "4", label: "Professional engagements" }, { value: "6", label: "Systems delivered" }, { value: "5", label: "Professional certifications" }, { value: "20+", label: "Technologies in toolbox" }]);
+    expect(zeroPaddedStatsHydrated.about.stats).toEqual([{ value: "4", label: "Professional engagements" }, { value: "6", label: "Systems delivered" }, { value: "5", label: "Professional certifications" }, { value: "20+", label: "Technologies in toolbox" }]);
     expect(boldedRefinementHydrated.about.paragraphs.join(" ")).not.toContain("**");
     expect(boldedRefinementHydrated.about.paragraphs[1]).toContain("cloud-aware automation");
     expect(customHydrated.about.title).toBe("A systems-focused engineer\nconnecting every layer of the stack.");
