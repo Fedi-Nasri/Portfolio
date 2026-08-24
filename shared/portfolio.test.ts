@@ -20,16 +20,35 @@ describe("role-focused Toolbox hydration", () => {
     const persistedFreelance = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     persistedFreelance.about.stats[0] = { value: "2", label: "Internships completed " };
 
-    expect(hydrated.experience[0]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: true });
-    expect(hydrated.experience[0]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
-    expect(hydrated.experience[1]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting", date: "FREELANCE · PROJECT-BASED" });
+    expect(hydrated.experience[0]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting", date: "FREELANCE · PROJECT-BASED", now: true });
+    expect(hydrated.experience[1]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: false });
+    expect(hydrated.experience[1]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
     expect(hydrated.experienceSection.title).toBe("Four engineering engagements,\nfrom secure delivery to cloud migration.");
     expect(hydrated.about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
-    expect(hydrateExperienceDetails(persistedGalylio).experience[1]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting" });
+    expect(hydrateExperienceDetails(persistedGalylio).experience[0]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting", now: true });
     expect(hydrateExperienceDetails(persistedGalylio).about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
     expect(hydrateExperienceDetails(persistedFreelance).about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
     expect(customHydrated.experience).toHaveLength(2);
     expect(customHydrated.experience[0]?.text).toBe("A saved custom experience summary.");
+  });
+
+  it("adds the 1111.tn and freelance Selected Work entries only to an untouched legacy project baseline", () => {
+    const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.projects = legacy.projects.slice(2);
+    legacy.projectsSection = { ...legacy.projectsSection, title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer." };
+    const custom = structuredClone(legacy);
+    custom.projects[0]!.summary = "A custom saved project summary.";
+
+    const hydrated = hydrateExperienceDetails(legacy);
+    const customHydrated = hydrateExperienceDetails(custom);
+
+    expect(hydrated.projects).toHaveLength(6);
+    expect(hydrated.projectsSection.title).toBe("Six systems,\nbuilt to run reliably.");
+    expect(hydrated.projects[0]).toMatchObject({ title: "1111.tn DevSecOps Delivery", state: "Professional project", tech: expect.arrayContaining(["GitHub Actions", "Trivy", "OWASP ZAP", "Grafana"]) });
+    expect(hydrated.projects[1]).toMatchObject({ title: "Cloud & Kubernetes Modernization", state: "Freelance engagement", tech: expect.arrayContaining(["Kubernetes", "Microsoft Azure"]) });
+    expect(customHydrated.projects).toHaveLength(4);
+    expect(customHydrated.projects[0]?.summary).toBe("A custom saved project summary.");
+    expect(customHydrated.projectsSection.title).toBe("Four systems,\nbuilt to run reliably.");
   });
 
   it("upgrades legacy Toolbox headings into the DevOps, DevSecOps, and Cloud Engineering groups without mutating saved content", () => {
@@ -58,6 +77,7 @@ describe("role-focused Toolbox hydration", () => {
 
   it("adds a concise summary for legacy projects without overwriting an existing project summary", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.projects = legacy.projects.slice(2);
     legacy.projects[0]!.summary = undefined;
     legacy.projects[1]!.summary = "Saved concise summary.";
 

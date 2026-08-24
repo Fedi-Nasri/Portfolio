@@ -108,7 +108,7 @@ describe("Selected Work project management", () => {
     expect(above.projects[0]).toMatchObject({ title: "New infrastructure project", state: "Draft template", tech: ["New technology"], delivery: ["Project outcome"] });
     expect(createProjectTemplate()).toMatchObject({ image: "", githubUrl: "", liveUrl: "", summary: "Add a concise description that explains this project at a glance." });
     expect(below.projects[1]?.title).toBe("New infrastructure project");
-    expect(DEFAULT_PORTFOLIO_CONTENT.projects).toHaveLength(4);
+    expect(DEFAULT_PORTFOLIO_CONTENT.projects).toHaveLength(6);
   });
 
   it("adds and removes project tech and delivery items, including the final item", () => {

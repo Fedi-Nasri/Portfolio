@@ -66,7 +66,7 @@ const GALYLIO_DEVSECOPS_INTERNSHIP = {
     "Added Prometheus and Grafana monitoring so deployed services and pipeline outcomes could be observed and investigated.",
   ],
   tags: ["DevSecOps", "GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"],
-  now: true,
+  now: false,
 } satisfies PortfolioContent["experience"][number];
 const FREELANCE_CLOUD_DELIVERY_EXPERIENCE = {
   date: "FREELANCE · PROJECT-BASED",
@@ -79,6 +79,7 @@ const FREELANCE_CLOUD_DELIVERY_EXPERIENCE = {
     "Implemented cloud services and deployment workflows for multiple applications, with attention to reliable releases and environment readiness.",
   ],
   tags: ["Freelance", "Kubernetes", "Microsoft Azure", "Cloud Migration", "Cloud Services", "Application Deployment"],
+  now: true,
 } satisfies PortfolioContent["experience"][number];
 const LEGACY_DEFAULT_EXPERIENCE = [
   { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"] },
@@ -87,6 +88,16 @@ const LEGACY_DEFAULT_EXPERIENCE = [
 const LEGACY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." } satisfies PortfolioContent["experienceSection"];
 const GALYLIO_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." } satisfies PortfolioContent["experienceSection"];
 const CLOUD_DELIVERY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Four engineering engagements,\nfrom secure delivery to cloud migration.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, Kubernetes production upgrades, and Azure cloud migration — a practical path toward reliable delivery." } satisfies PortfolioContent["experienceSection"];
+const DEVSECOPS_1111_TN_PROJECT = { image: "", type: "DevSecOps · Secure Delivery · Observability", state: "Professional project", title: "1111.tn DevSecOps Delivery", byline: "1111.tn · DevSecOps contribution", summary: "A security-focused delivery workflow for the 1111.tn application, covering environment promotion, automated checks, and operational visibility.", problem: "A production application needs a dependable release path that separates environments, identifies quality and security risks early, and makes deployed services observable.", body: "Contributed to the 1111.tn application’s DevSecOps workflow by supporting delivery across development, testing, staging, and deployment environments with container-based automation and layered security checks.", realization: "Established a more inspectable delivery path with automated code-quality, vulnerability, and dynamic-security checks, alongside metrics and dashboards for service and release visibility.", tech: ["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"], delivery: ["Environment promotion", "Security checks", "Operational observability"] } satisfies PortfolioContent["projects"][number];
+const FREELANCE_CLOUD_MODERNIZATION_PROJECT = { image: "", type: "Cloud Migration · Kubernetes · Delivery", state: "Freelance engagement", title: "Cloud & Kubernetes Modernization", byline: "Independent Consulting · Freelance", summary: "A production-modernization engagement spanning Kubernetes upgrades, on-premises-to-Azure migration planning, cloud services, and application deployments.", problem: "Application workloads need a controlled path from on-premises infrastructure to cloud services while keeping deployment practices, runtime readiness, and operational responsibilities clear.", body: "Supported Kubernetes production upgrades, contributed to moving workloads from on-premises infrastructure toward Microsoft Azure, and implemented cloud services and deployment workflows for multiple applications.", realization: "Delivered practical modernization support that connected upgraded Kubernetes delivery, Azure-oriented migration steps, cloud-service implementation, and repeatable application deployments.", tech: ["Kubernetes", "Microsoft Azure", "Docker", "Cloud Services", "Application Deployment"], delivery: ["Kubernetes upgrades", "Azure migration", "Production deployments"] } satisfies PortfolioContent["projects"][number];
+const LEGACY_DEFAULT_PROJECTS = [
+  { image: "/manus-storage/fedi-project-autonomous-boat_69519cd9.jpg", type: "AI · Edge Linux · Real-time Monitoring", state: "Internship project", title: "Autonomous Robot Boat Monitoring", byline: "Graines d’Entrepreneurs Tunisie · 2025", summary: "A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.", problem: "An autonomous robot boat required a reliable way to stream telemetry, support AI navigation decisions, and detect floating waste in real time.", body: "Architected a live monitoring web application, a Python navigation backend, and a YOLOv11 waste-detection pipeline deployed on embedded Linux.", realization: "Delivered an integrated embedded-Linux monitoring stack that brought live telemetry, navigation services, and waste-detection signals into one operator workflow.", tech: ["React", "Flask", "Firebase", "Python", "YOLOv11", "Docker"], delivery: ["Live telemetry", "Embedded Linux", "AI module"] },
+  { image: "/manus-storage/fedi-eap-tls-reliable_c4eb57dd.jpg", type: "Network Security · PKI · Linux", state: "Infrastructure project", title: "802.1X / EAP-TLS Authentication", byline: "Enterprise Network Lab · 2025", summary: "A certificate-based access-control lab for password-free enterprise network admission.", problem: "Enterprise access control needs strong identity verification without relying on shared passwords or weak network admission practices.", body: "Built a complete certificate-based 802.1X / EAP-TLS authentication infrastructure across three Linux virtual machines, simulating mutual authentication in an enterprise network.", realization: "Delivered a three-VM lab that validates certificate-based mutual authentication and password-free enterprise network access.", tech: ["Linux", "EAP-TLS", "802.1X", "PKI", "Virtual Machines"], delivery: ["Mutual authentication", "Password-free access"] },
+  { image: "/manus-storage/fedi-cicd-reliable_5af806ca.jpg", type: "DevOps · Containers · Automation", state: "Infrastructure project", title: "CI/CD & Docker Orchestration", byline: "Cloud Deployment Lab · 2025", summary: "A repeatable container delivery path from GitHub Actions to a cloud VM.", problem: "Service delivery needs repeatable build, test, and deployment practices with clear health checks and container dependencies.", body: "Automated GitHub Actions workflows for Docker image builds and cloud VM deployment, then managed multi-container environments with Docker Compose.", realization: "Delivered a repeatable build-test-deploy path to a cloud VM, with Compose-managed dependencies, health checks, and persistent volumes.", tech: ["GitHub Actions", "Docker", "Docker Compose", "Cloud VMs"], delivery: ["Build-test-deploy", "Health checks", "Persistent volumes"] },
+  { image: "/manus-storage/fedi-secure-network-reliable_5c6d52b4.jpg", type: "Networking · Secure Deployment", state: "Systems project", title: "Secure Network Deployment Infrastructure", byline: "Network Systems Lab · 2025", summary: "A segmented network lab for secure DNS, TLS, routing, and VPN access.", problem: "Production-ready environments need secure connectivity, segmentation, TLS, and dependable routing between services and networks.", body: "Configured DNS zones, HTTPS/TLS certificates, VLANs, NAT, ACLs, static routing, and a Tailscale VPN across a structured multi-node lab environment.", realization: "Delivered a segmented multi-node network lab with secured DNS and TLS, controlled routing, and remote access through a Tailscale VPN.", tech: ["DNS", "TLS", "VLAN", "NAT", "ACL", "Tailscale"], delivery: ["Network segmentation", "Secure VPN", "Inter-VLAN routing"] }
+] satisfies PortfolioContent["projects"];
+const LEGACY_PROJECTS_SECTION = { eyebrow: "Selected Work", title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer.", problemLabel: "Problem", descriptionLabel: "What it is", realizationLabel: "Realization", techLabel: "Tech stack", deliveryLabel: "Delivery" } satisfies PortfolioContent["projectsSection"];
+const EXPANDED_PROJECTS_SECTION = { eyebrow: "Selected Work", title: "Six systems,\nbuilt to run reliably.", intro: "From secure DevSecOps delivery and cloud modernization to real-time AI monitoring and network infrastructure — each project strengthened a different operational layer.", problemLabel: "Problem", descriptionLabel: "What it is", realizationLabel: "Realization", techLabel: "Tech stack", deliveryLabel: "Delivery" } satisfies PortfolioContent["projectsSection"];
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -107,8 +118,8 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   },
   experienceSection: { ...CLOUD_DELIVERY_EXPERIENCE_SECTION },
   experience: [
-    { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] },
     { ...FREELANCE_CLOUD_DELIVERY_EXPERIENCE, details: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.details], tags: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.tags] },
+    { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] },
     ...LEGACY_DEFAULT_EXPERIENCE.map((experience) => ({ ...experience, details: [...(experience.details ?? [])], tags: [...experience.tags] }))
   ],
   skillsSection: { eyebrow: "Role Toolbox", title: "A DevOps-ready toolkit\nfor cloud, security, and delivery." },
@@ -120,12 +131,11 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     { name: "DevOps, Cloud & Agile", provider: "ibm", issuer: "IBM Specialisation", issued: "Mar 2026", scope: "Cloud delivery practices" }, { name: "Azure AI Fundamentals", provider: "microsoft", issuer: "Microsoft · AZ-900", issued: "Nov 2024", scope: "AI fundamentals" }
   ],
   capabilities: { ...LIFECYCLE_CAPABILITIES, services: LIFECYCLE_CAPABILITIES.services.map((service) => ({ ...service })) },
-  projectsSection: { eyebrow: "Selected Work", title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer.", problemLabel: "Problem", descriptionLabel: "What it is", realizationLabel: "Realization", techLabel: "Tech stack", deliveryLabel: "Delivery" },
+  projectsSection: { ...EXPANDED_PROJECTS_SECTION },
   projects: [
-    { image: "/manus-storage/fedi-project-autonomous-boat_69519cd9.jpg", type: "AI · Edge Linux · Real-time Monitoring", state: "Internship project", title: "Autonomous Robot Boat Monitoring", byline: "Graines d’Entrepreneurs Tunisie · 2025", summary: "A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.", problem: "An autonomous robot boat required a reliable way to stream telemetry, support AI navigation decisions, and detect floating waste in real time.", body: "Architected a live monitoring web application, a Python navigation backend, and a YOLOv11 waste-detection pipeline deployed on embedded Linux.", realization: "Delivered an integrated embedded-Linux monitoring stack that brought live telemetry, navigation services, and waste-detection signals into one operator workflow.", tech: ["React", "Flask", "Firebase", "Python", "YOLOv11", "Docker"], delivery: ["Live telemetry", "Embedded Linux", "AI module"] },
-    { image: "/manus-storage/fedi-eap-tls-reliable_c4eb57dd.jpg", type: "Network Security · PKI · Linux", state: "Infrastructure project", title: "802.1X / EAP-TLS Authentication", byline: "Enterprise Network Lab · 2025", summary: "A certificate-based access-control lab for password-free enterprise network admission.", problem: "Enterprise access control needs strong identity verification without relying on shared passwords or weak network admission practices.", body: "Built a complete certificate-based 802.1X / EAP-TLS authentication infrastructure across three Linux virtual machines, simulating mutual authentication in an enterprise network.", realization: "Delivered a three-VM lab that validates certificate-based mutual authentication and password-free enterprise network access.", tech: ["Linux", "EAP-TLS", "802.1X", "PKI", "Virtual Machines"], delivery: ["Mutual authentication", "Password-free access"] },
-    { image: "/manus-storage/fedi-cicd-reliable_5af806ca.jpg", type: "DevOps · Containers · Automation", state: "Infrastructure project", title: "CI/CD & Docker Orchestration", byline: "Cloud Deployment Lab · 2025", summary: "A repeatable container delivery path from GitHub Actions to a cloud VM.", problem: "Service delivery needs repeatable build, test, and deployment practices with clear health checks and container dependencies.", body: "Automated GitHub Actions workflows for Docker image builds and cloud VM deployment, then managed multi-container environments with Docker Compose.", realization: "Delivered a repeatable build-test-deploy path to a cloud VM, with Compose-managed dependencies, health checks, and persistent volumes.", tech: ["GitHub Actions", "Docker", "Docker Compose", "Cloud VMs"], delivery: ["Build-test-deploy", "Health checks", "Persistent volumes"] },
-    { image: "/manus-storage/fedi-secure-network-reliable_5c6d52b4.jpg", type: "Networking · Secure Deployment", state: "Systems project", title: "Secure Network Deployment Infrastructure", byline: "Network Systems Lab · 2025", summary: "A segmented network lab for secure DNS, TLS, routing, and VPN access.", problem: "Production-ready environments need secure connectivity, segmentation, TLS, and dependable routing between services and networks.", body: "Configured DNS zones, HTTPS/TLS certificates, VLANs, NAT, ACLs, static routing, and a Tailscale VPN across a structured multi-node lab environment.", realization: "Delivered a segmented multi-node network lab with secured DNS and TLS, controlled routing, and remote access through a Tailscale VPN.", tech: ["DNS", "TLS", "VLAN", "NAT", "ACL", "Tailscale"], delivery: ["Network segmentation", "Secure VPN", "Inter-VLAN routing"] }
+    { ...DEVSECOPS_1111_TN_PROJECT, tech: [...DEVSECOPS_1111_TN_PROJECT.tech], delivery: [...DEVSECOPS_1111_TN_PROJECT.delivery] },
+    { ...FREELANCE_CLOUD_MODERNIZATION_PROJECT, tech: [...FREELANCE_CLOUD_MODERNIZATION_PROJECT.tech], delivery: [...FREELANCE_CLOUD_MODERNIZATION_PROJECT.delivery] },
+    ...LEGACY_DEFAULT_PROJECTS.map((project) => ({ ...project, tech: [...project.tech], delivery: [...project.delivery] }))
   ],
   writingSection: { eyebrow: "Writing & Insights", title: "Notes from the systems\nbehind the work.", intro: "A home for future technical articles, build notes, and public links from Medium, LinkedIn, or your own blog." },
   writing: [
@@ -166,6 +176,10 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && matchesExperience(content.experience[0]!, GALYLIO_DEVSECOPS_INTERNSHIP)
     && matchesExperience(content.experience[1]!, FREELANCE_CLOUD_DELIVERY_EXPERIENCE)
     && content.experience.slice(2).every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
+  const hasCurrentFreelanceExperienceOrder = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 2
+    && matchesExperience(content.experience[0]!, FREELANCE_CLOUD_DELIVERY_EXPERIENCE)
+    && matchesExperience(content.experience[1]!, GALYLIO_DEVSECOPS_INTERNSHIP)
+    && content.experience.slice(2).every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
   const shouldAddFreelanceExperience = hasExactLegacyExperience || hasExactGalylioExperience;
   const shouldUpgradeExperienceSection = (hasExactLegacyExperience
     && content.experienceSection.eyebrow === LEGACY_EXPERIENCE_SECTION.eyebrow
@@ -179,8 +193,47 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     const value = String(stat.value).trim();
     return (value === "2" || value === "3") && stat.label.trim().toLowerCase() === "internships completed";
   };
-  const shouldUpgradeEngagementStat = (shouldAddFreelanceExperience || hasExactFreelanceExperience)
+  const shouldUpgradeEngagementStat = (shouldAddFreelanceExperience || hasExactFreelanceExperience || hasCurrentFreelanceExperienceOrder)
     && content.about.stats.some(isLegacyInternshipStat);
+  const matchesExperienceContent = (experience: PortfolioContent["experience"][number], expected: PortfolioContent["experience"][number]) => experience.date === expected.date
+    && experience.role === expected.role
+    && experience.company === expected.company
+    && experience.text === expected.text
+    && JSON.stringify(experience.details ?? []) === JSON.stringify(expected.details ?? [])
+    && JSON.stringify(experience.tags) === JSON.stringify(expected.tags);
+  const hasPriorFreelanceExperienceOrder = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 2
+    && matchesExperienceContent(content.experience[0]!, GALYLIO_DEVSECOPS_INTERNSHIP)
+    && matchesExperienceContent(content.experience[1]!, FREELANCE_CLOUD_DELIVERY_EXPERIENCE)
+    && content.experience.slice(2).every((experience, index) => matchesExperienceContent(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
+  const matchesProject = (project: PortfolioContent["projects"][number], expected: PortfolioContent["projects"][number]) => project.image === expected.image
+    && project.type === expected.type
+    && project.state === expected.state
+    && project.title === expected.title
+    && project.byline === expected.byline
+    && project.summary === expected.summary
+    && project.problem === expected.problem
+    && project.body === expected.body
+    && project.realization === expected.realization
+    && JSON.stringify(project.tech) === JSON.stringify(expected.tech)
+    && JSON.stringify(project.delivery) === JSON.stringify(expected.delivery)
+    && !project.githubUrl
+    && !project.liveUrl
+    && !project.imageFocus
+    && !project.imageZoom
+    && !project.imageAspectRatio
+    && !project.imageFrameHeight
+    && !project.caseStudyBlocks;
+  const shouldAddSelectedWorkProjects = content.projects.length === LEGACY_DEFAULT_PROJECTS.length
+    && content.projects.every((project, index) => matchesProject(project, LEGACY_DEFAULT_PROJECTS[index]!));
+  const shouldUpgradeProjectsSection = shouldAddSelectedWorkProjects
+    && content.projectsSection.eyebrow === LEGACY_PROJECTS_SECTION.eyebrow
+    && content.projectsSection.title === LEGACY_PROJECTS_SECTION.title
+    && content.projectsSection.intro === LEGACY_PROJECTS_SECTION.intro
+    && content.projectsSection.problemLabel === LEGACY_PROJECTS_SECTION.problemLabel
+    && content.projectsSection.descriptionLabel === LEGACY_PROJECTS_SECTION.descriptionLabel
+    && content.projectsSection.realizationLabel === LEGACY_PROJECTS_SECTION.realizationLabel
+    && content.projectsSection.techLabel === LEGACY_PROJECTS_SECTION.techLabel
+    && content.projectsSection.deliveryLabel === LEGACY_PROJECTS_SECTION.deliveryLabel;
 
   return {
     ...content,
@@ -195,17 +248,32 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     experienceSection: shouldUpgradeExperienceSection
       ? { ...CLOUD_DELIVERY_EXPERIENCE_SECTION }
       : { ...content.experienceSection },
-    experience: (shouldAddFreelanceExperience
+    projectsSection: shouldUpgradeProjectsSection
+      ? { ...EXPANDED_PROJECTS_SECTION }
+      : { ...content.projectsSection },
+    experience: (hasPriorFreelanceExperienceOrder
       ? [
-        hasExactLegacyExperience ? { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] } : { ...content.experience[0]!, now: true },
-        { ...FREELANCE_CLOUD_DELIVERY_EXPERIENCE, details: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.details], tags: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.tags] },
+        { ...content.experience[1]!, now: true },
+        { ...content.experience[0]!, now: false },
+        ...content.experience.slice(2).map((experience) => ({ ...experience, now: false })),
+      ]
+      : shouldAddFreelanceExperience
+      ? [
+        { ...FREELANCE_CLOUD_DELIVERY_EXPERIENCE, details: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.details], tags: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.tags], now: true },
+        hasExactLegacyExperience ? { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags], now: false } : { ...content.experience[0]!, now: false },
         ...(hasExactLegacyExperience ? content.experience : content.experience.slice(1)).map((experience) => ({ ...experience, now: false })),
       ]
       : content.experience).map((experience) => {
       const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
     }),
-    projects: content.projects.map((project) => ({ ...project, summary: project.summary ?? project.body.split(/(?<=[.!?])\s/)[0] ?? project.body })),
+    projects: (shouldAddSelectedWorkProjects
+      ? [
+        { ...DEVSECOPS_1111_TN_PROJECT, tech: [...DEVSECOPS_1111_TN_PROJECT.tech], delivery: [...DEVSECOPS_1111_TN_PROJECT.delivery] },
+        { ...FREELANCE_CLOUD_MODERNIZATION_PROJECT, tech: [...FREELANCE_CLOUD_MODERNIZATION_PROJECT.tech], delivery: [...FREELANCE_CLOUD_MODERNIZATION_PROJECT.delivery] },
+        ...content.projects.map((project) => ({ ...project, tech: [...project.tech], delivery: [...project.delivery] })),
+      ]
+      : content.projects).map((project) => ({ ...project, summary: project.summary ?? project.body.split(/(?<=[.!?])\s/)[0] ?? project.body })),
     capabilities: shouldReplaceLegacyCapabilities || shouldReplacePriorLifecycleCapabilities ? { ...LIFECYCLE_CAPABILITIES, services: LIFECYCLE_CAPABILITIES.services.map((service) => ({ ...service })) } : { ...content.capabilities, services: content.capabilities.services.map((service) => ({ ...service })) },
     skills: shouldReplaceLegacyToolbox
       ? ROLE_FOCUSED_TOOLBOX.map((group) => ({ ...group, entries: [...group.entries] }))

@@ -6,7 +6,7 @@ import { ProjectImageControlPanel } from "./ProjectImageControlPanel";
 
 describe("ProjectImageControlPanel", () => {
   it("exposes visible image-management and crop controls for a project with an image", () => {
-    const html = renderToStaticMarkup(<ProjectImageControlPanel projects={DEFAULT_PORTFOLIO_CONTENT.projects} onChange={() => {}} onUploadImage={() => {}} onRemoveImage={() => {}} />);
+    const html = renderToStaticMarkup(<ProjectImageControlPanel projects={DEFAULT_PORTFOLIO_CONTENT.projects.slice(2)} onChange={() => {}} onUploadImage={() => {}} onRemoveImage={() => {}} />);
 
     expect(html).toContain("Replace image");
     expect(html).toContain("Remove image");
