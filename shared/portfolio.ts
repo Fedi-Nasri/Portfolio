@@ -149,7 +149,8 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && content.experienceSection.eyebrow === LEGACY_EXPERIENCE_SECTION.eyebrow
     && content.experienceSection.title === LEGACY_EXPERIENCE_SECTION.title
     && content.experienceSection.intro === LEGACY_EXPERIENCE_SECTION.intro;
-  const shouldUpgradeLegacyInternshipStat = hasExactLegacyExperience
+  const hasGalylioExperience = content.experience.some((experience) => experience.role === GALYLIO_DEVSECOPS_INTERNSHIP.role && experience.company === GALYLIO_DEVSECOPS_INTERNSHIP.company);
+  const shouldUpgradeLegacyInternshipStat = (hasExactLegacyExperience || hasGalylioExperience)
     && content.about.stats.some((stat) => stat.value === "2" && stat.label === "Internships completed");
 
   return {

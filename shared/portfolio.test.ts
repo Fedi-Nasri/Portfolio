@@ -12,11 +12,14 @@ describe("role-focused Toolbox hydration", () => {
 
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
+    const persistedGalylio = structuredClone(hydrated);
+    persistedGalylio.about.stats[0] = { value: "2", label: "Internships completed" };
 
     expect(hydrated.experience[0]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: true });
     expect(hydrated.experience[0]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
     expect(hydrated.experienceSection.title).toBe("Three internships,\none secure delivery focus.");
     expect(hydrated.about.stats[0]).toEqual({ value: "3", label: "Internships completed" });
+    expect(hydrateExperienceDetails(persistedGalylio).about.stats[0]).toEqual({ value: "3", label: "Internships completed" });
     expect(customHydrated.experience).toHaveLength(2);
     expect(customHydrated.experience[0]?.text).toBe("A saved custom experience summary.");
   });
