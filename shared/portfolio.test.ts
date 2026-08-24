@@ -99,8 +99,9 @@ describe("role-focused Toolbox hydration", () => {
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
 
-    expect(hydrated.about.title).toBe("Building secure, reliable systems\nfrom infrastructure to delivery.");
-    expect(hydrated.about.paragraphs[0]).toContain("focused on cloud, networking, Linux systems, and secure application delivery.");
+    expect(hydrated.about.title).toBe("A passionate engineer,\nfrom secure infrastructure foundations to reliable cloud delivery.");
+    expect(hydrated.about.paragraphs[0]).toContain("**cloud, networking, Linux systems, and secure application delivery**");
+    expect(hydrated.about.stats).toEqual([{ value: "4", label: "Professional engagements" }, { value: "6", label: "Systems delivered" }, { value: "5", label: "Professional certifications" }, { value: "20+", label: "Technologies in toolbox" }]);
     expect(customHydrated.about.title).toBe("A systems-focused engineer\nconnecting every layer of the stack.");
     expect(customHydrated.about.paragraphs[1]).toBe("A custom saved About paragraph.");
   });

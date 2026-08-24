@@ -89,7 +89,9 @@ const LEGACY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Two internshi
 const GALYLIO_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." } satisfies PortfolioContent["experienceSection"];
 const CLOUD_DELIVERY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Four engineering engagements,\nfrom secure delivery to cloud migration.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, Kubernetes production upgrades, and Azure cloud migration — a practical path toward reliable delivery." } satisfies PortfolioContent["experienceSection"];
 const LEGACY_ABOUT_COPY = { eyebrow: "About", title: "A systems-focused engineer\nconnecting every layer of the stack.", paragraphs: ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."] } satisfies Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">;
-const REVISED_ABOUT_COPY = { eyebrow: "About", title: "Building secure, reliable systems\nfrom infrastructure to delivery.", paragraphs: ["I am a Computer Engineering Master’s student at the Faculty of Sciences of Bizerte, focused on cloud, networking, Linux systems, and secure application delivery.", "My work spans the full operational lifecycle: designing dependable network and server foundations, building cloud-aware automation, strengthening CI/CD pipelines with security checks, and making services observable through monitoring and telemetry.", "I combine hands-on experience in DevSecOps, Kubernetes, Azure migration, application deployment, databases, and applied AI services. Whether I am improving a production workflow, connecting real-time data, or securing an infrastructure layer, I focus on solutions that are practical, maintainable, and ready to evolve."] } satisfies Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">;
+const PRIOR_REVISED_ABOUT_COPY = { eyebrow: "About", title: "Building secure, reliable systems\nfrom infrastructure to delivery.", paragraphs: ["I am a Computer Engineering Master’s student at the Faculty of Sciences of Bizerte, focused on cloud, networking, Linux systems, and secure application delivery.", "My work spans the full operational lifecycle: designing dependable network and server foundations, building cloud-aware automation, strengthening CI/CD pipelines with security checks, and making services observable through monitoring and telemetry.", "I combine hands-on experience in DevSecOps, Kubernetes, Azure migration, application deployment, databases, and applied AI services. Whether I am improving a production workflow, connecting real-time data, or securing an infrastructure layer, I focus on solutions that are practical, maintainable, and ready to evolve."] } satisfies Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">;
+const REFINED_ABOUT_COPY = { eyebrow: "About", title: "A passionate engineer,\nfrom secure infrastructure foundations to reliable cloud delivery.", paragraphs: ["I am a Computer Engineering Master’s student specialised in **cloud, networking, Linux systems, and secure application delivery**.", "My work spans **the full operational lifecycle**: designing dependable network and server foundations, building **cloud-aware automation**, strengthening **CI/CD pipelines with security checks**, and making services observable through **monitoring and telemetry**.", "I combine hands-on experience in **DevSecOps, Kubernetes, Azure migration, application deployment, databases, and applied AI services**. Whether I am improving a production workflow, connecting real-time data, or securing an infrastructure layer, I focus on solutions that are **practical, maintainable, and ready to evolve**."] } satisfies Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">;
+const REFINED_ABOUT_STATS = [{ value: "4", label: "Professional engagements" }, { value: "6", label: "Systems delivered" }, { value: "5", label: "Professional certifications" }, { value: "20+", label: "Technologies in toolbox" }] satisfies PortfolioContent["about"]["stats"];
 const DEVSECOPS_1111_TN_PROJECT = { image: "", type: "DevSecOps · Secure Delivery · Observability", state: "Professional project", title: "1111.tn DevSecOps Delivery", byline: "1111.tn · DevSecOps contribution", summary: "A security-focused delivery workflow for the 1111.tn application, covering environment promotion, automated checks, and operational visibility.", problem: "A production application needs a dependable release path that separates environments, identifies quality and security risks early, and makes deployed services observable.", body: "Contributed to the 1111.tn application’s DevSecOps workflow by supporting delivery across development, testing, staging, and deployment environments with container-based automation and layered security checks.", realization: "Established a more inspectable delivery path with automated code-quality, vulnerability, and dynamic-security checks, alongside metrics and dashboards for service and release visibility.", tech: ["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"], delivery: ["Environment promotion", "Security checks", "Operational observability"] } satisfies PortfolioContent["projects"][number];
 const FREELANCE_CLOUD_MODERNIZATION_PROJECT = { image: "", type: "Cloud Migration · Kubernetes · Delivery", state: "Freelance engagement", title: "Cloud & Kubernetes Modernization", byline: "Independent Consulting · Freelance", summary: "A production-modernization engagement spanning Kubernetes upgrades, on-premises-to-Azure migration planning, cloud services, and application deployments.", problem: "Application workloads need a controlled path from on-premises infrastructure to cloud services while keeping deployment practices, runtime readiness, and operational responsibilities clear.", body: "Supported Kubernetes production upgrades, contributed to moving workloads from on-premises infrastructure toward Microsoft Azure, and implemented cloud services and deployment workflows for multiple applications.", realization: "Delivered practical modernization support that connected upgraded Kubernetes delivery, Azure-oriented migration steps, cloud-service implementation, and repeatable application deployments.", tech: ["Kubernetes", "Microsoft Azure", "Docker", "Cloud Services", "Application Deployment"], delivery: ["Kubernetes upgrades", "Azure migration", "Production deployments"] } satisfies PortfolioContent["projects"][number];
 const LEGACY_DEFAULT_PROJECTS = [
@@ -113,9 +115,9 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     focusAreas: ["Cloud", "DevOps", "DevSecOps", "Security & Networking"], focusVisuals: ["", "", "", ""], focusPositions: createDefaultFocusPositions()
   },
   about: {
-    ...REVISED_ABOUT_COPY,
+    ...REFINED_ABOUT_COPY,
     tags: ["#Cloud", "#Networking", "#Linux", "#DevOps", "#Docker", "#Cybersecurity", "#OpenToWork"],
-    stats: [{ value: "4", label: "Professional engagements" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
+    stats: REFINED_ABOUT_STATS.map((stat) => ({ ...stat }))
   },
   experienceSection: { ...CLOUD_DELIVERY_EXPERIENCE_SECTION },
   experience: [
@@ -196,9 +198,19 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
   };
   const shouldUpgradeEngagementStat = (shouldAddFreelanceExperience || hasExactFreelanceExperience || hasCurrentFreelanceExperienceOrder)
     && content.about.stats.some(isLegacyInternshipStat);
-  const shouldUpgradeAboutCopy = content.about.eyebrow === LEGACY_ABOUT_COPY.eyebrow
-    && content.about.title === LEGACY_ABOUT_COPY.title
-    && JSON.stringify(content.about.paragraphs) === JSON.stringify(LEGACY_ABOUT_COPY.paragraphs);
+  const matchesAboutCopy = (candidate: Pick<PortfolioContent["about"], "eyebrow" | "title" | "paragraphs">) => content.about.eyebrow === candidate.eyebrow
+    && content.about.title === candidate.title
+    && JSON.stringify(content.about.paragraphs) === JSON.stringify(candidate.paragraphs);
+  const shouldUpgradeAboutCopy = matchesAboutCopy(LEGACY_ABOUT_COPY) || matchesAboutCopy(PRIOR_REVISED_ABOUT_COPY);
+  const hasPriorAboutStats = content.about.stats.length === 4
+    && (isLegacyInternshipStat(content.about.stats[0]!) || (String(content.about.stats[0]!.value).trim() === "4" && content.about.stats[0]!.label.trim().toLowerCase() === "professional engagements"))
+    && String(content.about.stats[1]!.value).trim() === "4"
+    && content.about.stats[1]!.label.trim().toLowerCase() === "infrastructure projects"
+    && String(content.about.stats[2]!.value).trim() === "5"
+    && content.about.stats[2]!.label.trim().toLowerCase() === "professional certifications"
+    && (String(content.about.stats[3]!.value).trim() === "20" || String(content.about.stats[3]!.value).trim() === "20+")
+    && content.about.stats[3]!.label.trim().toLowerCase() === "technologies in toolbox";
+  const shouldUpgradeAboutStats = shouldUpgradeAboutCopy && hasPriorAboutStats;
   const normalizedAboutStats = content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
     ? { value: "20", label: "Technologies in toolbox" }
     : shouldUpgradeEngagementStat && isLegacyInternshipStat(stat)
@@ -247,7 +259,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
   return {
     ...content,
     about: shouldUpgradeAboutCopy
-      ? { ...content.about, ...REVISED_ABOUT_COPY, paragraphs: [...REVISED_ABOUT_COPY.paragraphs], stats: normalizedAboutStats }
+      ? { ...content.about, ...REFINED_ABOUT_COPY, paragraphs: [...REFINED_ABOUT_COPY.paragraphs], stats: shouldUpgradeAboutStats ? REFINED_ABOUT_STATS.map((stat) => ({ ...stat })) : normalizedAboutStats }
       : { ...content.about, stats: normalizedAboutStats },
     experienceSection: shouldUpgradeExperienceSection
       ? { ...CLOUD_DELIVERY_EXPERIENCE_SECTION }
