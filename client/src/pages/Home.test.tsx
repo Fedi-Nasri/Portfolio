@@ -33,7 +33,7 @@ describe("public contact section", () => {
   it("renders a collapsed Experience detail disclosure and visible tags for each seeded experience", () => {
     const html = renderToStaticMarkup(<Home />);
 
-    expect((html.match(/See details/g) ?? []).length).toBe(3);
+    expect((html.match(/See details/g) ?? []).length).toBe(4);
     expect(html).toContain("experience-detail-toggle");
     expect(html).toContain("experience-tag-list");
   });
@@ -67,7 +67,7 @@ describe("public contact section", () => {
     expect(html).toContain("about-editorial-layout");
     expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
     expect((html.match(/about-numeric-indicator/g) ?? []).length).toBeGreaterThanOrEqual(4);
-    expect(html).toContain(">3<");
+    expect(html).toContain(">4<");
   });
 
   it("renders the role-focused Cloud, DevOps, and DevSecOps Toolbox cards", () => {

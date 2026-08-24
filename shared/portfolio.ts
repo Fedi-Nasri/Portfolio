@@ -68,11 +68,25 @@ const GALYLIO_DEVSECOPS_INTERNSHIP = {
   tags: ["DevSecOps", "GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"],
   now: true,
 } satisfies PortfolioContent["experience"][number];
+const FREELANCE_CLOUD_DELIVERY_EXPERIENCE = {
+  date: "FREELANCE · PROJECT-BASED",
+  role: "Freelance Cloud & Kubernetes Engineer",
+  company: "Independent Consulting",
+  text: "Supported production modernization through Kubernetes upgrades, on-premises-to-Azure cloud migration, cloud-service implementation, and application deployments.",
+  details: [
+    "Supported Kubernetes production upgrades to strengthen application delivery, runtime consistency, and operational readiness.",
+    "Contributed to moving application workloads from on-premises infrastructure toward Microsoft Azure cloud services.",
+    "Implemented cloud services and deployment workflows for multiple applications, with attention to reliable releases and environment readiness.",
+  ],
+  tags: ["Freelance", "Kubernetes", "Microsoft Azure", "Cloud Migration", "Cloud Services", "Application Deployment"],
+} satisfies PortfolioContent["experience"][number];
 const LEGACY_DEFAULT_EXPERIENCE = [
   { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"] },
   { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", details: ["Developed patient, doctor, and consultation management workflows for an internal healthcare application.", "Created interactive reporting dashboards that helped hospital administrators review operational information.", "Worked with Symfony 7, Twig, PostgreSQL, Docker, and Linux in a structured full-stack environment."], tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] },
 ] satisfies PortfolioContent["experience"];
 const LEGACY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." } satisfies PortfolioContent["experienceSection"];
+const GALYLIO_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." } satisfies PortfolioContent["experienceSection"];
+const CLOUD_DELIVERY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Four engineering engagements,\nfrom secure delivery to cloud migration.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, Kubernetes production upgrades, and Azure cloud migration — a practical path toward reliable delivery." } satisfies PortfolioContent["experienceSection"];
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -89,11 +103,12 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     eyebrow: "About", title: "A systems-focused engineer\nconnecting every layer of the stack.",
     paragraphs: ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."],
     tags: ["#Cloud", "#Networking", "#Linux", "#DevOps", "#Docker", "#Cybersecurity", "#OpenToWork"],
-    stats: [{ value: "3", label: "Internships completed" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
+    stats: [{ value: "4", label: "Professional engagements" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
   },
-  experienceSection: { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." },
+  experienceSection: { ...CLOUD_DELIVERY_EXPERIENCE_SECTION },
   experience: [
     { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] },
+    { ...FREELANCE_CLOUD_DELIVERY_EXPERIENCE, details: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.details], tags: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.tags] },
     ...LEGACY_DEFAULT_EXPERIENCE.map((experience) => ({ ...experience, details: [...(experience.details ?? [])], tags: [...experience.tags] }))
   ],
   skillsSection: { eyebrow: "Role Toolbox", title: "A DevOps-ready toolkit\nfor cloud, security, and delivery." },
@@ -135,23 +150,29 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && content.capabilities.title === PRIOR_LIFECYCLE_CAPABILITY_TITLE
     && content.capabilities.description === LIFECYCLE_CAPABILITIES.description
     && hasExactLifecycleServices;
+  const matchesExperience = (experience: PortfolioContent["experience"][number], expected: PortfolioContent["experience"][number]) => experience.date === expected.date
+    && experience.role === expected.role
+    && experience.company === expected.company
+    && experience.text === expected.text
+    && JSON.stringify(experience.details ?? []) === JSON.stringify(expected.details ?? [])
+    && JSON.stringify(experience.tags) === JSON.stringify(expected.tags)
+    && (expected.now ? experience.now === true : experience.now !== true);
   const hasExactLegacyExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length
-    && content.experience.every((experience, index) => {
-      const legacy = LEGACY_DEFAULT_EXPERIENCE[index];
-      return experience.date === legacy?.date
-        && experience.role === legacy?.role
-        && experience.company === legacy?.company
-        && experience.text === legacy?.text
-        && JSON.stringify(experience.details ?? []) === JSON.stringify(legacy?.details ?? [])
-        && JSON.stringify(experience.tags) === JSON.stringify(legacy?.tags ?? []);
-    });
-  const shouldUpgradeLegacyExperienceSection = hasExactLegacyExperience
+    && content.experience.every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
+  const hasExactGalylioExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 1
+    && matchesExperience(content.experience[0]!, GALYLIO_DEVSECOPS_INTERNSHIP)
+    && content.experience.slice(1).every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
+  const shouldAddFreelanceExperience = hasExactLegacyExperience || hasExactGalylioExperience;
+  const shouldUpgradeExperienceSection = (hasExactLegacyExperience
     && content.experienceSection.eyebrow === LEGACY_EXPERIENCE_SECTION.eyebrow
     && content.experienceSection.title === LEGACY_EXPERIENCE_SECTION.title
-    && content.experienceSection.intro === LEGACY_EXPERIENCE_SECTION.intro;
-  const hasGalylioExperience = content.experience.some((experience) => experience.role === GALYLIO_DEVSECOPS_INTERNSHIP.role && experience.company === GALYLIO_DEVSECOPS_INTERNSHIP.company);
-  const shouldUpgradeLegacyInternshipStat = (hasExactLegacyExperience || hasGalylioExperience)
-    && content.about.stats.some((stat) => stat.value === "2" && stat.label === "Internships completed");
+    && content.experienceSection.intro === LEGACY_EXPERIENCE_SECTION.intro)
+    || (hasExactGalylioExperience
+      && content.experienceSection.eyebrow === GALYLIO_EXPERIENCE_SECTION.eyebrow
+      && content.experienceSection.title === GALYLIO_EXPERIENCE_SECTION.title
+      && content.experienceSection.intro === GALYLIO_EXPERIENCE_SECTION.intro);
+  const shouldUpgradeEngagementStat = shouldAddFreelanceExperience
+    && content.about.stats.some((stat) => (stat.value === "2" || stat.value === "3") && stat.label === "Internships completed");
 
   return {
     ...content,
@@ -159,15 +180,19 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       ...content.about,
       stats: content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
         ? { value: "20", label: "Technologies in toolbox" }
-        : shouldUpgradeLegacyInternshipStat && stat.value === "2" && stat.label === "Internships completed"
-          ? { value: "3", label: "Internships completed" }
+        : shouldUpgradeEngagementStat && (stat.value === "2" || stat.value === "3") && stat.label === "Internships completed"
+          ? { value: "4", label: "Professional engagements" }
           : stat),
     },
-    experienceSection: shouldUpgradeLegacyExperienceSection
-      ? { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." }
+    experienceSection: shouldUpgradeExperienceSection
+      ? { ...CLOUD_DELIVERY_EXPERIENCE_SECTION }
       : { ...content.experienceSection },
-    experience: (hasExactLegacyExperience
-      ? [{ ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] }, ...content.experience.map((experience) => ({ ...experience, now: false }))]
+    experience: (shouldAddFreelanceExperience
+      ? [
+        hasExactLegacyExperience ? { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] } : { ...content.experience[0]!, now: true },
+        { ...FREELANCE_CLOUD_DELIVERY_EXPERIENCE, details: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.details], tags: [...FREELANCE_CLOUD_DELIVERY_EXPERIENCE.tags] },
+        ...(hasExactLegacyExperience ? content.experience : content.experience.slice(1)).map((experience) => ({ ...experience, now: false })),
+      ]
       : content.experience).map((experience) => {
       const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };

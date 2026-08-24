@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT, hydrateExperienceDetails } from "./portfolio";
 
 describe("role-focused Toolbox hydration", () => {
-  it("adds the Galylio DevSecOps internship only to the exact untouched two-internship default", () => {
+  it("adds the Galylio and freelance cloud-delivery entries only to exact untouched Experience defaults", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
-    legacy.experience = legacy.experience.slice(1);
+    legacy.experience = legacy.experience.slice(2);
     legacy.experienceSection = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." };
     legacy.about.stats[0] = { value: "2", label: "Internships completed" };
     const custom = structuredClone(legacy);
@@ -12,14 +12,18 @@ describe("role-focused Toolbox hydration", () => {
 
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
-    const persistedGalylio = structuredClone(hydrated);
-    persistedGalylio.about.stats[0] = { value: "2", label: "Internships completed" };
+    const persistedGalylio = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    persistedGalylio.experience = persistedGalylio.experience.filter((experience) => experience.company !== "Independent Consulting");
+    persistedGalylio.experienceSection = { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." };
+    persistedGalylio.about.stats[0] = { value: "3", label: "Internships completed" };
 
     expect(hydrated.experience[0]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: true });
     expect(hydrated.experience[0]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
-    expect(hydrated.experienceSection.title).toBe("Three internships,\none secure delivery focus.");
-    expect(hydrated.about.stats[0]).toEqual({ value: "3", label: "Internships completed" });
-    expect(hydrateExperienceDetails(persistedGalylio).about.stats[0]).toEqual({ value: "3", label: "Internships completed" });
+    expect(hydrated.experience[1]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting", date: "FREELANCE · PROJECT-BASED" });
+    expect(hydrated.experienceSection.title).toBe("Four engineering engagements,\nfrom secure delivery to cloud migration.");
+    expect(hydrated.about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
+    expect(hydrateExperienceDetails(persistedGalylio).experience[1]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting" });
+    expect(hydrateExperienceDetails(persistedGalylio).about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
     expect(customHydrated.experience).toHaveLength(2);
     expect(customHydrated.experience[0]?.text).toBe("A saved custom experience summary.");
   });

@@ -6,7 +6,7 @@ describe("direct editor list operations", () => {
   it("duplicates, reorders, and removes draft list items without mutating the original content", () => {
     const duplicated = duplicateListItem(DEFAULT_PORTFOLIO_CONTENT, ["experience"], 0);
     expect(duplicated.experience).toHaveLength(DEFAULT_PORTFOLIO_CONTENT.experience.length + 1);
-    expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(3);
+    expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(4);
 
     const moved = moveListItem(duplicated, ["experience"], 0, 1);
     expect(moved.experience[0].role).toBe(duplicated.experience[1].role);
@@ -37,7 +37,7 @@ describe("Experience quick additions", () => {
     expect(above.experience[0]).toMatchObject({ date: "MONTH — YEAR", role: "New experience title", details: ["Describe a key responsibility, delivery, or measurable outcome."], tags: ["New tag"] });
     expect(below.experience[1]?.role).toBe("New experience title");
     expect(withTag.experience[0]?.tags).toEqual(["New tag", "New tag"]);
-    expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(3);
+    expect(DEFAULT_PORTFOLIO_CONTENT.experience).toHaveLength(4);
   });
 
   it("does not remove the final Experience entry from a draft", () => {
