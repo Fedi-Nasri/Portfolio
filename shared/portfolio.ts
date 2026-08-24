@@ -162,6 +162,10 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
   const hasExactGalylioExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 1
     && matchesExperience(content.experience[0]!, GALYLIO_DEVSECOPS_INTERNSHIP)
     && content.experience.slice(1).every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
+  const hasExactFreelanceExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 2
+    && matchesExperience(content.experience[0]!, GALYLIO_DEVSECOPS_INTERNSHIP)
+    && matchesExperience(content.experience[1]!, FREELANCE_CLOUD_DELIVERY_EXPERIENCE)
+    && content.experience.slice(2).every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
   const shouldAddFreelanceExperience = hasExactLegacyExperience || hasExactGalylioExperience;
   const shouldUpgradeExperienceSection = (hasExactLegacyExperience
     && content.experienceSection.eyebrow === LEGACY_EXPERIENCE_SECTION.eyebrow
@@ -171,8 +175,12 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       && content.experienceSection.eyebrow === GALYLIO_EXPERIENCE_SECTION.eyebrow
       && content.experienceSection.title === GALYLIO_EXPERIENCE_SECTION.title
       && content.experienceSection.intro === GALYLIO_EXPERIENCE_SECTION.intro);
-  const shouldUpgradeEngagementStat = shouldAddFreelanceExperience
-    && content.about.stats.some((stat) => (stat.value === "2" || stat.value === "3") && stat.label === "Internships completed");
+  const isLegacyInternshipStat = (stat: PortfolioContent["about"]["stats"][number]) => {
+    const value = String(stat.value).trim();
+    return (value === "2" || value === "3") && stat.label.trim().toLowerCase() === "internships completed";
+  };
+  const shouldUpgradeEngagementStat = (shouldAddFreelanceExperience || hasExactFreelanceExperience)
+    && content.about.stats.some(isLegacyInternshipStat);
 
   return {
     ...content,
@@ -180,7 +188,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       ...content.about,
       stats: content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
         ? { value: "20", label: "Technologies in toolbox" }
-        : shouldUpgradeEngagementStat && (stat.value === "2" || stat.value === "3") && stat.label === "Internships completed"
+        : shouldUpgradeEngagementStat && isLegacyInternshipStat(stat)
           ? { value: "4", label: "Professional engagements" }
           : stat),
     },

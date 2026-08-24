@@ -17,6 +17,8 @@ describe("role-focused Toolbox hydration", () => {
     persistedGalylio.experience = persistedGalylio.experience.filter((experience) => experience.company !== "Independent Consulting");
     persistedGalylio.experienceSection = { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." };
     persistedGalylio.about.stats[0] = { value: "3", label: "Internships completed" };
+    const persistedFreelance = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    persistedFreelance.about.stats[0] = { value: "2", label: "Internships completed " };
 
     expect(hydrated.experience[0]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: true });
     expect(hydrated.experience[0]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
@@ -25,6 +27,7 @@ describe("role-focused Toolbox hydration", () => {
     expect(hydrated.about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
     expect(hydrateExperienceDetails(persistedGalylio).experience[1]).toMatchObject({ role: "Freelance Cloud & Kubernetes Engineer", company: "Independent Consulting" });
     expect(hydrateExperienceDetails(persistedGalylio).about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
+    expect(hydrateExperienceDetails(persistedFreelance).about.stats[0]).toEqual({ value: "4", label: "Professional engagements" });
     expect(customHydrated.experience).toHaveLength(2);
     expect(customHydrated.experience[0]?.text).toBe("A saved custom experience summary.");
   });
