@@ -95,13 +95,19 @@ describe("role-focused Toolbox hydration", () => {
     legacy.about.paragraphs = ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."];
     const custom = structuredClone(legacy);
     custom.about.paragraphs[1] = "A custom saved About paragraph.";
+    const boldedRefinement = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    boldedRefinement.about.paragraphs = ["I am a Computer Engineering Master’s student specialised in **cloud, networking, Linux systems, and secure application delivery**.", "My work spans **the full operational lifecycle**: designing dependable network and server foundations, building **cloud-aware automation**, strengthening **CI/CD pipelines with security checks**, and making services observable through **monitoring and telemetry**.", "I combine hands-on experience in **DevSecOps, Kubernetes, Azure migration, application deployment, databases, and applied AI services**. Whether I am improving a production workflow, connecting real-time data, or securing an infrastructure layer, I focus on solutions that are **practical, maintainable, and ready to evolve**."];
 
     const hydrated = hydrateExperienceDetails(legacy);
     const customHydrated = hydrateExperienceDetails(custom);
+    const boldedRefinementHydrated = hydrateExperienceDetails(boldedRefinement);
 
     expect(hydrated.about.title).toBe("A passionate engineer,\nfrom secure infrastructure foundations to reliable cloud delivery.");
-    expect(hydrated.about.paragraphs[0]).toContain("**cloud, networking, Linux systems, and secure application delivery**");
+    expect(hydrated.about.paragraphs[0]).toBe("I am a Computer Engineering Master’s student specialised in cloud, networking, Linux systems, and secure application delivery.");
+    expect(hydrated.about.paragraphs.join(" ")).not.toContain("**");
     expect(hydrated.about.stats).toEqual([{ value: "4", label: "Professional engagements" }, { value: "6", label: "Systems delivered" }, { value: "5", label: "Professional certifications" }, { value: "20+", label: "Technologies in toolbox" }]);
+    expect(boldedRefinementHydrated.about.paragraphs.join(" ")).not.toContain("**");
+    expect(boldedRefinementHydrated.about.paragraphs[1]).toContain("cloud-aware automation");
     expect(customHydrated.about.title).toBe("A systems-focused engineer\nconnecting every layer of the stack.");
     expect(customHydrated.about.paragraphs[1]).toBe("A custom saved About paragraph.");
   });
