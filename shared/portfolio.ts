@@ -55,6 +55,24 @@ const LEGACY_TOOLBOX_HEADINGS = ["Systems & OS", "Containers & CI/CD", "Networki
 const LEGACY_CAPABILITIES = { eyebrow: "Cloud & Infrastructure", title: "One engineer,\nevery critical layer.", description: "Secure networks, Linux systems, containers, cloud services, real-time monitoring, and data infrastructure — designed to work together.", services: [{ name: "Linux Systems", description: "Debian and Ubuntu administration, Bash scripting, monitoring, and inter-service communication." }, { name: "Cloud & DevOps", description: "Docker, Compose, CI/CD, cloud VMs, service dependencies, and health checks." }, { name: "Network Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and enterprise access control." }, { name: "Databases", description: "PostgreSQL, MySQL, MongoDB, Firebase Firestore, and live telemetry data." }, { name: "Full-Stack", description: "React, Flask, Symfony, API services, dashboards, and dependable data flows." }, { name: "Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision pipelines." }] } satisfies PortfolioContent["capabilities"];
 const PRIOR_LIFECYCLE_CAPABILITY_TITLE = "Engineering every stage\nfrom foundation to delivery.";
 const LIFECYCLE_CAPABILITIES = { eyebrow: "Deployment Lifecycle", title: "From infrastructure foundations\nto reliable delivery.", description: "I connect Linux and networking foundations with cloud infrastructure, DevOps delivery, application services, data systems, and hands-on AI — building deployments that are secure, observable, and ready to evolve.", services: [{ name: "Linux Foundations", description: "Debian and Ubuntu administration, Bash automation, services, monitoring, and dependable system communication." }, { name: "Cloud & DevOps Delivery", description: "Cloud VMs, Docker, Compose, CI/CD, health checks, and repeatable delivery workflows." }, { name: "Networking & Security", description: "TCP/IP, DNS, TLS, VLANs, ACLs, NAT, VPNs, and secure enterprise access control." }, { name: "Data & Service Reliability", description: "PostgreSQL, MySQL, Firebase, telemetry flows, observability, and dependable service data." }, { name: "Development Services", description: "React, Flask, Symfony, APIs, dashboards, and practical full-stack integration work." }, { name: "Hands-on Applied AI", description: "Python, OpenCV, TensorFlow, YOLOv11, and deployable computer-vision services." }] } satisfies PortfolioContent["capabilities"];
+const GALYLIO_DEVSECOPS_INTERNSHIP = {
+  date: "JUN — AUG 2026",
+  role: "DevSecOps Intern",
+  company: "Galylio",
+  text: "Built secure delivery workflows across development, testing, staging, and deployment environments, combining automated security checks with observability.",
+  details: [
+    "Designed GitHub Actions and Docker workflows to move changes through development, testing, staging, and deployment environments.",
+    "Integrated code-quality, vulnerability, and dynamic security checks with SonarQube, Trivy, and OWASP ZAP to strengthen the delivery pipeline.",
+    "Added Prometheus and Grafana monitoring so deployed services and pipeline outcomes could be observed and investigated.",
+  ],
+  tags: ["DevSecOps", "GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"],
+  now: true,
+} satisfies PortfolioContent["experience"][number];
+const LEGACY_DEFAULT_EXPERIENCE = [
+  { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"] },
+  { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", details: ["Developed patient, doctor, and consultation management workflows for an internal healthcare application.", "Created interactive reporting dashboards that helped hospital administrators review operational information.", "Worked with Symfony 7, Twig, PostgreSQL, Docker, and Linux in a structured full-stack environment."], tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] },
+] satisfies PortfolioContent["experience"];
+const LEGACY_EXPERIENCE_SECTION = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." } satisfies PortfolioContent["experienceSection"];
 
 export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
   sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -71,12 +89,12 @@ export const DEFAULT_PORTFOLIO_CONTENT: PortfolioContent = {
     eyebrow: "About", title: "A systems-focused engineer\nconnecting every layer of the stack.",
     paragraphs: ["I'm a Computer Engineering Master's student at the Faculty of Sciences of Bizerte, specialising in networking and cloud computing. My experience spans Linux systems, secure network infrastructure, databases, and deployable AI services.", "I work across the service lifecycle — from reliable network architecture and cloud-aware automation to monitoring applications and real-time data pipelines.", "I enjoy making infrastructure practical, observable, and secure. My focus is server administration, network supervision, cloud deployment, and database management."],
     tags: ["#Cloud", "#Networking", "#Linux", "#DevOps", "#Docker", "#Cybersecurity", "#OpenToWork"],
-    stats: [{ value: "2", label: "Internships completed" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
+    stats: [{ value: "3", label: "Internships completed" }, { value: "4", label: "Infrastructure projects" }, { value: "5", label: "Professional certifications" }, { value: "20", label: "Technologies in toolbox" }]
   },
-  experienceSection: { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." },
+  experienceSection: { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." },
   experience: [
-    { date: "FEB — JUN 2025", role: "Software Engineering & AI Intern", company: "Graines d’Entrepreneurs Tunisie", text: "Built a real-time monitoring platform for an autonomous robot boat, including AI navigation services, YOLOv11 waste detection, Linux deployment, and live telemetry.", details: ["Built a live monitoring workflow that brought autonomous-boat telemetry and operator information into one dashboard.", "Integrated Python navigation services and YOLOv11 waste detection within an embedded Linux environment.", "Containerised services and connected real-time data flows so the system could be observed and maintained."], tags: ["React", "Flask", "Docker", "Firebase", "Python", "Linux"], now: true },
-    { date: "JUL — AUG 2024", role: "Full Stack Web Developer Intern", company: "Ministry of Health IT Center (CIMS)", text: "Developed a patient, doctor, and consultation management application with interactive reporting dashboards for hospital administrators.", details: ["Developed patient, doctor, and consultation management workflows for an internal healthcare application.", "Created interactive reporting dashboards that helped hospital administrators review operational information.", "Worked with Symfony 7, Twig, PostgreSQL, Docker, and Linux in a structured full-stack environment."], tags: ["Symfony 7", "Twig", "PostgreSQL", "Docker", "Linux"] }
+    { ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] },
+    ...LEGACY_DEFAULT_EXPERIENCE.map((experience) => ({ ...experience, details: [...(experience.details ?? [])], tags: [...experience.tags] }))
   ],
   skillsSection: { eyebrow: "Role Toolbox", title: "A DevOps-ready toolkit\nfor cloud, security, and delivery." },
   skills: ROLE_FOCUSED_TOOLBOX.map((group) => ({ ...group, entries: [...group.entries] })),
@@ -117,6 +135,22 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && content.capabilities.title === PRIOR_LIFECYCLE_CAPABILITY_TITLE
     && content.capabilities.description === LIFECYCLE_CAPABILITIES.description
     && hasExactLifecycleServices;
+  const hasExactLegacyExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length
+    && content.experience.every((experience, index) => {
+      const legacy = LEGACY_DEFAULT_EXPERIENCE[index];
+      return experience.date === legacy?.date
+        && experience.role === legacy?.role
+        && experience.company === legacy?.company
+        && experience.text === legacy?.text
+        && JSON.stringify(experience.details ?? []) === JSON.stringify(legacy?.details ?? [])
+        && JSON.stringify(experience.tags) === JSON.stringify(legacy?.tags ?? []);
+    });
+  const shouldUpgradeLegacyExperienceSection = hasExactLegacyExperience
+    && content.experienceSection.eyebrow === LEGACY_EXPERIENCE_SECTION.eyebrow
+    && content.experienceSection.title === LEGACY_EXPERIENCE_SECTION.title
+    && content.experienceSection.intro === LEGACY_EXPERIENCE_SECTION.intro;
+  const shouldUpgradeLegacyInternshipStat = hasExactLegacyExperience
+    && content.about.stats.some((stat) => stat.value === "2" && stat.label === "Internships completed");
 
   return {
     ...content,
@@ -124,9 +158,16 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
       ...content.about,
       stats: content.about.stats.map((stat) => stat.label.trim().toLowerCase() === "languages spoken"
         ? { value: "20", label: "Technologies in toolbox" }
-        : stat),
+        : shouldUpgradeLegacyInternshipStat && stat.value === "2" && stat.label === "Internships completed"
+          ? { value: "3", label: "Internships completed" }
+          : stat),
     },
-    experience: content.experience.map((experience) => {
+    experienceSection: shouldUpgradeLegacyExperienceSection
+      ? { eyebrow: "Experience", title: "Three internships,\none secure delivery focus.", intro: "From full-stack delivery and embedded AI to DevSecOps pipelines, security checks, and observability — a practical path toward reliable cloud systems." }
+      : { ...content.experienceSection },
+    experience: (hasExactLegacyExperience
+      ? [{ ...GALYLIO_DEVSECOPS_INTERNSHIP, details: [...GALYLIO_DEVSECOPS_INTERNSHIP.details], tags: [...GALYLIO_DEVSECOPS_INTERNSHIP.tags] }, ...content.experience.map((experience) => ({ ...experience, now: false }))]
+      : content.experience).map((experience) => {
       const matchingDefault = DEFAULT_PORTFOLIO_CONTENT.experience.find((candidate) => candidate.role === experience.role && candidate.company === experience.company);
       return { ...experience, details: [...(experience.details ?? matchingDefault?.details ?? [])] };
     }),

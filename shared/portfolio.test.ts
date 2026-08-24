@@ -2,6 +2,25 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_PORTFOLIO_CONTENT, hydrateExperienceDetails } from "./portfolio";
 
 describe("role-focused Toolbox hydration", () => {
+  it("adds the Galylio DevSecOps internship only to the exact untouched two-internship default", () => {
+    const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
+    legacy.experience = legacy.experience.slice(1);
+    legacy.experienceSection = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." };
+    legacy.about.stats[0] = { value: "2", label: "Internships completed" };
+    const custom = structuredClone(legacy);
+    custom.experience[0]!.text = "A saved custom experience summary.";
+
+    const hydrated = hydrateExperienceDetails(legacy);
+    const customHydrated = hydrateExperienceDetails(custom);
+
+    expect(hydrated.experience[0]).toMatchObject({ role: "DevSecOps Intern", company: "Galylio", date: "JUN — AUG 2026", now: true });
+    expect(hydrated.experience[0]?.tags).toEqual(expect.arrayContaining(["GitHub Actions", "Docker", "SonarQube", "Trivy", "OWASP ZAP", "Prometheus", "Grafana"]));
+    expect(hydrated.experienceSection.title).toBe("Three internships,\none secure delivery focus.");
+    expect(hydrated.about.stats[0]).toEqual({ value: "3", label: "Internships completed" });
+    expect(customHydrated.experience).toHaveLength(2);
+    expect(customHydrated.experience[0]?.text).toBe("A saved custom experience summary.");
+  });
+
   it("upgrades legacy Toolbox headings into the DevOps, DevSecOps, and Cloud Engineering groups without mutating saved content", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     legacy.skills = [
