@@ -156,7 +156,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && experience.text === expected.text
     && JSON.stringify(experience.details ?? []) === JSON.stringify(expected.details ?? [])
     && JSON.stringify(experience.tags) === JSON.stringify(expected.tags)
-    && (expected.now ? experience.now === true : experience.now !== true);
+    && (!expected.now || experience.now === true);
   const hasExactLegacyExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length
     && content.experience.every((experience, index) => matchesExperience(experience, LEGACY_DEFAULT_EXPERIENCE[index]!));
   const hasExactGalylioExperience = content.experience.length === LEGACY_DEFAULT_EXPERIENCE.length + 1

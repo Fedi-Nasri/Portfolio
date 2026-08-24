@@ -5,6 +5,7 @@ describe("role-focused Toolbox hydration", () => {
   it("adds the Galylio and freelance cloud-delivery entries only to exact untouched Experience defaults", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     legacy.experience = legacy.experience.slice(2);
+    legacy.experience[0]!.now = true;
     legacy.experienceSection = { eyebrow: "Experience", title: "Two internships,\none infrastructure-ready toolkit.", intro: "From full-stack application development to embedded AI and Linux deployment — a clear path toward cloud and network engineering." };
     legacy.about.stats[0] = { value: "2", label: "Internships completed" };
     const custom = structuredClone(legacy);
