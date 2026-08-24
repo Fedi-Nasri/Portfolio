@@ -35,6 +35,7 @@ describe("role-focused Toolbox hydration", () => {
   it("adds the 1111.tn and freelance Selected Work entries only to an untouched legacy project baseline", () => {
     const legacy = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     legacy.projects = legacy.projects.slice(2);
+    legacy.projects.forEach((project) => { project.summary = undefined; });
     legacy.projectsSection = { ...legacy.projectsSection, title: "Four systems,\nbuilt to run reliably.", intro: "From real-time AI monitoring to certificate-based access control and automated cloud deployment — each project strengthened a different infrastructure layer." };
     const custom = structuredClone(legacy);
     custom.projects[0]!.summary = "A custom saved project summary.";

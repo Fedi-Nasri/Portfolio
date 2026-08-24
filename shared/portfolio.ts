@@ -210,7 +210,7 @@ export function hydrateExperienceDetails(content: PortfolioContent): PortfolioCo
     && project.state === expected.state
     && project.title === expected.title
     && project.byline === expected.byline
-    && project.summary === expected.summary
+    && (project.summary === undefined || project.summary === expected.summary)
     && project.problem === expected.problem
     && project.body === expected.body
     && project.realization === expected.realization
