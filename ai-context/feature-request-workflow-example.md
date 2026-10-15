@@ -10,12 +10,12 @@ An Impact field may contain a factual outcome, such as a measured improvement or
 
 ## Phase 1: Read the correct context
 
-| Agent action | Files / evidence | Expected output |
-|---|---|---|
-| Read operating rules | `ai-context/README.md`, `AI_AGENT_SYSTEM_PROMPT.md` | Knows that changes require todo, tests, documentation, and checkpoint evidence. |
-| Read active status | `current-work.md`, `issues.md`, `decisions.md` | Confirms Vercel is paused and editor is intentionally direct-access. |
-| Read feature architecture | `technical-architecture.md`, `database-and-data.md`, `design-system.md` | Identifies that projects are part of the shared `PortfolioContent` JSON model, not a separate SQL table. |
-| Read source ownership | `shared/portfolio.ts`, `Home.tsx`, `FullLivePreview.tsx`, `EditPortfolio.tsx`, `editorContent.ts`, export utilities, related tests | Builds a concrete affected-file list before editing. |
+| Agent action              | Files / evidence                                                                                                                   | Expected output                                                                                          |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Read operating rules      | `ai-context/README.md`, `AI_AGENT_SYSTEM_PROMPT.md`                                                                                | Knows that changes require todo, tests, documentation, and checkpoint evidence.                          |
+| Read active status        | `current-work.md`, `issues.md`, `decisions.md`                                                                                     | Confirms Vercel is paused and editor is intentionally direct-access.                                     |
+| Read feature architecture | `technical-architecture.md`, `database-and-data.md`, `design-system.md`                                                            | Identifies that projects are part of the shared `PortfolioContent` JSON model, not a separate SQL table. |
+| Read source ownership     | `shared/portfolio.ts`, `Home.tsx`, `FullLivePreview.tsx`, `EditPortfolio.tsx`, `editorContent.ts`, export utilities, related tests | Builds a concrete affected-file list before editing.                                                     |
 
 The agent should summarize its understanding in one sentence before changing code:
 
@@ -69,27 +69,27 @@ The agent follows this sequence:
 
 ## Phase 4: Validate without damaging public data
 
-| Validation step | Why it is necessary |
-|---|---|
-| Use an isolated test draft. | Prevents test text from appearing in Main portfolio. |
-| Add one verified sample string only if supplied by the user. | Avoids fabricating a portfolio claim. |
-| Check desktop and mobile preview. | Impact text can affect project-card height and alternating media alignment. |
-| Run `pnpm check`. | Confirms shared type changes are handled in all consumers. |
-| Run `pnpm test`. | Protects draft, UI, and export regressions. |
-| Run `pnpm build`. | Ensures production bundle still compiles. |
-| Verify save, publish, and restore on an isolated draft. | Confirms the field survives version history without corrupting previous snapshots. |
+| Validation step                                              | Why it is necessary                                                                |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| Use an isolated test draft.                                  | Prevents test text from appearing in Main portfolio.                               |
+| Add one verified sample string only if supplied by the user. | Avoids fabricating a portfolio claim.                                              |
+| Check desktop and mobile preview.                            | Impact text can affect project-card height and alternating media alignment.        |
+| Run `pnpm check`.                                            | Confirms shared type changes are handled in all consumers.                         |
+| Run `pnpm test`.                                             | Protects draft, UI, and export regressions.                                        |
+| Run `pnpm build`.                                            | Ensures production bundle still compiles.                                          |
+| Verify save, publish, and restore on an isolated draft.      | Confirms the field survives version history without corrupting previous snapshots. |
 
 ## Phase 5: Update durable memory and checkpoint
 
 Before checkpointing, the agent updates:
 
-| Record | Required update |
-|---|---|
-| `todo.md` | Mark only verified work complete. |
-| `ai-context/current-work.md` | Record validation result and next state. |
-| `ai-context/change-log.md` | Note the user-visible feature, contract impact, and validation. |
-| `ai-context/design-system.md` | Update only if Impact introduces a reusable visual pattern. |
-| `docs/components.md` or `docs/editor-workflow.md` | Update if the editor/public workflow changes materially. |
+| Record                                            | Required update                                                 |
+| ------------------------------------------------- | --------------------------------------------------------------- |
+| `todo.md`                                         | Mark only verified work complete.                               |
+| `ai-context/current-work.md`                      | Record validation result and next state.                        |
+| `ai-context/change-log.md`                        | Note the user-visible feature, contract impact, and validation. |
+| `ai-context/design-system.md`                     | Update only if Impact introduces a reusable visual pattern.     |
+| `docs/components.md` or `docs/editor-workflow.md` | Update if the editor/public workflow changes materially.        |
 
 The checkpoint message should state the behavior and evidence, for example:
 
@@ -99,12 +99,12 @@ The checkpoint message should state the behavior and evidence, for example:
 
 The agent must stop and ask for guidance rather than guessing when any of these conditions occur:
 
-| Condition | Correct response |
-|---|---|
-| User asks for numerical outcomes but has not supplied factual data. | Provide an editable blank/template; request real information. |
-| The request requires modifying historical versions. | Propose an additive migration or transformation plan; do not mutate history in place. |
-| The change reveals public/editor layout drift. | Fix parity before calling the feature complete. |
-| Tests need a real external service/credential. | Keep the test deterministic where possible and request the minimum required configuration. |
-| The task touches Vercel/database provider configuration. | Recognize the paused state and wait for explicit deployment resumption. |
+| Condition                                                           | Correct response                                                                           |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| User asks for numerical outcomes but has not supplied factual data. | Provide an editable blank/template; request real information.                              |
+| The request requires modifying historical versions.                 | Propose an additive migration or transformation plan; do not mutate history in place.      |
+| The change reveals public/editor layout drift.                      | Fix parity before calling the feature complete.                                            |
+| Tests need a real external service/credential.                      | Keep the test deterministic where possible and request the minimum required configuration. |
+| The task touches Vercel/database provider configuration.            | Recognize the paused state and wait for explicit deployment resumption.                    |
 
 This same pattern applies to images, certifications, writing, custom canvas blocks, draft features, and other portfolio enhancements: **read context, plan, change all affected layers, validate, document evidence, checkpoint.**

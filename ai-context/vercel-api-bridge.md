@@ -10,21 +10,21 @@
 
 The portfolio is a Vite single-page application. Page routes need an `index.html` fallback after a refresh, while the direct editor needs server-side tRPC routes under `/api/trpc/*` for draft data, immutable version saves, PostgreSQL persistence, and Blob uploads.
 
-| Failure being prevented | Correction maintained on `master` | Expected result |
-|---|---|---|
-| `/api/trpc/*` falls through to the SPA. | `vercel.json` routes `/api/*` to the API function before client-side fallbacks. | `GET /api/trpc/auth.me` returns tRPC JSON, not HTML. |
-| Serverless dependency/module-format failure. | `server/vercel-api-handler.ts` is bundled into CommonJS `api/[...path].js`; `api/package.json` scopes the API directory to CommonJS. | `/edit` loads its PostgreSQL-backed workspace. |
-| Server/API source changes leave a stale function. | `pnpm build:vercel-api` regenerates the artifact. | The generated API function matches reviewed server source. |
+| Failure being prevented                           | Correction maintained on `master`                                                                                                    | Expected result                                            |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `/api/trpc/*` falls through to the SPA.           | `vercel.json` routes `/api/*` to the API function before client-side fallbacks.                                                      | `GET /api/trpc/auth.me` returns tRPC JSON, not HTML.       |
+| Serverless dependency/module-format failure.      | `server/vercel-api-handler.ts` is bundled into CommonJS `api/[...path].js`; `api/package.json` scopes the API directory to CommonJS. | `/edit` loads its PostgreSQL-backed workspace.             |
+| Server/API source changes leave a stale function. | `pnpm build:vercel-api` regenerates the artifact.                                                                                    | The generated API function matches reviewed server source. |
 
 ## File responsibilities
 
-| Path | Role | Rule for future agents |
-|---|---|---|
-| `server/vercel-api-handler.ts` | Source entry for the Vercel function bundle | Change only with relevant server/API tests. |
-| `api/[...path].js` | Generated CommonJS Vercel catch-all function | Never hand-edit; regenerate it. |
-| `api/package.json` | Keeps the generated API directory CommonJS inside an ESM repository | Preserve it with the generated function. |
-| `vercel.json` | Prioritizes `/api/*`, preserves legacy media rewrite, then provides SPA fallback | Preserve route order unless a deployment architecture change is explicit. |
-| `server/routers.ts` and `server/portfolio.ts` | Define tRPC editor/data contracts | Regenerate the artifact after relevant changes. |
+| Path                                          | Role                                                                             | Rule for future agents                                                    |
+| --------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `server/vercel-api-handler.ts`                | Source entry for the Vercel function bundle                                      | Change only with relevant server/API tests.                               |
+| `api/[...path].js`                            | Generated CommonJS Vercel catch-all function                                     | Never hand-edit; regenerate it.                                           |
+| `api/package.json`                            | Keeps the generated API directory CommonJS inside an ESM repository              | Preserve it with the generated function.                                  |
+| `vercel.json`                                 | Prioritizes `/api/*`, preserves legacy media rewrite, then provides SPA fallback | Preserve route order unless a deployment architecture change is explicit. |
+| `server/routers.ts` and `server/portfolio.ts` | Define tRPC editor/data contracts                                                | Regenerate the artifact after relevant changes.                           |
 
 ## Required workflow for a server/API change
 

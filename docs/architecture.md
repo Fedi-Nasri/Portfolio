@@ -28,43 +28,43 @@ flowchart LR
 
 ## Runtime layers
 
-| Layer | Technology | Responsibility | Key implementation points |
-|---|---|---|---|
-| User interface | React 19, Tailwind CSS 4, shadcn/ui primitives, Wouter | Renders the public portfolio and editor workspace. | `client/src/pages/Home.tsx`, `EditPortfolio.tsx`, `FullLivePreview.tsx` |
-| Client data boundary | tRPC React Query client, SuperJSON | Loads content and invokes typed mutations without handwritten REST clients. | `client/src/lib/trpc.ts`, `client/src/main.tsx` |
-| API | Express 4, tRPC 11, Zod | Mounts typed public/editor procedures beneath `/api/trpc`. | `server/_core/app.ts`, `server/routers.ts` |
-| Domain service | TypeScript | Validates, seeds, versions, restores, publishes, and selects portfolio drafts. | `server/portfolio.ts` |
-| Persistence | Drizzle ORM, `pg`, PostgreSQL | Stores draft metadata and immutable JSON snapshots. | `drizzle/schema.ts`, `server/db.ts` |
-| Assets | Forge/S3-style storage and an asset proxy | Stores images, logos, previews, and PDFs outside relational tables. | `server/storage.ts`, `server/_core/storageProxy.ts` |
-| Static export | JSZip and browser download APIs | Produces an HTML export or a faithful offline ZIP with local assets. | `client/src/lib/portfolioExport.ts`, `staticPublicExport.ts` |
-| Hosting adapter | Vite static build plus Vercel serverless function | Serves SPA routes and API routes in Vercel. | `api/[...path].ts`, `vercel.json` |
+| Layer                | Technology                                             | Responsibility                                                                 | Key implementation points                                               |
+| -------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| User interface       | React 19, Tailwind CSS 4, shadcn/ui primitives, Wouter | Renders the public portfolio and editor workspace.                             | `client/src/pages/Home.tsx`, `EditPortfolio.tsx`, `FullLivePreview.tsx` |
+| Client data boundary | tRPC React Query client, SuperJSON                     | Loads content and invokes typed mutations without handwritten REST clients.    | `client/src/lib/trpc.ts`, `client/src/main.tsx`                         |
+| API                  | Express 4, tRPC 11, Zod                                | Mounts typed public/editor procedures beneath `/api/trpc`.                     | `server/_core/app.ts`, `server/routers.ts`                              |
+| Domain service       | TypeScript                                             | Validates, seeds, versions, restores, publishes, and selects portfolio drafts. | `server/portfolio.ts`                                                   |
+| Persistence          | Drizzle ORM, `pg`, PostgreSQL                          | Stores draft metadata and immutable JSON snapshots.                            | `drizzle/schema.ts`, `server/db.ts`                                     |
+| Assets               | Forge/S3-style storage and an asset proxy              | Stores images, logos, previews, and PDFs outside relational tables.            | `server/storage.ts`, `server/_core/storageProxy.ts`                     |
+| Static export        | JSZip and browser download APIs                        | Produces an HTML export or a faithful offline ZIP with local assets.           | `client/src/lib/portfolioExport.ts`, `staticPublicExport.ts`            |
+| Hosting adapter      | Vite static build plus Vercel serverless function      | Serves SPA routes and API routes in Vercel.                                    | `api/[...path].ts`, `vercel.json`                                       |
 
 ## Shared content contract
 
 `PortfolioContent` represents the entire editable portfolio. It contains section labels and visibility controls as well as all content for hero, About, Experience, Skills, Certifications, Capabilities, Projects, Writing, Contact, Footer, and optional custom sections.
 
-| Content area | Important fields | Editorial behavior |
-|---|---|---|
-| Global composition | `sectionOrder`, `hiddenSections`, `customSections`, `canvasPresets` | Controls public section ordering, reversible visibility, custom sections, and reusable canvas layouts. |
-| Hero | identity, contact links, portrait, focus areas, visuals, `focusPositions` | Supports portrait/focus-visual upload and persisted focus-card positioning. |
-| About | paragraphs, tags, statistics | Direct in-place editing plus add/delete operations. |
-| Experience | role, company, logo, summary, tags, `details` | Collapsed/expanded public states, editable bullet details, and company logos. |
-| Skills | toolbox headings and entries | Toolbox and tool add/delete controls. |
-| Certifications | provider, credential details, link, PDF, preview, logo | Supports provider branding, document viewing, and storage-backed attachment URLs. |
-| Projects | case study, tech, delivery, image crop/frame preferences | Alternating public rows with persisted focal point, zoom, aspect ratio, and frame height. |
-| Writing | publishing metadata, article content, URL | Supplies stacked article rows with a protected right-side metadata area on desktop. |
-| Custom canvas | title, text, image, button, tag-list, statistic, contact-card blocks | Renders a freeform desktop canvas with a readable responsive fallback. |
+| Content area       | Important fields                                                          | Editorial behavior                                                                                     |
+| ------------------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Global composition | `sectionOrder`, `hiddenSections`, `customSections`, `canvasPresets`       | Controls public section ordering, reversible visibility, custom sections, and reusable canvas layouts. |
+| Hero               | identity, contact links, portrait, focus areas, visuals, `focusPositions` | Supports portrait/focus-visual upload and persisted focus-card positioning.                            |
+| About              | paragraphs, tags, statistics                                              | Direct in-place editing plus add/delete operations.                                                    |
+| Experience         | role, company, logo, summary, tags, `details`                             | Collapsed/expanded public states, editable bullet details, and company logos.                          |
+| Skills             | toolbox headings and entries                                              | Toolbox and tool add/delete controls.                                                                  |
+| Certifications     | provider, credential details, link, PDF, preview, logo                    | Supports provider branding, document viewing, and storage-backed attachment URLs.                      |
+| Projects           | case study, tech, delivery, image crop/frame preferences                  | Alternating public rows with persisted focal point, zoom, aspect ratio, and frame height.              |
+| Writing            | publishing metadata, article content, URL                                 | Supplies stacked article rows with a protected right-side metadata area on desktop.                    |
+| Custom canvas      | title, text, image, button, tag-list, statistic, contact-card blocks      | Renders a freeform desktop canvas with a readable responsive fallback.                                 |
 
 ## Database architecture
 
 The schema has both a legacy single-stream version table and the active multi-draft model. New work should use the multi-draft tables.
 
-| Table | Purpose | Critical fields |
-|---|---|---|
-| `portfolio_content_versions` | Legacy content history retained for bootstrap and fallback. | `status`, `contentJson`, `publishedAt` |
-| `portfolio_drafts` | One record per named workspace draft. | `draftKey`, `name`, `isPublic`, timestamps |
-| `portfolio_draft_versions` | Immutable snapshots for one draft. | `draftId`, `versionNumber`, `contentJson`, `note`, `createdAt` |
-| `users` | Template-provided OAuth user table; not required by the direct `/edit` workflow. | `openId`, `role`, timestamps |
+| Table                        | Purpose                                                                          | Critical fields                                                |
+| ---------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `portfolio_content_versions` | Legacy content history retained for bootstrap and fallback.                      | `status`, `contentJson`, `publishedAt`                         |
+| `portfolio_drafts`           | One record per named workspace draft.                                            | `draftKey`, `name`, `isPublic`, timestamps                     |
+| `portfolio_draft_versions`   | Immutable snapshots for one draft.                                               | `draftId`, `versionNumber`, `contentJson`, `note`, `createdAt` |
+| `users`                      | Template-provided OAuth user table; not required by the direct `/edit` workflow. | `openId`, `role`, timestamps                                   |
 
 `contentJson` is a typed JSON document rather than a column per portfolio field. This makes the diverse and evolving portfolio content practical to version atomically. Each `portfolio_draft_versions` row is a full historical snapshot rather than a patch.
 
@@ -81,11 +81,11 @@ The schema has both a legacy single-stream version table and the active multi-dr
 
 The API follows tRPC contracts rather than ad-hoc REST resources. The high-level interface is exposed by `appRouter`.
 
-| Router group | Operations | Consumer |
-|---|---|---|
-| `portfolio` | public content load, editor workspace load, save, publish, draft create/rename/delete, public selection, version load/restore, version note update | Public page and `/edit` workspace |
-| `assets` | Uploads for portraits, focus cards, projects, canvas images, provider/company logos, and certificate PDFs | `/edit` workspace |
-| `auth` | Template-provided `me` and logout actions | Not used as an access gate for `/edit` |
+| Router group | Operations                                                                                                                                         | Consumer                               |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `portfolio`  | public content load, editor workspace load, save, publish, draft create/rename/delete, public selection, version load/restore, version note update | Public page and `/edit` workspace      |
+| `assets`     | Uploads for portraits, focus cards, projects, canvas images, provider/company logos, and certificate PDFs                                          | `/edit` workspace                      |
+| `auth`       | Template-provided `me` and logout actions                                                                                                          | Not used as an access gate for `/edit` |
 
 The Express app sets JSON and URL-encoded body limits to 50 MB, registers the storage proxy and OAuth routes, then mounts tRPC at `/api/trpc`. Any new server-backed feature should normally be added as a typed tRPC procedure and covered by a Vitest test.
 
@@ -101,11 +101,11 @@ Local development starts the Express server from `server/_core/index.ts`. On Ver
 
 `vercel.json` has three important routing decisions:
 
-| Rule | Why it exists |
-|---|---|
-| Build only the Vite frontend | Vercel serves the SPA as static output while serverless functions are built from `api/`. |
-| Rewrite `/manus-storage/:path*` to `/api/manus-storage/:path*` | Keeps legacy asset URLs aligned with the Express storage proxy. |
-| Rewrite all other unmatched paths to `/index.html` | Lets Wouter resolve `/edit` and other SPA paths client-side. |
+| Rule                                                           | Why it exists                                                                            |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Build only the Vite frontend                                   | Vercel serves the SPA as static output while serverless functions are built from `api/`. |
+| Rewrite `/manus-storage/:path*` to `/api/manus-storage/:path*` | Keeps legacy asset URLs aligned with the Express storage proxy.                          |
+| Rewrite all other unmatched paths to `/index.html`             | Lets Wouter resolve `/edit` and other SPA paths client-side.                             |
 
 ## Security and operational boundaries
 
@@ -117,13 +117,13 @@ The public draft selector does protect against deleting the current public draft
 
 When changing an editable feature, trace the full path below rather than modifying only one page.
 
-| Change type | Required touch points |
-|---|---|
-| New editable field | `PortfolioContent` type, defaults, public render, `FullLivePreview`, editor handler, exported render, persistence test. |
-| New list-like section | Shared shape, immutable helpers in `editorContent.ts`, add/remove/reorder UI, empty/limit guards, export, tests. |
-| New file attachment | Upload category validation, storage provider, draft URL field, public display, editor removal path, export packaging if offline behavior matters. |
-| Design-token change | `index.css`, public render, editor preview parity, responsive breakpoints, contrast and focus verification. |
-| New deployment provider | Environment documentation, provider abstraction, local fallback, production migration/runbook, smoke tests. |
+| Change type             | Required touch points                                                                                                                             |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| New editable field      | `PortfolioContent` type, defaults, public render, `FullLivePreview`, editor handler, exported render, persistence test.                           |
+| New list-like section   | Shared shape, immutable helpers in `editorContent.ts`, add/remove/reorder UI, empty/limit guards, export, tests.                                  |
+| New file attachment     | Upload category validation, storage provider, draft URL field, public display, editor removal path, export packaging if offline behavior matters. |
+| Design-token change     | `index.css`, public render, editor preview parity, responsive breakpoints, contrast and focus verification.                                       |
+| New deployment provider | Environment documentation, provider abstraction, local fallback, production migration/runbook, smoke tests.                                       |
 
 ## AI continuation reference
 

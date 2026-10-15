@@ -17,7 +17,7 @@ export function createPortfolioApp() {
     createExpressMiddleware({
       router: appRouter,
       createContext,
-    }),
+    })
   );
   return app;
 }

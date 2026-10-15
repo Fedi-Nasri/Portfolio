@@ -12,11 +12,11 @@ The public portfolio is a Vite single-page application. Vite’s client-side rou
 
 An initial TypeScript serverless entry also encountered a module-format conflict. The shared Express dependencies use CommonJS-compatible loading, while the root application is configured as an ES module project. Vercel therefore needed a self-contained CommonJS API artifact instead of relying on dynamic imports of the source server at runtime.
 
-| Earlier failure | User-visible effect | Corrected behavior |
-|---|---|---|
-| `/api/trpc/*` reached the SPA fallback. | `/edit` could show an unavailable or endlessly loading workspace because it received HTML instead of a tRPC result. | `/api/*` is routed before the SPA fallback. |
-| The serverless function attempted to resolve shared server files with an incompatible module format. | Vercel could return a function error even though the public portfolio rendered. | A self-contained CommonJS function includes the server dependencies Vercel must run. |
-| The API function did not have an explicit Vercel-recognized JavaScript entry. | Vercel could not reliably distinguish the API function from static application output. | `api/[...path].js` is the explicit catch-all serverless entry. |
+| Earlier failure                                                                                      | User-visible effect                                                                                                 | Corrected behavior                                                                   |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `/api/trpc/*` reached the SPA fallback.                                                              | `/edit` could show an unavailable or endlessly loading workspace because it received HTML instead of a tRPC result. | `/api/*` is routed before the SPA fallback.                                          |
+| The serverless function attempted to resolve shared server files with an incompatible module format. | Vercel could return a function error even though the public portfolio rendered.                                     | A self-contained CommonJS function includes the server dependencies Vercel must run. |
+| The API function did not have an explicit Vercel-recognized JavaScript entry.                        | Vercel could not reliably distinguish the API function from static application output.                              | `api/[...path].js` is the explicit catch-all serverless entry.                       |
 
 ## How the bridge works
 
@@ -32,13 +32,13 @@ flowchart LR
 
 The relevant files have different responsibilities:
 
-| File | Responsibility | Editing rule |
-|---|---|---|
-| `server/vercel-api-handler.ts` | Source entry that creates the server application for Vercel packaging. | Edit only when backend behavior or API wiring changes. |
-| `api/[...path].js` | Generated, bundled CommonJS serverless function Vercel executes for `/api/*`. | **Never hand edit.** Regenerate it from source. |
-| `api/package.json` | Declares the generated `api/` directory as CommonJS even though the root project is ESM. | Keep this file with the generated function. |
-| `vercel.json` | Sends `/api/*` to the function before the static SPA fallback. | Preserve route order unless deliberately changing deployment architecture. |
-| `server/routers.ts` | Defines tRPC procedures such as draft load/save and asset upload. | Change with tests and regenerate the function afterward. |
+| File                           | Responsibility                                                                           | Editing rule                                                               |
+| ------------------------------ | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `server/vercel-api-handler.ts` | Source entry that creates the server application for Vercel packaging.                   | Edit only when backend behavior or API wiring changes.                     |
+| `api/[...path].js`             | Generated, bundled CommonJS serverless function Vercel executes for `/api/*`.            | **Never hand edit.** Regenerate it from source.                            |
+| `api/package.json`             | Declares the generated `api/` directory as CommonJS even though the root project is ESM. | Keep this file with the generated function.                                |
+| `vercel.json`                  | Sends `/api/*` to the function before the static SPA fallback.                           | Preserve route order unless deliberately changing deployment architecture. |
+| `server/routers.ts`            | Defines tRPC procedures such as draft load/save and asset upload.                        | Change with tests and regenerate the function afterward.                   |
 
 The `[...path]` segment is a **catch-all route parameter**. It lets one Vercel function receive multiple backend URLs, including `/api/trpc/auth.me`, `/api/trpc/portfolio.editorContent`, `/api/trpc/portfolio.saveDraft`, and `/api/trpc/assets.upload`.
 
@@ -46,13 +46,13 @@ The `[...path]` segment is a **catch-all route parameter**. It lets one Vercel f
 
 The bridge enables these deployed editor capabilities:
 
-| Capability | Example route family | Why the bridge is required |
-|---|---|---|
-| Load the direct editor | `portfolio.editorContent` | The editor needs the current draft, version list, and public-draft status from PostgreSQL. |
-| Save immutable draft versions | `portfolio.saveDraft` | The browser needs a server-side procedure to create a new version record safely. |
-| Restore or choose drafts | `portfolio.restoreDraftVersion`, `portfolio.selectPublicDraft` | Draft history and public selection are server-managed data operations. |
-| Upload new media | `assets.upload` | The server validates media, writes bytes to Blob, and stores metadata in PostgreSQL. |
-| Read public portfolio data | `portfolio.publicContent` | The public app can fetch the selected public draft through the same backend boundary. |
+| Capability                    | Example route family                                           | Why the bridge is required                                                                 |
+| ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Load the direct editor        | `portfolio.editorContent`                                      | The editor needs the current draft, version list, and public-draft status from PostgreSQL. |
+| Save immutable draft versions | `portfolio.saveDraft`                                          | The browser needs a server-side procedure to create a new version record safely.           |
+| Restore or choose drafts      | `portfolio.restoreDraftVersion`, `portfolio.selectPublicDraft` | Draft history and public selection are server-managed data operations.                     |
+| Upload new media              | `assets.upload`                                                | The server validates media, writes bytes to Blob, and stores metadata in PostgreSQL.       |
+| Read public portfolio data    | `portfolio.publicContent`                                      | The public app can fetch the selected public draft through the same backend boundary.      |
 
 ## Safe maintenance workflow
 
@@ -68,13 +68,13 @@ When a change touches server API source, tRPC routers, database helpers, or Verc
 
 ## Troubleshooting
 
-| Symptom | Likely cause | Safe first check |
-|---|---|---|
-| `/edit` displays an API/query error. | `/api/*` may be falling through to the SPA, the function may have failed, or PostgreSQL may be unavailable. | Open `/api/trpc/auth.me`. A valid tRPC JSON response confirms the API route is active. |
-| `/api/trpc/...` returns portfolio HTML. | The API rewrite no longer runs before the SPA fallback. | Review the `/api/(.*)` rewrite in `vercel.json`; do not change it blindly. |
-| Vercel reports a module or `require` error. | The generated CommonJS artifact is stale, missing, or no longer scoped by `api/package.json`. | Run `pnpm build:vercel-api`, then include both API files in the release candidate. |
-| Public `/` works but draft save/upload fails. | The static application succeeded while the serverless function, database variable, or Blob configuration failed. | Check Vercel logs and the Preview environment assignment without exposing any secret values. |
-| Historical image or PDF does not render. | It may still reference legacy `/manus-storage` rather than a Blob URL. | Treat it as a media-migration task; the bridge cannot automatically copy old files into Blob. |
+| Symptom                                       | Likely cause                                                                                                     | Safe first check                                                                              |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `/edit` displays an API/query error.          | `/api/*` may be falling through to the SPA, the function may have failed, or PostgreSQL may be unavailable.      | Open `/api/trpc/auth.me`. A valid tRPC JSON response confirms the API route is active.        |
+| `/api/trpc/...` returns portfolio HTML.       | The API rewrite no longer runs before the SPA fallback.                                                          | Review the `/api/(.*)` rewrite in `vercel.json`; do not change it blindly.                    |
+| Vercel reports a module or `require` error.   | The generated CommonJS artifact is stale, missing, or no longer scoped by `api/package.json`.                    | Run `pnpm build:vercel-api`, then include both API files in the release candidate.            |
+| Public `/` works but draft save/upload fails. | The static application succeeded while the serverless function, database variable, or Blob configuration failed. | Check Vercel logs and the Preview environment assignment without exposing any secret values.  |
+| Historical image or PDF does not render.      | It may still reference legacy `/manus-storage` rather than a Blob URL.                                           | Treat it as a media-migration task; the bridge cannot automatically copy old files into Blob. |
 
 ## Security boundary
 

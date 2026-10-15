@@ -6,7 +6,14 @@ import { ProjectImageControlPanel } from "./ProjectImageControlPanel";
 
 describe("ProjectImageControlPanel", () => {
   it("exposes visible image-management and crop controls for a project with an image", () => {
-    const html = renderToStaticMarkup(<ProjectImageControlPanel projects={DEFAULT_PORTFOLIO_CONTENT.projects.slice(2)} onChange={() => {}} onUploadImage={() => {}} onRemoveImage={() => {}} />);
+    const html = renderToStaticMarkup(
+      <ProjectImageControlPanel
+        projects={DEFAULT_PORTFOLIO_CONTENT.projects.slice(2)}
+        onChange={() => {}}
+        onUploadImage={() => {}}
+        onRemoveImage={() => {}}
+      />
+    );
 
     expect(html).toContain("Replace image");
     expect(html).toContain("Remove image");
@@ -20,7 +27,13 @@ describe("ProjectImageControlPanel", () => {
   it("keeps a visible add-image action when the selected project has no image", () => {
     const projects = structuredClone(DEFAULT_PORTFOLIO_CONTENT.projects);
     projects[0]!.image = "";
-    const html = renderToStaticMarkup(<ProjectImageControlPanel projects={projects} onChange={() => {}} onUploadImage={() => {}} />);
+    const html = renderToStaticMarkup(
+      <ProjectImageControlPanel
+        projects={projects}
+        onChange={() => {}}
+        onUploadImage={() => {}}
+      />
+    );
 
     expect(html).toContain("No image attached to this project yet.");
     expect(html).toContain("Add image");

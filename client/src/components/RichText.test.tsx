@@ -5,7 +5,9 @@ import { RichText } from "./RichText";
 
 describe("RichText", () => {
   it("renders only the supported formatting tokens as safe React elements", () => {
-    const html = renderToStaticMarkup(<RichText value="**Bold** _italic_ __underlined__ [[size:lead]]lead text[[/size]]" />);
+    const html = renderToStaticMarkup(
+      <RichText value="**Bold** _italic_ __underlined__ [[size:lead]]lead text[[/size]]" />
+    );
     expect(html).toContain("<strong>Bold</strong>");
     expect(html).toContain("<em>italic</em>");
     expect(html).toContain("<u>underlined</u>");

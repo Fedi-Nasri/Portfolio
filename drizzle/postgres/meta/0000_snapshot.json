@@ -221,9 +221,7 @@
         "portfolio_drafts_draftKey_unique": {
           "name": "portfolio_drafts_draftKey_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "draftKey"
-          ]
+          "columns": ["draftKey"]
         }
       },
       "policies": {},
@@ -312,9 +310,7 @@
         "users_openId_unique": {
           "name": "users_openId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "openId"
-          ]
+          "columns": ["openId"]
         }
       },
       "policies": {},
@@ -326,18 +322,12 @@
     "public.portfolio_content_status": {
       "name": "portfolio_content_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.user_role": {
       "name": "user_role",
       "schema": "public",
-      "values": [
-        "user",
-        "admin"
-      ]
+      "values": ["user", "admin"]
     }
   },
   "schemas": {},

@@ -53,23 +53,40 @@ memory.public.none(`
 `);
 
 const adapter = memory.adapters.createPg();
-process.env.DATABASE_URL = "postgresql://portfolio-test:portfolio-test@localhost:5432/portfolio_test";
+process.env.DATABASE_URL =
+  "postgresql://portfolio-test:portfolio-test@localhost:5432/portfolio_test";
 
 class TestPool extends adapter.Pool {
   query(query: unknown, ...args: unknown[]) {
-    const needsArrayRows = Boolean(query && typeof query === "object" && (query as Record<string, unknown>).rowMode === "array");
+    const needsArrayRows = Boolean(
+      query &&
+        typeof query === "object" &&
+        (query as Record<string, unknown>).rowMode === "array"
+    );
     const normalizeRows = (result: { rows?: unknown[] }) => {
       if (needsArrayRows && Array.isArray(result.rows)) {
-        result.rows = result.rows.map((row) => (Array.isArray(row) ? row : Object.values(row as Record<string, unknown>)));
+        result.rows = result.rows.map(row =>
+          Array.isArray(row)
+            ? row
+            : Object.values(row as Record<string, unknown>)
+        );
       }
       return result;
     };
 
     if (query && typeof query === "object") {
-      const { types: _types, rowMode: _rowMode, ...compatibleQuery } = query as Record<string, unknown>;
-      return (super.query(compatibleQuery as never, ...args as never[]) as Promise<{ rows?: unknown[] }>).then(normalizeRows);
+      const {
+        types: _types,
+        rowMode: _rowMode,
+        ...compatibleQuery
+      } = query as Record<string, unknown>;
+      return (
+        super.query(compatibleQuery as never, ...(args as never[])) as Promise<{
+          rows?: unknown[];
+        }>
+      ).then(normalizeRows);
     }
-    return super.query(query as never, ...args as never[]);
+    return super.query(query as never, ...(args as never[]));
   }
 }
 

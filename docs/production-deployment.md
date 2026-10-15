@@ -17,37 +17,37 @@ The current upload implementation uses Forge/S3-style storage and a `/manus-stor
 
 ## Vercel project topology
 
-| Concern | Current repository configuration |
-|---|---|
-| Vercel project | Existing project: `portfolio` |
-| Static build command | `pnpm exec vite build` |
-| Install command | `pnpm install --frozen-lockfile` |
-| Static output | `dist/public` |
-| Serverless entry | `api/[...path].ts` |
-| API app factory | `server/_core/app.ts` |
-| Legacy storage rewrite | `/manus-storage/:path*` → `/api/manus-storage/:path*` |
-| SPA fallback | Unmatched routes → `/index.html` |
-| Critical public route | `/` |
-| Critical direct editor route | `/edit` |
+| Concern                      | Current repository configuration                      |
+| ---------------------------- | ----------------------------------------------------- |
+| Vercel project               | Existing project: `portfolio`                         |
+| Static build command         | `pnpm exec vite build`                                |
+| Install command              | `pnpm install --frozen-lockfile`                      |
+| Static output                | `dist/public`                                         |
+| Serverless entry             | `api/[...path].ts`                                    |
+| API app factory              | `server/_core/app.ts`                                 |
+| Legacy storage rewrite       | `/manus-storage/:path*` → `/api/manus-storage/:path*` |
+| SPA fallback                 | Unmatched routes → `/index.html`                      |
+| Critical public route        | `/`                                                   |
+| Critical direct editor route | `/edit`                                               |
 
 ## Environment variables
 
 Set production secrets in the Vercel project environment configuration. Do not put secret values in source code, exported ZIP files, or git commits.
 
-| Variable | Scope | Current role | Production requirement |
-|---|---|---|---|
-| `DATABASE_URL` | Server only | PostgreSQL connection used by Drizzle and draft persistence. | **Required.** Must be a PostgreSQL-compatible URL. |
-| `JWT_SECRET` | Server only | Template session-cookie signing secret. | Supply a strong random value if OAuth/session routes remain mounted; direct `/edit` does not use it as access control. |
-| `VITE_APP_ID` | Client-exposed build variable | Manus OAuth application identifier from the template. | Needed only if OAuth client behavior remains enabled. Vite embeds `VITE_*` values into client bundles. |
-| `OAUTH_SERVER_URL` | Server/client configuration | Base URL used by Manus OAuth integration. | Required only when OAuth routes/login are actively used. |
-| `VITE_OAUTH_PORTAL_URL` | Client-exposed build variable | Manus login portal location. | Optional for the current direct editor; required for restored OAuth UI. |
-| `BUILT_IN_FORGE_API_URL` | Server only | Forge endpoint used by the current storage proxy/service. | Required only while retaining Forge storage. Remove the runtime dependency after a complete Blob adapter. |
-| `BUILT_IN_FORGE_API_KEY` | Server only secret | Bearer token for current Forge storage calls. | Required only while retaining Forge storage. Never expose client-side. |
-| `VITE_FRONTEND_FORGE_API_URL` | Client-exposed build variable | Frontend Forge endpoint configuration. | Needed only by client features that call Forge directly. Do not set when unused. |
-| `VITE_FRONTEND_FORGE_API_KEY` | Client-exposed build variable | Frontend-scoped Forge access token. | Treat as public client configuration; do not use for privileged operations. |
-| `OWNER_OPEN_ID` | Server only | Template owner identity. | Not an authorization control for the current direct editor; needed only by owner/OAuth template logic. |
-| `OWNER_NAME` | Server only | Template owner display value. | Optional for the direct portfolio path; keep if template services reference it. |
-| `BLOB_READ_WRITE_TOKEN` | Server only secret | Vercel Blob write credential when Blob adapter is introduced. | **Required after Blob migration.** Use Vercel’s connected Blob integration rather than hardcoding a token. |
+| Variable                      | Scope                         | Current role                                                  | Production requirement                                                                                                 |
+| ----------------------------- | ----------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`                | Server only                   | PostgreSQL connection used by Drizzle and draft persistence.  | **Required.** Must be a PostgreSQL-compatible URL.                                                                     |
+| `JWT_SECRET`                  | Server only                   | Template session-cookie signing secret.                       | Supply a strong random value if OAuth/session routes remain mounted; direct `/edit` does not use it as access control. |
+| `VITE_APP_ID`                 | Client-exposed build variable | Manus OAuth application identifier from the template.         | Needed only if OAuth client behavior remains enabled. Vite embeds `VITE_*` values into client bundles.                 |
+| `OAUTH_SERVER_URL`            | Server/client configuration   | Base URL used by Manus OAuth integration.                     | Required only when OAuth routes/login are actively used.                                                               |
+| `VITE_OAUTH_PORTAL_URL`       | Client-exposed build variable | Manus login portal location.                                  | Optional for the current direct editor; required for restored OAuth UI.                                                |
+| `BUILT_IN_FORGE_API_URL`      | Server only                   | Forge endpoint used by the current storage proxy/service.     | Required only while retaining Forge storage. Remove the runtime dependency after a complete Blob adapter.              |
+| `BUILT_IN_FORGE_API_KEY`      | Server only secret            | Bearer token for current Forge storage calls.                 | Required only while retaining Forge storage. Never expose client-side.                                                 |
+| `VITE_FRONTEND_FORGE_API_URL` | Client-exposed build variable | Frontend Forge endpoint configuration.                        | Needed only by client features that call Forge directly. Do not set when unused.                                       |
+| `VITE_FRONTEND_FORGE_API_KEY` | Client-exposed build variable | Frontend-scoped Forge access token.                           | Treat as public client configuration; do not use for privileged operations.                                            |
+| `OWNER_OPEN_ID`               | Server only                   | Template owner identity.                                      | Not an authorization control for the current direct editor; needed only by owner/OAuth template logic.                 |
+| `OWNER_NAME`                  | Server only                   | Template owner display value.                                 | Optional for the direct portfolio path; keep if template services reference it.                                        |
+| `BLOB_READ_WRITE_TOKEN`       | Server only secret            | Vercel Blob write credential when Blob adapter is introduced. | **Required after Blob migration.** Use Vercel’s connected Blob integration rather than hardcoding a token.             |
 
 ## Recommended deployment sequence
 
@@ -57,13 +57,13 @@ Connect a PostgreSQL database and record its connection string in `DATABASE_URL`
 
 If Neon or another PostgreSQL service is available, use it as the host and keep the following implementation rules intact:
 
-| Porting area | Current implementation | PostgreSQL port needed |
-|---|---|---|
-| Drizzle schema imports | `drizzle-orm/pg-core` | Keep standard PostgreSQL table/column imports. |
-| Driver | `drizzle-orm/node-postgres`, `pg` | Keep the provider-neutral PostgreSQL driver and adapter. |
-| Drizzle config | `dialect: "postgresql"` | Retain provider-neutral PostgreSQL credentials. |
-| Generated migrations | PostgreSQL DDL | Review provider-neutral PostgreSQL migration history. |
-| Runtime validation | PostgreSQL URL | Run preview/production smoke tests. |
+| Porting area           | Current implementation            | PostgreSQL port needed                                   |
+| ---------------------- | --------------------------------- | -------------------------------------------------------- |
+| Drizzle schema imports | `drizzle-orm/pg-core`             | Keep standard PostgreSQL table/column imports.           |
+| Driver                 | `drizzle-orm/node-postgres`, `pg` | Keep the provider-neutral PostgreSQL driver and adapter. |
+| Drizzle config         | `dialect: "postgresql"`           | Retain provider-neutral PostgreSQL credentials.          |
+| Generated migrations   | PostgreSQL DDL                    | Review provider-neutral PostgreSQL migration history.    |
+| Runtime validation     | PostgreSQL URL                    | Run preview/production smoke tests.                      |
 
 ### 2. Apply database migrations
 
@@ -107,27 +107,27 @@ pnpm build
 
 After deployment, verify the following in the production URL:
 
-| Test | Expected result |
-|---|---|
-| Public route `/` | Loads the selected public draft, including images and certificate interactions. |
-| Direct editor `/edit` | Loads a draft library, version history, live preview, and save controls. |
-| Save version | Creates the next version without replacing history. |
-| Publish | Changes the selected public draft and refreshes the public page content. |
-| Restore | Creates a new version from a prior snapshot while retaining newer versions. |
-| Uploads | New media URL renders after saving/publishing and remains available after refresh. |
-| ZIP export | Downloads a public-style package and includes locally packaged accessible certificate PDFs. |
-| SPA reload | Reloading `/edit` returns the SPA rather than a Vercel 404. |
+| Test                  | Expected result                                                                             |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| Public route `/`      | Loads the selected public draft, including images and certificate interactions.             |
+| Direct editor `/edit` | Loads a draft library, version history, live preview, and save controls.                    |
+| Save version          | Creates the next version without replacing history.                                         |
+| Publish               | Changes the selected public draft and refreshes the public page content.                    |
+| Restore               | Creates a new version from a prior snapshot while retaining newer versions.                 |
+| Uploads               | New media URL renders after saving/publishing and remains available after refresh.          |
+| ZIP export            | Downloads a public-style package and includes locally packaged accessible certificate PDFs. |
+| SPA reload            | Reloading `/edit` returns the SPA rather than a Vercel 404.                                 |
 
 ## Security hardening before broad launch
 
 The current application intentionally has no authentication on `/edit`. This is the largest deployment risk, more significant than ordinary styling or data bugs.
 
-| Option | Protection level | Implementation direction |
-|---|---|---|
-| Keep direct `/edit` public | None | Suitable only for a private/unlisted environment where content tampering is accepted. |
-| Vercel deployment protection | Basic perimeter | Use Vercel project/deployment protection if it covers the editor path for intended users. |
-| Edge/password gate | Moderate | Require a shared secret before serving `/edit`; do not hardcode it in client code. |
-| OAuth/user roles | Stronger application control | Restore a server-side protected procedure and require a verified editor identity. |
+| Option                       | Protection level             | Implementation direction                                                                  |
+| ---------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------- |
+| Keep direct `/edit` public   | None                         | Suitable only for a private/unlisted environment where content tampering is accepted.     |
+| Vercel deployment protection | Basic perimeter              | Use Vercel project/deployment protection if it covers the editor path for intended users. |
+| Edge/password gate           | Moderate                     | Require a shared secret before serving `/edit`; do not hardcode it in client code.        |
+| OAuth/user roles             | Stronger application control | Restore a server-side protected procedure and require a verified editor identity.         |
 
 Changing the public route is a product decision. Protecting only the UI while leaving tRPC write procedures public is not sufficient; enforce the control in the server router/service path too.
 

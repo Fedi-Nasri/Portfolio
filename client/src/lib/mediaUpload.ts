@@ -9,7 +9,11 @@ const PREPARED_IMAGE_TYPE = "image/webp";
 const PREPARED_IMAGE_QUALITY = 0.82;
 
 export function needsInlineImagePreparation(file: Pick<File, "size" | "type">) {
-  return file.type.startsWith("image/") && file.type !== "image/svg+xml" && file.size > INLINE_IMAGE_PREPARATION_THRESHOLD_BYTES;
+  return (
+    file.type.startsWith("image/") &&
+    file.type !== "image/svg+xml" &&
+    file.size > INLINE_IMAGE_PREPARATION_THRESHOLD_BYTES
+  );
 }
 
 export function preparedImageFileName(fileName: string) {
@@ -21,13 +25,16 @@ function loadImage(sourceUrl: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error("The selected image could not be prepared for upload."));
+    image.onerror = () =>
+      reject(new Error("The selected image could not be prepared for upload."));
     image.src = sourceUrl;
   });
 }
 
 function canvasToBlob(canvas: HTMLCanvasElement) {
-  return new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, PREPARED_IMAGE_TYPE, PREPARED_IMAGE_QUALITY));
+  return new Promise<Blob | null>(resolve =>
+    canvas.toBlob(resolve, PREPARED_IMAGE_TYPE, PREPARED_IMAGE_QUALITY)
+  );
 }
 
 /**
@@ -36,7 +43,12 @@ function canvasToBlob(canvas: HTMLCanvasElement) {
  * prepared in the browser, or compression would not reduce its byte size.
  */
 export async function prepareImageForInlineUpload(file: File): Promise<File> {
-  if (!needsInlineImagePreparation(file) || typeof document === "undefined" || typeof URL === "undefined") return file;
+  if (
+    !needsInlineImagePreparation(file) ||
+    typeof document === "undefined" ||
+    typeof URL === "undefined"
+  )
+    return file;
 
   const sourceUrl = URL.createObjectURL(file);
   try {
@@ -54,7 +66,10 @@ export async function prepareImageForInlineUpload(file: File): Promise<File> {
 
     const prepared = await canvasToBlob(canvas);
     if (!prepared || prepared.size >= file.size) return file;
-    return new File([prepared], preparedImageFileName(file.name), { type: PREPARED_IMAGE_TYPE, lastModified: file.lastModified });
+    return new File([prepared], preparedImageFileName(file.name), {
+      type: PREPARED_IMAGE_TYPE,
+      lastModified: file.lastModified,
+    });
   } finally {
     URL.revokeObjectURL(sourceUrl);
   }

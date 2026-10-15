@@ -4,13 +4,13 @@ This guide explains what to do when the portfolio needs a new database capabilit
 
 ## Current service map
 
-| Need | Current solution | Application rule |
-|---|---|---|
-| Drafts, versions, public selection | PostgreSQL through `pg` and Drizzle | PostgreSQL remains provider-neutral; Neon is the current Vercel-connected host only. |
-| Images and PDFs | Public Vercel Blob store `portfolio-blob` | Blob holds file bytes; PostgreSQL holds metadata and portfolio URLs. |
-| Website and API | Vercel static deployment plus serverless function | React files serve from `dist/public`; API is `api/[...path].js`. |
-| Configuration | Vercel Project Environment Variables | Use names and scope only in docs; never commit values. |
-| Domain | Vercel project Domains settings | A domain points at the Production deployment unless deliberately assigned otherwise. |
+| Need                               | Current solution                                  | Application rule                                                                     |
+| ---------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Drafts, versions, public selection | PostgreSQL through `pg` and Drizzle               | PostgreSQL remains provider-neutral; Neon is the current Vercel-connected host only. |
+| Images and PDFs                    | Public Vercel Blob store `portfolio-blob`         | Blob holds file bytes; PostgreSQL holds metadata and portfolio URLs.                 |
+| Website and API                    | Vercel static deployment plus serverless function | React files serve from `dist/public`; API is `api/[...path].js`.                     |
+| Configuration                      | Vercel Project Environment Variables              | Use names and scope only in docs; never commit values.                               |
+| Domain                             | Vercel project Domains settings                   | A domain points at the Production deployment unless deliberately assigned otherwise. |
 
 ## Add or change PostgreSQL data
 
@@ -31,15 +31,15 @@ Use PostgreSQL for structured records with relationships, transactions, history,
 
 Vercel Blob is the correct service here for large files such as portraits, project images, certificate previews, and PDFs.[2]
 
-| Step | Required action |
-|---|---|
-| Decide access | The current store is public because portfolio media is meant to be displayed or downloaded by visitors. Do not make sensitive files public. |
-| Preserve originals | Keep source files outside the repository in `/home/ubuntu/webdev-static-assets/`; do not add large media to `client/public/` or source folders. |
-| Use the server handler | Call the project’s server upload path; the browser must not receive a privileged write token. |
-| Validate type/size | Follow the handler’s accepted MIME types and size caps. |
-| Persist metadata | Insert the Blob key and URL metadata in PostgreSQL after a successful Blob write. |
-| Test safely | Upload to a disposable private draft, save a version, reload, and verify the Preview renderer or viewer. |
-| Plan legacy migration | `/manus-storage` URLs require an explicit inventory and private-draft migration; do not claim they moved merely because new uploads work. |
+| Step                   | Required action                                                                                                                                 |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Decide access          | The current store is public because portfolio media is meant to be displayed or downloaded by visitors. Do not make sensitive files public.     |
+| Preserve originals     | Keep source files outside the repository in `/home/ubuntu/webdev-static-assets/`; do not add large media to `client/public/` or source folders. |
+| Use the server handler | Call the project’s server upload path; the browser must not receive a privileged write token.                                                   |
+| Validate type/size     | Follow the handler’s accepted MIME types and size caps.                                                                                         |
+| Persist metadata       | Insert the Blob key and URL metadata in PostgreSQL after a successful Blob write.                                                               |
+| Test safely            | Upload to a disposable private draft, save a version, reload, and verify the Preview renderer or viewer.                                        |
+| Plan legacy migration  | `/manus-storage` URLs require an explicit inventory and private-draft migration; do not claim they moved merely because new uploads work.       |
 
 ## Add or change a custom domain
 
@@ -56,14 +56,14 @@ Do not use a custom domain as a substitute for editor security: a public `/edit`
 
 ## Other Vercel services: when to consider them
 
-| Service category | Consider it when | Do not add it when |
-|---|---|---|
-| Marketplace PostgreSQL | The current relational data model needs a supported managed host or provider change. | You only need to store an image/PDF. |
-| Vercel Blob | You need visitor-facing images, PDFs, or other file objects. | You need queryable relationships or version history. |
-| Global Config | You need globally readable, rarely changing configuration such as feature flags. | You need transactional draft records. |
-| Redis/KV integration | You need caching, rate limiting, or transient sessions. | You only need the existing draft database. |
-| Vercel Firewall/Deployment Protection | You need a perimeter around Preview or a public deployment. | You expect it alone to protect public API write procedures permanently. |
-| Custom Environment | You need a persistent staging/QA environment and your Vercel plan supports it. | Preview URLs already cover a short-lived feature check. |
+| Service category                      | Consider it when                                                                     | Do not add it when                                                      |
+| ------------------------------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| Marketplace PostgreSQL                | The current relational data model needs a supported managed host or provider change. | You only need to store an image/PDF.                                    |
+| Vercel Blob                           | You need visitor-facing images, PDFs, or other file objects.                         | You need queryable relationships or version history.                    |
+| Global Config                         | You need globally readable, rarely changing configuration such as feature flags.     | You need transactional draft records.                                   |
+| Redis/KV integration                  | You need caching, rate limiting, or transient sessions.                              | You only need the existing draft database.                              |
+| Vercel Firewall/Deployment Protection | You need a perimeter around Preview or a public deployment.                          | You expect it alone to protect public API write procedures permanently. |
+| Custom Environment                    | You need a persistent staging/QA environment and your Vercel plan supports it.       | Preview URLs already cover a short-lived feature check.                 |
 
 ## References
 

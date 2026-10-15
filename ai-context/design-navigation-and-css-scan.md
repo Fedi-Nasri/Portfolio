@@ -4,24 +4,24 @@ This is the short operational guide for an AI agent changing the portfolio’s v
 
 ## Mandatory pre-edit sequence
 
-| Order | Action | Stop condition |
-|---:|---|---|
-| 1 | Read `current-work.md`, `todo.md`, and the relevant section of `design-system.md`. | Do not edit if a branch, release, or data boundary is unclear. |
-| 2 | Map the user’s term to a section root and component pair. | Example: “Experience” means `Home.tsx`, `FullLivePreview.tsx`, `.ref-experience`, and `.reference-job`. |
-| 3 | Search the CSS selector across all of `client/src/index.css`. | Identify the last applicable selector, mobile rule, and dim-mode rule. |
-| 4 | Check whether the request changes data or only visual treatment. | Read `shared/portfolio.ts` before changing labels, arrays, URLs, cards, or defaults. |
-| 5 | Add a precise unchecked `todo.md` item. | Do this before implementation. |
+| Order | Action                                                                             | Stop condition                                                                                          |
+| ----: | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+|     1 | Read `current-work.md`, `todo.md`, and the relevant section of `design-system.md`. | Do not edit if a branch, release, or data boundary is unclear.                                          |
+|     2 | Map the user’s term to a section root and component pair.                          | Example: “Experience” means `Home.tsx`, `FullLivePreview.tsx`, `.ref-experience`, and `.reference-job`. |
+|     3 | Search the CSS selector across all of `client/src/index.css`.                      | Identify the last applicable selector, mobile rule, and dim-mode rule.                                  |
+|     4 | Check whether the request changes data or only visual treatment.                   | Read `shared/portfolio.ts` before changing labels, arrays, URLs, cards, or defaults.                    |
+|     5 | Add a precise unchecked `todo.md` item.                                            | Do this before implementation.                                                                          |
 
 ## Source map for visual work
 
-| Concern | Primary source | Secondary source | Notes |
-|---|---|---|---|
-| Public layout | `client/src/pages/Home.tsx` | `client/src/index.css` | Public source of visible hierarchy. |
-| Editor preview parity | `client/src/pages/FullLivePreview.tsx` | `client/src/pages/full-live-preview.css` | Controls may differ; visual hierarchy should not. |
-| Editor workspace | `client/src/pages/EditPortfolio.tsx` | `client/src/pages/edit-extensions.css` | Do not put public section styling here. |
-| Shared content schema | `shared/portfolio.ts` | `client/src/lib/editorContent.ts` | Extend before updating data-driven JSX. |
-| Public motion | `client/src/lib/publicMotion.ts` | `client/src/index.css` | Public-only; reduced motion remains visible and static. |
-| Media controls | `client/src/components/ProjectImageControlPanel.tsx` | its co-located CSS | Keep crop and upload controls out of the base project composition. |
+| Concern               | Primary source                                       | Secondary source                         | Notes                                                              |
+| --------------------- | ---------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------ |
+| Public layout         | `client/src/pages/Home.tsx`                          | `client/src/index.css`                   | Public source of visible hierarchy.                                |
+| Editor preview parity | `client/src/pages/FullLivePreview.tsx`               | `client/src/pages/full-live-preview.css` | Controls may differ; visual hierarchy should not.                  |
+| Editor workspace      | `client/src/pages/EditPortfolio.tsx`                 | `client/src/pages/edit-extensions.css`   | Do not put public section styling here.                            |
+| Shared content schema | `shared/portfolio.ts`                                | `client/src/lib/editorContent.ts`        | Extend before updating data-driven JSX.                            |
+| Public motion         | `client/src/lib/publicMotion.ts`                     | `client/src/index.css`                   | Public-only; reduced motion remains visible and static.            |
+| Media controls        | `client/src/components/ProjectImageControlPanel.tsx` | its co-located CSS                       | Keep crop and upload controls out of the base project composition. |
 
 ## CSS scanning rules
 
@@ -55,12 +55,12 @@ User asks for a visual change
 
 ## Required verification matrix
 
-| Change | Minimum verification |
-|---|---|
-| CSS-only public section refinement | `pnpm check`, `pnpm test`, `pnpm build`, public desktop/mobile screenshot. |
-| Shared public/editor visual refinement | All above plus `/edit` desktop/mobile screenshot. |
-| Interactive control or motion | All above plus manual behavior verification and reduced-motion reasoning. |
-| Shared content/data field | All above plus public/editor render test and editor save/load path. |
+| Change                                 | Minimum verification                                                       |
+| -------------------------------------- | -------------------------------------------------------------------------- |
+| CSS-only public section refinement     | `pnpm check`, `pnpm test`, `pnpm build`, public desktop/mobile screenshot. |
+| Shared public/editor visual refinement | All above plus `/edit` desktop/mobile screenshot.                          |
+| Interactive control or motion          | All above plus manual behavior verification and reduced-motion reasoning.  |
+| Shared content/data field              | All above plus public/editor render test and editor save/load path.        |
 
 ## Release boundary
 

@@ -1,7 +1,10 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import { DEFAULT_PORTFOLIO_CONTENT, type PortfolioContent } from "@shared/portfolio";
+import {
+  DEFAULT_PORTFOLIO_CONTENT,
+  type PortfolioContent,
+} from "@shared/portfolio";
 
 let mockPublicContent: PortfolioContent | undefined;
 
@@ -9,7 +12,11 @@ vi.mock("@/lib/trpc", () => ({
   trpc: {
     portfolio: {
       publicContent: {
-        useQuery: () => ({ data: mockPublicContent, isLoading: false, error: null }),
+        useQuery: () => ({
+          data: mockPublicContent,
+          isLoading: false,
+          error: null,
+        }),
       },
     },
   },
@@ -42,13 +49,19 @@ describe("public contact section", () => {
     const html = renderToStaticMarkup(<Home />);
 
     expect((html.match(/ref-project/g) ?? []).length).toBeGreaterThanOrEqual(4);
-    expect((html.match(/project-layout-reversed/g) ?? []).length).toBeGreaterThanOrEqual(2);
-    expect((html.match(/project-detail-disclosure/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(
+      (html.match(/project-layout-reversed/g) ?? []).length
+    ).toBeGreaterThanOrEqual(2);
+    expect(
+      (html.match(/project-detail-disclosure/g) ?? []).length
+    ).toBeGreaterThanOrEqual(2);
     expect(html).toContain("View detailed project");
-    expect(html).not.toContain("project-detail-disclosure\" open");
+    expect(html).not.toContain('project-detail-disclosure" open');
     expect(html).toContain("project-summary");
     expect(html).toContain("project-compact-meta");
-    expect(html).toContain("A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection.");
+    expect(html).toContain(
+      "A live embedded-Linux dashboard for autonomous navigation, telemetry, and waste detection."
+    );
     expect((html.match(/capability-card-icon/g) ?? []).length).toBe(6);
   });
 
@@ -66,7 +79,9 @@ describe("public contact section", () => {
 
     expect(html).toContain("about-editorial-layout");
     expect(html).toContain('class="ref-stats" data-stat-reveal="true"');
-    expect((html.match(/about-numeric-indicator/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    expect(
+      (html.match(/about-numeric-indicator/g) ?? []).length
+    ).toBeGreaterThanOrEqual(4);
     expect(html).toContain(">4<");
   });
 

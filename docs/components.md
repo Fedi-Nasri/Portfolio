@@ -4,17 +4,17 @@
 
 The project separates **content shape**, **page orchestration**, **reusable interaction components**, **server procedures**, and **pure editing/export utilities**. This separation matters because public rendering and editor preview must remain visually aligned while the editor retains additional controls.
 
-| Area | Main files | Ownership |
-|---|---|---|
-| Routes and providers | `client/src/App.tsx`, `client/src/main.tsx` | Registers `/`, `/edit`, fallback routing, React Query, tRPC, theme, tooltips, and notifications. |
-| Public portfolio | `client/src/pages/Home.tsx` | Loads the public draft and renders the polished public experience. |
-| Editor workspace | `client/src/pages/EditPortfolio.tsx` | Owns draft browser state, tRPC mutations, save/publish actions, text selection tools, and the draft sidebar. |
-| Editable public-style preview | `client/src/pages/FullLivePreview.tsx` | Renders all portfolio sections in their public layout plus editor-only section controls. |
-| Canvas builder | `client/src/components/CustomSectionCanvas.tsx` | Supports palette-based components, drag/resize, grouping, guides, presets, duplication, and deletion. |
-| Project image controls | `client/src/components/ProjectImageControlPanel.tsx` | Manages focal point, zoom, aspect ratio, frame height, pointer/wheel/key controls, and reset. |
-| Export controls | `client/src/components/PortfolioExportActions.tsx` | Exposes HTML and static ZIP download actions in the editor. |
-| Editor styles | `client/src/pages/edit-extensions.css` | Holds workspace, draft-library, version history, overlay, and editing affordance styles. |
-| Public visual system | `client/src/index.css` | Holds the reference portfolio token set, section patterns, motion, and responsive rules. |
+| Area                          | Main files                                           | Ownership                                                                                                    |
+| ----------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Routes and providers          | `client/src/App.tsx`, `client/src/main.tsx`          | Registers `/`, `/edit`, fallback routing, React Query, tRPC, theme, tooltips, and notifications.             |
+| Public portfolio              | `client/src/pages/Home.tsx`                          | Loads the public draft and renders the polished public experience.                                           |
+| Editor workspace              | `client/src/pages/EditPortfolio.tsx`                 | Owns draft browser state, tRPC mutations, save/publish actions, text selection tools, and the draft sidebar. |
+| Editable public-style preview | `client/src/pages/FullLivePreview.tsx`               | Renders all portfolio sections in their public layout plus editor-only section controls.                     |
+| Canvas builder                | `client/src/components/CustomSectionCanvas.tsx`      | Supports palette-based components, drag/resize, grouping, guides, presets, duplication, and deletion.        |
+| Project image controls        | `client/src/components/ProjectImageControlPanel.tsx` | Manages focal point, zoom, aspect ratio, frame height, pointer/wheel/key controls, and reset.                |
+| Export controls               | `client/src/components/PortfolioExportActions.tsx`   | Exposes HTML and static ZIP download actions in the editor.                                                  |
+| Editor styles                 | `client/src/pages/edit-extensions.css`               | Holds workspace, draft-library, version history, overlay, and editing affordance styles.                     |
+| Public visual system          | `client/src/index.css`                               | Holds the reference portfolio token set, section patterns, motion, and responsive rules.                     |
 
 ## Page flow
 
@@ -34,19 +34,19 @@ Public-only behavior includes navigation anchors, the Experience detail disclosu
 
 ## UI component inventory
 
-| Feature | Public rendering | Editor capabilities | Primary data fields |
-|---|---|---|---|
-| Navigation and footer | Header, anchor links, contact CTA, footer | Direct text selection where bound to content; section ordering/visibility is editor-managed. | `navigation`, `footer`, `sectionOrder`, `hiddenSections` |
-| Hero / Home | Copy card, circular portrait, four focus cards arranged around portrait | Text editing, portrait upload, focus-card visual upload, drag placement, reset placement. | `hero` |
-| About | Two-column narrative, hashtag cloud, statistic cards | In-place text edit, add/delete tags, add/delete statistic cards. | `about` |
-| Experience | Timeline with collapsed summary, expandable detail bullets, tool chips, optional logos | Add above/below, delete, add/delete/reorder detail bullets, add/delete tags, upload/clear logo. | `experienceSection`, `experience` |
-| Skills & Toolbox | Category cards with compact tool tags | Add/delete toolboxes and add/delete tools. | `skillsSection`, `skills` |
-| Certifications | Provider card grid, hover action, in-page PDF viewer | Add/delete certificates, edit fields, upload/delete PDF, link set/clear, provider brand selection/logo upload. | `credentialsSection`, `certifications` |
-| Capabilities | Blue services section | Direct editable text in live preview; can be copied to a custom canvas. | `capabilities` |
-| Selected Work | Alternating compact image/details rows | Add/delete/reorder projects, edit case-study blocks, tech/delivery chips, project image upload, crop controls. | `projectsSection`, `projects` |
-| Writing & Insights | Horizontal article rows with stable metadata column | Add/delete/reorder articles, edit content and source URL, clear link. | `writingSection`, `writing` |
-| Contact | Structured heading and direct-contact card | Direct text editing; section visibility and ordering controls. | `contact`, `hero` contact data |
-| Custom sections | Public responsive block rendering | Canvas layout creation, add components, select/group, drag/resize, alignment guides, presets, image upload. | `customSections`, `canvasPresets` |
+| Feature               | Public rendering                                                                       | Editor capabilities                                                                                            | Primary data fields                                      |
+| --------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Navigation and footer | Header, anchor links, contact CTA, footer                                              | Direct text selection where bound to content; section ordering/visibility is editor-managed.                   | `navigation`, `footer`, `sectionOrder`, `hiddenSections` |
+| Hero / Home           | Copy card, circular portrait, four focus cards arranged around portrait                | Text editing, portrait upload, focus-card visual upload, drag placement, reset placement.                      | `hero`                                                   |
+| About                 | Two-column narrative, hashtag cloud, statistic cards                                   | In-place text edit, add/delete tags, add/delete statistic cards.                                               | `about`                                                  |
+| Experience            | Timeline with collapsed summary, expandable detail bullets, tool chips, optional logos | Add above/below, delete, add/delete/reorder detail bullets, add/delete tags, upload/clear logo.                | `experienceSection`, `experience`                        |
+| Skills & Toolbox      | Category cards with compact tool tags                                                  | Add/delete toolboxes and add/delete tools.                                                                     | `skillsSection`, `skills`                                |
+| Certifications        | Provider card grid, hover action, in-page PDF viewer                                   | Add/delete certificates, edit fields, upload/delete PDF, link set/clear, provider brand selection/logo upload. | `credentialsSection`, `certifications`                   |
+| Capabilities          | Blue services section                                                                  | Direct editable text in live preview; can be copied to a custom canvas.                                        | `capabilities`                                           |
+| Selected Work         | Alternating compact image/details rows                                                 | Add/delete/reorder projects, edit case-study blocks, tech/delivery chips, project image upload, crop controls. | `projectsSection`, `projects`                            |
+| Writing & Insights    | Horizontal article rows with stable metadata column                                    | Add/delete/reorder articles, edit content and source URL, clear link.                                          | `writingSection`, `writing`                              |
+| Contact               | Structured heading and direct-contact card                                             | Direct text editing; section visibility and ordering controls.                                                 | `contact`, `hero` contact data                           |
+| Custom sections       | Public responsive block rendering                                                      | Canvas layout creation, add components, select/group, drag/resize, alignment guides, presets, image upload.    | `customSections`, `canvasPresets`                        |
 
 ## Editor event workflow
 
@@ -87,15 +87,15 @@ Text is selected through an in-preview content path. `EditPortfolio.tsx` records
 
 The canvas is an editor extension for custom sections and safe copies of certain existing sections. It is not a pixel-perfect replacement for every public section.
 
-| Block type | Intended use |
-|---|---|
-| `title` | Major heading or introductory title. |
-| `text` | Readable body copy. |
-| `image` | Storage-backed visual with alternate text. |
-| `button` | Action with label and destination URL. |
-| `tag-list` | Reusable compact tags. |
-| `stat` | Portfolio-style statistic card. |
-| `contact-card` | Direct contact information presentation. |
+| Block type     | Intended use                               |
+| -------------- | ------------------------------------------ |
+| `title`        | Major heading or introductory title.       |
+| `text`         | Readable body copy.                        |
+| `image`        | Storage-backed visual with alternate text. |
+| `button`       | Action with label and destination URL.     |
+| `tag-list`     | Reusable compact tags.                     |
+| `stat`         | Portfolio-style statistic card.            |
+| `contact-card` | Direct contact information presentation.   |
 
 Desktop canvas components use `x`, `y`, `width`, and `height` coordinates. The canvas supports an 8px snap rhythm, alignment guides, shift-click multi-selection, proportional group resize, duplicate/delete actions, and saved layout presets. On narrow displays, public rendering uses a single-column content flow to preserve readability instead of preserving arbitrary absolute positions.
 
@@ -111,20 +111,20 @@ Because uploads and content snapshots are separate steps, an unused uploaded obj
 
 ## Export workflow
 
-| Export | Result | Constraints |
-|---|---|---|
-| HTML | A standalone simplified portfolio document | Best for a lightweight handoff; remote/available image data is inlined where possible. |
+| Export     | Result                                                             | Constraints                                                                                                                                           |
+| ---------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTML       | A standalone simplified portfolio document                         | Best for a lightweight handoff; remote/available image data is inlined where possible.                                                                |
 | Static ZIP | `index.html`, `styles.css`, `app.js`, usage note, and local assets | Recreates the public portfolio hierarchy and interactions offline, including certificate PDFs downloaded into `assets/certificates/` when accessible. |
 
 The export utility runs in the browser against the current editor draft. It does not automatically create a database version; editors should save first when an export needs to correspond to a named historical version.
 
 ## Adding a feature safely
 
-| Step | Required result |
-|---|---|
-| 1. Define the contract | Extend `PortfolioContent` and defaults with backward-compatible optional fields where possible. |
-| 2. Render publicly | Update `Home.tsx` and relevant shared render utilities. |
-| 3. Render in the editor | Add matching output and controls in `FullLivePreview`. |
-| 4. Add state behavior | Use or extend pure helpers in `editorContent.ts`; wire callbacks in `EditPortfolio.tsx`. |
-| 5. Persist and export | Ensure JSON serialization, upload references, and static export output all understand the field. |
+| Step                        | Required result                                                                                    |
+| --------------------------- | -------------------------------------------------------------------------------------------------- |
+| 1. Define the contract      | Extend `PortfolioContent` and defaults with backward-compatible optional fields where possible.    |
+| 2. Render publicly          | Update `Home.tsx` and relevant shared render utilities.                                            |
+| 3. Render in the editor     | Add matching output and controls in `FullLivePreview`.                                             |
+| 4. Add state behavior       | Use or extend pure helpers in `editorContent.ts`; wire callbacks in `EditPortfolio.tsx`.           |
+| 5. Persist and export       | Ensure JSON serialization, upload references, and static export output all understand the field.   |
 | 6. Test and visually verify | Add/update Vitest coverage, run checks, and compare `/` with `/edit` at desktop and mobile widths. |

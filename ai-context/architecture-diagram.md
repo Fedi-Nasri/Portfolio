@@ -102,11 +102,11 @@ erDiagram
   }
 ```
 
-| Record | Purpose | Important invariant |
-|---|---|---|
-| `portfolio_drafts` | Stores a named workspace such as Main portfolio or a future alternative draft. | One draft is selected as public at a time. |
-| `portfolio_draft_versions` | Stores the full `PortfolioContent` document for each saved version. | Existing versions are immutable; a restore inserts another version instead of changing history. |
-| `portfolio_content_versions` | Stores the legacy pre-multi-draft stream. | It is a bootstrap/fallback source, not the preferred target for new features. |
+| Record                       | Purpose                                                                        | Important invariant                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `portfolio_drafts`           | Stores a named workspace such as Main portfolio or a future alternative draft. | One draft is selected as public at a time.                                                      |
+| `portfolio_draft_versions`   | Stores the full `PortfolioContent` document for each saved version.            | Existing versions are immutable; a restore inserts another version instead of changing history. |
+| `portfolio_content_versions` | Stores the legacy pre-multi-draft stream.                                      | It is a bootstrap/fallback source, not the preferred target for new features.                   |
 
 ## 3. Public read flow
 
@@ -163,12 +163,12 @@ sequenceDiagram
   P->>D: Transactional draft selection update
 ```
 
-| Editor action | Database result | What it does **not** do |
-|---|---|---|
-| Change a field locally | Nothing until Save or Publish. | It does not alter public content immediately. |
-| Save version | Inserts the next immutable snapshot. | It does not automatically make the draft public. |
-| Publish | Saves the current snapshot, then selects the draft as public. | It does not delete other drafts or versions. |
-| Restore | Uses old content to create a new current version. | It does not overwrite newer history. |
+| Editor action          | Database result                                               | What it does **not** do                          |
+| ---------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
+| Change a field locally | Nothing until Save or Publish.                                | It does not alter public content immediately.    |
+| Save version           | Inserts the next immutable snapshot.                          | It does not automatically make the draft public. |
+| Publish                | Saves the current snapshot, then selects the draft as public. | It does not delete other drafts or versions.     |
+| Restore                | Uses old content to create a new current version.             | It does not overwrite newer history.             |
 
 ## 5. Asset and certificate PDF lifecycle
 
@@ -192,12 +192,12 @@ flowchart TD
   Fetch --> LocalPDF[assets/certificates/*.pdf inside ZIP]
 ```
 
-| Asset kind | Stored where | Database/snapshot stores | Public consumer |
-|---|---|---|---|
-| Portrait, project image, custom canvas image | Object storage | URL in `PortfolioContent` | `<img>` in public/editor render. |
-| Company/provider logo | Object storage or provider text configuration | URL/value in `PortfolioContent` | Experience/certification cards. |
-| Certificate preview | Object storage | Preview URL | Certificate-card image. |
-| Certificate PDF | Object storage | PDF URL | In-page viewer and static ZIP package. |
+| Asset kind                                   | Stored where                                  | Database/snapshot stores        | Public consumer                        |
+| -------------------------------------------- | --------------------------------------------- | ------------------------------- | -------------------------------------- |
+| Portrait, project image, custom canvas image | Object storage                                | URL in `PortfolioContent`       | `<img>` in public/editor render.       |
+| Company/provider logo                        | Object storage or provider text configuration | URL/value in `PortfolioContent` | Experience/certification cards.        |
+| Certificate preview                          | Object storage                                | Preview URL                     | Certificate-card image.                |
+| Certificate PDF                              | Object storage                                | PDF URL                         | In-page viewer and static ZIP package. |
 
 The relational database stores **references**, not file bytes. This keeps version records compact and lets the static export package download accessible PDFs separately.
 
@@ -237,20 +237,20 @@ The `vercel.json` file already defines the static output, SPA fallback, and curr
 
 ## 8. Source ownership map
 
-| Concern | Authoritative files |
-|---|---|
-| Public presentation | `client/src/pages/Home.tsx`, `client/src/index.css` |
-| Editor workspace | `client/src/pages/EditPortfolio.tsx`, `client/src/pages/FullLivePreview.tsx`, `client/src/pages/edit-extensions.css` |
-| Shared content contract | `shared/portfolio.ts` |
-| Immutable editor transforms | `client/src/lib/editorContent.ts` |
-| Canvas behavior | `client/src/components/CustomSectionCanvas.tsx` |
-| Project crop controls | `client/src/components/ProjectImageControlPanel.tsx` |
-| API validation | `server/routers.ts` |
-| Draft lifecycle | `server/portfolio.ts` |
-| Database schema | `drizzle/schema.ts`, `drizzle.config.ts`, `server/db.ts` |
-| Asset storage/proxy | `server/storage.ts`, `server/_core/storageProxy.ts` |
-| Export | `client/src/lib/portfolioExport.ts`, `client/src/lib/staticPublicExport.ts` |
-| Vercel routing | `vercel.json`, `api/[...path].ts`, `server/_core/app.ts` |
+| Concern                     | Authoritative files                                                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Public presentation         | `client/src/pages/Home.tsx`, `client/src/index.css`                                                                  |
+| Editor workspace            | `client/src/pages/EditPortfolio.tsx`, `client/src/pages/FullLivePreview.tsx`, `client/src/pages/edit-extensions.css` |
+| Shared content contract     | `shared/portfolio.ts`                                                                                                |
+| Immutable editor transforms | `client/src/lib/editorContent.ts`                                                                                    |
+| Canvas behavior             | `client/src/components/CustomSectionCanvas.tsx`                                                                      |
+| Project crop controls       | `client/src/components/ProjectImageControlPanel.tsx`                                                                 |
+| API validation              | `server/routers.ts`                                                                                                  |
+| Draft lifecycle             | `server/portfolio.ts`                                                                                                |
+| Database schema             | `drizzle/schema.ts`, `drizzle.config.ts`, `server/db.ts`                                                             |
+| Asset storage/proxy         | `server/storage.ts`, `server/_core/storageProxy.ts`                                                                  |
+| Export                      | `client/src/lib/portfolioExport.ts`, `client/src/lib/staticPublicExport.ts`                                          |
+| Vercel routing              | `vercel.json`, `api/[...path].ts`, `server/_core/app.ts`                                                             |
 
 ## 9. Change-impact rule
 

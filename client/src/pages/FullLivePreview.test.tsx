@@ -7,13 +7,56 @@ import FullLivePreview, { EditableText } from "./FullLivePreview";
 
 describe("FullLivePreview", () => {
   it("renders the complete portfolio with an Edit section control for every major area", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    ["Home", "About", "Experience", "Skills &amp; Toolbox", "Certifications", "Capabilities", "Selected Work", "Writing &amp; Insights", "Contact", "Footer"].forEach((label) => expect(html).toContain(label));
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    [
+      "Home",
+      "About",
+      "Experience",
+      "Skills &amp; Toolbox",
+      "Certifications",
+      "Capabilities",
+      "Selected Work",
+      "Writing &amp; Insights",
+      "Contact",
+      "Footer",
+    ].forEach(label => expect(html).toContain(label));
     expect((html.match(/live-section-hoverbar/g) ?? []).length).toBe(10);
   });
 
   it("uses the public navigation structure with a separate action group and compact call-to-action", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("live-public-header");
     expect(html).toContain("ref-header-actions");
@@ -23,7 +66,27 @@ describe("FullLivePreview", () => {
   });
 
   it("keeps role labels, capability headings, and tool controls editable in the Toolbox preview", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="skills" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSkillToolbox={() => {}} onAddSkillTool={() => {}} onRemoveSkillTool={() => {}} onRemoveSkillToolbox={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="skills"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddSkillToolbox={() => {}}
+        onAddSkillTool={() => {}}
+        onRemoveSkillTool={() => {}}
+        onRemoveSkillToolbox={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("role-toolbox-grid");
     expect(html).toContain("Cloud Engineering");
@@ -35,9 +98,36 @@ describe("FullLivePreview", () => {
 
   it("renders section ordering controls and an editable custom-section template", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
-    content.customSections = [{ id: "custom-1", eyebrow: "New section", title: "Custom focus", body: "Custom section copy" }];
+    content.customSections = [
+      {
+        id: "custom-1",
+        eyebrow: "New section",
+        title: "Custom focus",
+        body: "Custom section copy",
+      },
+    ];
     content.sectionOrder = [...(content.sectionOrder ?? []), "custom-1"];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="custom" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSection={() => {}} onAddCustomSection={() => {}} onMoveSection={() => {}} onRemoveSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="custom"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddSection={() => {}}
+        onAddCustomSection={() => {}}
+        onMoveSection={() => {}}
+        onRemoveSection={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("Portfolio layout");
     expect(html).toContain("Add custom section");
@@ -61,7 +151,24 @@ describe("FullLivePreview", () => {
   it("keeps a public-hidden section in the editor with a Show action", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.hiddenSections = ["about"];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onToggleSectionVisibility={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="about"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onToggleSectionVisibility={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("section-about is-active is-hidden-public");
     expect(html).toContain("Hidden publicly");
@@ -69,13 +176,46 @@ describe("FullLivePreview", () => {
   });
 
   it("offers a direct Canvas section editor action for active existing sections", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onCreateCanvasCopyFromSection={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="about"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onCreateCanvasCopyFromSection={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("Canvas section editor");
   });
 
   it("uses alternating project feature rows in the active Selected Work editor", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="projects"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("project-editor-card");
     expect(html).toContain("project-layout-reversed");
@@ -91,7 +231,23 @@ describe("FullLivePreview", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.projects[0]!.imageFocus = { x: 22, y: 74 };
     content.projects[0]!.imageZoom = 1.35;
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="projects"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("object-position:22% 74%");
     expect(html).toContain("scale(1.35)");
@@ -100,18 +256,52 @@ describe("FullLivePreview", () => {
   });
 
   it("enables in-place text editing only for the active preview section", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="hero.blurb" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="home"
+        activePath="hero.blurb"
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(html).toContain('contentEditable="true"');
     expect(html).toContain("live-editable-text is-editable");
     expect(html).toContain("section-home is-active");
   });
 
   it("uses the public Home hero composition with editable text-only floating specialties", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="home"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(html).toContain("reference-hero live-reference-hero");
     expect(html).toContain("hero-copy-ref");
     expect(html).toContain("portrait-zone live-portrait-zone");
-    expect(html).toContain("hero-floating-labels live-floating-specialty-labels");
+    expect(html).toContain(
+      "hero-floating-labels live-floating-specialty-labels"
+    );
     expect(html).toContain("floating-specialty-1");
     expect(html).not.toContain("Replace SVG / image");
     expect(html).toContain("Upload image");
@@ -119,27 +309,132 @@ describe("FullLivePreview", () => {
 
   it("renders editable Home specialty labels without card-drag controls", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
-    content.hero.focusPositions = [{ x: 8, y: 10 }, { x: 45, y: 20 }, { x: 45, y: 62 }, { x: 7, y: 63 }];
-    const activeHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={content} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    content.hero.focusPositions = [
+      { x: 8, y: 10 },
+      { x: 45, y: 20 },
+      { x: 45, y: 62 },
+      { x: 7, y: 63 },
+    ];
+    const activeHtml = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="home"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const inactiveHtml = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(activeHtml).toContain("DevOps");
     expect(activeHtml).not.toContain("Drag DevOps card");
     expect(activeHtml).toContain("--focus-x:45%");
-    expect(inactiveHtml).not.toContain("contentEditable=\"true\"");
+    expect(inactiveHtml).not.toContain('contentEditable="true"');
   });
 
   it("does not show retired card-layout reset controls in the text-only specialty composition", () => {
-    const activeHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="home" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const inactiveHtml = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onResetFocusPositions={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const activeHtml = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="home"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onResetFocusPositions={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const inactiveHtml = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onResetFocusPositions={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(activeHtml).not.toContain("Reset card layout");
     expect(inactiveHtml).not.toContain("Reset card layout");
   });
 
   it("renders Experience detail disclosure controls and active detail-management actions", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddExperienceDetail={() => {}} onRemoveExperienceDetail={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="experience"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddExperienceDetail={() => {}}
+        onRemoveExperienceDetail={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(inactive).toContain("See details");
     expect(active).toContain("See details");
@@ -150,14 +445,59 @@ describe("FullLivePreview", () => {
 
   it("writes direct preview text edits to the selected content path", () => {
     const changes: Array<{ path: unknown; value: string }> = [];
-    const text = EditableText({ value: "Before", path: ["hero", "blurb"], section: "home", activeSection: "home", activePath: "", onSection: () => {}, onSelect: () => {}, onChange: (path, value) => changes.push({ path, value }) });
-    (text.props as { onBlur: (event: { currentTarget: { innerText: string } }) => void }).onBlur({ currentTarget: { innerText: "After" } });
+    const text = EditableText({
+      value: "Before",
+      path: ["hero", "blurb"],
+      section: "home",
+      activeSection: "home",
+      activePath: "",
+      onSection: () => {},
+      onSelect: () => {},
+      onChange: (path, value) => changes.push({ path, value }),
+    });
+    (
+      text.props as {
+        onBlur: (event: { currentTarget: { innerText: string } }) => void;
+      }
+    ).onBlur({ currentTarget: { innerText: "After" } });
     expect(changes).toEqual([{ path: ["hero", "blurb"], value: "After" }]);
   });
 
   it("shows About add controls only while the About section is active", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="about"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(inactive).not.toContain("Add tag");
     expect(active).toContain("Add tag");
     expect(active).toContain("Add statistic");
@@ -165,8 +505,42 @@ describe("FullLivePreview", () => {
   });
 
   it("shows direct About tag and statistic deletion controls only while About is active", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onRemoveAboutTag={() => {}} onRemoveAboutStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="about"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onRemoveAboutTag={() => {}}
+        onRemoveAboutStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(inactive).not.toContain("Delete tag #Cloud");
     expect(inactive).not.toContain("Delete statistic");
     expect(active).toContain("Delete tag #Cloud");
@@ -174,7 +548,25 @@ describe("FullLivePreview", () => {
   });
 
   it("uses the public About composition while preserving its active management controls", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="about" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onRemoveAboutTag={() => {}} onRemoveAboutStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="about"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onRemoveAboutTag={() => {}}
+        onRemoveAboutStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(html).toContain("ref-section ref-about live-reference-about");
     expect(html).toContain("about-editorial-layout");
     expect(html).toContain("about-ref-grid");
@@ -187,7 +579,23 @@ describe("FullLivePreview", () => {
   });
 
   it("uses the public Selected Work composition while keeping project text editable", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="projects"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(html).toContain("ref-section ref-projects live-reference-projects");
     expect(html).toContain("ref-project-list");
     expect(html).toContain("project-thumb");
@@ -197,9 +605,27 @@ describe("FullLivePreview", () => {
   });
 
   it("uses the public Certifications composition while keeping credential fields editable and the PDF viewer affordance available", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="certifications"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
-    expect(html).toContain("ref-section ref-certifications live-reference-certifications");
+    expect(html).toContain(
+      "ref-section ref-certifications live-reference-certifications"
+    );
     expect(html).toContain("cert-mosaic");
     expect(html).toContain("certifications-grid");
     expect(html).toContain("credential-card has-pdf");
@@ -211,8 +637,44 @@ describe("FullLivePreview", () => {
   it("shows certificate template, PDF, link, branding, and guarded deletion controls while Certifications is active", () => {
     const single = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     single.certifications = [single.certifications[0]!];
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={single} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddCertificate={() => {}} onRemoveCertificate={() => {}} onUploadCertificatePdf={() => {}} onUploadProviderLogo={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={single}
+        activeSection="certifications"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddCertificate={() => {}}
+        onRemoveCertificate={() => {}}
+        onUploadCertificatePdf={() => {}}
+        onUploadProviderLogo={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(inactive).not.toContain("Add certificate");
     expect(active).toContain("Add certificate");
@@ -228,7 +690,23 @@ describe("FullLivePreview", () => {
     content.certifications[0]!.provider = "coursera";
     content.certifications[1]!.provider = "kodekloud";
     content.certifications[2]!.provider = "aws";
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="certifications"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("coursera-mark");
     expect(html).toContain("kodekloud-mark");
@@ -242,7 +720,25 @@ describe("FullLivePreview", () => {
     content.certifications[0]!.provider = "microsoft";
     content.certifications[0]!.pdf = "/manus-storage/microsoft-certificate.pdf";
     content.certifications[0]!.url = "https://example.com/microsoft-credential";
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="certifications" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onRemoveCertificatePdf={() => {}} onClearCertificateLink={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="certifications"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onRemoveCertificatePdf={() => {}}
+        onClearCertificateLink={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("microsoft-squares");
     expect(html).toContain("Microsoft");
@@ -251,7 +747,23 @@ describe("FullLivePreview", () => {
   });
 
   it("uses the public Writing & Insights composition while preserving editable article metadata and reader actions", () => {
-    const html = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="writing" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="writing"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("ref-section ref-writing live-reference-writing");
     expect(html).toContain("writing-grid");
@@ -265,7 +777,27 @@ describe("FullLivePreview", () => {
   it("shows article management controls, an external destination, and revised site-name/date metadata while Writing is active", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.writing[0]!.url = "https://example.com/article";
-    const active = renderToStaticMarkup(<FullLivePreview content={content} activeSection="writing" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddWritingArticle={() => {}} onRemoveWritingArticle={() => {}} onMoveWritingArticle={() => {}} onClearWritingLink={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="writing"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddWritingArticle={() => {}}
+        onRemoveWritingArticle={() => {}}
+        onMoveWritingArticle={() => {}}
+        onClearWritingLink={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(active).toContain("Add featured article");
     expect(active).toContain("writing-site-name");
@@ -280,14 +812,73 @@ describe("FullLivePreview", () => {
   it("protects the final Writing & Insights article from deletion", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.writing = [content.writing[0]!];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="writing" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="writing"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain('class="writing-delete-button" disabled=""');
   });
 
   it("shows Selected Work template, image, metadata, case-study, ordering, and deletion controls only while projects are active", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddProject={() => {}} onInsertProject={() => {}} onMoveProject={() => {}} onRemoveProject={() => {}} onAddProjectTech={() => {}} onRemoveProjectTech={() => {}} onAddProjectDelivery={() => {}} onRemoveProjectDelivery={() => {}} onAddProjectCaseStudyBlock={() => {}} onRemoveProjectCaseStudyBlock={() => {}} onUploadProjectImage={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="projects"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddProject={() => {}}
+        onInsertProject={() => {}}
+        onMoveProject={() => {}}
+        onRemoveProject={() => {}}
+        onAddProjectTech={() => {}}
+        onRemoveProjectTech={() => {}}
+        onAddProjectDelivery={() => {}}
+        onRemoveProjectDelivery={() => {}}
+        onAddProjectCaseStudyBlock={() => {}}
+        onRemoveProjectCaseStudyBlock={() => {}}
+        onUploadProjectImage={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(inactive).not.toContain("Add project");
     expect(active).toContain("Add project");
@@ -304,7 +895,23 @@ describe("FullLivePreview", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.projects = [content.projects[0]!];
     content.projects[0]!.caseStudyBlocks = ["problem"];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="projects" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="projects"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
 
     expect(html).toContain("Add What it is");
     expect(html).toContain("Add Realization");
@@ -312,8 +919,40 @@ describe("FullLivePreview", () => {
   });
 
   it("shows per-entry Experience insertion, tag, and delete controls only while Experience is active", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="experience"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(inactive).not.toContain("Add above");
     expect(active).toContain("Add above");
     expect(active).toContain("Add below");
@@ -325,23 +964,103 @@ describe("FullLivePreview", () => {
 
   it("assigns the filled current marker to the first Experience entry rather than a stored now flag", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
-    content.experience.unshift({ date: "NEW", role: "Newest experience", company: "New company", text: "Newest experience summary.", tags: ["New"], now: false });
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const timeline = html.slice(html.indexOf("experience-editor-timeline"), html.indexOf("section-skills"));
-    expect((timeline.match(/latest-job/g) ?? [])).toHaveLength(1);
-    expect(timeline.indexOf("latest-job")).toBeLessThan(timeline.indexOf("Newest experience"));
+    content.experience.unshift({
+      date: "NEW",
+      role: "Newest experience",
+      company: "New company",
+      text: "Newest experience summary.",
+      tags: ["New"],
+      now: false,
+    });
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const timeline = html.slice(
+      html.indexOf("experience-editor-timeline"),
+      html.indexOf("section-skills")
+    );
+    expect(timeline.match(/latest-job/g) ?? []).toHaveLength(1);
+    expect(timeline.indexOf("latest-job")).toBeLessThan(
+      timeline.indexOf("Newest experience")
+    );
   });
 
   it("disables deletion when the Experience timeline has only one entry", () => {
     const content = structuredClone(DEFAULT_PORTFOLIO_CONTENT);
     content.experience = [content.experience[0]!];
-    const html = renderToStaticMarkup(<FullLivePreview content={content} activeSection="experience" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const html = renderToStaticMarkup(
+      <FullLivePreview
+        content={content}
+        activeSection="experience"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(html).toContain('class="experience-delete-button" disabled=""');
   });
 
   it("shows toolbox and tool management controls only while Skills is active", () => {
-    const inactive = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection={null} activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
-    const active = renderToStaticMarkup(<FullLivePreview content={DEFAULT_PORTFOLIO_CONTENT} activeSection="skills" activePath="" onSection={() => {}} onChange={() => {}} onSelect={() => {}} onAddTag={() => {}} onAddStat={() => {}} onInsertExperience={() => {}} onAddExperienceTag={() => {}} onRemoveExperience={() => {}} onAddSkillToolbox={() => {}} onAddSkillTool={() => {}} onRemoveSkillTool={() => {}} onRemoveSkillToolbox={() => {}} onUploadAsset={() => {}} uploadingAsset={null} />);
+    const inactive = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection={null}
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
+    const active = renderToStaticMarkup(
+      <FullLivePreview
+        content={DEFAULT_PORTFOLIO_CONTENT}
+        activeSection="skills"
+        activePath=""
+        onSection={() => {}}
+        onChange={() => {}}
+        onSelect={() => {}}
+        onAddTag={() => {}}
+        onAddStat={() => {}}
+        onInsertExperience={() => {}}
+        onAddExperienceTag={() => {}}
+        onRemoveExperience={() => {}}
+        onAddSkillToolbox={() => {}}
+        onAddSkillTool={() => {}}
+        onRemoveSkillTool={() => {}}
+        onRemoveSkillToolbox={() => {}}
+        onUploadAsset={() => {}}
+        uploadingAsset={null}
+      />
+    );
     expect(inactive).not.toContain("Add toolbox");
     expect(active).toContain("Add toolbox");
     expect(active).toContain("Add tool");

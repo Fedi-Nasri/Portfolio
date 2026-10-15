@@ -32,37 +32,37 @@
 
 ## Active priorities
 
-| Priority | Status | Work item | Next safe action |
-|---:|---|---|---|
-| 1 | Complete | Merged the validated public-motion/design prototype and design-navigation documentation into stable `main` at `ce7df13`. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes. |
-| 2 | Paused by user | Migrate historical `/manus-storage` media references to an object-storage-compatible path. | Project 1 is verified in private Draft 2 version 4. Do not modify Draft 2 or Main until the user explicitly asks to resume. |
-| 3 | Active | Review the isolated role-focused Toolbox redesign on `feature/toolbox-devops-cloud`. | Do not merge or push the Toolbox feature to `deployment_versel` until the user explicitly approves it; `/edit` remains intentionally unauthenticated. |
-| 4 | Complete | Provide an optional local Docker Compose environment. | Compose uses isolated local PostgreSQL from `main`; it contains no Vercel, Neon, Blob, or Production credentials, and does not replace Vercel Production. |
+| Priority | Status         | Work item                                                                                                                | Next safe action                                                                                                                                          |
+| -------: | -------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|        1 | Complete       | Merged the validated public-motion/design prototype and design-navigation documentation into stable `main` at `ce7df13`. | Preserve the handbook and AI release workflow; update them with future branch/service policy changes.                                                     |
+|        2 | Paused by user | Migrate historical `/manus-storage` media references to an object-storage-compatible path.                               | Project 1 is verified in private Draft 2 version 4. Do not modify Draft 2 or Main until the user explicitly asks to resume.                               |
+|        3 | Active         | Review the isolated role-focused Toolbox redesign on `feature/toolbox-devops-cloud`.                                     | Do not merge or push the Toolbox feature to `deployment_versel` until the user explicitly approves it; `/edit` remains intentionally unauthenticated.     |
+|        4 | Complete       | Provide an optional local Docker Compose environment.                                                                    | Compose uses isolated local PostgreSQL from `main`; it contains no Vercel, Neon, Blob, or Production credentials, and does not replace Vercel Production. |
 
 ## PostgreSQL hosting state
 
 The user requested a provider-neutral PostgreSQL implementation and connected a Vercel-hosted **Neon PostgreSQL** database. The database appears as `neon-citrine-mountain` on the Free plan, and Vercel created a sensitive `DATABASE_URL` environment variable for Preview and Production. Do not expose or copy that value into project files.
 
-| Confirmed | Still required |
-|---|---|
-| PostgreSQL is the project database technology. | Keep application code provider-neutral and do not disclose the connection value. |
-| Neon is the currently connected Vercel PostgreSQL host. | Keep application code provider-neutral and do not disclose the connection value. |
-| `DATABASE_URL` exists in Vercel Preview and Production. | Keep the runtime code provider-neutral and do not disclose the value. |
-| PostgreSQL migration SQL and the additive `portfolio_media_assets` table were applied and table-verified on the connected host. | Migrate historical media references before treating all seeded public media as portable. |
-| A disposable Preview draft was created, saved with a note, restored as a new version, reloaded, and kept private. | Leave Main selected as the public draft unless the user explicitly requests a change. |
-| Vercel runtime logs show successful deployed tRPC save/create/restore/publish requests, and Blob contains new portrait/PDF-category objects. | Do not treat legacy `/manus-storage` URLs as Blob-migrated. |
+| Confirmed                                                                                                                                                                                  | Still required                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| PostgreSQL is the project database technology.                                                                                                                                             | Keep application code provider-neutral and do not disclose the connection value.            |
+| Neon is the currently connected Vercel PostgreSQL host.                                                                                                                                    | Keep application code provider-neutral and do not disclose the connection value.            |
+| `DATABASE_URL` exists in Vercel Preview and Production.                                                                                                                                    | Keep the runtime code provider-neutral and do not disclose the value.                       |
+| PostgreSQL migration SQL and the additive `portfolio_media_assets` table were applied and table-verified on the connected host.                                                            | Migrate historical media references before treating all seeded public media as portable.    |
+| A disposable Preview draft was created, saved with a note, restored as a new version, reloaded, and kept private.                                                                          | Leave Main selected as the public draft unless the user explicitly requests a change.       |
+| Vercel runtime logs show successful deployed tRPC save/create/restore/publish requests, and Blob contains new portrait/PDF-category objects.                                               | Do not treat legacy `/manus-storage` URLs as Blob-migrated.                                 |
 | Private Draft 2 version 4 contains a Blob-backed replacement for the Autonomous Robot Boat project image; `assets.upload` and `portfolio.saveDraft` each returned HTTP 200 in Vercel logs. | Keep all remaining migrated references private until an explicit public-selection decision. |
 
 ## Validation baseline
 
 The reported dark-mode screenshot revealed a contrast failure: focus-card labels were styled as light text despite rendering on white caption pills. The repair uses a dark navy caption color, a calmer blue-white caption surface, stronger dark-card boundaries, brighter visual-window separation, and reduced hero-orbit prominence. Browser verification confirmed legible Cloud, DevOps, and DevSecOps labels in both the public desktop dark hero and the `/edit` live preview dark hero. The Security & Networking artwork was also re-centred, with a mobile-specific geometry override, so its lower node remains inside the artwork frame rather than being clipped.
 
-| Command / check | Last known result | Notes |
-|---|---|---|
-| `pnpm check` | Passed | TypeScript compiled with no errors after the corrected Selected Work containment repair. |
-| `pnpm test` | Passed: 16 files, 88 tests | Includes Project image-panel add/replace/remove and collapsed-card metadata-containment regression coverage plus PostgreSQL persistence, Blob validation, API bridge, media upload preparation, public motion, Toolbox migration/editor parity, text formatting, and development-only pg-mem fallback coverage. |
-| `pnpm build` | Passed | Vite output and server bundle built successfully after the corrected Selected Work containment repair; bundle-size warning is informational. |
-| Preview API and editor | Passed | `GET /api/trpc/auth.me` returned a tRPC JSON response; `/edit` loaded the full direct workspace. |
+| Command / check        | Last known result          | Notes                                                                                                                                                                                                                                                                                                           |
+| ---------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm check`           | Passed                     | TypeScript compiled with no errors after the corrected Selected Work containment repair.                                                                                                                                                                                                                        |
+| `pnpm test`            | Passed: 16 files, 88 tests | Includes Project image-panel add/replace/remove and collapsed-card metadata-containment regression coverage plus PostgreSQL persistence, Blob validation, API bridge, media upload preparation, public motion, Toolbox migration/editor parity, text formatting, and development-only pg-mem fallback coverage. |
+| `pnpm build`           | Passed                     | Vite output and server bundle built successfully after the corrected Selected Work containment repair; bundle-size warning is informational.                                                                                                                                                                    |
+| Preview API and editor | Passed                     | `GET /api/trpc/auth.me` returned a tRPC JSON response; `/edit` loaded the full direct workspace.                                                                                                                                                                                                                |
 
 ## Working rules for the next agent
 

@@ -6,12 +6,12 @@ This guide is the day-to-day operating contract for the portfolio. It defines on
 
 ## Branch responsibilities
 
-| Branch or environment | Purpose | Allowed work | Do not do |
-|---|---|---|---|
-| `master` | Canonical source, local-development baseline, and Vercel Production Branch | Build, test, document, checkpoint, and—after explicit approval—push reviewed releases. | Push unreviewed or failing work; force-push; treat a local commit as automatically published. |
-| Short-lived `feature/*` branch (optional) | Isolated review space created **from current `master`** | Prototype or review a discrete feature, then validate it against the current master baseline. | Base it on stale `main` or `deployment_versel`; use it as a second source of truth. |
-| `deployment_versel` | Historical release and rollback reference (`e448599`) | Preserve its evidence; use it only when the user explicitly requests a rollback strategy. | Delete, force-push, or continue ordinary feature/release work there. |
-| Vercel Production | Live user-facing portfolio | Serves the latest Ready deployment created from approved `master` work. | Change branch tracking, domains, variables, or public draft selection without explicit user approval. |
+| Branch or environment                     | Purpose                                                                    | Allowed work                                                                                  | Do not do                                                                                             |
+| ----------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `master`                                  | Canonical source, local-development baseline, and Vercel Production Branch | Build, test, document, checkpoint, and—after explicit approval—push reviewed releases.        | Push unreviewed or failing work; force-push; treat a local commit as automatically published.         |
+| Short-lived `feature/*` branch (optional) | Isolated review space created **from current `master`**                    | Prototype or review a discrete feature, then validate it against the current master baseline. | Base it on stale `main` or `deployment_versel`; use it as a second source of truth.                   |
+| `deployment_versel`                       | Historical release and rollback reference (`e448599`)                      | Preserve its evidence; use it only when the user explicitly requests a rollback strategy.     | Delete, force-push, or continue ordinary feature/release work there.                                  |
+| Vercel Production                         | Live user-facing portfolio                                                 | Serves the latest Ready deployment created from approved `master` work.                       | Change branch tracking, domains, variables, or public draft selection without explicit user approval. |
 
 ## One active branch rule
 
@@ -40,14 +40,14 @@ master (local development, validation, documentation) → explicit approval → 
 
 ## Change-impact matrix
 
-| If you change… | Also examine… | Minimum validation | Production verification |
-|---|---|---|---|
-| Public copy, layout, or styles | `Home.tsx`, `FullLivePreview.tsx`, responsive behavior | `pnpm check`, relevant tests, `pnpm build` | Check `/` and `/edit` visual parity. |
-| Portfolio data field | `shared/portfolio.ts`, default data, editor, renderer, export, persistence | TypeScript and focused regression coverage | Save/reload a private draft. |
-| New route or API procedure | `server/routers.ts`, API context, client query/mutation, errors | `pnpm build:vercel-api`, TypeScript, procedure/API test, build | Verify tRPC JSON and affected flow. |
-| Database schema | `drizzle/schema.ts`, generated migration, query helpers, tests, docs | Migration review and PostgreSQL tests | Use only a disposable draft; never destructive Production experiments. |
-| Image or PDF feature | `server/assets.ts`, editor upload controls, Blob metadata, export | Asset tests and full checks | Upload a safe file privately; verify Blob URL, metadata, and rendering. |
-| Vercel routing/build behavior | `vercel.json`, `api/package.json`, `api/[...path].js` | API artifact build plus full checks | Reload `/edit`, test API JSON, inspect Vercel build/runtime logs. |
+| If you change…                 | Also examine…                                                              | Minimum validation                                             | Production verification                                                 |
+| ------------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Public copy, layout, or styles | `Home.tsx`, `FullLivePreview.tsx`, responsive behavior                     | `pnpm check`, relevant tests, `pnpm build`                     | Check `/` and `/edit` visual parity.                                    |
+| Portfolio data field           | `shared/portfolio.ts`, default data, editor, renderer, export, persistence | TypeScript and focused regression coverage                     | Save/reload a private draft.                                            |
+| New route or API procedure     | `server/routers.ts`, API context, client query/mutation, errors            | `pnpm build:vercel-api`, TypeScript, procedure/API test, build | Verify tRPC JSON and affected flow.                                     |
+| Database schema                | `drizzle/schema.ts`, generated migration, query helpers, tests, docs       | Migration review and PostgreSQL tests                          | Use only a disposable draft; never destructive Production experiments.  |
+| Image or PDF feature           | `server/assets.ts`, editor upload controls, Blob metadata, export          | Asset tests and full checks                                    | Upload a safe file privately; verify Blob URL, metadata, and rendering. |
+| Vercel routing/build behavior  | `vercel.json`, `api/package.json`, `api/[...path].js`                      | API artifact build plus full checks                            | Reload `/edit`, test API JSON, inspect Vercel build/runtime logs.       |
 
 ## Local Docker Compose
 

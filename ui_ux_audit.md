@@ -6,14 +6,14 @@ The portfolio has a strong foundation. Its **white and pale-blue frame**, circul
 
 The main opportunity is not the large titles. Their visual hierarchy is effective. The usability risk sits in the **secondary and tertiary text**: small navigation labels, tags, timeline metadata, contact details, and project-supporting copy become difficult to scan, especially on a phone. The screenshots also show a few areas where content or imagery looks less intentional than the rest of the visual system.
 
-| Area | Current assessment | Priority |
-|---|---|---|
-| Main headlines and section hierarchy | Strong; titles provide clear page structure. | Preserve |
-| Body paragraph readability | Improved, but some supporting text still feels small or light. | High |
-| Mobile scanning | The page remains functional but has many compact labels and dense sections. | High |
-| Project presentation | Clear content structure; visual specificity and image variety need work. | Medium |
-| Navigation and interactive controls | Understandable, but some controls appear undersized for touch. | High |
-| Brand distinctiveness | Cohesive but the `fedi.` wordmark is still visually generic. | Medium |
+| Area                                 | Current assessment                                                          | Priority |
+| ------------------------------------ | --------------------------------------------------------------------------- | -------- |
+| Main headlines and section hierarchy | Strong; titles provide clear page structure.                                | Preserve |
+| Body paragraph readability           | Improved, but some supporting text still feels small or light.              | High     |
+| Mobile scanning                      | The page remains functional but has many compact labels and dense sections. | High     |
+| Project presentation                 | Clear content structure; visual specificity and image variety need work.    | Medium   |
+| Navigation and interactive controls  | Understandable, but some controls appear undersized for touch.              | High     |
+| Brand distinctiveness                | Cohesive but the `fedi.` wordmark is still visually generic.                | Medium   |
 
 ## Priority Findings
 
@@ -67,13 +67,13 @@ The layout also has a consistent reading order: introduction, profile, experienc
 
 ## Recommended Order of Improvement
 
-| Order | Change | Expected impact |
-|---|---|---|
-| 1 | Enlarge all labels, timeline metadata, tags, contact facts, and mobile role-card captions. | Immediate readability improvement across the site. |
-| 2 | Darken secondary-text colors and form-placeholder text. | Better legibility without altering the visual direction. |
-| 3 | Increase mobile touch-target sizes for icon actions and header controls. | More usable mobile interactions. |
-| 4 | Replace repeated project images with cloud and network-specific visuals. | Stronger proof of domain expertise and a more ownable brand. |
-| 5 | Replace unfinished availability wording and refine the wordmark. | More polished and credible professional impression. |
+| Order | Change                                                                                     | Expected impact                                              |
+| ----- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1     | Enlarge all labels, timeline metadata, tags, contact facts, and mobile role-card captions. | Immediate readability improvement across the site.           |
+| 2     | Darken secondary-text colors and form-placeholder text.                                    | Better legibility without altering the visual direction.     |
+| 3     | Increase mobile touch-target sizes for icon actions and header controls.                   | More usable mobile interactions.                             |
+| 4     | Replace repeated project images with cloud and network-specific visuals.                   | Stronger proof of domain expertise and a more ownable brand. |
+| 5     | Replace unfinished availability wording and refine the wordmark.                           | More polished and credible professional impression.          |
 
 ## Conclusion
 

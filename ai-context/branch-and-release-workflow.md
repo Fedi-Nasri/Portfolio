@@ -6,12 +6,12 @@ This is the mandatory branch policy for agents and developers deciding where to 
 
 ## Branch roles and current state
 
-| Branch or environment | Role | Operating rule |
-|---|---|---|
-| `master` | Canonical development source and Production Branch | Begin every task here. Build, test, document, checkpoint, and push only after explicit approval. |
-| `feature/*` (optional) | Short-lived isolated review work | Create only from current `master`; reconcile back to master before release. |
-| `deployment_versel` | Historical Production release | Preserve unchanged as rollback evidence; never use for ordinary new work. |
-| Vercel Production | Live portfolio | Current verified source: `master` commit `732c0ac`, Ready in 31 seconds on 2026-08-24. |
+| Branch or environment  | Role                                               | Operating rule                                                                                   |
+| ---------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `master`               | Canonical development source and Production Branch | Begin every task here. Build, test, document, checkpoint, and push only after explicit approval. |
+| `feature/*` (optional) | Short-lived isolated review work                   | Create only from current `master`; reconcile back to master before release.                      |
+| `deployment_versel`    | Historical Production release                      | Preserve unchanged as rollback evidence; never use for ordinary new work.                        |
+| Vercel Production      | Live portfolio                                     | Current verified source: `master` commit `732c0ac`, Ready in 31 seconds on 2026-08-24.           |
 
 ## Mandatory agent flow
 
@@ -42,16 +42,16 @@ flowchart LR
 
 ## Vercel facts and constraints
 
-| Topic | Verified current fact | Agent constraint |
-|---|---|---|
-| Production Branch | Vercel Production Environment Branch Tracking is `master`. | Treat master push as live deployment action. |
-| Latest Production | Deployment ID `GuUXgkhsehPTuVKxDDm3ij8UycEU` is Ready from `master` commit `732c0ac`. | Verify `/`, `/edit`, and relevant API behavior after future releases. |
-| Previous Production | `deployment_versel` commit `e448599` is retained unchanged. | Use only with new explicit rollback direction. |
-| API route | `vercel.json` routes `/api/*` to generated CommonJS `api/[...path].js`. | Regenerate after server/API source changes. |
-| Database | Provider-neutral PostgreSQL; Neon is the currently connected host. | Do not disclose `DATABASE_URL` or couple code to Neon-only APIs. |
-| Media | Vercel Blob stores new bytes; PostgreSQL stores metadata. | Do not store file bytes in PostgreSQL. |
-| Legacy media | Historical `/manus-storage` migration remains paused. | Do not modify Main, Draft 2, or legacy objects without explicit request. |
-| Editor | `/edit` is intentionally unauthenticated. | Treat every Production release as security-sensitive. |
+| Topic               | Verified current fact                                                                 | Agent constraint                                                         |
+| ------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Production Branch   | Vercel Production Environment Branch Tracking is `master`.                            | Treat master push as live deployment action.                             |
+| Latest Production   | Deployment ID `GuUXgkhsehPTuVKxDDm3ij8UycEU` is Ready from `master` commit `732c0ac`. | Verify `/`, `/edit`, and relevant API behavior after future releases.    |
+| Previous Production | `deployment_versel` commit `e448599` is retained unchanged.                           | Use only with new explicit rollback direction.                           |
+| API route           | `vercel.json` routes `/api/*` to generated CommonJS `api/[...path].js`.               | Regenerate after server/API source changes.                              |
+| Database            | Provider-neutral PostgreSQL; Neon is the currently connected host.                    | Do not disclose `DATABASE_URL` or couple code to Neon-only APIs.         |
+| Media               | Vercel Blob stores new bytes; PostgreSQL stores metadata.                             | Do not store file bytes in PostgreSQL.                                   |
+| Legacy media        | Historical `/manus-storage` migration remains paused.                                 | Do not modify Main, Draft 2, or legacy objects without explicit request. |
+| Editor              | `/edit` is intentionally unauthenticated.                                             | Treat every Production release as security-sensitive.                    |
 
 ## Reading order for a future feature
 

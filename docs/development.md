@@ -4,13 +4,13 @@
 
 Use a current Node.js 22 environment and pnpm. The project is configured as an ES module application and uses TypeScript, Vite, Express, tRPC, Drizzle, and Vitest.
 
-| Requirement | Recommended version / value | Why it is needed |
-|---|---|---|
-| Node.js | 22.x | Matches the project’s current toolchain. |
-| pnpm | 10.x | Lockfile and package-manager metadata are pnpm-based. |
-| PostgreSQL database | PostgreSQL-compatible connection | The Drizzle schema uses `pg-core` and `pg`. |
-| `DATABASE_URL` | PostgreSQL connection URL | Required for Drizzle commands and database-backed editor persistence. |
-| Storage provider | Managed Forge/S3 in current development setup | Required for upload endpoints and asset retrieval. |
+| Requirement         | Recommended version / value                   | Why it is needed                                                      |
+| ------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| Node.js             | 22.x                                          | Matches the project’s current toolchain.                              |
+| pnpm                | 10.x                                          | Lockfile and package-manager metadata are pnpm-based.                 |
+| PostgreSQL database | PostgreSQL-compatible connection              | The Drizzle schema uses `pg-core` and `pg`.                           |
+| `DATABASE_URL`      | PostgreSQL connection URL                     | Required for Drizzle commands and database-backed editor persistence. |
+| Storage provider    | Managed Forge/S3 in current development setup | Required for upload endpoints and asset retrieval.                    |
 
 ## Installation
 
@@ -41,12 +41,12 @@ For the complete variable reference and production responsibilities, read [Produ
 
 The Drizzle configuration uses `drizzle/schema.ts`, writes PostgreSQL migration output under `drizzle/postgres/`, and expects a PostgreSQL connection. `drizzle.config.ts` throws early when `DATABASE_URL` is absent.
 
-| Task | Command | Notes |
-|---|---|---|
-| Generate migration SQL | `pnpm drizzle-kit generate` | Inspect generated SQL before applying it. |
-| Apply generated migrations | `pnpm drizzle-kit migrate` | Requires a reachable `DATABASE_URL`. |
-| Generate + apply | `pnpm db:push` | Project convenience command; use only after reviewing schema/migration intent. |
-| Type-check the schema/API/UI | `pnpm check` | Runs TypeScript with no emitted files. |
+| Task                         | Command                     | Notes                                                                          |
+| ---------------------------- | --------------------------- | ------------------------------------------------------------------------------ |
+| Generate migration SQL       | `pnpm drizzle-kit generate` | Inspect generated SQL before applying it.                                      |
+| Apply generated migrations   | `pnpm drizzle-kit migrate`  | Requires a reachable `DATABASE_URL`.                                           |
+| Generate + apply             | `pnpm db:push`              | Project convenience command; use only after reviewing schema/migration intent. |
+| Type-check the schema/API/UI | `pnpm check`                | Runs TypeScript with no emitted files.                                         |
 
 For a production schema change, follow this order: update `drizzle/schema.ts`, generate the migration, inspect the new SQL, apply it to the intended database, then run the application checks. Keep production migrations additive and backward-compatible when possible, because stored `contentJson` snapshots may span older editor versions.
 
@@ -58,10 +58,10 @@ pnpm dev
 
 The development command runs the Express entry point under `tsx watch`. It serves the Vite-backed SPA and the tRPC API together. Open:
 
-| URL | Purpose |
-|---|---|
-| `/` | Public portfolio built from the selected public draft. |
-| `/edit` | Direct-access editor workspace. |
+| URL         | Purpose                                                                         |
+| ----------- | ------------------------------------------------------------------------------- |
+| `/`         | Public portfolio built from the selected public draft.                          |
+| `/edit`     | Direct-access editor workspace.                                                 |
 | `/api/trpc` | tRPC transport endpoint; use typed client hooks instead of manually calling it. |
 
 The first `/edit` request seeds `Main portfolio` only when no multi-draft records exist. Use a disposable newly-created draft when testing editor changes so production-like public history is not polluted.
@@ -85,12 +85,12 @@ pnpm test
 
 The project has targeted regression coverage for editor persistence, multi-draft flows, restore/version-note behavior, canvas behavior, project image behavior, and export rendering. New functionality should add a test where it changes a data invariant, a persistence path, or a serialized export contract.
 
-| Test need | Suggested test location |
-|---|---|
+| Test need                               | Suggested test location                                              |
+| --------------------------------------- | -------------------------------------------------------------------- |
 | Draft persistence, restore, publication | `server/portfolio.editor-flow.test.ts` or related `server/*.test.ts` |
-| Shared content defaults and canvas data | Tests close to `shared/portfolio.ts` or existing canvas tests |
-| Export output and packaged assets | `client/src/lib/*test.ts` patterns |
-| Pure editing transforms | Tests close to `client/src/lib/editorContent.ts` |
+| Shared content defaults and canvas data | Tests close to `shared/portfolio.ts` or existing canvas tests        |
+| Export output and packaged assets       | `client/src/lib/*test.ts` patterns                                   |
+| Pure editing transforms                 | Tests close to `client/src/lib/editorContent.ts`                     |
 
 ## Production build
 
@@ -102,15 +102,15 @@ The current local build does two things: Vite emits the frontend to `dist/public
 
 ## Debugging guide
 
-| Symptom | First checks |
-|---|---|
-| `/edit` cannot load content | Verify `DATABASE_URL`, database reachability, and that migrations have been applied. Review server logs for the portfolio service error. |
-| Save/publish fails | Confirm schema contains `portfolio_drafts` and `portfolio_draft_versions`; verify the version tables are writable. |
-| Upload fails | Confirm current storage environment variables and storage proxy configuration. On Vercel, confirm the planned Blob adapter has been completed. |
-| Public page shows unexpected data | Inspect which draft is marked `isPublic`; public rendering uses that draft’s newest version. |
-| Changes disappear | Check whether the editor was reset or a save mutation completed; browser-state changes are intentionally unsaved until Save or Publish. |
-| `/edit` layout differs from `/` | Compare `Home.tsx`, `FullLivePreview.tsx`, and the shared CSS before adding editor-only layout patches. |
-| New route returns 404 on Vercel | Confirm SPA rewrite behavior and whether it belongs under `/api/*` or client-side Wouter routing. |
+| Symptom                           | First checks                                                                                                                                   |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/edit` cannot load content       | Verify `DATABASE_URL`, database reachability, and that migrations have been applied. Review server logs for the portfolio service error.       |
+| Save/publish fails                | Confirm schema contains `portfolio_drafts` and `portfolio_draft_versions`; verify the version tables are writable.                             |
+| Upload fails                      | Confirm current storage environment variables and storage proxy configuration. On Vercel, confirm the planned Blob adapter has been completed. |
+| Public page shows unexpected data | Inspect which draft is marked `isPublic`; public rendering uses that draft’s newest version.                                                   |
+| Changes disappear                 | Check whether the editor was reset or a save mutation completed; browser-state changes are intentionally unsaved until Save or Publish.        |
+| `/edit` layout differs from `/`   | Compare `Home.tsx`, `FullLivePreview.tsx`, and the shared CSS before adding editor-only layout patches.                                        |
+| New route returns 404 on Vercel   | Confirm SPA rewrite behavior and whether it belongs under `/api/*` or client-side Wouter routing.                                              |
 
 ## File and asset hygiene
 

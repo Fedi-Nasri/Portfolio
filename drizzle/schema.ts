@@ -1,4 +1,13 @@
-import { boolean, integer, jsonb, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import type { PortfolioContent } from "../shared/portfolio";
 
 /**
@@ -6,7 +15,10 @@ import type { PortfolioContent } from "../shared/portfolio";
  * standards-compatible PostgreSQL provider through DATABASE_URL.
  */
 export const userRole = pgEnum("user_role", ["user", "admin"]);
-export const portfolioContentStatus = pgEnum("portfolio_content_status", ["draft", "published"]);
+export const portfolioContentStatus = pgEnum("portfolio_content_status", [
+  "draft",
+  "published",
+]);
 
 export const users = pgTable("users", {
   id: integer("id").generatedAlwaysAsIdentity().primaryKey(),
@@ -15,9 +27,15 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: userRole("role").default("user").notNull(),
-  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  lastSignedIn: timestamp("lastSignedIn", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export type User = typeof users.$inferSelect;
@@ -29,13 +47,19 @@ export const portfolioContentVersions = pgTable("portfolio_content_versions", {
   contentJson: jsonb("contentJson").$type<PortfolioContent>().notNull(),
   createdBy: integer("createdBy").notNull(),
   updatedBy: integer("updatedBy").notNull(),
-  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
   publishedAt: timestamp("publishedAt", { withTimezone: true }),
 });
 
-export type PortfolioContentVersion = typeof portfolioContentVersions.$inferSelect;
-export type InsertPortfolioContentVersion = typeof portfolioContentVersions.$inferInsert;
+export type PortfolioContentVersion =
+  typeof portfolioContentVersions.$inferSelect;
+export type InsertPortfolioContentVersion =
+  typeof portfolioContentVersions.$inferInsert;
 
 export const portfolioDrafts = pgTable("portfolio_drafts", {
   id: integer("id").generatedAlwaysAsIdentity().primaryKey(),
@@ -44,8 +68,12 @@ export const portfolioDrafts = pgTable("portfolio_drafts", {
   isPublic: boolean("isPublic").notNull().default(false),
   createdBy: integer("createdBy").notNull(),
   updatedBy: integer("updatedBy").notNull(),
-  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export const portfolioDraftVersions = pgTable("portfolio_draft_versions", {
@@ -55,7 +83,9 @@ export const portfolioDraftVersions = pgTable("portfolio_draft_versions", {
   contentJson: jsonb("contentJson").$type<PortfolioContent>().notNull(),
   note: varchar("note", { length: 500 }),
   createdBy: integer("createdBy").notNull(),
-  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 /**
@@ -65,14 +95,18 @@ export const portfolioDraftVersions = pgTable("portfolio_draft_versions", {
  */
 export const portfolioMediaAssets = pgTable("portfolio_media_assets", {
   id: integer("id").generatedAlwaysAsIdentity().primaryKey(),
-  storageProvider: varchar("storageProvider", { length: 40 }).notNull().default("vercel-blob"),
+  storageProvider: varchar("storageProvider", { length: 40 })
+    .notNull()
+    .default("vercel-blob"),
   storageKey: text("storageKey").notNull().unique(),
   url: text("url").notNull(),
   fileName: varchar("fileName", { length: 255 }).notNull(),
   contentType: varchar("contentType", { length: 120 }).notNull(),
   category: varchar("category", { length: 40 }).notNull(),
   sizeBytes: integer("sizeBytes").notNull(),
-  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export type PortfolioDraft = typeof portfolioDrafts.$inferSelect;
